@@ -93,6 +93,24 @@
       title: "Empirical research backing the Deployed Eng Pipeline",
       stopId: "reading-code-stability",
       answer: "Key studies cited across this site:\n• Y Combinator W25: 25% of startups had 95% AI-generated codebases.\n• Google DORA: Every 25% bump in AI adoption correlated with a 7.2% drop in stability without guardrails.\n• GitClear (211M lines): 2-week code churn doubled from 3.3% to 7.1%.\n• Stanford ACM CCS (Perry et al.): Developers using AI wrote less secure code while feeling more confident.\n• UC Berkeley ('Why Johnny Can't Prompt'): Domain vocabulary is the control surface.\n• METR (2025): Blind AI debugging loops slowed developers down by 19%."
+    },
+    {
+      keywords: ["open source", "npm install", "pip install", "package", "library", "template", "shadcn", "node_modules"],
+      title: "How to download, use & build on top of open source",
+      stopId: "system-architecture",
+      answer: "There are 2 ways to build on open source:\n1. Library track (Brick by brick): Run 'npm install <pkg>' (JS) or 'pip install <pkg>' (Python) to snap a specific tool (like Lucide icons, Zod validation, or Stripe) into your existing project.\n2. Full repo track (Whole house frame): Click 'Use this template' or 'Fork' on GitHub (or browse Vercel Templates), then run 'git clone <url>', 'npm install', and 'cp .env.example .env' to boot a complete working starter app on your laptop in 2 minutes."
+    },
+    {
+      keywords: ["license", "mit", "apache", "gpl", "agpl", "bsd", "copyleft", "legal"],
+      title: "Open-source licenses: MIT & Apache 2.0 vs. AGPL & GPL",
+      stopId: "system-architecture",
+      answer: "• Permissive (Safe for commercial & private apps): MIT, Apache-2.0, BSD, ISC. You can build and ship freely as long as you keep the original copyright notice.\n• Viral Copyleft (Proceed with caution): GPL-3.0 and AGPL-3.0. If you build on an AGPL library and host it over a web server, you can be legally required to open-source your entire application!\n• No LICENSE file: Means 'All Rights Reserved' by default copyright law—do not use."
+    },
+    {
+      keywords: ["watch out", "watch-out", "caution", "slopsquatting", "bill", "rate limit", "upstash", "leak"],
+      title: "6 critical watch-outs when building and shipping",
+      stopId: "system-architecture",
+      answer: "1. License traps: Stick to MIT/Apache-2.0; avoid AGPL/GPL for closed products.\n2. AI 'slopsquatting': Verify AI-suggested package names actually exist on npm/PyPI before installing.\n3. Leaking .env keys: Never put real keys in '.env.example' or commit '.env' to public GitHub.\n4. Runaway cloud bills: Set a hard $10–$25 monthly spend cap and add Upstash rate-limiting before sharing a public URL.\n5. Zombie repos: Avoid libraries unmaintained for 3+ years.\n6. Client trust: Always check auth and prices on the backend server, never just in browser JS."
     }
   ];
 
@@ -101,7 +119,7 @@
       "What is a plain text file vs Word doc?",
       "How do Laptop, GitHub & Vercel connect?",
       "Python vs TypeScript vs SQL?",
-      "Branch vs clone vs fork?"
+      "How do I build on top of open source?"
     ],
     "downloading-the-tools": [
       "What is a plain text file vs Word doc?",
@@ -138,9 +156,10 @@
       "When do I need Redis or a job queue?"
     ],
     "system-architecture": [
-      "Why is 'the box' a good place to start?",
-      "What is addition bias (Nature study)?",
-      "How do I pick a standard blueprint?"
+      "How do I download & build on open source?",
+      "MIT vs AGPL open-source licenses?",
+      "What is AI 'slopsquatting'?",
+      "6 watch-outs when shipping to production?"
     ]
   };
 

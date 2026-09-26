@@ -661,6 +661,8 @@
         renderGitLivingDiagram(containerEl);
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
+      } else if (stop.diagramType === "opensource-shipping" && typeof window.renderOpenSourceShippingDiagram === "function") {
+        window.renderOpenSourceShippingDiagram(containerEl);
       }
     }
   };

@@ -390,49 +390,75 @@ window.PIPELINE_DATA = {
     },
     {
       id: "system-architecture",
-      title: "System architecture & stress-tested blueprints",
-      stage: "Step 7 · Architecture",
+      title: "System architecture, open source & shipping to production",
+      stage: "Step 7 · Architecture, Open Source & Shipping",
       tone: "tone-primary",
       badgeClass: "badge-info",
       icon: "account_tree",
-      teaser: "Why 'sometimes the box is a good place to start'—pairing fresh product instinct with proven blueprints.",
-      explainer: "Coming from the problem side gives you a superpower: fresh eyes on product instinct (avoiding the 80% of enterprise features Pendo found go unused) and GTM change management (avoiding the 70% transformation failure rate). Combining that product taste with standard architectural blueprints turns a clever prototype into lasting infrastructure.",
+      diagramType: "opensource-shipping",
+      teaser: "Why 'sometimes the box is a good place to start'—how to download and build on open source, where to find the best resources to ship, and critical watch-outs.",
+      explainer: "Coming from the problem side gives you a superpower: fresh eyes on product instinct (avoiding the 80% of enterprise features Pendo found go unused) and GTM change management (avoiding the 70% transformation failure rate). But when it comes to building and shipping the system itself, 'sometimes the box is a good place to start.' Instead of asking AI to invent everything from scratch, deployed engineers compose battle-tested open-source building blocks, starter templates, and managed shipping infrastructure—while guarding against license traps, leaked .env keys, AI 'slopsquatting,' and runaway cloud bills.",
       experiences: [
         {
-          lead: "The downside of out-of-the-box thinking:",
-          body: "Fresh eyes are great for deciding what to build, but inside the architecture, standard battle-tested patterns exist for a reason."
+          lead: "Two ways to build on open source (Libraries vs. Full Starter Repos):",
+          body: "You can either snap single open-source building blocks into your project ('npm install' / 'pip install' for icons, validation, or Stripe) or Fork/Clone a complete open-source starter template ('git clone' + 'cp .env.example .env') so authentication, database tables, and UI components are already wired up."
         },
         {
-          lead: "Analogical pattern matching:",
-          body: "Seasoned SWEs recognize that a new workflow problem is structurally identical to an event log, a state machine, or a pub/sub pipeline."
+          lead: "Where to find the best resources to ship fast:",
+          body: "Start from official Vercel Templates, shadcn/ui components, and GitHub 'Awesome' directories; pair them with Supabase or Neon (PostgreSQL), Auth.js or Clerk (login), Google AI Studio / Hugging Face (models), Stripe Checkout (payments), and Upstash Ratelimit."
+        },
+        {
+          lead: "Critical watch-outs (Licenses, Slopsquatting, .env leaks & Billing caps):",
+          body: "Stick to permissive licenses (MIT, Apache 2.0, BSD) and watch out for viral copyleft licenses (AGPL/GPL); verify AI-suggested package names actually exist on npm/PyPI before installing; never commit '.env' keys to public GitHub; and always set hard monthly spend caps + API rate limits before sharing a live link."
         },
         {
           lead: "Simplicity over addition bias:",
-          body: "Using UVA's Nature research on addition bias to ask: do we need a custom microservice, or a clean UI over existing trusted data?"
+          body: "Using UVA's Nature research on addition bias to ask: do we need a custom microservice, or can we compose a clean UI over existing trusted open-source primitives?"
         }
       ],
       activity: {
-        title: "Fun activity: The blueprint swap",
+        title: "Fun activity: Vet, clone & ship an open-source blueprint safely",
         steps: [
-          "Before prompting AI to build a new feature, ask it to propose 3 standard architectural patterns (with pros, cons, and failure modes) before writing any code.",
-          "Check whether the simplest option can reuse an existing data table or integration instead of adding a new stateful service.",
-          "Document the chosen blueprint in a 10-line architecture note at the top of your repo."
+          "Pick an open-source starter on Vercel Templates or GitHub and check its 4 health signals: LICENSE file (MIT/Apache 2.0), last commit date, open issues, and README.",
+          "Clone it locally ('git clone'), run 'npm install', copy '.env.example' to '.env', and verify '.env' is listed inside '.gitignore' via 'git status'.",
+          "Before deploying a public URL, add a hard monthly spend cap in your cloud/AI billing console and ask your AI agent to proposing 3 standard architectural patterns before adding custom tables."
         ]
       },
       resources: [
+        {
+          type: "Tool",
+          badgeClass: "badge-info",
+          title: "Vercel Open-Source Starter Templates",
+          description: "Production-ready Next.js, AI chat, SaaS, and Supabase starter repos you can clone and deploy to a live URL in minutes.",
+          url: "https://vercel.com/templates"
+        },
+        {
+          type: "Tool",
+          badgeClass: "badge-success",
+          title: "shadcn/ui & Radix Open-Source Components",
+          description: "Accessible, customizable open-source UI components that copy directly into your codebase so you own every line.",
+          url: "https://ui.shadcn.com/"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-warning",
+          title: "Choose an Open Source License (MIT vs. Apache 2.0 vs. AGPL)",
+          description: "Plain-English breakdown of which open-source licenses are safe for commercial apps and which require open-sourcing your code.",
+          url: "https://choosealicense.com/licenses/"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-secondary",
+          title: "The System Design Primer & Awesome Open Source",
+          description: "Visual catalog of standard architectural blueprints (load balancers, caches, queues, schemas) and vetted open-source tools.",
+          url: "https://github.com/donnemartin/system-design-primer"
+        },
         {
           type: "Explainer",
           badgeClass: "badge-info",
           title: "Nature: People systematically overlook subtractive changes (Adams et al.)",
           description: "Empirical research on addition bias and why simplifying architecture requires deliberate effort.",
           url: "https://www.nature.com/articles/s41586-021-03380-y"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-secondary",
-          title: "The System Design Primer (Donne Martin)",
-          description: "Visual catalog of standard building blocks: load balancers, caches, queues, and relational schemas.",
-          url: "https://github.com/donnemartin/system-design-primer"
         }
       ]
     }
