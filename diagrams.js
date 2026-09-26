@@ -130,7 +130,7 @@
     var loopCanvas = document.createElement("div");
     loopCanvas.className = "loop-diagram-canvas";
 
-    // TOP ROW: [1. Your computer] ---> [2. Cloud storage (GitHub)] ---> [3. Live hosting (Vercel)]
+    // TOP ROW: [1. Your computer] ---> [2. Cloud code repository] ---> [3. Cloud hosting]
     var topRow = document.createElement("div");
     topRow.className = "loop-top-row";
 
@@ -143,9 +143,9 @@
         selectNode(nodeById["ide-editor"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "ide-editor", label: "Code editor" },
-        { id: "plain-text", label: "Text files" },
-        { id: "homebrew-runtime", label: "Homebrew & engines" },
+        { id: "ide-editor", label: "Code editors & IDEs" },
+        { id: "plain-text", label: "Plain-text files" },
+        { id: "homebrew-runtime", label: "Package managers & runtimes" },
         { id: "local-git", label: "Local Git" },
         { id: "env-secrets", label: "Secret .env" }
       ])
@@ -153,18 +153,18 @@
     stageCards.push(stage1.card);
     topRow.appendChild(stage1.card);
 
-    topRow.appendChild(art.createHorizontalStepArrow("git push", "Uploads code"));
+    topRow.appendChild(art.createHorizontalStepArrow("git push", "Uploads repo"));
 
     var stage2 = art.createLoopStageCard({
       stageKey: "stage-cloud",
-      artSvg: art.createCloudServerArt("GitHub Cloud"),
-      title: "2. Cloud storage",
-      subtitle: "Saves & backs up repo",
+      artSvg: art.createCloudServerArt("Cloud Git Repo"),
+      title: "2. Cloud code repository",
+      subtitle: "Remote backup & review",
       onStageClick: function () {
         selectNode(nodeById["cloud-github"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "cloud-github", label: "Personal GitHub" }
+        { id: "cloud-github", label: "Cloud Git hosts (GitHub, GitLab...)" }
       ])
     });
     stageCards.push(stage2.card);
@@ -175,13 +175,13 @@
     var stage3 = art.createLoopStageCard({
       stageKey: "stage-hosting",
       artSvg: art.createDatabaseArt("https://"),
-      title: "3. Live hosting",
-      subtitle: "Public web server",
+      title: "3. Cloud hosting",
+      subtitle: "Web apps, AI demos & servers",
       onStageClick: function () {
         selectNode(nodeById["cloud-vercel"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "cloud-vercel", label: "Vercel hosting" }
+        { id: "cloud-vercel", label: "Cloud hosts (Vercel, Render, HF...)" }
       ])
     });
     stageCards.push(stage3.card);
@@ -204,13 +204,13 @@
         selectNode(nodeById["browser-devtools"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "browser-devtools", label: "Chrome DevTools" }
+        { id: "browser-devtools", label: "Browser DevTools" }
       ])
     });
     stageCards.push(stage4.card);
     bottomRow.appendChild(stage4.card);
 
-    bottomRow.appendChild(art.createCurvedReturnWing("right", "Serves live site"));
+    bottomRow.appendChild(art.createCurvedReturnWing("right", "Serves live link"));
 
     loopCanvas.appendChild(bottomRow);
     card.appendChild(loopCanvas);
@@ -248,7 +248,7 @@
     h4.textContent = node.title;
 
     var desc = document.createElement("p");
-    desc.className = "resource-desc";
+    desc.className = "resource-desc pre-line-text";
     desc.textContent = node.whatItIs;
 
     var slipCallout = document.createElement("div");
@@ -397,15 +397,15 @@
     var graphWrap = document.createElement("div");
     graphWrap.className = "git-graph-stage";
 
-    // Top Lane Label: main branch (Production -> Vercel)
+    // Top Lane Label: main branch (Production -> Cloud auto-deploy)
     var mainBanner = document.createElement("div");
     mainBanner.className = "git-lane-banner";
     var mainBadge = document.createElement("span");
     mainBadge.className = "badge badge-info";
-    mainBadge.textContent = "main branch (Production -> Vercel)";
+    mainBadge.textContent = "main branch (Production -> Cloud auto-deploy)";
     var mainExplain = document.createElement("span");
     mainExplain.className = "resource-desc";
-    mainExplain.textContent = "Continuous blue production line—every change merged into this line goes live to the public.";
+    mainExplain.textContent = "Continuous blue production line—every change merged into this line auto-deploys to your cloud host (e.g. Vercel, Netlify, Render, Cloud Run, or Hugging Face).";
     mainBanner.appendChild(mainBadge);
     mainBanner.appendChild(mainExplain);
     graphWrap.appendChild(mainBanner);

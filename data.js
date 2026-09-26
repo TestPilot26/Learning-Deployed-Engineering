@@ -2,11 +2,11 @@
 // Stop order:
 // 1. Downloading the tools
 // 2. Basic terminology, coding languages & app infrastructure
-// 3. Version control, Git & shipping to Vercel
+// 3. Version control, Git & cloud deployment
 // 4. Command line interface & the terminal
 // 5. Reading code & long-term stability
 // 6. System dynamics & how pieces fit together
-// 7. System architecture & stress-tested blueprints
+// 7. System architecture, open source & shipping to production
 
 window.PIPELINE_DATA = {
   substackUrl: "https://lulucalcott.substack.com/",
@@ -19,28 +19,28 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "home_repair_service",
       diagramType: "tools-flow",
-      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to GitHub and Vercel.",
-      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and windows on your laptop actually do. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see what each tool does—your code editor (where you read and edit those text files), Homebrew (which installs coding engines on your laptop), Git (your local save history), GitHub (your cloud backup), and Vercel (which turns your folder into a live website)—the mystery disappears.",
+      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to cloud code hosts (like GitHub) and deployment platforms (like Vercel, Render, or Hugging Face).",
+      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and websites actually do, and which category each one belongs to. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see the five core categories of tools—a Code Editor / IDE (like VS Code or Cursor, where you edit files), a Package Manager & Runtime (like Homebrew, Node.js, or Python, which run code on your laptop), Local Version Control (Git, your local save history), a Cloud Code Repository (like GitHub or GitLab, your online backup), and a Cloud Hosting Platform (like Vercel for websites, Render for backend servers, or Hugging Face Spaces for AI demos)—every tool name you hear suddenly clicks into place.",
       experiences: [
         {
-          lead: "Plain text files vs. Word or Google Docs:",
-          body: "A .js, .py, or .html file is just a plain text file with zero hidden formatting. Opening code in Word or Google Docs injects curly quotes and invisible styles that confuse the computer—a code editor like VS Code or Cursor is simply a plain-text workshop with color-coding and a built-in terminal."
+          lead: "Category 1 — Code editors & notebooks vs. Word or Google Docs:",
+          body: "A .js, .py, or .html file is just a plain text file with zero hidden formatting. Word and Google Docs inject curly quotes and invisible styles that break code. Instead, engineers use a Code Editor / IDE (e.g. VS Code, Cursor, Windsurf, Claude Code, or browser-based Replit) for building projects, or Interactive Notebooks (e.g. Google Colab, Jupyter) for running Python data and AI experiments step by step."
         },
         {
-          lead: "Why engineers use Homebrew instead of random installer downloads:",
-          body: "Hunting around websites for random installers often scatters tools into folders your terminal cannot find ('command not found'). A tool installer like Homebrew ('brew install node git') puts developer tools in one standard place and keeps them updated."
+          lead: "Category 2 — Package managers & runtimes (Why engineers don't hunt for random installer downloads):",
+          body: "To run code on your laptop, you need a Language Runtime (like Python or Node.js). Instead of hunting websites for random '.dmg' or '.exe' installers that land in the wrong folder ('command not found'), engineers use a System Package Manager—like Homebrew ('brew') on Mac/Linux or 'winget' on Windows—and Project Package Managers ('npm' for JavaScript, 'pip' or 'uv' for Python) to install tools cleanly."
         },
         {
-          lead: "What 'saving to Vercel' physically means:",
-          body: "Pressing Cmd+S only saves the file on your laptop's hard drive. 'Pushing' to GitHub uploads your folder to a cloud backup. Vercel watches your GitHub folder, automatically builds your latest code whenever you push, and publishes it to a live public https:// link."
+          lead: "Category 3 — Cloud code repositories & hosting platforms (And no, not everything needs to be a web app!):",
+          body: "Pressing Cmd+S only saves to your laptop. 'Pushing' uploads your folder to a Cloud Git Repository (e.g. GitHub, GitLab, Bitbucket). From there, a Cloud Hosting Platform can publish your work to a live https:// link—whether it's a full website (e.g. Vercel, Netlify, Cloudflare Pages), an always-on backend server (e.g. Render, Railway, Google Cloud Run, AWS), a lightweight AI demo or model (e.g. Hugging Face Spaces, Google Colab, Replicate), or a static doc site (e.g. GitHub Pages)."
         }
       ],
       activity: {
         title: "Fun activity: Trace a file from laptop to live URL",
         steps: [
-          "Click through each stage in the interactive diagram above to trace how a plain text file travels from your laptop to a live Vercel website.",
-          "Open VS Code or Cursor, create a file named index.html, and find it in Mac Finder or Windows Explorer to see that it is just a normal file in a normal folder.",
-          "Open your editor's built-in terminal (Ctrl+` or Cmd+`) and run git --version and node -v to check that Git and Node.js are installed on your laptop."
+          "Click through each stage in the interactive diagram above to see the category name first—and which real-world tools (VS Code, Homebrew, Git, GitHub, Vercel, Render, Hugging Face) fit into each slot.",
+          "Open a code editor (like VS Code or Cursor), create a file named index.html, and find it in Mac Finder or Windows Explorer to see that it is just a normal text file in a normal folder.",
+          "Open your editor's built-in terminal (Ctrl+` or Cmd+`) and run git --version, node -v, or python3 --version to check which runtimes are installed on your laptop."
         ]
       },
       resources: [
@@ -54,7 +54,7 @@ window.PIPELINE_DATA = {
         {
           type: "Tool",
           badgeClass: "badge-success",
-          title: "Homebrew: The missing package manager for macOS & Linux",
+          title: "Homebrew: The system package manager for macOS & Linux",
           description: "Install Node.js, Python, Git, and command-line tools with a single terminal command instead of hunting for installers.",
           url: "https://brew.sh/"
         },
@@ -68,8 +68,8 @@ window.PIPELINE_DATA = {
         {
           type: "Explainer",
           badgeClass: "badge-secondary",
-          title: "How Vercel deploys from GitHub automatically",
-          description: "Step-by-step walkthrough of what happens when Vercel detects a new commit on your GitHub repository.",
+          title: "How cloud hosts (like Vercel, Netlify & Render) deploy from GitHub",
+          description: "Step-by-step walkthrough of what happens when a cloud hosting platform detects a new commit on your Git repository.",
           url: "https://vercel.com/docs/deployments/git"
         },
         {
@@ -96,27 +96,27 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-secondary",
       icon: "menu_book",
       diagramType: "app-infrastructure",
-      teaser: "An interactive map of the parts of an app (Front End, Back End, API, Database), why different coding languages exist, and what makes an app solid vs. fragile.",
-      explainer: "When you build with AI, knowing the names for the parts of an app completely changes how you ask for help. If a button isn't saving your work and you don't know the terminology, you can only describe what looks wrong on the screen ('the save button is broken!') and hope the AI guesses right. Once you know the basic map of an app—what lives on the user's screen (Front End), what runs behind the scenes (Back End), the messenger between them (API), and the permanent filing cabinet (Database)—you can point your AI straight to the exact piece you want to build or fix.",
+      teaser: "An interactive map of the parts of software (Front End, Back End, API, Database), why different languages exist, and how to recognize the most common tools by category.",
+      explainer: "When you build with AI, knowing the names for the parts of software—and which category a tool belongs to—completely changes how you work. If a button isn't saving your work and you don't know the terminology, you can only describe what looks wrong on the screen ('the save button is broken!') and hope the AI guesses right. Once you know the basic map—what lives on the user's screen (Front End), what runs behind the scenes (Back End), the messenger between them (API), and the permanent filing cabinet (Database)—plus the most common real-world tools in each category, you can point your AI straight to the exact piece you want to build or fix.",
       experiences: [
         {
-          lead: "Why one app uses several different coding languages:",
-          body: "Each part of an app speaks its own native language: web browsers only understand HTML, CSS, and JavaScript to draw the screen; Back End servers often use Python (great for AI and data) or Node.js (JavaScript for servers); and Databases use SQL to organize tables of information."
+          lead: "Why one project uses several different coding languages:",
+          body: "Each layer of software has its own native language: web browsers only understand HTML, CSS, and JavaScript/TypeScript to draw screens (often using UI frameworks like React, Next.js, or Vue); Back End servers often use Python (with FastAPI or Flask—great for AI and data) or Node.js; and relational Databases use SQL (e.g. PostgreSQL, SQLite) to organize tables of information."
         },
         {
-          lead: "Describing what looks wrong vs. pointing to the right part:",
-          body: "Instead of telling AI 'it forgot what I typed when I refreshed the page,' you can say: 'Right now this is only saved on the Front End screen—let's send it through the API and save it in the Database so it stays there when I refresh.'"
+          lead: "Not everything needs to be a full-stack web app:",
+          body: "Before building a complex React + Database web app, ask what shape actually fits your goal: a Python notebook (Google Colab / Jupyter) is often best for data analysis; an interactive Python demo (Gradio or Streamlit on Hugging Face Spaces) is fastest for sharing an AI model; and a simple static site (GitHub Pages or Cloudflare Pages) is plenty for a portfolio or guide."
         },
         {
           lead: "Why a working demo can still be fragile:",
-          body: "An AI can quickly build a prototype that works on your laptop by putting everything—including secret AI billing passwords—directly inside the Front End browser code. Learning the boundary between the public Front End and the private Back End keeps your app and your wallet safe when you share it online."
+          body: "An AI can quickly build a prototype that works on your laptop by putting everything—including secret AI billing keys—directly inside the Front End browser code. Learning the boundary between the public Front End and the private Back End keeps your app and your wallet safe when you share it online."
         }
       ],
       activity: {
         title: "Fun activity: Explore the interactive app & language map",
         steps: [
-          "Click through each stage and language pill in the Interactive App Diagram above to see what lives on the Front End, API Bridge, Back End, and Database.",
-          "Toggle the diagram between 'Healthy app setup' and 'Fragile setup (what breaks)' to spot the 4 classic beginner traps.",
+          "Click through each stage and pill in the Interactive App Diagram above to see each category (UI frameworks, APIs, Back End runtimes, Cloud Databases, Auth, and External APIs) and its real-world examples.",
+          "Toggle the diagram between 'Healthy deployed setup' and 'Fragile vibe-coded setup' to spot the 4 classic beginner traps.",
           "Right-click any website in Chrome, click 'Inspect -> Network', click a button on the page, and watch the browser send a live message to the server."
         ]
       },
@@ -160,32 +160,32 @@ window.PIPELINE_DATA = {
     },
     {
       id: "git-and-shipping",
-      title: "Version control, Git & shipping to Vercel",
+      title: "Version control, Git & cloud deployment",
       stage: "Step 3 · Safety Net",
       tone: "tone-primary",
       badgeClass: "badge-info",
       icon: "commit",
       diagramType: "git-living",
-      teaser: "How to save checkpoints (commits), test risky AI changes on a separate scratchpad (branches), check what changed (diffs), and publish to a live link.",
-      explainer: "Everyone who builds with AI hits this moment early on: your app is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we learn Git right away. Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your app works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to GitHub and Vercel.",
+      teaser: "How to save checkpoints (commits), test risky AI changes on a separate scratchpad (branches), check what changed (diffs), and auto-deploy to cloud hosts (like Vercel, Netlify, Render, or Hugging Face).",
+      explainer: "Everyone who builds with AI hits this moment early on: your project is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we learn Version Control (Git) right away. Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your code works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to a cloud code repository (like GitHub or GitLab) that automatically deploys to your live hosting platform (like Vercel, Netlify, Render, Cloud Run, or Hugging Face Spaces).",
       experiences: [
         {
           lead: "Why are there so many steps? (Save vs. Commit vs. Push vs. PR vs. Squash & Merge):",
-          body: "Each step has a distinct job: Cmd+S saves to your laptop scratchpad; 'git commit' seals a local checkpoint; 'git push' uploads your branch to GitHub; a 'Pull Request (PR)' opens a review page with a preview link; and 'Squash & Merge' neatly combines your 5 messy 'WIP / fix typo' checkpoints into one clean update on main."
+          body: "Each step has a distinct job: Cmd+S saves to your laptop scratchpad; 'git commit' seals a local checkpoint; 'git push' uploads your branch to a cloud repo (like GitHub or GitLab); a 'Pull Request (PR)' opens a review page with a preview link; and 'Squash & Merge' neatly combines your 5 messy 'WIP / fix typo' checkpoints into one clean update on main."
         },
         {
           lead: "Branching vs. Cloning vs. Copying a folder:",
           body: "Never duplicate folders on your desktop like 'project-v2-final-FINAL'. A Git branch lets you try a big AI experiment in a safe parallel timeline—and either merge it back in if it works, or throw it away in one second if it breaks."
         },
         {
-          lead: "What 'HEAD' means in Git (and why you always check git diff):",
-          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Running 'git diff' compares your current unsaved edits against HEAD so you can spot accidental deletions or stray passwords before committing."
+          lead: "What 'HEAD' means in Git (and how Continuous Deployment works after Merge):",
+          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Once you check 'git diff' and merge your PR into 'main', Continuous Deployment (CI/CD) platforms—like Vercel or Netlify for websites, Render or Cloud Run for backend servers, or Hugging Face Spaces for AI demos—automatically build and publish your updated code."
         }
       ],
       activity: {
-        title: "Fun activity: Drive the living Git timeline",
+        title: "Fun activity: Drive the living Git & deployment timeline",
         steps: [
-          "Click each step on the Living Git & Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Vercel Live) to see how code moves safely to a live link.",
+          "Click each step on the Living Git & Cloud Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Auto-Deploy Live) to see how code moves safely from your laptop to the internet.",
           "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
           "Create a branch with git checkout -b test-experiment, make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
         ]
@@ -432,38 +432,38 @@ window.PIPELINE_DATA = {
     },
     {
       id: "system-architecture",
-      title: "System architecture, open source & shipping to production",
+      title: "System architecture, open source & shipping to the world",
       stage: "Step 7 · Architecture, Open Source & Shipping",
       tone: "tone-primary",
       badgeClass: "badge-info",
       icon: "account_tree",
       diagramType: "opensource-shipping",
-      teaser: "How to download and build on top of free open-source code, where to find the best starter templates and tools to ship, and key watch-outs before going live.",
-      explainer: "When you build a real product, you don't get extra points for inventing login screens, payment checkouts, or databases from scratch. Experienced engineers rarely build those from zero—instead, they start inside the box by snapping together free, community-tested open-source building blocks and starter templates, saving their energy for the 20% that makes their idea unique. This final stop shows you how to download and build on top of open-source code, where to find the best tools to ship, and the key watch-outs—like software licenses, fake AI-hallucinated packages, leaked '.env' keys, and surprise cloud bills—to check before you share a public link.",
+      teaser: "How to download and build on top of open-source code, all the ways to host and share what you build (web apps, Hugging Face AI demos, Colab notebooks, servers, or packages), and key watch-outs.",
+      explainer: "When you build something useful, you don't get extra points for inventing login screens, databases, or UI buttons from scratch—and not everything you ship even needs to be a full web app! Experienced engineers start by snapping together free, community-tested open-source building blocks, and then pick the lightest-weight way to share their work: a Frontend/Web App Host (like Vercel, Netlify, or Cloudflare Pages), an AI Demo & Model Hub (like Hugging Face Spaces, Google Colab, or Replicate), an Always-On Backend/Container Server (like Render, Railway, or Google Cloud Run), or an Installable Code Package (on PyPI or npm). This final stop maps every major tool category -> real-world examples, and walks through the 6 watch-outs to check before sharing a public link.",
       experiences: [
         {
-          lead: "Two ways to build on open source (Single Libraries vs. Full Starter Templates):",
-          body: "You can either install a single open-source building block into your existing project ('npm install' or 'pip install' for icons, charts, or Stripe) OR copy a complete working starter app on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
+          lead: "Not everything you ship needs to be a full web app (Pick the right hosting category):",
+          body: "• Sharing an AI demo, model, or dataset? Host a 20-line Python Gradio/Streamlit app on Hugging Face Spaces, or share an interactive notebook on Google Colab / Jupyter.\n• Sharing a website or full-stack web app? Use a web app host (e.g. Vercel, Netlify, Cloudflare Pages).\n• Running a long Python API, Docker container, or background worker? Use a backend server host (e.g. Render, Railway, Fly.io, Google Cloud Run, AWS).\n• Sharing reusable code for other builders? Publish a package to PyPI (Python) or npm (JavaScript), or a free static site on GitHub Pages."
         },
         {
-          lead: "Where to find the best free building blocks to ship fast:",
-          body: "Start from official Vercel Templates, shadcn/ui components, and GitHub 'Awesome' lists; pair them with Supabase or Neon (free-tier databases), Clerk or Auth.js (user login), Google AI Studio or Hugging Face (AI models), and Stripe Checkout (payments)."
+          lead: "Two ways to build on open source (Single Libraries vs. Full Starter Templates):",
+          body: "You can either install a single open-source library into your existing project ('npm install' or 'pip install' for UI components, validation, or AI SDKs) OR copy a complete working starter repository on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
+        },
+        {
+          lead: "Recognizing the builder's stack by category first (then example tools):",
+          body: "Whenever you hear a tool name, place it in its category: UI Components (e.g. shadcn/ui, Radix, Tailwind CSS), Managed Cloud Databases (e.g. Supabase, Neon, Firebase, MongoDB, Pinecone), User Authentication (e.g. Auth.js, Better Auth, Clerk), AI APIs & Model Hubs (e.g. Google AI Studio, OpenAI, Anthropic, Hugging Face, Ollama), and Payments/Email (e.g. Stripe, Resend)."
         },
         {
           lead: "Four watch-outs before you install or go live:",
-          body: "1) Check the LICENSE file (MIT and Apache 2.0 are safe for business; AGPL/GPL require sharing your source code). 2) Make sure any package AI suggests is real on npm/GitHub before installing. 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
-        },
-        {
-          lead: "Keeping your architecture simple:",
-          body: "When an AI suggests adding five new servers for a simple app, push back and ask: 'What is the simplest way to build this using the tools we already have?'"
+          body: "1) Check the LICENSE file (MIT and Apache 2.0 are safe for business; AGPL/GPL require sharing your source code). 2) Verify any package AI suggests is real on npm/PyPI before installing (avoid 'slopsquatting'). 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
         }
       ],
       activity: {
-        title: "Fun activity: Vet, clone & ship an open-source starter safely",
+        title: "Fun activity: Vet, clone & pick the right way to ship",
         steps: [
-          "Click through the 3 interactive diagrams above: (1) Open-Source Workflow, (2) Shipping Resource Stack, and (3) Critical Watch-Outs Shield.",
-          "Pick a starter repo on Vercel Templates or GitHub and check its 4 health signals: LICENSE file (MIT/Apache 2.0), last commit date, download count, and README.",
-          "Before sharing any live app link publicly, set a hard monthly spend limit in your AI/cloud billing settings so a traffic spike can never cause a surprise bill."
+          "Click through the 3 interactive diagrams above: (1) Open-Source Workflow, (2) Category-First Hosting & Builder's Stack Map, and (3) Critical Watch-Outs Shield.",
+          "Compare the 4 hosting categories in Diagram 2 (Web App Hosts vs. AI & Notebook Hubs like Hugging Face/Colab vs. Backend Container Hosts vs. Static/Package Registries) to see which fits your next project.",
+          "Before sharing any live link publicly, set a hard monthly spend limit in your AI/cloud billing settings so a traffic spike can never cause a surprise bill."
         ]
       },
       resources: [

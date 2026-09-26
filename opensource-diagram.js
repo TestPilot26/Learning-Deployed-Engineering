@@ -115,140 +115,140 @@
     },
 
     // =========================================================================
-    // PART 2: WHERE TO FIND THE BEST RESOURCES TO SHIP (9 STACK PILLS)
+    // PART 2: WAYS TO HOST, SHARE & BUILD — DEFINED BY CATEGORY FIRST (9 PILLS)
     // =========================================================================
     "ship-vercel-templates": {
       id: "ship-vercel-templates",
-      label: "Vercel Templates",
-      tag: "Starter kits",
+      label: "Web app & static hosts (Vercel, Netlify, Cloudflare, GitHub Pages)",
+      tag: "Category · Web hosting",
       badgeClass: "badge-info",
-      icon: "dashboard_customize",
-      oneLiner: "1-click deployable open-source starters for AI apps, SaaS, blogs & dashboards",
-      headline: "Vercel Templates: The fastest way to go from idea to a live URL",
-      whatItIs: "A curated library of hundreds of production-grade, open-source starter repositories (Next.js, React, Python FastAPI, AI chatbots, multi-tenant SaaS, commerce). Clicking 'Deploy' clones the open-source repo into your GitHub account, provisions any needed database, and gives you a live https:// URL in under 90 seconds.",
-      whenToUse: "Before starting any new project from a blank folder—check if an official template already solves 70% of your plumbing.",
-      codeExample: "# Browse at https://vercel.com/templates or clone via CLI:\nnpx create-next-app@latest --example with-supabase",
-      watchOut: "Pick templates maintained by official teams (Vercel, Supabase, Next.js, Stripe) rather than overly complex 15-tool boilerplates you don't understand yet.",
-      resourceTitle: "Explore Vercel Templates",
+      icon: "public",
+      oneLiner: "For websites, blogs, portfolios & full-stack web apps that deploy automatically on git push",
+      headline: "Category 1 of Hosting: Frontend, static & full-stack web app platforms",
+      whatItIs: "Category definition: When what you built is a website, documentation guide, or interactive web app (HTML/CSS/JS, React, Next.js, Astro, Svelte, Vue), a Web App Host connects to your Git repository, builds your site in the cloud on every 'git push', and serves it globally over a fast Content Delivery Network (CDN).\n\nCommon platforms in this category:\n• Full-stack & frontend web hosts: Vercel, Netlify, Cloudflare Pages, Firebase Hosting, AWS Amplify.\n• Free static site hosts (great for docs, blogs & portfolios with zero server cost): GitHub Pages, Cloudflare Pages, GitLab Pages.",
+      whenToUse: "Use when your project has a custom web UI in the browser and fast API routes (under 10–60 seconds).",
+      codeExample: "# Push to GitHub -> Vercel / Netlify / Cloudflare Pages auto-deploys:\ngit push origin main   # Live https:// preview & production link in ~20s",
+      watchOut: "Serverless web hosts aren't meant for 10-minute Python jobs or heavy GPUs—pair them with a backend container host or AI model host for heavy compute.",
+      resourceTitle: "Explore Vercel & Web Starter Templates",
       resourceUrl: "https://vercel.com/templates"
     },
-    "ship-shadcn-radix": {
-      id: "ship-shadcn-radix",
-      label: "shadcn/ui & Lucide Icons",
-      tag: "UI building blocks",
+    "ship-ai-huggingface": {
+      id: "ship-ai-huggingface",
+      label: "AI demos, models & notebooks (Hugging Face, Colab, Replicate, Modal)",
+      tag: "Category · AI & notebook hosting",
       badgeClass: "badge-info",
-      icon: "widgets",
-      oneLiner: "Accessible, open-source UI components & icons that copy straight into your repo",
-      headline: "shadcn/ui + Lucide: Why you aren't locked into a black-box UI library",
-      whatItIs: "Unlike traditional component libraries that hide code inside 'node_modules/', shadcn/ui gives you clean, accessible, open-source component files (buttons, dialogs, tables, drawers, charts) directly inside your own 'components/ui/' folder. Because the files live in your repo, both you and your AI coding agent can read and customize every line.",
-      whenToUse: "Whenever you want polished, accessible tables, modals, forms, and icons without fighting brittle CSS from scratch.",
-      codeExample: "# Add a battle-tested dialog and table component directly into your folder:\nnpx shadcn@latest add button dialog table",
-      watchOut: "Because AI training data loves shadcn/ui, tell your AI agent to stick to your design tokens rather than hardcoding random Tailwind colors on every card.",
-      resourceTitle: "Open shadcn/ui Component Directory",
-      resourceUrl: "https://ui.shadcn.com/"
+      icon: "psychology",
+      oneLiner: "When you DO NOT need a full web app—share Python AI demos, open models, datasets, or live notebooks",
+      headline: "Category 2 of Hosting: AI demo spaces, model hubs & interactive notebooks (No full web app needed!)",
+      whatItIs: "Category definition: Not everything you build or share needs to be a full-stack React web app! If you trained a model, built a Python AI workflow, or analyzed a dataset, these platforms let people try or run your work directly in their browser with zero frontend web engineering:\n\nCommon platforms in this category:\n• Hugging Face ('The GitHub of AI/ML'):\n  - Hugging Face Spaces: Turn a 20-line Python script (using Gradio or Streamlit) into a live, shareable interactive AI demo page.\n  - Hugging Face Models & Datasets: Where the world shares and downloads 1M+ open-weight AI models and public datasets.\n• Interactive Cloud Notebooks (run Python cell-by-cell in the browser): Google Colab (includes free cloud GPUs/TPUs), Jupyter Notebooks, Kaggle Notebooks, Marimo.\n• Serverless Cloud GPUs for custom models: Replicate, Modal, Together AI, Baseten, RunPod.",
+      whenToUse: "Whenever you want to share an AI prototype, Python tool, data analysis, or machine learning model without building a full website from scratch.",
+      codeExample: "# A complete interactive AI web demo in 4 lines of Python (Gradio on Hugging Face Spaces):\nimport gradio as gr\ndemo = gr.Interface(fn=summarize_text, inputs=\"text\", outputs=\"text\")\ndemo.launch()",
+      watchOut: "Public Hugging Face Spaces and Colab links are visible to everyone by default—keep private API keys inside Hugging Face 'Repository Secrets' or Colab 'Secrets' (the key icon on the left), never inside notebook cells!",
+      resourceTitle: "Open Hugging Face Spaces & Model Hub",
+      resourceUrl: "https://huggingface.co/spaces"
+    },
+    "ship-vercel-cloudflare": {
+      id: "ship-vercel-cloudflare",
+      label: "Backend servers, containers & clouds (Render, Railway, Cloud Run, AWS)",
+      tag: "Category · Backend & cloud infra",
+      badgeClass: "badge-info",
+      icon: "dns",
+      oneLiner: "For always-on Python APIs (FastAPI/Flask), Docker containers, background workers & enterprise cloud",
+      headline: "Category 3 of Hosting: Backend container platforms & major cloud providers ('Hyperscalers')",
+      whatItIs: "Category definition: When your project is a Python backend server (FastAPI, Flask, Django), a long-running background worker, a Discord/Slack bot, or a Docker container (a portable box that bundles your code and its exact operating system together), you host it on a Backend Server or Cloud Container Platform.\n\nCommon platforms in this category:\n• Developer-friendly server & container hosts (PaaS): Render, Railway, Fly.io, DigitalOcean App Platform, Heroku.\n• Container packaging tool: Docker (creates a 'Dockerfile' so your code runs identically on any laptop or server).\n• The 'Big 3' Cloud Infrastructure Providers ('Hyperscalers'):\n  - Google Cloud (GCP): Cloud Run (1-command serverless containers), Vertex AI, Google Cloud Storage.\n  - Amazon Web Services (AWS): EC2 (virtual servers), AWS Lambda, S3 (file storage).\n  - Microsoft Azure: Azure App Service, Azure OpenAI.\n• Package Registries (when shipping a code library or CLI tool instead of a server): PyPI ('pip install'), npm ('npm install'), Crates.io (Rust), Homebrew.",
+      whenToUse: "Use Render, Railway, or Google Cloud Run whenever you need a dedicated Python backend, Docker container, or requests that run longer than 60 seconds.",
+      codeExample: "# Deploy any Python / Docker backend to Google Cloud Run in 1 command:\ngcloud run deploy my-api --source . --region us-central1",
+      watchOut: "Always-on cloud servers and GPUs bill by the hour if left running—use auto-scaling to zero (like Cloud Run) and set a hard budget alert in your cloud console.",
+      resourceTitle: "Open Render & Cloud Run Guides",
+      resourceUrl: "https://render.com/"
     },
     "ship-awesome-github": {
       id: "ship-awesome-github",
-      label: "GitHub 'Awesome' Lists",
-      tag: "Discovery",
-      badgeClass: "badge-info",
+      label: "Starter templates, sandboxes & directories (GitHub Awesome, Replit, v0)",
+      tag: "Category · Discovery & sandboxes",
+      badgeClass: "badge-secondary",
       icon: "star",
-      oneLiner: "Community-vetted directories of the best open-source libraries for every domain",
-      headline: "GitHub 'Awesome' Lists & Trending: Finding the gold-standard library",
-      whatItIs: "On GitHub, volunteers maintain 'Awesome Lists' (starting with 'sindresorhus/awesome'—over 340,000 stars) that catalog the most trusted open-source libraries for Python, TypeScript, AI agents, CLI tools, databases, and security. Instead of guessing which library is best, check the domain's Awesome list.",
-      whenToUse: "When you need a specialized tool (e.g. PDF parsing, audio transcription, markdown editors, or data visualization) and want to see what senior engineers use.",
-      codeExample: "# Search GitHub directly for curated directories:\n# https://github.com/sindresorhus/awesome\n# https://github.com/ trending",
+      oneLiner: "Where to find vetted open-source libraries, starter templates, and instant browser coding sandboxes",
+      headline: "Discovery directories, starter templates & browser coding sandboxes",
+      whatItIs: "Category definition: Before writing code from scratch, engineers check curated directories for vetted open-source libraries, clone official starter templates, or spin up a quick prototype in a browser sandbox.\n\nCommon sites & tools in this category:\n• Vetted open-source directories: GitHub 'Awesome' Lists ('sindresorhus/awesome'), GitHub Trending, Papers With Code (AI research + code).\n• Official starter template galleries: Vercel Templates, Next.js Examples, Supabase Starters, Astro Themes, Python Cookiecutter.\n• Browser sandboxes & AI UI generators (prototype in your browser with zero local setup): Replit, StackBlitz, CodeSandbox, v0, Bolt, Lovable, Google AI Studio.",
+      whenToUse: "At the very start of a project—to pick the gold-standard library or clone a working starter kit.",
+      codeExample: "# Clone an official starter template or search curated GitHub Awesome lists:\nnpx create-next-app@latest --example with-supabase",
       watchOut: "Star count alone doesn't equal security—always check that the repo is actively maintained and has a permissive license (MIT / Apache 2.0).",
       resourceTitle: "Open the Master 'Awesome' Open-Source Directory",
       resourceUrl: "https://github.com/sindresorhus/awesome"
     },
+    "ship-shadcn-radix": {
+      id: "ship-shadcn-radix",
+      label: "UI component libraries & styling (shadcn/ui, Tailwind, Radix, Gradio)",
+      tag: "Category · UI & design systems",
+      badgeClass: "badge-secondary",
+      icon: "widgets",
+      oneLiner: "Pre-built, accessible buttons, tables, dialogs, icons & CSS systems so you don't style from zero",
+      headline: "UI component libraries, CSS frameworks & Python interface builders",
+      whatItIs: "Category definition: Instead of hand-coding dropdown menus, accessible pop-up dialogs, or mobile layouts from scratch, engineers snap together open-source UI Component Libraries and Styling Systems.\n\nCommon tools by subcategory:\n• Copy-paste & headless web components: shadcn/ui (copies clean code straight into your repo so you own every line), Radix UI, Headless UI.\n• CSS & design systems: Tailwind CSS, Google Material 3 (GM3), Material UI (MUI), Chakra UI, Bootstrap.\n• Icon libraries: Lucide Icons, Google Material Symbols, Heroicons, Font Awesome.\n• Python-only UI builders (turn Python functions into web pages with zero HTML/JS): Gradio, Streamlit, NiceGUI, Dash.",
+      whenToUse: "Whenever you want accessible tables, modals, forms, and icons without fighting brittle CSS from scratch.",
+      codeExample: "# Add battle-tested open-source components directly into your project:\nnpx shadcn@latest add button dialog table",
+      watchOut: "Tell your AI agent to use your shared color variables/tokens rather than hardcoding random hex colors on every card.",
+      resourceTitle: "Open shadcn/ui Component Directory",
+      resourceUrl: "https://ui.shadcn.com/"
+    },
     "ship-supabase-neon": {
       id: "ship-supabase-neon",
-      label: "Supabase & Neon (Postgres)",
-      tag: "Database & Auth",
+      label: "Cloud databases & storage (Postgres, Supabase, Neon, Firebase, S3)",
+      tag: "Category · Databases & storage",
       badgeClass: "badge-secondary",
       icon: "database",
-      oneLiner: "Open-source PostgreSQL databases with generous free tiers, Auth & instant APIs",
-      headline: "Supabase & Neon: Production PostgreSQL without managing servers",
-      whatItIs: "Both Supabase and Neon give you a real, open-source PostgreSQL relational database in the cloud in 30 seconds. Supabase also bundles built-in User Authentication, file storage, and automatic REST APIs guarded by Row-Level Security (RLS), while Neon offers serverless database branching (so every Git branch can get its own isolated test database!).",
-      whenToUse: "Whenever your app needs to save data across devices, store user accounts, or move beyond browser localStorage.",
-      codeExample: "// Querying Supabase Postgres safely from your server:\nconst { data, error } = await supabase\n  .from(\"projects\")\n  .select(\"id, title, status\")\n  .eq(\"owner_id\", currentUser.id);",
-      watchOut: "In Supabase, ALWAYS turn on Row-Level Security (RLS) on every table the moment you create it! Without RLS enabled, anyone with your public anon key can read or delete every row in that table.",
-      resourceTitle: "Open Supabase Open-Source Platform",
+      oneLiner: "Relational SQL tables, NoSQL documents, AI vector search & cloud file storage buckets",
+      headline: "Managed cloud databases & file storage (Defined by category first)",
+      whatItIs: "Category definition: Cloud Database & Storage platforms keep your app's data safe across devices with automatic backups and visual browser dashboards.\n\nCommon platforms by database category:\n• Relational / SQL Databases (structured tables — best default): PostgreSQL ('Postgres'), MySQL, SQLite. Popular managed cloud hosts: Supabase, Neon, Google Cloud SQL, AWS RDS, PlanetScale, Turso (cloud SQLite).\n• Document / NoSQL Databases (JSON documents & real-time sync): Firebase / Cloud Firestore, MongoDB Atlas, Convex, AWS DynamoDB.\n• Vector Databases (for AI embeddings & RAG search): pgvector (built into Postgres/Supabase), Pinecone, Weaviate, Chroma, Qdrant.\n• File / Object Storage (for large PDFs, images, audio & video): AWS S3, Cloudflare R2, Google Cloud Storage, Supabase Storage, UploadThing.",
+      whenToUse: "Whenever your project needs to save data across devices, store user uploads, or move beyond browser localStorage.",
+      codeExample: "// Querying a Postgres table safely from your backend server:\nconst { data, error } = await supabase\n  .from(\"projects\")\n  .select(\"id, title, status\")\n  .eq(\"owner_id\", currentUser.id);",
+      watchOut: "In cloud databases like Supabase or Firebase, ALWAYS enable Row-Level Security (RLS) or security rules on every table so strangers cannot read or wipe your rows!",
+      resourceTitle: "Open Supabase (Open-Source Postgres Platform)",
       resourceUrl: "https://supabase.com/"
     },
     "ship-clerk-authjs": {
       id: "ship-clerk-authjs",
-      label: "Auth.js / Clerk / Better Auth",
-      tag: "Login & Security",
+      label: "User login & authentication (Auth.js, Better Auth, Clerk, Auth0)",
+      tag: "Category · Authentication",
       badgeClass: "badge-secondary",
       icon: "verified_user",
-      oneLiner: "Drop-in Google/GitHub sign-in, session cookies, and multi-factor auth",
-      headline: "Never vibe-code your own password login: Use Auth.js, Better Auth, or Clerk",
-      whatItIs: "Authentication (verifying who a user is) and Authorization (checking what they're allowed to do) are the #1 place where DIY vibe-coded apps get hacked. Open-source libraries like Better Auth and Auth.js (NextAuth), or managed services like Clerk and Supabase Auth, give you Battle-tested 'Sign in with Google/GitHub', encrypted HTTP-only cookies, and CSRF protection out of the box.",
-      whenToUse: "The moment your app has user accounts, private data, or admin actions.",
+      oneLiner: "Drop-in Google/GitHub sign-in, encrypted session cookies, passkeys & permissions",
+      headline: "Authentication & identity providers (Never vibe-code password encryption yourself!)",
+      whatItIs: "Category definition: Authentication (verifying who a user is) and Authorization (checking what they're allowed to do) are the #1 place where DIY vibe-coded apps get compromised. Dedicated Auth Libraries and Identity Providers handle OAuth ('Sign in with Google/GitHub/Apple'), password hashing, passkeys, and encrypted session cookies for you.\n\nCommon tools in this category:\n• Open-source auth libraries (free, runs in your own database): Better Auth, Auth.js (NextAuth).\n• Managed login services (drop-in login UI + user dashboard): Clerk, Supabase Auth, Firebase Auth, Auth0, WorkOS, Okta.",
+      whenToUse: "The moment your project has user accounts, private user data, or admin actions.",
       codeExample: "// Always verify the logged-in user on the BACK END before mutating data:\nconst session = await auth();\nif (!session?.user) return new Response(\"Unauthorized\", { status: 401 });",
-      watchOut: "Hiding a 'Delete' button in the frontend CSS/JS does NOT secure your app—anyone can call your backend API URL directly unless your backend checks 'session.user' on every request!",
+      watchOut: "Hiding a 'Delete' button in frontend CSS/JS does NOT secure your app—your backend API must check the user's session on every single request!",
       resourceTitle: "Open Auth.js (Open-Source Authentication)",
       resourceUrl: "https://authjs.dev/"
     },
-    "ship-vercel-cloudflare": {
-      id: "ship-vercel-cloudflare",
-      label: "Vercel / Cloudflare / Railway",
-      tag: "Cloud Hosting",
-      badgeClass: "badge-secondary",
-      icon: "cloud_upload",
-      oneLiner: "Where to host frontends, serverless APIs, and long-running Python/Docker backends",
-      headline: "Choosing the right hosting platform for what you built",
-      whatItIs: "Different apps need different hosting shapes:\n• Vercel & Cloudflare Pages: Best for static sites, Next.js/React apps, and fast serverless API routes.\n• Railway, Render & Google Cloud Run: Best when your backend is a Python (FastAPI/Flask) server, a Docker container, or a long-running background worker that needs more than 10–60 seconds per request.",
-      whenToUse: "Use Vercel/Cloudflare for instant web UIs and lightweight APIs; pair with Cloud Run or Railway when running heavy Python data/AI workloads.",
-      codeExample: "# Deploy a container or Python service to Google Cloud Run in 1 command:\ngcloud run deploy my-service --source . --region us-central1",
-      watchOut: "Serverless functions (like Vercel functions) have strict execution timeouts (typically 10s–60s). If an AI workflow takes 3 minutes, move it to a background queue or Cloud Run service.",
-      resourceTitle: "Open Vercel Documentation",
-      resourceUrl: "https://vercel.com/docs"
-    },
-    "ship-ai-huggingface": {
-      id: "ship-ai-huggingface",
-      label: "Google AI Studio & Hugging Face",
-      tag: "AI & Models",
+    "ship-stripe-billing": {
+      id: "ship-stripe-billing",
+      label: "AI APIs, payments & email (AI Studio, OpenAI, Claude, Stripe, Resend)",
+      tag: "Category · External APIs",
       badgeClass: "badge-success",
-      icon: "psychology",
-      oneLiner: "Where to get Gemini API keys, test prompts, and download open-weight models",
-      headline: "Google AI Studio + Hugging Face: The two hubs for AI builders",
-      whatItIs: "• Google AI Studio (aistudio.google.com): The fastest place to get a Gemini API key, test structured JSON outputs, and copy ready-to-run Python/TypeScript code into your backend.\n• Hugging Face (huggingface.co): The 'GitHub of Machine Learning'—home to 1M+ open-weight models, public datasets, and 'Spaces' where you can inspect and clone open-source AI web apps.",
-      whenToUse: "Use AI Studio when calling frontier Gemini models via API; use Hugging Face when exploring open-weight models, embeddings, or open datasets.",
-      codeExample: "// Always call Gemini from your BACKEND server using process.env.GEMINI_API_KEY:\nconst ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });\nconst response = await ai.models.generateContent({\n  model: \"gemini-2.5-flash\",\n  contents: userPrompt\n});",
-      watchOut: "Never call paid LLM APIs directly from browser JavaScript with your real API key—bots will extract your key from Chrome DevTools Network tab in minutes.",
+      icon: "hub",
+      oneLiner: "Frontier AI model APIs, local model runners, hosted payment checkouts & transactional email",
+      headline: "External APIs by category: AI models, local LLMs, payments & email/SMS",
+      whatItIs: "Category definition: Instead of building credit-card vaults, email servers, or training frontier LLMs from scratch, your backend connects to specialized APIs via secret keys stored in '.env'.\n\nCommon platforms by category:\n• Frontier AI Model APIs: Google AI Studio / Vertex AI (Gemini), OpenAI Platform (GPT), Anthropic Console (Claude), OpenRouter (1 API for many models).\n• Local Open-Weight Model Runners (run AI free on your own laptop offline!): Ollama, LM Studio, llama.cpp, vLLM.\n• Payments & Subscriptions: Stripe Checkout, Lemon Squeezy, Polar, Paddle, PayPal.\n• Transactional Email & SMS: Resend, SendGrid, Postmark, AWS SES, Twilio (SMS/WhatsApp).",
+      whenToUse: "Anytime your project calls an AI model, accepts payments, or sends automated emails/texts.",
+      codeExample: "# Run an open-weight AI model locally on your laptop with Ollama:\nollama run gemma3\n# Or test Stripe webhooks locally with the Stripe CLI:\nstripe listen --forward-to localhost:3000/api/webhooks/stripe",
+      watchOut: "Never call paid AI or payment APIs directly from browser JavaScript with your secret key—always call them from your backend server.",
       resourceTitle: "Open Google AI Studio",
       resourceUrl: "https://aistudio.google.com/"
     },
-    "ship-stripe-billing": {
-      id: "ship-stripe-billing",
-      label: "Stripe Checkout & Lemon Squeezy",
-      tag: "Payments",
-      badgeClass: "badge-success",
-      icon: "credit_card",
-      oneLiner: "Accept payments and subscriptions safely without touching raw card numbers",
-      headline: "Stripe Checkout: Let Stripe host the payment page and notify you via webhook",
-      whatItIs: "Instead of building credit card forms on your own website (which triggers strict PCI security audits), redirect users to a Stripe Checkout session or Payment Link. Stripe handles Apple Pay, Google Pay, cards, and fraud checks, then sends a signed 'checkout.session.completed' webhook to your backend server to unlock the user's account.",
-      whenToUse: "Anytime your project charges money, sells subscriptions, or accepts donations.",
-      codeExample: "# Test Stripe webhooks locally on your laptop using the official Stripe CLI:\nstripe listen --forward-to localhost:3000/api/webhooks/stripe",
-      watchOut: "Always verify the 'stripe-signature' header inside your webhook endpoint so an attacker cannot send a fake 'payment succeeded' POST request to unlock a free account.",
-      resourceTitle: "Open Stripe Checkout Quickstart",
-      resourceUrl: "https://docs.stripe.com/checkout/quickstart"
-    },
     "ship-upstash-inngest": {
       id: "ship-upstash-inngest",
-      label: "Upstash Redis & Inngest",
-      tag: "Rate limits & Queues",
+      label: "Rate limits, queues & monitoring (Upstash Redis, Inngest, Sentry, PostHog)",
+      tag: "Category · Reliability & shields",
       badgeClass: "badge-success",
       icon: "bolt",
-      oneLiner: "Protect your APIs from bot spam and run reliable background retries",
-      headline: "Upstash Ratelimit & Inngest: The shield that prevents $5,000 overnight bills",
-      whatItIs: "• Upstash Ratelimit: An open-source, 5-line SDK over serverless Redis that blocks any IP or user from calling your expensive AI endpoint more than N times per minute.\n• Inngest / Trigger.dev: Open-source background job orchestrators that let you run multi-step AI tasks in the background with automatic retries.",
-      whenToUse: "Before sharing your live app URL publicly on LinkedIn, Substack, or Hacker News.",
+      oneLiner: "Protect your APIs from bot spam, run background retries, and catch live bugs",
+      headline: "Rate-limiters, background job queues & observability tools",
+      whatItIs: "Category definition: Before sharing a live link publicly, deployed engineers add three lightweight shields so traffic spikes or bugs never cause an overnight outage or surprise bill:\n\nCommon tools by category:\n• API Rate Limiting & Caching (stops bots from spamming expensive AI endpoints): Upstash Redis (`@upstash/ratelimit`), Redis, Cloudflare WAF.\n• Background Queues & Workflows (runs slow 2-minute AI tasks in the background with retries): Inngest, Trigger.dev, Celery (Python), BullMQ (Node.js), Temporal.\n• Error Tracking & Product Analytics (alerts you when a user hits an error): Sentry (crash reports), PostHog (open-source analytics & session replay), Datadog, Plausible.",
+      whenToUse: "Before sharing your live URL publicly on LinkedIn, Substack, X, or Hacker News.",
       codeExample: "// 5 lines to protect your AI API route with @upstash/ratelimit:\nconst { success } = await ratelimit.limit(userIp);\nif (!success) return new Response(\"Too many requests\", { status: 429 });",
-      watchOut: "Without rate limiting on your API routes, a single broken 'useEffect' infinite loop in your own frontend code can call your backend 10,000 times in a minute!",
+      watchOut: "Without rate limiting on your API routes, a single accidental infinite loop in your own frontend code can call your backend 10,000 times in a minute!",
       resourceTitle: "Open Upstash Ratelimit (GitHub)",
       resourceUrl: "https://github.com/upstash/ratelimit"
     },
@@ -516,7 +516,7 @@
     syncActiveStates();
 
     // =========================================================================
-    // CARD 2: INTERACTIVE SHIPPING STACK MAP (WHERE TO FIND THE BEST RESOURCES)
+    // CARD 2: CATEGORY-FIRST HOSTING & BUILDER'S STACK MAP
     // =========================================================================
     var shipCard = document.createElement("div");
     shipCard.className = "surface-card section-spacer diagram-shell-card";
@@ -528,14 +528,14 @@
     shipBadgeRow.className = "badge-row";
     var shipBadge = document.createElement("span");
     shipBadge.className = "badge badge-success";
-    shipBadge.textContent = "Interactive diagram 2 — click any tool to see why engineers pick it & open its link";
+    shipBadge.textContent = "Interactive diagram 2 — click any category below to compare real-world platforms & tools in the side panel";
     shipBadgeRow.appendChild(shipBadge);
     var shipH3 = document.createElement("h3");
     shipH3.className = "vocab-section-heading";
-    shipH3.textContent = "Where to find the best resources to ship: The modern builder's stack";
+    shipH3.textContent = "Ways to host, share & build: Every major category and its real-world examples";
     var shipSub = document.createElement("p");
     shipSub.className = "text-muted";
-    shipSub.textContent = "Instead of building everything from scratch, combine these trusted open-source directories, databases, auth providers, and hosting platforms:";
+    shipSub.textContent = "Not everything you build needs to be a full web app—and no single product defines a whole category. Click any category below to see what it does and recognize the most common sites and software in the wild:";
     shipTitleGroup.appendChild(shipBadgeRow);
     shipTitleGroup.appendChild(shipH3);
     shipTitleGroup.appendChild(shipSub);
@@ -548,13 +548,13 @@
     var col1 = document.createElement("div");
     col1.className = "app-half-card";
     var c1Title = document.createElement("h4");
-    c1Title.textContent = "1. Templates, UI & discovery (Start fast)";
+    c1Title.textContent = "1. Ways to host & share (Do they all need to be web apps? No!)";
     var c1Desc = document.createElement("p");
     c1Desc.className = "resource-desc";
-    c1Desc.textContent = "Where to find working starter apps, copy-paste accessible UI components, and vetted open-source libraries:";
+    c1Desc.textContent = "Compare the 3 main ways people host and share work—from web app hosts to AI/notebook hubs (Hugging Face, Colab) to backend container servers:";
     var c1Pills = document.createElement("div");
     c1Pills.className = "diagram-pill-cluster";
-    ["ship-vercel-templates", "ship-shadcn-radix", "ship-awesome-github"].forEach(function (id) {
+    ["ship-vercel-templates", "ship-ai-huggingface", "ship-vercel-cloudflare"].forEach(function (id) {
       c1Pills.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
     });
     col1.appendChild(c1Title);
@@ -564,13 +564,13 @@
     var col2 = document.createElement("div");
     col2.className = "app-half-card";
     var c2Title = document.createElement("h4");
-    c2Title.textContent = "2. Hosting, databases & login (Core plumbing)";
+    c2Title.textContent = "2. Discovery, UI components, databases & login (By category)";
     var c2Desc = document.createElement("p");
     c2Desc.className = "resource-desc";
-    c2Desc.textContent = "Where to host your code, store user records in Postgres, and add Google/GitHub sign-in safely:";
+    c2Desc.textContent = "Where to find vetted open-source templates, UI component libraries, managed SQL/NoSQL/Vector databases, and user login providers:";
     var c2Pills = document.createElement("div");
     c2Pills.className = "diagram-pill-cluster";
-    ["ship-supabase-neon", "ship-clerk-authjs", "ship-vercel-cloudflare"].forEach(function (id) {
+    ["ship-awesome-github", "ship-shadcn-radix", "ship-supabase-neon", "ship-clerk-authjs"].forEach(function (id) {
       c2Pills.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
     });
     col2.appendChild(c2Title);
@@ -584,13 +584,13 @@
     var col3 = document.createElement("div");
     col3.className = "app-half-card";
     var c3Title = document.createElement("h4");
-    c3Title.textContent = "3. AI models, payments & rate-limit shields (Production superpowers)";
+    c3Title.textContent = "3. External APIs (AI models, payments, email) & reliability shields";
     var c3Desc = document.createElement("p");
     c3Desc.className = "resource-desc";
-    c3Desc.textContent = "Where to grab frontier AI keys, open-weight models, hosted checkout pages, and bot rate-limiters:";
+    c3Desc.textContent = "Where to connect frontier or local AI models, hosted payment checkouts, transactional email, rate-limiters, and error monitoring:";
     var c3Pills = document.createElement("div");
     c3Pills.className = "diagram-pill-cluster";
-    ["ship-ai-huggingface", "ship-stripe-billing", "ship-upstash-inngest"].forEach(function (id) {
+    ["ship-stripe-billing", "ship-upstash-inngest"].forEach(function (id) {
       c3Pills.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
     });
     col3.appendChild(c3Title);

@@ -17,34 +17,34 @@
       answer: "Code files (.html, .js, .py, .json, .md) are plain UTF-8 text files containing raw characters only. Word and Google Docs inject invisible formatting tags and convert straight quotes (\" \") into curly quotes, which breaks code compilers. A code editor like VS Code or Cursor edits pure plain text while adding visual syntax highlighting."
     },
     {
-      keywords: ["homebrew", "brew", "package manager", "installer", "dmg", "path", "command not found"],
-      title: "Why engineers use Homebrew (package managers)",
+      keywords: ["homebrew", "brew", "package manager", "installer", "dmg", "path", "command not found", "winget", "npm", "pip", "uv"],
+      title: "Package managers & language runtimes (e.g. Homebrew, winget, npm, pip/uv)",
       stopId: "downloading-the-tools",
-      answer: "Homebrew ('brew') is the standard package manager for macOS and Linux. When you download random installers from websites, binaries often land in folders your terminal doesn't check (causing 'command not found'). Running 'brew install node git' installs verified developer tools into one clean directory and wires up your system PATH automatically."
+      answer: "• Language runtimes (run code on your computer): Python, Node.js / Bun / Deno (JavaScript/TypeScript), Docker (containers).\n• System package managers (install developer tools on your computer so you never hunt for random installers): Homebrew ('brew') on Mac/Linux, 'winget' on Windows, 'apt' on Linux.\n• Project package managers (install open-source libraries into one project): 'npm' / 'pnpm' (JavaScript) and 'pip' / 'uv' / 'conda' (Python)."
     },
     {
-      keywords: ["ide", "code editor", "vs code", "cursor", "developer environment", "localhost"],
-      title: "What an IDE / developer environment actually is",
+      keywords: ["ide", "code editor", "vs code", "cursor", "windsurf", "claude code", "replit", "colab", "jupyter", "developer environment", "localhost"],
+      title: "Code editors, AI IDEs, browser sandboxes & notebooks",
       stopId: "downloading-the-tools",
-      answer: "An IDE (Integrated Development Environment) like VS Code or Cursor is your local workshop. It combines three things in one window: (1) a file explorer showing your project folder, (2) a plain-text code editor, and (3) an integrated terminal running inside that folder. When you run a dev server, it serves your app on 'localhost'—a private address only your laptop can see."
+      answer: "• Desktop Code Editors / IDEs (e.g. VS Code, Cursor, Windsurf, Zed, PyCharm): Combine a file explorer, a plain-text editor, and a built-in terminal.\n• Terminal coding agents: Claude Code, Gemini CLI.\n• Browser sandboxes (zero install): Replit, StackBlitz, CodeSandbox, v0, Bolt, Lovable.\n• Interactive notebooks (run Python cell-by-cell for data & AI): Google Colab, Jupyter Notebooks.\nWhen you run a dev server locally, it serves your project on 'localhost'—a private address only your laptop can see."
     },
     {
-      keywords: ["vercel", "deploy", "save on vercel", "hosting", "live url", "production"],
-      title: "What 'deploying to Vercel' physically means",
-      stopId: "downloading-the-tools",
-      answer: "Saving a file (Cmd+S) only updates your laptop's hard drive. When you 'git push' to GitHub, GitHub notifies Vercel via a webhook. Vercel spins up a clean Linux container in the cloud, downloads your GitHub commit, runs your build step, and publishes the output to a public https:// URL on a global Content Delivery Network (CDN)."
+      keywords: ["vercel", "deploy", "save on vercel", "hosting", "live url", "production", "netlify", "render", "railway", "cloud run", "hugging face", "spaces", "aws", "ways to host", "do they all need to be apps"],
+      title: "Ways to host & share your work (No, not everything needs to be a full web app!)",
+      stopId: "system-architecture",
+      answer: "Different projects belong on different hosting categories—and not everything needs to be a full web app:\n1. Frontend & full-stack web apps (React, Next.js, HTML/JS): Vercel, Netlify, Cloudflare Pages, Firebase Hosting.\n2. AI demos, ML models, datasets & notebooks (no web app required!): Hugging Face Spaces (turns a 20-line Python Gradio/Streamlit script into a live demo), Hugging Face Hub (models & datasets), Google Colab / Jupyter (interactive notebooks), Replicate, Modal.\n3. Always-on backend servers & Docker containers (Python FastAPI/Flask, long jobs): Render, Railway, Fly.io, DigitalOcean, and the Big 3 cloud providers (Google Cloud Run, AWS, Microsoft Azure).\n4. Free static sites & code packages: GitHub Pages (static docs/blogs), PyPI ('pip install' Python packages), npm ('npm install' JS packages)."
     },
     {
       keywords: ["language", "languages", "python", "javascript", "typescript", "sql", "html", "css", "go", "rust", "which language"],
       title: "Coding languages: Which one does what (pros & cons)",
       stopId: "basic-terminology",
-      answer: "• HTML & CSS: Structure and visual styling inside the browser.\n• JavaScript / TypeScript: The only language browsers execute natively; also runs on servers via Node.js. TypeScript adds type safety to catch bugs early.\n• Python: The #1 language for AI/ML, data science, and clean backend APIs (FastAPI), though slower at raw CPU concurrency than Go.\n• SQL: Declarative language for querying relational databases (PostgreSQL, SQLite).\n• Bash / Shell: Terminal commands and automation glue.\n• Go / Rust: Compiled languages for high-speed cloud infrastructure."
+      answer: "• HTML & CSS: Structure and visual styling inside the browser.\n• JavaScript / TypeScript: The only language browsers execute natively; also runs on servers via Node.js. TypeScript adds type safety to catch bugs early.\n• Python: The #1 language for AI/ML, data science (Pandas, Colab), rapid AI demos (Gradio, Streamlit), and clean backend APIs (FastAPI, Flask).\n• SQL: Declarative language for querying relational databases (PostgreSQL, SQLite).\n• Bash / Shell: Terminal commands and automation glue.\n• Go / Rust / C++: Compiled languages for high-speed cloud infrastructure."
     },
     {
-      keywords: ["database", "postgres", "postgresql", "supabase", "sqlite", "mongodb", "sql vs nosql", "redis", "cache"],
-      title: "Databases & caching (PostgreSQL, Supabase, Redis)",
+      keywords: ["database", "postgres", "postgresql", "supabase", "neon", "sqlite", "mongodb", "firebase", "firestore", "pinecone", "vector", "sql vs nosql", "redis", "cache"],
+      title: "Database categories & cloud hosts (SQL, NoSQL, Vector, Cache)",
       stopId: "basic-terminology",
-      answer: "• PostgreSQL (often hosted on Supabase or Neon): The gold-standard relational SQL database. Best for 95% of apps because user data has strict relationships and needs ACID transactions.\n• SQLite: A full SQL database stored in a single file—great for local tools and prototypes.\n• Redis / Upstash: An ultra-fast in-memory key-value store used for caching frequent reads (<5ms), rate-limiting, and background job queues."
+      answer: "Always group databases by category first:\n• Relational / SQL databases (structured tables — best default for 90% of apps): PostgreSQL ('Postgres'), SQLite, MySQL. Popular cloud hosts: Supabase, Neon, Cloud SQL, AWS RDS.\n• Document / NoSQL databases (JSON documents & real-time sync): Firebase / Cloud Firestore, MongoDB, Convex, DynamoDB.\n• Vector databases (AI embeddings & RAG search): pgvector (inside Postgres/Supabase), Pinecone, Weaviate, Chroma.\n• In-memory caches (1ms speed & rate-limiting): Redis, Upstash."
     },
     {
       keywords: ["good architecture", "bad architecture", "fragile", "vibe-coded", "spaghetti", "mistake", "slip up"],
@@ -56,7 +56,7 @@
       keywords: ["git", "commit", "branch", "pull request", "pr", "merge", "diff"],
       title: "Git essentials: Commit, Branch, Diff, Pull Request (PR) & Merge",
       stopId: "git-and-shipping",
-      answer: "• git diff: Shows exact green (+) and red (-) line changes before you save.\n• git commit: Saves a permanent timestamped checkpoint on your laptop.\n• git branch: Creates a parallel timeline so you can test risky AI edits without touching 'main'.\n• Pull Request (PR): A review page on GitHub comparing your branch against 'main' with a live preview link.\n• git merge: Joins your verified branch back into 'main' and triggers production deployment."
+      answer: "• git diff: Shows exact green (+) and red (-) line changes before you save.\n• git commit: Saves a permanent timestamped checkpoint on your laptop.\n• git branch: Creates a parallel timeline so you can test risky AI edits without touching 'main'.\n• Pull Request (PR): A review page on your cloud Git host (GitHub/GitLab) comparing your branch against 'main' with a live preview link.\n• git merge: Joins your verified branch back into 'main' and triggers cloud deployment."
     },
     {
       keywords: ["grep", "what is grep", "grep -rn", "search files", "regular expression print", "ctrl+f", "cmd+f"],
@@ -80,7 +80,7 @@
       keywords: ["clone", "fork", "copy", "duplicate", "branch vs clone", "git clone"],
       title: "Clone vs. Branch vs. Fork vs. Copy-Pasting a folder",
       stopId: "git-and-shipping",
-      answer: "• git clone: Downloads a repository from GitHub onto your laptop for the first time with its full history and remote link intact.\n• git branch: Creates a parallel safe timeline inside the folder you already have.\n• Fork: Copies someone else's repo into your own GitHub account (used for open-source contributions).\n• Copy-pasting a folder: Breaks version tracking and leads to 'project-final-v3' chaos—use a branch instead!"
+      answer: "• git clone: Downloads a repository from a cloud Git host (GitHub, GitLab, Hugging Face) onto your laptop for the first time with its full history intact.\n• git branch: Creates a parallel safe timeline inside the folder you already have.\n• Fork: Copies someone else's cloud repository into your own account (used for open-source contributions).\n• Copy-pasting a folder: Breaks version tracking and leads to 'project-final-v3' chaos—use a branch instead!"
     },
     {
       keywords: ["undo", "revert", "reset", "ai broke", "restore", "checkout"],
@@ -92,7 +92,7 @@
       keywords: ["env", ".env", "environment variable", "api key", "secret", "gitignore"],
       title: "Environment variables (.env) & keeping secrets safe",
       stopId: "basic-terminology",
-      answer: "Never paste API keys directly into .js or .py code files. Store secrets in a local '.env' file on your laptop, add '.env' to your '.gitignore' file so Git never uploads it to GitHub, and paste those keys into Vercel's encrypted Environment Variables settings for production."
+      answer: "Never paste API keys directly into .js or .py code files. Store secrets in a local '.env' file on your laptop, add '.env' to your '.gitignore' file so Git never uploads it to public repos, and paste those keys into your cloud host's encrypted Environment Variables / Secrets settings (in Vercel, Render, Cloud Run, Hugging Face Spaces, or Colab Secrets)."
     },
     {
       keywords: ["api", "rest", "json", "http", "get", "post", "status code", "404", "500", "429", "cors"],
@@ -116,7 +116,7 @@
       keywords: ["open source", "npm install", "pip install", "package", "library", "template", "shadcn", "node_modules"],
       title: "How to download, use & build on top of open source",
       stopId: "system-architecture",
-      answer: "There are 2 ways to build on open source:\n1. Library track (Brick by brick): Run 'npm install <pkg>' (JS) or 'pip install <pkg>' (Python) to snap a specific tool (like Lucide icons, Zod validation, or Stripe) into your existing project.\n2. Full repo track (Whole house frame): Click 'Use this template' or 'Fork' on GitHub (or browse Vercel Templates), then run 'git clone <url>', 'npm install', and 'cp .env.example .env' to boot a complete working starter app on your laptop in 2 minutes."
+      answer: "There are 2 ways to build on open source:\n1. Library track (Brick by brick): Run 'npm install <pkg>' (JS) or 'pip install <pkg>' (Python) to snap a specific tool (like Lucide icons, Zod validation, or Stripe) into your existing project.\n2. Full repo track (Whole house frame): Click 'Use this template' or 'Fork' on GitHub, then run 'git clone <url>', 'npm install', and 'cp .env.example .env' to boot a complete working starter app on your laptop in 2 minutes."
     },
     {
       keywords: ["license", "mit", "apache", "gpl", "agpl", "bsd", "copyleft", "legal"],
@@ -152,27 +152,27 @@
 
   var STOP_STARTER_PROMPTS = {
     "default": [
+      "Ways to host & share (Vercel vs Hugging Face vs Render)?",
       "How much Python do I need in 2026?",
       "What is grep (and grep -rn)?",
-      "How do Laptop, GitHub & Vercel connect?",
       "How do I build on top of open source?"
     ],
     "downloading-the-tools": [
+      "What are the main cloud hosting categories?",
       "What is a plain text file vs Word doc?",
-      "Why use Homebrew instead of installers?",
-      "What does deploying to Vercel actually do?",
-      "What is localhost?"
+      "Why use package managers (Homebrew, npm, pip)?",
+      "Code editors vs notebooks (Colab / Jupyter)?"
     ],
     "basic-terminology": [
+      "Database categories (SQL vs NoSQL vs Vector)?",
       "Python vs TypeScript vs SQL?",
       "Good vs fragile vibe-coded architecture?",
-      "What is an API and JSON?",
       "Where do secret .env API keys go?"
     ],
     "git-and-shipping": [
       "What is 'Squash & Merge' vs Commit?",
+      "How does cloud auto-deploy work on merge?",
       "What does 'HEAD' mean in Git?",
-      "Branch vs clone vs fork?",
       "How do I undo an AI mistake in Git?"
     ],
     "cli-and-terminal": [
@@ -194,9 +194,9 @@
       "What is idempotency?"
     ],
     "system-architecture": [
+      "Ways to host (Web apps vs Hugging Face vs Servers)?",
       "How do I download & build on open source?",
       "MIT vs AGPL open-source licenses?",
-      "What is AI 'slopsquatting'?",
       "6 watch-outs when shipping to production?"
     ]
   };
