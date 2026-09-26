@@ -19,28 +19,28 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "home_repair_service",
       diagramType: "tools-flow",
-      teaser: "What a plain text file actually is, why we use Homebrew and IDEs, and how your laptop connects to GitHub and Vercel.",
-      explainer: "When you start from zero, the hardest part isn't complex algorithms—it's figuring out what all the windows and downloads on your laptop actually do. Code is just plain, unformatted text files sitting in a folder on your hard drive. Once you understand how your code editor (IDE), package manager (Homebrew), local Git folder, cloud GitHub repo, and Vercel hosting connect, the black box disappears.",
+      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to GitHub and Vercel.",
+      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and windows on your laptop actually do. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see what each tool does—your code editor (where you read and edit those text files), Homebrew (which installs coding engines on your laptop), Git (your local save history), GitHub (your cloud backup), and Vercel (which turns your folder into a live website)—the mystery disappears.",
       experiences: [
         {
           lead: "Plain text files vs. Word or Google Docs:",
-          body: "A .js, .py, or .html file is just a plain UTF-8 text file with zero hidden formatting. Opening code in Word or TextEdit injects curly quotes and invisible styles that break syntax—an IDE like VS Code or Cursor is simply a plain-text workshop with syntax coloring and a built-in terminal."
+          body: "A .js, .py, or .html file is just a plain text file with zero hidden formatting. Opening code in Word or Google Docs injects curly quotes and invisible styles that confuse the computer—a code editor like VS Code or Cursor is simply a plain-text workshop with color-coding and a built-in terminal."
         },
         {
-          lead: "Why engineers use Homebrew instead of random .dmg installers:",
-          body: "Double-clicking installers from web searches scatters tools across folders your terminal cannot find ('command not found'). A package manager like Homebrew (brew install node git) installs developer tools into one standard path and keeps versions clean."
+          lead: "Why engineers use Homebrew instead of random installer downloads:",
+          body: "Hunting around websites for random installers often scatters tools into folders your terminal cannot find ('command not found'). A tool installer like Homebrew ('brew install node git') puts developer tools in one standard place and keeps them updated."
         },
         {
           lead: "What 'saving to Vercel' physically means:",
-          body: "Pressing Cmd+S saves to your laptop's hard drive only. Pushing to GitHub uploads your code history to a cloud vault. Vercel watches that GitHub vault, spins up a fresh cloud server on every push, builds your files, and gives you a live public https:// link."
+          body: "Pressing Cmd+S only saves the file on your laptop's hard drive. 'Pushing' to GitHub uploads your folder to a cloud backup. Vercel watches your GitHub folder, automatically builds your latest code whenever you push, and publishes it to a live public https:// link."
         }
       ],
       activity: {
         title: "Fun activity: Trace a file from laptop to live URL",
         steps: [
-          "Click through each node in the living diagram below to trace how a plain text file travels from your laptop to a live Vercel server.",
-          "Open VS Code or Cursor, create a file named index.html, and inspect it in Finder/Explorer to see that it is just a regular file in a regular folder.",
-          "Open the integrated terminal (Ctrl+` or Cmd+`) and run git --version and node -v to confirm your local runtime tools are wired into your PATH."
+          "Click through each stage in the interactive diagram above to trace how a plain text file travels from your laptop to a live Vercel website.",
+          "Open VS Code or Cursor, create a file named index.html, and find it in Mac Finder or Windows Explorer to see that it is just a normal file in a normal folder.",
+          "Open your editor's built-in terminal (Ctrl+` or Cmd+`) and run git --version and node -v to check that Git and Node.js are installed on your laptop."
         ]
       },
       resources: [
@@ -83,7 +83,7 @@ window.PIPELINE_DATA = {
           type: "Explainer",
           badgeClass: "badge-info",
           title: "Plain text vs. rich text: Why code needs straight quotes",
-          description: "Understanding UTF-8 plain text, file extensions (.js, .py, .json, .md, .env), and hidden dotfiles.",
+          description: "Understanding plain text files, file extensions (.js, .py, .json, .md, .env), and hidden dotfiles.",
           url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files"
         }
       ]
@@ -96,28 +96,28 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-secondary",
       icon: "menu_book",
       diagramType: "app-infrastructure",
-      teaser: "Interactive diagram of an app, coding languages (pros & cons), real-world tools (Postgres, Redis, FastAPI), and good vs. fragile architecture.",
-      explainer: "In the AI era, your vocabulary is your control surface. UC Berkeley research ('Why Johnny Can't Prompt') proved that beginners describe UI symptoms in conversational English and hope for a lucky fix. When you know the anatomy of an app—which languages run in the browser vs. the server vs. the database, which real-world tools handle auth or caching, and what separates clean architecture from fragile spaghetti—you can direct AI with surgical precision.",
+      teaser: "An interactive map of the parts of an app (Front End, Back End, API, Database), why different coding languages exist, and what makes an app solid vs. fragile.",
+      explainer: "When you build with AI, knowing the names for the parts of an app completely changes how you ask for help. If a button isn't saving your work and you don't know the terminology, you can only describe what looks wrong on the screen ('the save button is broken!') and hope the AI guesses right. Once you know the basic map of an app—what lives on the user's screen (Front End), what runs behind the scenes (Back End), the messenger between them (API), and the permanent filing cabinet (Database)—you can point your AI straight to the exact piece you want to build or fix.",
       experiences: [
         {
-          lead: "Why apps use multiple coding languages at once:",
-          body: "Web browsers only execute HTML, CSS, and JavaScript. Backend servers often use Python (for AI/ML libraries), TypeScript/Node.js (to match the frontend), or Go (for high concurrency), while relational databases speak SQL."
+          lead: "Why one app uses several different coding languages:",
+          body: "Each part of an app speaks its own native language: web browsers only understand HTML, CSS, and JavaScript to draw the screen; Back End servers often use Python (great for AI and data) or Node.js (JavaScript for servers); and Databases use SQL to organize tables of information."
         },
         {
-          lead: "Symptom prompting vs. mechanism prompting:",
-          body: "Instead of telling AI 'it double-charged when I clicked twice', naming the exact layer and mechanism ('add an idempotency key on the POST /api/checkout endpoint and disable the submit button while loading') solves the root cause on the first try."
+          lead: "Describing what looks wrong vs. pointing to the right part:",
+          body: "Instead of telling AI 'it forgot what I typed when I refreshed the page,' you can say: 'Right now this is only saved on the Front End screen—let's send it through the API and save it in the Database so it stays there when I refresh.'"
         },
         {
-          lead: "Good architecture vs. fragile vibe-coded architecture:",
-          body: "A working demo that puts API keys in the browser or lets the UI mutate database tables directly without auth will collapse in production. Separating client, API server, and data boundaries keeps your system safe."
+          lead: "Why a working demo can still be fragile:",
+          body: "An AI can quickly build a prototype that works on your laptop by putting everything—including secret AI billing passwords—directly inside the Front End browser code. Learning the boundary between the public Front End and the private Back End keeps your app and your wallet safe when you share it online."
         }
       ],
       activity: {
         title: "Fun activity: Explore the interactive app & language map",
         steps: [
-          "Click through all 6 components in the Interactive App & Infrastructure Diagram below to inspect the real-world tools (e.g., PostgreSQL, Supabase, Redis, FastAPI) and languages used at each layer.",
-          "Toggle the diagram between 'Good architecture' and 'Fragile vibe-coded architecture' to see the 4 classic beginner traps.",
-          "Open Chrome DevTools (F12 -> Network tab) on any website, click a button, and spot the HTTP method (GET/POST), status code (200/404/500), and JSON payload."
+          "Click through each stage and language pill in the Interactive App Diagram above to see what lives on the Front End, API Bridge, Back End, and Database.",
+          "Toggle the diagram between 'Healthy app setup' and 'Fragile setup (what breaks)' to spot the 4 classic beginner traps.",
+          "Right-click any website in Chrome, click 'Inspect -> Network', click a button on the page, and watch the browser send a live message to the server."
         ]
       },
       resources: [
@@ -139,7 +139,7 @@ window.PIPELINE_DATA = {
           type: "Explainer",
           badgeClass: "badge-info",
           title: "Why Johnny Can't Prompt (UC Berkeley, ACM CHI)",
-          description: "Empirical study showing why domain vocabulary separates systematic engineering from trial-and-error prompting.",
+          description: "Research paper showing why learning basic software vocabulary helps you prompt AI much more effectively.",
           url: "https://dl.acm.org/doi/10.1145/3544548.3581388"
         },
         {
@@ -159,28 +159,28 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "commit",
       diagramType: "git-living",
-      teaser: "Living diagram of commits, branches, Pull Requests (PRs), merges, and how cloning, branching, and forking keep your code safe.",
-      explainer: "Version control comes right after terminology because you need a seatbelt before you let an AI agent edit twenty files at once. GitClear's study of 211 million lines of code found that two-week code churn more than doubled from 3.3% to 7.1% in the AI era. Understanding commits (save checkpoints), branches (parallel safe timelines), diffs (line-by-line inspection), and Pull Requests (PRs) means an AI hallucination can never destroy a working prototype.",
+      teaser: "How to save checkpoints (commits), test risky AI changes on a separate scratchpad (branches), check what changed (diffs), and publish to a live link.",
+      explainer: "Everyone who builds with AI hits this moment early on: your app is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we learn Git right away. Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your app works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to GitHub and Vercel.",
       experiences: [
         {
           lead: "Saving (Cmd+S) vs. Committing (git commit) vs. Pushing (git push):",
-          body: "Cmd+S updates the scratchpad on your laptop. git commit takes a permanent, labeled snapshot you can rewind to anytime. git push uploads those snapshots to GitHub and triggers Vercel."
+          body: "Cmd+S updates the file on your laptop right now. git commit takes a permanent, labeled snapshot you can rewind to anytime. git push uploads those snapshots to GitHub and triggers Vercel to update your live website."
         },
         {
           lead: "Branching vs. Cloning vs. Copying a folder:",
-          body: "Never duplicate folders like 'project-v2-final-FINAL'. A Git branch lets you try a risky AI refactor in an isolated timeline and either merge it if it works or delete it in one second if it breaks."
+          body: "Never duplicate folders on your desktop like 'project-v2-final-FINAL'. A Git branch lets you try a big AI experiment in a safe parallel timeline—and either merge it back in if it works, or throw it away in one second if it breaks."
         },
         {
-          lead: "Always read git diff before opening a Pull Request (PR):",
-          body: "Before sealing a commit or opening a Pull Request (PR), reading the red/green diff lines catches stray console logs, accidentally deleted functions, or leaked secrets."
+          lead: "Always check git diff before sealing a checkpoint:",
+          body: "Before you commit or open a Pull Request (PR), running git diff shows you every line removed (in red) and added (in green) so you can catch accidental deletions or stray passwords."
         }
       ],
       activity: {
         title: "Fun activity: Drive the living Git timeline",
         steps: [
-          "Click each node on the Living Git & Deployment Diagram below (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Vercel Live) to see how code moves safely to production.",
-          "Make a clean git commit in your local repo, then ask an AI agent to change a component and run git diff to see the exact lines added and removed.",
-          "Create a branch with git checkout -b test-experiment, make an edit, and switch back to main with git checkout main to watch your files instantly revert."
+          "Click each step on the Living Git & Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Vercel Live) to see how code moves safely to a live link.",
+          "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
+          "Create a branch with git checkout -b test-experiment, make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
         ]
       },
       resources: [
@@ -208,8 +208,8 @@ window.PIPELINE_DATA = {
         {
           type: "Explainer",
           badgeClass: "badge-secondary",
-          title: "GitClear 2025 AI code quality & churn report",
-          description: "Empirical study of 211M lines of code showing why disciplined version control and refactoring matter in the AI era.",
+          title: "GitClear AI code quality & churn report",
+          description: "Industry study showing why frequent commits, branches, and code reviews matter when coding with AI.",
           url: "https://www.gitclear.com/"
         }
       ]
@@ -223,32 +223,32 @@ window.PIPELINE_DATA = {
       icon: "terminal",
       diagramType: "terminal-interactive",
       hasTerminalVocab: true,
-      teaser: "Tracking what AI is doing in real time, what 'grep' and paths actually mean, and a searchable Unix/macOS/Linux command reference.",
-      explainer: "Learning terminal essentials matters for two big reasons: first, you can track what AI is actually doing as it's doing it (watching which files it reads, searches with grep, edits, or runs instead of treating it as a black box); second, you'll find it much easier to navigate any system—from your own laptop to cloud servers and live logs.",
+      teaser: "What the terminal actually is, how to watch what your AI agent is doing in real time, what 'grep' and folder paths mean, and a live keyboard sandbox.",
+      explainer: "The terminal (or Command Line Interface) is simply a text-based way to talk directly to your computer—typing short one-line instructions instead of clicking through folders with your mouse. Learning a few terminal basics helps in two big ways: first, you can track what your AI coding tool is actually doing as it works (seeing which folders it opens, how it searches your files with 'grep', and which commands it runs); second, you can move around your computer, start local test servers, and read error messages in seconds.",
       experiences: [
         {
           lead: "What 'grep' is (and why AI agents run it constantly):",
-          body: "'grep' (short for Global Regular Expression Print) is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"keyword\" .' searches every file and subfolder (-r) in milliseconds and prints the exact filename and line number (-n) where that text appears."
+          body: "'grep' is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"Button\" .' searches inside every file and subfolder (-r) in a split second and prints the exact filename and line number (-n) where that word appears."
         },
         {
-          lead: "Tracking AI in real time:",
-          body: "When an AI agent runs shell commands, knowing pwd (where am I?), ls -la (list all files including hidden .env), grep (search text inside files), and git diff lets you follow every step as it happens."
+          lead: "Following what your AI is doing in real time:",
+          body: "When an AI agent runs terminal commands, knowing pwd (which folder am I in?), ls -la (list all files, including hidden .env files), grep (search text inside files), and git diff lets you follow every step instead of treating AI like a black box."
         },
         {
-          lead: "Universal navigation across systems:",
-          body: "Graphical interfaces change between apps, but standard Unix/POSIX terminal commands work the exact same way on macOS, Linux, GitHub Codespaces, and cloud servers."
+          lead: "One set of commands that works everywhere:",
+          body: "Buttons and menus move around in different apps, but basic terminal commands (cd, ls, pwd, mkdir, grep) work the exact same way on a Mac, Linux, VS Code, Cursor, and cloud servers."
         },
         {
-          lead: "Escaping the 20-prompt guessing loop:",
-          body: "METR's 2025 trial found developers took 19% longer when stuck in blind AI prompt loops—checking logs and file state directly in the terminal takes 30 seconds."
+          lead: "Breaking out of the 'ask AI 20 times' loop:",
+          body: "When your screen goes blank or a server won't start, pasting 'it still doesn't work' into chat ten times in a row is frustrating. Glancing at the red error line in the terminal (or running lsof -i :3000 to see if a port is busy) usually reveals the exact problem in 10 seconds."
         }
       ],
       activity: {
         title: "Fun activity: Terminal scavenger hunt",
         steps: [
-          "Search the Terminal vocab reference below for 'pwd', 'ls -la', 'grep', and 'Ctrl + C' and test each one in your editor's terminal.",
-          "Use mkdir and touch to create a folder and a plain text file without touching Finder or Windows Explorer.",
-          "Run python3 -m http.server 8000 in a folder and watch the terminal log every HTTP request live as you load localhost:8000."
+          "Try all 5 Guided Missions in the Live Terminal & Keyboard Sandbox above—pressing Tab, Up/Down Arrows, Enter, Ctrl+C, and Ctrl+L right on your keyboard.",
+          "Click through each colored piece of the Path Anatomy Bar above to see the difference between your Workspace, a Project Repo, a Parent Directory (..), a Subfolder, and a File.",
+          "Search the Terminal vocab reference below for 'pwd', 'ls -la', 'grep', and 'cd ..' and try them in your own code editor's terminal."
         ]
       },
       resources: [
@@ -269,8 +269,8 @@ window.PIPELINE_DATA = {
         {
           type: "Explainer",
           badgeClass: "badge-info",
-          title: "METR 2025 AI developer productivity study",
-          description: "Empirical trial showing why fast root-cause verification in the terminal beats blind chat iteration.",
+          title: "METR AI developer productivity study",
+          description: "Research showing why checking terminal output directly is much faster than blind trial-and-error prompting.",
           url: "https://metr.org/"
         },
         {
@@ -289,28 +289,28 @@ window.PIPELINE_DATA = {
       tone: "tone-secondary",
       badgeClass: "badge-secondary",
       icon: "troubleshoot",
-      teaser: "Crossing the gap between code that works on a first go and resilient business infrastructure.",
-      explainer: "Stanford's ACM CCS study (Perry et al.) found that developers using AI assistants wrote less secure code while feeling significantly more confident that it was secure. You don't need to write every line from scratch, but you do need to read the code AI generates to spot silent failure states, missing error handling, and security gaps.",
+      teaser: "How to skim AI-written code—even before you could write it yourself—to spot silent bugs, missing error checks, and security traps.",
+      explainer: "You don't need to know how to write every line of code from memory—that's what AI is for. But there is a big difference between writing code and reading it. Often, an AI prototype works on your first try when you click the right button with clean test data, but breaks the moment a real user types something unexpected or has slow Wi-Fi. Learning how to skim the code AI generates lets you spot where it forgot to handle errors, where a secret password might be exposed, and how to keep your app stable as it grows.",
       experiences: [
         {
-          lead: "The first-go illusion:",
-          body: "Why a prototype that works for one user on happy-path input often breaks when two users click at once or an external API times out."
+          lead: "Why 'it worked on the first try' can be a trap:",
+          body: "AI usually writes code for the 'happy path'—assuming the internet is fast, every form box is filled in properly, and only one person is clicking at a time. Skimming the code helps you ask: what happens if the server is slow, a box is left blank, or an API call fails?"
         },
         {
-          lead: "Auditing inputs and error paths:",
-          body: "Reading code top-to-bottom to ask: what happens if this value is null, slow, or untrusted?"
+          lead: "Keeping files small and organized:",
+          body: "If you let AI keep piling new features into one giant 2,000-line file, it eventually starts breaking old features every time it adds a new one. Asking AI to split your app into small, focused files (one for the screen, one for the server, one for data) keeps everything easy to maintain."
         },
         {
-          lead: "From quick fix to durable infrastructure:",
-          body: "Adding validation, fallbacks, and diagnostic logging before handing a tool to real users."
+          lead: "Showing helpful errors instead of failing silently:",
+          body: "The most confusing bug is when a user clicks a button and nothing happens on screen. Always ask AI to add visible loading states and clear error messages so you and your users immediately know if something went wrong."
         }
       ],
       activity: {
-        title: "Fun activity: Red-team your own prototype",
+        title: "Fun activity: Stress-test your own prototype",
         steps: [
-          "Open one of your AI-generated scripts and trace what happens if the network disconnects mid-request.",
-          "Check every place user input enters the app and verify it uses safe text rendering (textContent) rather than raw HTML injection (innerHTML).",
-          "Add a startup diagnostic check so errors surface visibly instead of failing silently."
+          "Open one of your AI-built apps, turn off Wi-Fi (or slow it down in Chrome Inspect -> Network), click a button, and see if the app shows a helpful message or freezes silently.",
+          "Check your project files in your editor: if any single file is over 500–800 lines long, ask your AI assistant to split it into smaller, clearly named files.",
+          "Search your code (using grep -rn \"sk-\" . or your editor search) to make sure no secret API keys are sitting inside your normal code files."
         ]
       },
       resources: [
@@ -318,21 +318,21 @@ window.PIPELINE_DATA = {
           type: "Explainer",
           badgeClass: "badge-info",
           title: "Do Users Write More Insecure Code with AI Assistants? (Stanford)",
-          description: "Perry, Srivastava, Kumar & Boneh's study on the confidence-competence gap in AI coding.",
+          description: "Stanford study on why AI-generated code can look convincing at first glance while hiding security gaps.",
           url: "https://dl.acm.org/doi/10.1145/3576915.3623157"
         },
         {
           type: "Explainer",
           badgeClass: "badge-secondary",
           title: "Google DORA State of DevOps report",
-          description: "Why AI speed requires small batch sizes and automated verification to avoid the 7.2% stability drop.",
+          description: "Why shipping small, well-tested changes keeps apps much more reliable than giant all-at-once rewrites.",
           url: "https://dora.dev/"
         },
         {
           type: "Explainer",
           badgeClass: "badge-success",
           title: "OWASP Top 10 Web Application Security Risks",
-          description: "The essential checklist for spotting XSS, broken authentication, and injection bugs when reviewing AI code.",
+          description: "The essential checklist for spotting common security mistakes when reviewing web application code.",
           url: "https://owasp.org/www-project-top-ten/"
         }
       ]
@@ -344,28 +344,28 @@ window.PIPELINE_DATA = {
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "sync_alt",
-      teaser: "Webhooks vs. polling, idempotency, queues, caching, and data flow across services.",
-      explainer: "Most bugs in growing apps aren't syntax errors—they are state and timing bugs between components. Understanding system dynamics means seeing how data moves over time: what is synchronous vs. asynchronous, where state is stored, and how services recover when a downstream step stalls.",
+      teaser: "How information moves between the pieces of your app over time—handling slow tasks, double-clicks, page refreshes, and traffic spikes.",
+      explainer: "In Step 2, we looked at the map of an app's pieces (Front End, Back End, Database). This stop is about timing and traffic—how those pieces talk to each other in real life. Most bugs in a growing app aren't typos in the code; they happen when two things happen at once or a step takes too long: What happens if an AI task takes 30 seconds and the browser gets tired of waiting? What if someone impatiently clicks 'Pay' three times in a row? What if refreshing the page wipes out their work? Understanding how data moves over time helps you build apps that feel smooth and never lose user work.",
       experiences: [
         {
-          lead: "Webhooks vs. polling:",
-          body: "Knowing when to ask 'are you done yet?' on a timer versus letting the server notify you when an event finishes."
+          lead: "Asking 'Are you done yet?' (Polling) vs. 'Text me when it's ready' (Webhooks):",
+          body: "When your app waits for a slow job (like generating an AI report or confirming a Stripe payment), your screen can either keep asking the server 'Are you done yet?' every few seconds (called Polling), or the outside service can send your server a direct notification the moment it finishes (called a Webhook)."
         },
         {
-          lead: "Idempotency in real workflows:",
-          body: "Designing actions so that retrying a failed request never creates duplicate records or double notifications."
+          lead: "Making sure a double-click doesn't double-charge (Idempotency):",
+          body: "On slow Wi-Fi, people often tap 'Submit' or 'Pay' two or three times. Engineers use the word 'Idempotency' for a simple protection: disabling the button while it loads and tagging the action with a unique receipt ID so the server only runs it once."
         },
         {
-          lead: "State single source of truth:",
-          body: "Keeping UI state synchronized with backend storage so refreshing the page doesn't lose user work."
+          lead: "Why refreshing the page sometimes wipes out your work (State):",
+          body: "If you type into a page or open a tab and it disappears when you hit Refresh, that information was only sitting in temporary browser memory ('UI state'). Anything that needs to survive a page refresh must be saved in the Database, local storage, or the page URL."
         }
       ],
       activity: {
-        title: "Fun activity: Map a 3-box system diagram",
+        title: "Fun activity: Trace timing & double-clicks in your app",
         steps: [
-          "Pick a tool you built and draw three boxes: Client UI, API/Server, and Storage/External API.",
-          "Label every arrow between them with what triggers the call and what happens if that arrow fails.",
-          "Identify one synchronous bottleneck that could be made resilient with a queue or retry key."
+          "Pick an app you're building and draw three boxes on paper: Screen (Front End), Server (Back End), and Database / AI API.",
+          "Trace what happens if a user double-clicks the main submit button rapidly—does the button disable itself while loading, or does it send duplicate requests?",
+          "Refresh the browser in the middle of using your app and check what stays on screen (saved in the Database or URL) vs. what disappears (temporary browser state)."
         ]
       },
       resources: [
@@ -387,7 +387,7 @@ window.PIPELINE_DATA = {
           type: "Explainer",
           badgeClass: "badge-success",
           title: "Stripe Engineering: Designing robust APIs with idempotency",
-          description: "How production systems handle network retries safely without duplicate side effects.",
+          description: "How production systems handle network retries and double-clicks safely without duplicate side effects.",
           url: "https://stripe.com/blog/idempotency"
         }
       ]
@@ -400,32 +400,32 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "account_tree",
       diagramType: "opensource-shipping",
-      teaser: "Why 'sometimes the box is a good place to start'—how to download and build on open source, where to find the best resources to ship, and critical watch-outs.",
-      explainer: "Coming from the problem side gives you a superpower: fresh eyes on product instinct (avoiding the 80% of enterprise features Pendo found go unused) and GTM change management (avoiding the 70% transformation failure rate). But when it comes to building and shipping the system itself, 'sometimes the box is a good place to start.' Instead of asking AI to invent everything from scratch, deployed engineers compose battle-tested open-source building blocks, starter templates, and managed shipping infrastructure—while guarding against license traps, leaked .env keys, AI 'slopsquatting,' and runaway cloud bills.",
+      teaser: "How to download and build on top of free open-source code, where to find the best starter templates and tools to ship, and key watch-outs before going live.",
+      explainer: "When you build a real product, you don't get extra points for inventing login screens, payment checkouts, or databases from scratch. Experienced engineers rarely build those from zero—instead, they start inside the box by snapping together free, community-tested open-source building blocks and starter templates, saving their energy for the 20% that makes their idea unique. This final stop shows you how to download and build on top of open-source code, where to find the best tools to ship, and the key watch-outs—like software licenses, fake AI-hallucinated packages, leaked '.env' keys, and surprise cloud bills—to check before you share a public link.",
       experiences: [
         {
-          lead: "Two ways to build on open source (Libraries vs. Full Starter Repos):",
-          body: "You can either snap single open-source building blocks into your project ('npm install' / 'pip install' for icons, validation, or Stripe) or Fork/Clone a complete open-source starter template ('git clone' + 'cp .env.example .env') so authentication, database tables, and UI components are already wired up."
+          lead: "Two ways to build on open source (Single Libraries vs. Full Starter Templates):",
+          body: "You can either install a single open-source building block into your existing project ('npm install' or 'pip install' for icons, charts, or Stripe) OR copy a complete working starter app on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
         },
         {
-          lead: "Where to find the best resources to ship fast:",
-          body: "Start from official Vercel Templates, shadcn/ui components, and GitHub 'Awesome' directories; pair them with Supabase or Neon (PostgreSQL), Auth.js or Clerk (login), Google AI Studio / Hugging Face (models), Stripe Checkout (payments), and Upstash Ratelimit."
+          lead: "Where to find the best free building blocks to ship fast:",
+          body: "Start from official Vercel Templates, shadcn/ui components, and GitHub 'Awesome' lists; pair them with Supabase or Neon (free-tier databases), Clerk or Auth.js (user login), Google AI Studio or Hugging Face (AI models), and Stripe Checkout (payments)."
         },
         {
-          lead: "Critical watch-outs (Licenses, Slopsquatting, .env leaks & Billing caps):",
-          body: "Stick to permissive licenses (MIT, Apache 2.0, BSD) and watch out for viral copyleft licenses (AGPL/GPL); verify AI-suggested package names actually exist on npm/PyPI before installing; never commit '.env' keys to public GitHub; and always set hard monthly spend caps + API rate limits before sharing a live link."
+          lead: "Four watch-outs before you install or go live:",
+          body: "1) Check the LICENSE file (MIT and Apache 2.0 are safe for business; AGPL/GPL require sharing your source code). 2) Make sure any package AI suggests is real on npm/GitHub before installing. 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
         },
         {
-          lead: "Simplicity over addition bias:",
-          body: "Using UVA's Nature research on addition bias to ask: do we need a custom microservice, or can we compose a clean UI over existing trusted open-source primitives?"
+          lead: "Keeping your architecture simple:",
+          body: "When an AI suggests adding five new servers for a simple app, push back and ask: 'What is the simplest way to build this using the tools we already have?'"
         }
       ],
       activity: {
-        title: "Fun activity: Vet, clone & ship an open-source blueprint safely",
+        title: "Fun activity: Vet, clone & ship an open-source starter safely",
         steps: [
-          "Pick an open-source starter on Vercel Templates or GitHub and check its 4 health signals: LICENSE file (MIT/Apache 2.0), last commit date, open issues, and README.",
-          "Clone it locally ('git clone'), run 'npm install', copy '.env.example' to '.env', and verify '.env' is listed inside '.gitignore' via 'git status'.",
-          "Before deploying a public URL, add a hard monthly spend cap in your cloud/AI billing console and ask your AI agent to proposing 3 standard architectural patterns before adding custom tables."
+          "Click through the 3 interactive diagrams above: (1) Open-Source Workflow, (2) Shipping Resource Stack, and (3) Critical Watch-Outs Shield.",
+          "Pick a starter repo on Vercel Templates or GitHub and check its 4 health signals: LICENSE file (MIT/Apache 2.0), last commit date, download count, and README.",
+          "Before sharing any live app link publicly, set a hard monthly spend limit in your AI/cloud billing settings so a traffic spike can never cause a surprise bill."
         ]
       },
       resources: [
@@ -469,19 +469,19 @@ window.PIPELINE_DATA = {
   ],
   archive: {
     essayTitle: "What vibe-coding engineers need to learn",
-    essaySubtitle: "Takeaways from a seasoned software engineer at Google DeepMind and a new AI-deployed engineer on the easiest and hardest things to learn.",
+    essaySubtitle: "Takeaways from an experienced software engineer and a new AI-deployed builder on what comes naturally—and what takes deliberate practice.",
     sections: [
       {
-        heading: "The prototype-to-production gap",
-        body: "A lot of us have been building applications, solutions, and flows we never could have six months ago. In Y Combinator's Winter 2025 batch, 25% of startups shipped codebases that were 95% AI-generated. AI has changed who can code—but Google's DORA report across 39,000+ professionals found that every 25% bump in AI adoption correlated with a 7.2% drop in delivery stability when architectural guardrails lag behind."
+        heading: "The gap between a cool prototype and a real live app",
+        body: "Today, anyone can build working prototypes and flows they never could have built six months ago. AI makes getting to the first 80% faster than ever—but turning a prototype that works once on your laptop into a reliable app that real people can trust requires learning a few core engineering habits."
       },
       {
-        heading: "Easiest: Product instinct, GTM & fresh eyes",
-        body: "Coming directly from the problem eliminates translation loss (solving the Pendo benchmark where 80% of cloud software features go unused and CB Insights' 42% 'no market need' failure rate). Building alongside end users makes GTM and change management natural (avoiding the ~70% digital transformation failure rate), while fresh eyes help bypass addition bias (Nature, 2021)."
+        heading: "What comes naturally: Knowing the real problem & keeping it simple",
+        body: "When you come directly from the problem you're trying to solve, you have a huge head start: you already know what users actually need (instead of building extra features nobody clicks), you build alongside the people who will use it, and you bring fresh eyes to ask 'what is the simplest way this could work?'"
       },
       {
-        heading: "Hardest: Architecture, stability, vocabulary & the terminal",
-        body: "Sometimes the box is a good place to start. GitClear's analysis of 211M lines of code showed refactored lines fell from 24.1% to 9.5% while 2-week code churn doubled from 3.3% to 7.1%. Bridging the gap means building architectural blueprints, reading code to close the Stanford confidence-competence gap, treating vocabulary as your prompt control surface, and using the terminal to avoid the 19% AI debugging slowdown (METR, 2025)."
+        heading: "What takes practice: App vocabulary, Git checkpoints, the terminal & reading code",
+        body: "Sometimes starting inside the box is a great place to begin. Bridging the gap from 'vibes' to a deployed app comes down to five practical skills: (1) knowing the names of the parts of an app so you can point AI to the right place, (2) saving Git checkpoints and branches before big AI edits, (3) using the terminal to see what AI is doing in real time, (4) skimming the code AI writes to spot missing error checks or exposed keys, and (5) building on top of trusted open-source building blocks."
       }
     ],
     library: [
@@ -489,49 +489,49 @@ window.PIPELINE_DATA = {
         title: "Harvard CS50x: Introduction to Computer Science",
         category: "Course",
         badgeClass: "badge-info",
-        takeaway: "The gold-standard beginner course on how text files, compilers, memory, Python, SQL, and web apps actually work."
+        takeaway: "The best zero-assumed-knowledge course on how text files, code editors, Python, SQL, and web apps actually work."
       },
       {
-        title: "Hello Interview: System Design w/ Meta Staff Engineer",
+        title: "Hello Interview: System Design & App Architecture",
         category: "Video",
         badgeClass: "badge-secondary",
-        takeaway: "Visual framework for mapping frontend clients, APIs, databases, caches, and architectural trade-offs."
+        takeaway: "Clear visual guide for how screens (Front End), messengers (APIs), servers (Back End), and databases fit together."
       },
       {
         title: "MIT Missing Semester of Your CS Education",
         category: "Course",
         badgeClass: "badge-success",
-        takeaway: "The fastest path to terminal fluency, shell scripting, Git internals, and command-line debugging."
+        takeaway: "The clearest hands-on guide to using the terminal, navigating folders, and understanding how Git saves checkpoints."
       },
       {
         title: "Designing Data-Intensive Applications (Martin Kleppmann)",
         category: "Book",
         badgeClass: "badge-info",
-        takeaway: "Mental blueprints for how databases, queues, caches, and distributed state fit together."
+        takeaway: "Deep-dive reference for how databases, background queues, caches, and reliable systems work under the hood."
       },
       {
         title: "Learn Git Branching (Interactive Sandbox)",
         category: "Tool",
         badgeClass: "badge-success",
-        takeaway: "Visual, step-by-step playground for mastering commits, branches, merges, and resetting mistakes."
+        takeaway: "Visual, step-by-step browser game for practicing commits, branches, merges, and undoing mistakes."
       },
       {
-        title: "Google DORA State of AI-Assisted Software Development",
-        category: "Research",
-        badgeClass: "badge-secondary",
-        takeaway: "Empirical data on why fast AI code generation requires small batch sizes and verification."
+        title: "Choose an Open Source License (GitHub Guide)",
+        category: "Guide",
+        badgeClass: "badge-warning",
+        takeaway: "Plain-English cheat sheet on which open-source licenses (MIT, Apache 2.0) are safe to build on and which have restrictions."
       },
       {
         title: "Why Johnny Can't Prompt (UC Berkeley, ACM CHI)",
         category: "Paper",
         badgeClass: "badge-info",
-        takeaway: "Why learning precise systems vocabulary unlocks better model outputs than conversational trial and error."
+        takeaway: "Study showing why knowing the names for the parts of an app helps you direct AI much faster than guessing."
       },
       {
         title: "Do Users Write More Insecure Code with AI Assistants? (Stanford)",
         category: "Paper",
         badgeClass: "badge-secondary",
-        takeaway: "Why working on the first go can mask security and stability flaws unless you read the underlying code."
+        takeaway: "Study showing why skimming AI-written code for exposed passwords and missing error checks matters before going live."
       }
     ]
   }
