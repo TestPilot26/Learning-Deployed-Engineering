@@ -1,0 +1,591 @@
+/* Deployed Eng Pipeline — Interactive Living Diagrams Styles (Stops 1, 2, 3) */
+/* Strictly uses GM3 tokens (--color-*), 8px spacing grid, and zero borders/shadows on cards. */
+
+.diagram-shell-card {
+  gap: 24px;
+}
+
+.diagram-header-row {
+  margin-bottom: 0;
+}
+
+/* ============================================================================
+   SHARED CLICKABLE PILL BUTTONS & MINI ILLUSTRATIONS
+   ============================================================================ */
+.diagram-pill-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.diagram-label-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-family: var(--font-family-display);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.diagram-label-pill:hover {
+  background-color: var(--color-surface-container-high);
+  transform: translateY(-2px);
+}
+
+.diagram-label-pill.active {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.diagram-pill-icon {
+  font-size: 18px;
+  color: var(--color-primary);
+}
+
+.diagram-label-pill.active .diagram-pill-icon {
+  color: var(--color-on-primary-container);
+}
+
+.diagram-pill-tag {
+  font-family: var(--font-family-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container);
+}
+
+.diagram-label-pill.active .diagram-pill-tag {
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-primary);
+}
+
+/* ============================================================================
+   STOP 1: ILLUSTRATED COMPUTER -> CLOUD -> LIVE INTERNET SCENE
+   ============================================================================ */
+.illustrated-scene-layout {
+  display: grid;
+  grid-template-columns: 1.3fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.computer-illustration-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.computer-screen-frame {
+  width: 100%;
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.computer-keyboard-base {
+  width: 92%;
+  height: 16px;
+  background-color: var(--color-surface-container-highest);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.computer-trackpad-notch {
+  width: 64px;
+  height: 6px;
+  background-color: var(--color-surface-container-low);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.scene-hub-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.scene-hub-hero-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.computer-orbit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.cloud-web-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.cloud-illustration-frame,
+.internet-illustration-frame {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flow-zone-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scene-bridge-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.vertical-bridge-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.flow-connector-svg {
+  width: 72px;
+  height: 28px;
+  overflow: visible;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+@keyframes dashFlowReverse {
+  to {
+    stroke-dashoffset: 20;
+  }
+}
+
+.flow-animated-line {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+  stroke-dasharray: 6 4;
+  animation: dashFlow 0.9s linear infinite;
+}
+
+.flow-animated-line-reverse {
+  stroke: var(--color-tertiary);
+  stroke-width: 3;
+  stroke-dasharray: 6 4;
+  animation: dashFlowReverse 0.9s linear infinite;
+}
+
+.flow-arrow-head {
+  fill: var(--color-primary);
+}
+
+.flow-arrow-head-tertiary {
+  fill: var(--color-tertiary);
+}
+
+.scene-node-pill {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.scene-node-pill:hover {
+  background-color: var(--color-surface-container-high);
+  transform: translateY(-2px);
+}
+
+.scene-node-pill.active {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.scene-node-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.scene-node-pill:hover .scene-node-icon-circle {
+  transform: scale(1.08);
+}
+
+.scene-node-icon {
+  font-size: 24px;
+}
+
+.scene-node-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.diagram-node-title {
+  font-family: var(--font-family-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+/* ============================================================================
+   STOP 2: ILLUSTRATED APP HALVES + BIDIRECTIONAL FLOWING BRIDGES DIAGRAM
+   ============================================================================ */
+.app-anatomy-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.app-halves-row {
+  display: grid;
+  grid-template-columns: 1fr 240px 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.app-half-card {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.app-half-frontend {
+  border-radius: var(--radius-lg) var(--radius-sm) var(--radius-sm) var(--radius-lg);
+}
+
+.app-half-backend {
+  border-radius: var(--radius-sm) var(--radius-lg) var(--radius-lg) var(--radius-sm);
+}
+
+/* Cute Miniature Visual Illustration Header inside each Half */
+.app-mini-illustration {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mini-window-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mini-window-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mini-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-highest);
+}
+
+.mini-dot-primary {
+  background-color: var(--color-primary);
+}
+
+.mini-dot-tertiary {
+  background-color: var(--color-tertiary);
+}
+
+.mini-illustration-stage {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.mini-mockup-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.mini-bar-wide {
+  height: 8px;
+  width: 85%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-container-high);
+}
+
+.mini-bar-short {
+  height: 8px;
+  width: 55%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-container);
+}
+
+.mini-pill-row {
+  display: flex;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.mini-ui-chip {
+  height: 12px;
+  width: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-tertiary-container);
+}
+
+/* Center Bidirectional Messenger Bridge between Front End & Back End */
+.app-center-bridge {
+  background-color: var(--color-surface-container-low);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.bidirectional-svg {
+  width: 100%;
+  max-width: 180px;
+  height: 44px;
+  overflow: visible;
+}
+
+.vertical-bidirectional-svg {
+  width: 48px;
+  height: 44px;
+  overflow: visible;
+}
+
+/* Bottom Row: Database & Outside Superpowers connected below the App */
+.app-bottom-connectors-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.app-vertical-bridge-card {
+  background-color: var(--color-surface-container-low);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.app-bottom-vaults-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Inspector Detail Card */
+.diagram-inspector-card {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.diagram-inspector-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.arch-mode-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.arch-mode-banner.good-mode {
+  background-color: var(--badge-success-bg);
+  color: var(--badge-success-text);
+}
+
+.arch-mode-banner.bad-mode {
+  background-color: var(--badge-error-bg);
+  color: var(--badge-error-text);
+}
+
+/* ============================================================================
+   STOP 3: LIVING GIT TIMELINE & OFFICIAL OCTICON SVGS
+   ============================================================================ */
+.diagram-node-btn {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.diagram-node-btn:hover {
+  background-color: var(--color-surface-container-high);
+  transform: translateY(-2px);
+}
+
+.diagram-node-btn.active {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.git-graph-stage {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.git-graph-svg {
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+  display: block;
+}
+
+.git-branch-line-main {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.git-branch-line-feature {
+  fill: none;
+  stroke: var(--color-tertiary);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.git-branch-line-animated {
+  fill: none;
+  stroke: var(--color-on-tertiary-container);
+  stroke-width: 2;
+  stroke-dasharray: 6 8;
+  animation: dashFlow 1.1s linear infinite;
+}
+
+.git-commit-dot {
+  stroke-width: 3;
+  stroke: var(--color-surface-container-lowest);
+}
+
+.git-dot-main { fill: var(--color-primary); }
+.git-dot-feat { fill: var(--color-tertiary); }
+.git-dot-pr { fill: var(--color-secondary); }
+.git-dot-merge { fill: var(--color-primary); }
+.git-dot-deploy { fill: var(--color-tertiary); }
+
+.git-svg-label {
+  fill: var(--color-on-surface);
+  font-family: var(--font-family-display);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.git-svg-label-secondary {
+  fill: var(--color-on-surface-variant);
+  font-family: var(--font-family-display);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.git-svg-node-caption {
+  fill: var(--color-on-surface-variant);
+  font-family: var(--font-family-body);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.octicon-svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.octicon-svg-lg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .illustrated-scene-layout,
+  .computer-orbit-grid,
+  .app-halves-row,
+  .app-bottom-connectors-row,
+  .app-bottom-vaults-row {
+    grid-template-columns: 1fr;
+  }
+  .app-half-frontend,
+  .app-half-backend {
+    border-radius: var(--radius-lg);
+  }
+}
