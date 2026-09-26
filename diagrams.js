@@ -329,14 +329,54 @@
   }
 
   // ============================================================================
-  // RENDERER 3: Stop 3 — Living Git Graph with Authentic GitHub Octicons
+  // RENDERER 3: Stop 3 — Interactive Animated Git Graph (Octicons & Words Inside Graph)
   // ============================================================================
+  function createOnGraphGitNode(gNode, isSelected, onSelect) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "git-on-graph-node" + (isSelected ? " active" : "");
+    btn.setAttribute("data-node-id", gNode.id);
+
+    var topRow = document.createElement("div");
+    topRow.className = "git-node-top-row";
+
+    var wordSpan = document.createElement("span");
+    wordSpan.className = "git-node-word";
+    wordSpan.appendChild(createOcticonSvg(gNode.octicon, "octicon-svg"));
+    var wText = document.createElement("span");
+    wText.textContent = gNode.word;
+    wordSpan.appendChild(wText);
+
+    var shortCode = document.createElement("code");
+    shortCode.className = "git-node-shorthand";
+    shortCode.textContent = gNode.graphCodeLabel;
+
+    topRow.appendChild(wordSpan);
+    topRow.appendChild(shortCode);
+
+    var sub = document.createElement("span");
+    sub.className = "git-node-subtitle";
+    sub.textContent = gNode.oneLiner;
+
+    btn.appendChild(topRow);
+    btn.appendChild(sub);
+    btn.addEventListener("click", function () {
+      onSelect(gNode);
+    });
+    return btn;
+  }
+
   function renderGitLivingDiagram(container) {
     var gitNodes = getDiagramData().gitLivingNodes || [];
     if (!gitNodes.length) return;
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
+
+    var selectedIdx = 0;
+    var gitBtns = [];
+    var inspectorEl = document.createElement("div");
+    inspectorEl.className = "diagram-inspector-card";
 
     var headerRow = document.createElement("div");
     headerRow.className = "search-bar-row diagram-header-row";
@@ -345,134 +385,177 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Living version control timeline — click any step below";
+    badge.textContent = "Interactive animated Git timeline — click any icon or word on the lines below";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How checkpoints (Commits), sandboxes (Branches), and publishing work";
+    h3.textContent = "How Git commits, branches, PRs/CLs, and merges work";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
+
+    var stepBtn = document.createElement("button");
+    stepBtn.type = "button";
+    stepBtn.className = "nav-btn nav-btn-primary";
+    var stepIcon = document.createElement("span");
+    stepIcon.className = "material-symbols-outlined btn-icon-sm";
+    stepIcon.textContent = "play_arrow";
+    var stepLabel = document.createElement("span");
+    stepLabel.textContent = "Step through animation (1/" + gitNodes.length + ")";
+    stepBtn.appendChild(stepIcon);
+    stepBtn.appendChild(stepLabel);
+
+    function selectGitNode(gNode) {
+      selectedIdx = gitNodes.indexOf(gNode);
+      if (selectedIdx < 0) selectedIdx = 0;
+      stepLabel.textContent = "Next step in animation (" + (selectedIdx + 1) + "/" + gitNodes.length + ")";
+      gitBtns.forEach(function (other) {
+        if (other.getAttribute("data-node-id") === gNode.id) other.classList.add("active");
+        else other.classList.remove("active");
+      });
+      updateGitInspector(inspectorEl, gNode);
+    }
+
+    stepBtn.addEventListener("click", function () {
+      var nextIdx = (selectedIdx + 1) % gitNodes.length;
+      selectGitNode(gitNodes[nextIdx]);
+    });
+
     headerRow.appendChild(titleGroup);
+    headerRow.appendChild(stepBtn);
     card.appendChild(headerRow);
 
+    // Unified Animated Diagram Stage where clickable Octicon+word buttons sit directly on the tracks
     var graphWrap = document.createElement("div");
     graphWrap.className = "git-graph-stage";
 
-    var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("viewBox", "0 0 760 190");
-    svg.setAttribute("class", "git-graph-svg");
+    // Top Lane Label: main branch (Production -> Vercel)
+    var mainBanner = document.createElement("div");
+    mainBanner.className = "git-lane-banner";
+    var mainBadge = document.createElement("span");
+    mainBadge.className = "badge badge-info";
+    mainBadge.textContent = "main branch (Production -> Vercel)";
+    var mainExplain = document.createElement("span");
+    mainExplain.className = "resource-desc";
+    mainExplain.textContent = "Your real live website timeline—every change merged into this blue line goes live to the public.";
+    mainBanner.appendChild(mainBadge);
+    mainBanner.appendChild(mainExplain);
+    graphWrap.appendChild(mainBanner);
 
-    var mainLine = document.createElementNS(SVG_NS, "path");
-    mainLine.setAttribute("d", "M 50 55 L 710 55");
-    mainLine.setAttribute("class", "git-branch-line-main");
-    svg.appendChild(mainLine);
+    // Top Track Lane: [1. Clone / Init] --- [2. Branch] --- (main stays untouched) --- [6. Merge] --- [7. Vercel Live!]
+    var mainLane = document.createElement("div");
+    mainLane.className = "git-track-lane git-track-lane-main";
 
-    var featLine = document.createElementNS(SVG_NS, "path");
-    featLine.setAttribute("d", "M 170 55 C 210 55, 210 135, 260 135 L 460 135 C 510 135, 510 55, 560 55");
-    featLine.setAttribute("class", "git-branch-line-feature");
-    svg.appendChild(featLine);
+    var n1 = createOnGraphGitNode(gitNodes[0], true, selectGitNode);
+    var n2 = createOnGraphGitNode(gitNodes[1], false, selectGitNode);
+    var n6 = createOnGraphGitNode(gitNodes[5], false, selectGitNode);
+    var n7 = createOnGraphGitNode(gitNodes[6], false, selectGitNode);
+    gitBtns.push(n1, n2, n6, n7);
 
-    var featPulse = document.createElementNS(SVG_NS, "path");
-    featPulse.setAttribute("d", "M 170 55 C 210 55, 210 135, 260 135 L 460 135 C 510 135, 510 55, 560 55");
-    featPulse.setAttribute("class", "git-branch-line-animated");
-    svg.appendChild(featPulse);
+    var safePass = document.createElement("div");
+    safePass.className = "git-safe-pass-pill";
+    safePass.textContent = "main stays safe & live while you test on the sandbox branch below";
 
-    var mainLabel = document.createElementNS(SVG_NS, "text");
-    mainLabel.setAttribute("x", "50");
-    mainLabel.setAttribute("y", "28");
-    mainLabel.setAttribute("class", "git-svg-label");
-    mainLabel.textContent = "main timeline (Your real live website)";
-    svg.appendChild(mainLabel);
+    mainLane.appendChild(n1);
+    mainLane.appendChild(n2);
+    mainLane.appendChild(safePass);
+    mainLane.appendChild(n6);
+    mainLane.appendChild(n7);
+    graphWrap.appendChild(mainLane);
 
-    var featLabel = document.createElementNS(SVG_NS, "text");
-    featLabel.setAttribute("x", "235");
-    featLabel.setAttribute("y", "172");
-    featLabel.setAttribute("class", "git-svg-label-secondary");
-    featLabel.textContent = "branch timeline (Safe practice sandbox to test AI edits)";
-    svg.appendChild(featLabel);
+    // Middle Animated SVG Curve Layer connecting [2. Branch] down to [3. Commit] and [5. Pull Request] up to [6. Merge]
+    var curvesSvg = document.createElementNS(SVG_NS, "svg");
+    curvesSvg.setAttribute("viewBox", "0 0 900 76");
+    curvesSvg.setAttribute("class", "git-curves-svg");
+    curvesSvg.setAttribute("aria-hidden", "true");
 
-    var svgDots = [
-      { cx: "80", cy: "55", label: "1. Start", type: "main" },
-      { cx: "170", cy: "55", label: "2. Split branch", type: "main" },
-      { cx: "280", cy: "135", label: "3. Save checkpoint", type: "feat" },
-      { cx: "370", cy: "135", label: "4. Check diff", type: "feat" },
-      { cx: "460", cy: "135", label: "5. Review PR", type: "pr" },
-      { cx: "560", cy: "55", label: "6. Merge back", type: "merge" },
-      { cx: "675", cy: "55", label: "7. Live on Vercel!", type: "deploy" }
-    ];
+    var splitPathStr = "M 265 4 C 265 42, 265 42, 265 72";
+    var splitCurve = document.createElementNS(SVG_NS, "path");
+    splitCurve.setAttribute("d", splitPathStr);
+    splitCurve.setAttribute("class", "git-branch-line-feature");
+    var splitAnim = document.createElementNS(SVG_NS, "path");
+    splitAnim.setAttribute("d", splitPathStr);
+    splitAnim.setAttribute("class", "git-branch-line-animated");
 
-    svgDots.forEach(function (dot) {
-      var g = document.createElementNS(SVG_NS, "g");
-      var c = document.createElementNS(SVG_NS, "circle");
-      c.setAttribute("cx", dot.cx);
-      c.setAttribute("cy", dot.cy);
-      c.setAttribute("r", "11");
-      c.setAttribute("class", "git-commit-dot git-dot-" + dot.type);
-      var t = document.createElementNS(SVG_NS, "text");
-      t.setAttribute("x", dot.cx);
-      t.setAttribute("y", Number(dot.cy) === 55 ? "82" : "112");
-      t.setAttribute("text-anchor", "middle");
-      t.setAttribute("class", "git-svg-node-caption");
-      t.textContent = dot.label;
-      g.appendChild(c);
-      g.appendChild(t);
-      svg.appendChild(g);
-    });
+    var splitDot = document.createElementNS(SVG_NS, "circle");
+    splitDot.setAttribute("r", "6");
+    splitDot.setAttribute("class", "git-traveller-dot");
+    var splitMotion = document.createElementNS(SVG_NS, "animateMotion");
+    splitMotion.setAttribute("dur", "2.2s");
+    splitMotion.setAttribute("repeatCount", "indefinite");
+    splitMotion.setAttribute("path", splitPathStr);
+    splitDot.appendChild(splitMotion);
 
-    graphWrap.appendChild(svg);
+    var splitLabel = document.createElementNS(SVG_NS, "text");
+    splitLabel.setAttribute("x", "282");
+    splitLabel.setAttribute("y", "42");
+    splitLabel.setAttribute("class", "git-svg-curve-caption");
+    splitLabel.textContent = "↘ Splits off into sandbox branch (c2: branch off)";
+
+    var mergePathStr = "M 635 72 C 635 42, 635 42, 635 4";
+    var mergeCurve = document.createElementNS(SVG_NS, "path");
+    mergeCurve.setAttribute("d", mergePathStr);
+    mergeCurve.setAttribute("class", "git-branch-line-feature");
+    var mergeAnim = document.createElementNS(SVG_NS, "path");
+    mergeAnim.setAttribute("d", mergePathStr);
+    mergeAnim.setAttribute("class", "git-branch-line-animated");
+
+    var mergeDot = document.createElementNS(SVG_NS, "circle");
+    mergeDot.setAttribute("r", "6");
+    mergeDot.setAttribute("class", "git-traveller-dot");
+    var mergeMotion = document.createElementNS(SVG_NS, "animateMotion");
+    mergeMotion.setAttribute("dur", "2.2s");
+    mergeMotion.setAttribute("repeatCount", "indefinite");
+    mergeMotion.setAttribute("path", mergePathStr);
+    mergeDot.appendChild(mergeMotion);
+
+    var mergeLabel = document.createElementNS(SVG_NS, "text");
+    mergeLabel.setAttribute("x", "652");
+    mergeLabel.setAttribute("y", "42");
+    mergeLabel.setAttribute("class", "git-svg-curve-caption");
+    mergeLabel.textContent = "↗ Approved PR merges back into main (c5: merge PR)";
+
+    curvesSvg.appendChild(splitCurve);
+    curvesSvg.appendChild(splitAnim);
+    curvesSvg.appendChild(splitDot);
+    curvesSvg.appendChild(splitLabel);
+    curvesSvg.appendChild(mergeCurve);
+    curvesSvg.appendChild(mergeAnim);
+    curvesSvg.appendChild(mergeDot);
+    curvesSvg.appendChild(mergeLabel);
+    graphWrap.appendChild(curvesSvg);
+
+    // Bottom Track Lane: [spacer] --- [3. Commit] --- [4. git diff] --- [5. Pull Request (PR / CL)] --- [spacer]
+    var sandboxLane = document.createElement("div");
+    sandboxLane.className = "git-track-lane git-track-lane-sandbox";
+
+    var n3 = createOnGraphGitNode(gitNodes[2], false, selectGitNode);
+    var n4 = createOnGraphGitNode(gitNodes[3], false, selectGitNode);
+    var n5 = createOnGraphGitNode(gitNodes[4], false, selectGitNode);
+    gitBtns.push(n3, n4, n5);
+
+    sandboxLane.appendChild(document.createElement("div"));
+    sandboxLane.appendChild(n3);
+    sandboxLane.appendChild(n4);
+    sandboxLane.appendChild(n5);
+    sandboxLane.appendChild(document.createElement("div"));
+    graphWrap.appendChild(sandboxLane);
+
+    // Bottom Lane Label: feat/ai-experiment branch (Safe sandbox)
+    var sandboxBanner = document.createElement("div");
+    sandboxBanner.className = "git-lane-banner";
+    var sbBadge = document.createElement("span");
+    sbBadge.className = "badge badge-success";
+    sbBadge.textContent = "feat/ai-experiment branch (Safe sandbox)";
+    var sbExplain = document.createElement("span");
+    sbExplain.className = "resource-desc";
+    sbExplain.textContent = "Your parallel practice timeline—save commits and check diffs here before merging back to main.";
+    sandboxBanner.appendChild(sbBadge);
+    sandboxBanner.appendChild(sbExplain);
+    graphWrap.appendChild(sandboxBanner);
+
     card.appendChild(graphWrap);
-
-    var selectedGitNode = gitNodes[0];
-    var gitBtns = [];
-    var gitGrid = document.createElement("div");
-    gitGrid.className = "app-infra-grid";
-
-    var inspectorEl = document.createElement("div");
-    inspectorEl.className = "diagram-inspector-card";
-
-    gitNodes.forEach(function (gNode) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "diagram-node-btn" + (gNode.id === selectedGitNode.id ? " active" : "");
-      btn.setAttribute("data-node-id", gNode.id);
-
-      var top = document.createElement("div");
-      top.className = "resource-title-row";
-      var b = document.createElement("span");
-      b.className = "badge " + gNode.badgeClass;
-      b.textContent = gNode.badge;
-      var oct = createOcticonSvg(gNode.octicon, "octicon-svg");
-      top.appendChild(b);
-      top.appendChild(oct);
-
-      var title = document.createElement("strong");
-      title.className = "diagram-node-title";
-      title.textContent = gNode.title;
-
-      var cmdPreview = document.createElement("code");
-      cmdPreview.className = "vocab-cmd-pill";
-      cmdPreview.textContent = gNode.command;
-
-      btn.appendChild(top);
-      btn.appendChild(title);
-      btn.appendChild(cmdPreview);
-
-      btn.addEventListener("click", function () {
-        selectedGitNode = gNode;
-        gitBtns.forEach(function (other) {
-          if (other.getAttribute("data-node-id") === selectedGitNode.id) other.classList.add("active");
-          else other.classList.remove("active");
-        });
-        updateGitInspector(inspectorEl, selectedGitNode);
-      });
-
-      gitBtns.push(btn);
-      gitGrid.appendChild(btn);
-    });
-
-    card.appendChild(gitGrid);
-    updateGitInspector(inspectorEl, selectedGitNode);
+    updateGitInspector(inspectorEl, gitNodes[0]);
     card.appendChild(inspectorEl);
     container.appendChild(card);
   }
@@ -482,11 +565,19 @@
 
     var topRow = document.createElement("div");
     topRow.className = "resource-title-row";
+    var badgeGroup = document.createElement("div");
+    badgeGroup.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge " + gNode.badgeClass;
     badge.textContent = gNode.badge;
+    var codePill = document.createElement("code");
+    codePill.className = "vocab-cmd-pill";
+    codePill.textContent = "Graph label: " + gNode.graphCodeLabel;
+    badgeGroup.appendChild(badge);
+    badgeGroup.appendChild(codePill);
+
     var oct = createOcticonSvg(gNode.octicon, "octicon-svg-lg");
-    topRow.appendChild(badge);
+    topRow.appendChild(badgeGroup);
     topRow.appendChild(oct);
 
     var h4 = document.createElement("h4");
@@ -496,13 +587,23 @@
     pWhat.className = "resource-desc pre-line-text";
     pWhat.textContent = gNode.whatItIs;
 
+    var decodedBox = document.createElement("div");
+    decodedBox.className = "nested-card";
+    var decTitle = document.createElement("strong");
+    decTitle.textContent = "Decoding the diagram labels";
+    var decBody = document.createElement("p");
+    decBody.className = "resource-desc";
+    decBody.textContent = gNode.labelDecoded;
+    decodedBox.appendChild(decTitle);
+    decodedBox.appendChild(decBody);
+
     var saveCallout = document.createElement("div");
     saveCallout.className = "arch-mode-banner good-mode";
     var icon = document.createElement("span");
     icon.className = "material-symbols-outlined safety-icon";
     icon.textContent = "shield";
     var saveText = document.createElement("span");
-    saveText.textContent = gNode.whyItSavesYou;
+    saveText.textContent = "Why this saves you: " + gNode.whyItSavesYou;
     saveCallout.appendChild(icon);
     saveCallout.appendChild(saveText);
 
@@ -513,6 +614,7 @@
     inspectorEl.appendChild(topRow);
     inspectorEl.appendChild(h4);
     inspectorEl.appendChild(pWhat);
+    inspectorEl.appendChild(decodedBox);
     inspectorEl.appendChild(saveCallout);
     inspectorEl.appendChild(cmdBox);
   }
