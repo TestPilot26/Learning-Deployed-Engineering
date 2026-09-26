@@ -103,6 +103,10 @@
     ["Package Lockfile (package-lock.json / uv.lock)", "concept", "Dependencies & Git · Exact Version Receipt", "An auto-generated file that records the exact version number and cryptographic checksum of every open-source library installed in your project so every laptop and cloud server installs identical code.", "Commit lockfiles to Git!"],
     ["Pull Request (PR)", "concept", "Git & Code Review · Proposal to Merge a Branch into Main", "A review page on GitHub/GitLab where you inspect the `git diff` of your feature branch, run automated tests, and click 'preview' before merging into `main`.", "Open PR -> Review -> Merge"],
     ["README.md", "concept", "Open Source & Documentation · The Front-Door Instruction Manual", "A Markdown plain-text file at the root of every repository that explains what the project does, what prerequisites it needs, and the exact terminal commands to install and run it.", "Always read README.md first"],
+    ["chmod +x", "command", "Terminal Command · Make a Script File Executable", "Changes a file's permissions on Mac/Linux so your computer is allowed to run a `.sh` or `.py` script directly as a program (`+x` = add executable permission).", "chmod +x run.sh && ./run.sh"],
+    ["ssh (Secure Shell)", "command", "Terminal Command · Log Into a Remote Cloud Server Safely", "Opens an encrypted terminal connection from your laptop directly into a remote cloud virtual machine (like an AWS EC2 or DigitalOcean server).", "ssh user@server-ip"],
+    ["export KEY=value", "command", "Terminal Command · Set an Environment Variable in Your Current Shell", "Sets a variable (like an API key or `PORT=8080`) inside your current open terminal window so programs started from that window can read it.", "export PORT=8080"],
+    ["tar / zip / unzip", "command", "Terminal Command · Compress or Extract Archive Folders", "Packs or unpacks compressed archive files (`.zip` or `.tar.gz`) directly from the terminal when downloading releases or datasets.", "unzip dataset.zip"],
 
     // --- CORE APP, PYTHON, AI & ARCHITECTURE CONCEPTS ---
     ["API (Application Programming Interface)", "concept", "Architecture · The Messenger / Waiter Between Systems", "The structured contract ('menu and waiter') that lets two pieces of software talk to each other—such as your Front End browser screen asking your Back End server to save data, or your Back End calling the Gemini or Stripe API.", "POST /api/save-item"],
@@ -177,6 +181,7 @@
     ["Tool Use (Function Calling)", "concept", "AI Agents · Giving an LLM Hands to Run Functions & APIs", "An LLM by itself can only predict text. 'Tool Use' gives the AI a menu of real Python/TS functions (like `search_database(query)` or `send_email()`) that it can ask your backend code to execute.", "LLM requests tool -> Code runs it"],
     ["Type Hints (Python) & TypeScript (TS)", "concept", "Code Safety · Labels That Catch Mismatched Data Before You Run Code", "Adding explicit data types (`def add(a: int, b: int) -> int:` in Python, or TypeScript in JS) so your editor and AI agent immediately underline bugs if someone passes text where a number was expected.", "name: str, count: int"],
     ["UI (User Interface) & Component", "concept", "Front End · Visual Controls & Reusable LEGO Bricks on Screen", "The UI is all the buttons, cards, inputs, and menus a human interacts with. A Component is a self-contained, reusable UI piece (like a `<StopCard />`) so you design it once and reuse it everywhere.", "Reusable visual building blocks"],
+    ["Trace a file (Code Tracing)", "concept", "Reading Code & Debugging · Walking Through Code Step-by-Step Like the Computer", "To 'trace' a file means pretending you are the computer and following the code line-by-line with your eyes from the moment a user clicks a button or calls an API to the final database write or return value—checking at each step what happens if a variable is null, empty, or fails.", "Input -> Function -> DB -> Return"],
     ["Unit Test vs. Integration Test", "concept", "Testing · Testing 1 Function in Isolation vs. Multiple Parts Together", "A Unit Test checks one small function in isolation in milliseconds. An Integration or End-to-End (E2E) Test checks that the Front End, Back End API, and Database actually work together as a full pipeline.", "Unit = 1 function; E2E = full flow"],
     ["Vector Database & Embeddings", "concept", "AI & Search · Turning Meaning into Coordinates for Semantic Search", "An Embedding model converts a sentence or image into a list of numbers (e.g. `[0.12, -0.84, ...]`) representing its meaning. A Vector Database (like `pgvector` or Pinecone) finds items with the closest meaning.", "Search by meaning, not just exact words"],
     ["Virtual Environment (venv / .venv)", "concept", "Python Best Practice · Private Sandbox Bubble for Project Libraries", "An isolated folder (`.venv`) inside a Python project so installing libraries for Project A (`pip install` or `uv add`) never conflicts with or breaks Project B on the same laptop.", "python3 -m venv .venv"],
@@ -227,6 +232,8 @@
 
     return all;
   }
+
+  window.getMasterGlossaryItems = buildUnifiedGlossary;
 
   function getFirstLetterBucket(term) {
     var m = (term || "").match(/[a-zA-Z]/);

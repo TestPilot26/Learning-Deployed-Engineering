@@ -147,15 +147,21 @@
       title: "AI Agents, MCP, Human-in-the-Loop ('Prepare -> Confirm') & Data Separation",
       stopId: "system-dynamics",
       answer: "• URL -> Backend Function: Calling '/api/users/42' triggers 'def get_user(42)' on your server, which queries the Database.\n• AI Agents & MCP: An agent runs in a Reason + Act loop calling tools connected via MCP (Model Context Protocol—the universal USB-C plug for tools).\n• Human-in-the-Loop ('Prepare -> Confirm'): Let AI read and summarize freely, but for any action that changes the world (sending emails, deleting data, charging money), stage a Preview Card first and wait for a human 'Approve' click.\n• Code vs. Sensitive Data: Never store private user CSVs or customer records inside your Git code repo—keep code in GitHub and sensitive data in an access-controlled Database or Cloud Storage bucket."
+    },
+    {
+      keywords: ["hide api key", "open web", "low cost", "low-cost", "how does the helper work", "how does this helper work", "serverless proxy", "ask-guide", "flash-lite", "expose api key", "hide the api key"],
+      title: "How to run an AI helper on the open web: Hide the API key & keep cost near $0",
+      stopId: "basic-terminology",
+      answer: "Never put a Google Gemini API key in browser JavaScript (anyone can press F12 -> Network and steal it). Instead, use this 4-layer architecture (built into this repo at '/api/ask-guide'):\n1. Serverless Backend Proxy ('/api/ask-guide'): Browser sends POST /api/ask-guide -> your Vercel/Cloud Run server reads 'GEMINI_API_KEY' from encrypted Environment Variables -> calls Gemini -> returns only the text.\n2. Tier-0 Dictionary Match ($0.00, 0ms): Check the 220+ A–Z Glossary terms in JS first so common definitions never call the LLM.\n3. Use 'gemini-2.5-flash-lite' + Token Caps: Free tier gives ~1,000 req/day for $0; paid tier is $0.10/1M input tokens (~$0.00008 per answer = 10,000 questions for ~$0.85). Cap input to 300 chars and maxOutputTokens to 260.\n4. Server Cache + Per-IP Rate Limit: Cache answers in server memory so repeated questions cost $0, and cap each IP at 15 questions per 10 minutes."
     }
   ];
 
   var STOP_STARTER_PROMPTS = {
     "default": [
-      "Ways to host & share (Vercel vs Hugging Face vs Render)?",
-      "How much Python do I need in 2026?",
-      "What is grep (and grep -rn)?",
-      "How do I build on top of open source?"
+      "What does it mean to 'trace' a file?",
+      "How do I hide an API key & keep AI costs near $0?",
+      "What is Neon vs Supabase vs Firebase?",
+      "How much Python do I need in 2026?"
     ],
     "downloading-the-tools": [
       "What are the main cloud hosting categories?",
@@ -164,10 +170,10 @@
       "Code editors vs notebooks (Colab / Jupyter)?"
     ],
     "basic-terminology": [
-      "Database categories (SQL vs NoSQL vs Vector)?",
+      "How do I hide an API key & keep AI costs near $0?",
+      "Database categories (Neon/Supabase vs Firebase vs Pinecone)?",
       "Python vs TypeScript vs SQL?",
-      "Good vs fragile vibe-coded architecture?",
-      "Where do secret .env API keys go?"
+      "Good vs fragile vibe-coded architecture?"
     ],
     "git-and-shipping": [
       "What is 'Squash & Merge' vs Commit?",
@@ -182,10 +188,10 @@
       "What is a parent directory (..)?"
     ],
     "reading-code-stability": [
+      "What does it mean to 'trace' a file?",
       "How much Python do I need in 2026?",
       "How do Dicts, Lists & DataFrames fit together?",
-      "How do I read a Python stack trace?",
-      "What are Golden Evals & unit tests?"
+      "How do I read a Python stack trace?"
     ],
     "system-dynamics": [
       "What is Human-in-the-Loop ('Prepare -> Confirm')?",
@@ -201,21 +207,151 @@
     ]
   };
 
+  var STOP_WORDS = {
+    "what": 1, "whats": 1, "does": 1, "do": 1, "did": 1, "mean": 1, "means": 1,
+    "meaning": 1, "is": 1, "are": 1, "was": 1, "were": 1, "the": 1, "to": 1,
+    "a": 1, "an": 1, "in": 1, "on": 1, "of": 1, "for": 1, "how": 1, "you": 1,
+    "your": 1, "can": 1, "could": 1, "explain": 1, "tell": 1, "me": 1, "about": 1,
+    "why": 1, "when": 1, "where": 1, "who": 1, "it": 1, "its": 1, "this": 1,
+    "that": 1, "these": 1, "those": 1, "by": 1, "with": 1, "from": 1, "and": 1,
+    "or": 1, "vs": 1, "versus": 1, "use": 1, "used": 1, "using": 1, "work": 1,
+    "works": 1, "thing": 1, "things": 1, "like": 1, "example": 1, "examples": 1,
+    "difference": 1, "between": 1, "file": 1, "files": 1, "code": 1, "app": 1
+  };
+
+  function escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function hasKeywordMatch(text, kw) {
+    var cleanKw = kw.toLowerCase().trim();
+    if (!cleanKw) return false;
+    if (cleanKw.indexOf(" ") !== -1 || /[^a-z0-9]/.test(cleanKw)) {
+      return text.indexOf(cleanKw) !== -1;
+    }
+    var re = new RegExp("\\b" + escapeRegExp(cleanKw) + "(?:s|es|ing|ed)?\\b", "i");
+    return re.test(text);
+  }
+
+  function mapGlossaryGroupToStop(item) {
+    var cat = (item.category || "").toLowerCase();
+    var term = (item.term || "").toLowerCase();
+    if (item.group === "command" || cat.indexOf("terminal") !== -1 || cat.indexOf("cli") !== -1) {
+      if (term.indexOf("git ") === 0 || cat.indexOf("git") !== -1) return "git-and-shipping";
+      return "cli-and-terminal";
+    }
+    if (cat.indexOf("git") !== -1 || cat.indexOf("version control") !== -1) return "git-and-shipping";
+    if (cat.indexOf("python") !== -1 || cat.indexOf("testing") !== -1 || cat.indexOf("debugging") !== -1 || cat.indexOf("reading code") !== -1) {
+      return "reading-code-stability";
+    }
+    if (cat.indexOf("dynamics") !== -1 || cat.indexOf("realtime") !== -1 || cat.indexOf("queue") !== -1 || cat.indexOf("webhook") !== -1 || cat.indexOf("agent") !== -1) {
+      return "system-dynamics";
+    }
+    if (cat.indexOf("license") !== -1 || cat.indexOf("open-source") !== -1 || cat.indexOf("hosting") !== -1) {
+      return "system-architecture";
+    }
+    return "basic-terminology";
+  }
+
   function searchLocalAnswer(rawQuestion) {
     var q = (rawQuestion || "").trim().toLowerCase();
     if (!q) return null;
 
-    // 1. Check exact or partial matches in Terminal Vocab (31 commands)
+    var normalizedQ = q.replace(/['"“”‘’?!.,;:()[\]]/g, " ").replace(/\s+/g, " ").trim();
+    var tokens = normalizedQ.split(" ").filter(function (w) {
+      return w.length >= 2 && !STOP_WORDS[w];
+    });
+
+    // 1. Score against Curated Q&A (GENERAL_KNOWLEDGE_BASE) using word-boundary aware matching
+    var bestKb = null;
+    var bestKbScore = 0;
+    GENERAL_KNOWLEDGE_BASE.forEach(function (entry) {
+      var score = 0;
+      entry.keywords.forEach(function (kw) {
+        if (hasKeywordMatch(normalizedQ, kw) || hasKeywordMatch(q, kw)) {
+          score += kw.length + (kw.indexOf(" ") !== -1 ? 14 : 6);
+        }
+      });
+      if (score > bestKbScore) {
+        bestKbScore = score;
+        bestKb = entry;
+      }
+    });
+
+    // 2. Score against the 220+ A-Z Master Dictionary (window.getMasterGlossaryItems)
+    var bestGlossary = null;
+    var bestGlossaryScore = 0;
+    if (typeof window.getMasterGlossaryItems === "function") {
+      var glossaryItems = window.getMasterGlossaryItems();
+      glossaryItems.forEach(function (item) {
+        var s = 0;
+        var termLower = item.term.toLowerCase();
+        // Extract primary headword before parentheses or em-dash, e.g. "Neon", "Trace a file", "pwd"
+        var primaryHead = termLower.split(/[—(]/)[0].trim();
+        if (primaryHead && primaryHead.length >= 2 && hasKeywordMatch(normalizedQ, primaryHead)) {
+          s += 45 + primaryHead.length;
+        }
+        tokens.forEach(function (tok) {
+          if (hasKeywordMatch(termLower, tok)) {
+            s += 18;
+          } else if (hasKeywordMatch(item.category.toLowerCase(), tok)) {
+            s += 6;
+          } else if (hasKeywordMatch(item.definition.toLowerCase(), tok)) {
+            s += 3;
+          }
+        });
+        if (s > bestGlossaryScore) {
+          bestGlossaryScore = s;
+          bestGlossary = item;
+        }
+      });
+    }
+
+    // If a specific A-Z glossary term was directly asked about (e.g. "what is Neon?", "what is Drizzle?", "what is Modal?")
+    // and didn't hit a multi-word Q&A guide phrase, return the exact glossary entry!
+    if (bestGlossary && bestGlossaryScore >= 45 && bestKbScore < 22) {
+      var gStopId = mapGlossaryGroupToStop(bestGlossary);
+      var gStop = findStopById(gStopId);
+      return {
+        matched: true,
+        title: bestGlossary.term + " · " + bestGlossary.category,
+        body: bestGlossary.definition + (bestGlossary.example ? "\n\nExample: " + bestGlossary.example : ""),
+        stopId: gStopId,
+        stopTitle: gStop ? gStop.title : "Open related stop"
+      };
+    }
+
+    if (bestKb && bestKbScore >= 8) {
+      var matchedStop = findStopById(bestKb.stopId);
+      return {
+        matched: true,
+        title: bestKb.title,
+        body: bestKb.answer,
+        stopId: bestKb.stopId,
+        stopTitle: matchedStop ? matchedStop.title : "Open related stop"
+      };
+    }
+
+    if (bestGlossary && bestGlossaryScore >= 18) {
+      var gStopId2 = mapGlossaryGroupToStop(bestGlossary);
+      var gStop2 = findStopById(gStopId2);
+      return {
+        matched: true,
+        title: bestGlossary.term + " · " + bestGlossary.category,
+        body: bestGlossary.definition + (bestGlossary.example ? "\n\nExample: " + bestGlossary.example : ""),
+        stopId: gStopId2,
+        stopTitle: gStop2 ? gStop2.title : "Open related stop"
+      };
+    }
+
+    // 3. Check exact word-boundary matches in Terminal Vocab
     if (window.TERMINAL_VOCAB_DATA && window.TERMINAL_VOCAB_DATA.items) {
       for (var i = 0; i < window.TERMINAL_VOCAB_DATA.items.length; i++) {
         var v = window.TERMINAL_VOCAB_DATA.items[i];
-        var cmdClean = v.command.toLowerCase();
-        if (
-          q === cmdClean ||
-          q.indexOf(" " + cmdClean + " ") !== -1 ||
-          q.indexOf(cmdClean.split(" ")[0]) !== -1 && (q.indexOf("command") !== -1 || q.indexOf("what does") !== -1 || q.indexOf("terminal") !== -1 || q.length <= 14)
-        ) {
+        var cmdFirst = v.command.toLowerCase().split(" ")[0];
+        if (cmdFirst.length >= 2 && hasKeywordMatch(normalizedQ, cmdFirst)) {
           return {
+            matched: true,
             title: v.command + " (" + v.name + ")",
             body: v.description + "\n\nExample usage: " + v.example,
             stopId: "cli-and-terminal",
@@ -225,65 +361,11 @@
       }
     }
 
-    // 2. Score against GENERAL_KNOWLEDGE_BASE
-    var bestMatch = null;
-    var bestScore = 0;
-    GENERAL_KNOWLEDGE_BASE.forEach(function (entry) {
-      var score = 0;
-      entry.keywords.forEach(function (kw) {
-        if (q.indexOf(kw) !== -1) score += kw.length + 3;
-      });
-      if (score > bestScore) {
-        bestScore = score;
-        bestMatch = entry;
-      }
-    });
-
-    if (bestMatch && bestScore > 0) {
-      var matchedStop = findStopById(bestMatch.stopId);
-      return {
-        title: bestMatch.title,
-        body: bestMatch.answer,
-        stopId: bestMatch.stopId,
-        stopTitle: matchedStop ? matchedStop.title : "Open related stop"
-      };
-    }
-
-    // 3. Search across all PIPELINE_DATA stops, experiences, and resources
-    if (window.PIPELINE_DATA && window.PIPELINE_DATA.stops) {
-      var words = q.split(/\s+/).filter(function (w) { return w.length > 2; });
-      var bestStop = null;
-      var bestStopScore = 0;
-      window.PIPELINE_DATA.stops.forEach(function (st) {
-        var haystack = (st.title + " " + st.teaser + " " + st.explainer + " " +
-          (st.experiences || []).map(function (e) { return e.lead + " " + e.body; }).join(" ")
-        ).toLowerCase();
-        var s = 0;
-        words.forEach(function (w) {
-          if (haystack.indexOf(w) !== -1) s += 2;
-        });
-        if (s > bestStopScore) {
-          bestStopScore = s;
-          bestStop = st;
-        }
-      });
-      if (bestStop && bestStopScore > 0) {
-        var expSummary = (bestStop.experiences || []).map(function (e) {
-          return "• " + e.lead + " " + e.body;
-        }).join("\n");
-        return {
-          title: bestStop.title,
-          body: bestStop.explainer + (expSummary ? "\n\n" + expSummary : ""),
-          stopId: bestStop.id,
-          stopTitle: bestStop.title
-        };
-      }
-    }
-
-    // 4. Thoughtful general engineering fallback
+    // 4. Honest fallback when no specific term matches offline (never dump an unrelated Stop intro!)
     return {
-      title: "How to think about \"" + rawQuestion.trim() + "\"",
-      body: "Here is a structured way to break that down as a deployed engineer:\n• Layer check: Ask whether this lives on your Laptop (Localhost/CLI), in the Browser UI (HTML/CSS/JS), on the Backend Server (Python/Node/Go), or in the Database (SQL).\n• Mechanism check: Name the exact data input, state change, and failure mode rather than describing UI symptoms.\n• Tip: Click any quick topic below or add an optional Gemini API key (via the key icon above) to query live AI for open-ended questions outside the pipeline curriculum.",
+      matched: false,
+      title: "Open-ended question: \"" + rawQuestion.trim() + "\"",
+      body: "That specific question didn't match a pre-built card in the 220+ term offline dictionary.\n\n• To get live AI answers for any custom question: Set 'GEMINI_API_KEY' on the server ('/api/ask-guide' uses 'gemini-2.5-flash-lite' at ~$0.00008 per question while keeping the key 100% hidden from browsers), or click the Key icon above to save a personal Gemini key in your browser.\n• Or browse the 'A–Z dictionary & flashcards' button in the top bar to search all 220+ sites, commands, and concepts.",
       stopId: currentContextStopId || "basic-terminology",
       stopTitle: "Explore terminology & app architecture"
     };
@@ -342,27 +424,54 @@
   }
 
   function askGeminiLiveIfConfigured(question, onSuccess, onFallback) {
-    var apiKey = "";
-    try { apiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
-    if (!apiKey) {
-      onFallback();
+    var browserApiKey = "";
+    try { browserApiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
+
+    // Path A: Try the server-side hidden-key proxy (/api/ask-guide) first unless user explicitly set a browser key
+    if (!browserApiKey) {
+      fetch("/api/ask-guide", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question: question.slice(0, 300),
+          context: currentContextLabel
+        })
+      })
+        .then(function (res) {
+          return res.ok ? res.json() : Promise.reject(new Error("Proxy status " + res.status));
+        })
+        .then(function (data) {
+          if (data && data.answer) {
+            onSuccess(data.answer, "Pipeline guide (Live Gemini Flash-Lite)");
+          } else {
+            onFallback();
+          }
+        })
+        .catch(function () {
+          onFallback();
+        });
       return;
     }
 
-    var sysPrompt = "You are the Pipeline Guide for 'Deployed Eng Pipeline — By Lucy', helping non-traditional and vibe-coding engineers master deployed software engineering. Current page context: " + currentContextLabel + ". Keep answers direct, concise (under 140 words), practical, and free of hype/superlatives. Use bullet points where helpful.";
+    // Path B: User provided their own personal key in browser localStorage
+    var sysPrompt =
+      "You are the Pipeline Guide for 'The vibes -> deployed Eng journey — By Lucy', helping builders master deployed software engineering. " +
+      "Current section: " + currentContextLabel + ". " +
+      "Keep answers direct, plain-English, concise (under 130 words), practical, and free of hype/superlatives. Include a 1-line example when helpful.";
 
-    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + encodeURIComponent(apiKey), {
+    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=" + encodeURIComponent(browserApiKey), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: sysPrompt }] },
-        contents: [{ role: "user", parts: [{ text: question }] }]
+        contents: [{ role: "user", parts: [{ text: question.slice(0, 300) }] }],
+        generationConfig: { maxOutputTokens: 260, temperature: 0.25 }
       })
     })
       .then(function (res) { return res.ok ? res.json() : Promise.reject(new Error("API status " + res.status)); })
       .then(function (data) {
         var text = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
-        if (text) onSuccess(text);
+        if (text) onSuccess(text, "Pipeline guide (Live Gemini)");
         else onFallback();
       })
       .catch(function () {
@@ -377,22 +486,34 @@
     appendAgentMessage("user", null, q, null, null);
 
     var localReply = searchLocalAnswer(q);
-    var apiKey = "";
-    try { apiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
+    var browserApiKey = "";
+    try { browserApiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
 
-    if (apiKey) {
-      askGeminiLiveIfConfigured(
-        q,
-        function (liveText) {
-          appendAgentMessage("assistant", "Pipeline guide (Live Gemini)", liveText, localReply ? localReply.stopId : null, localReply ? localReply.stopTitle : null);
-        },
-        function () {
+    // Instant $0 Layer: If our curated Q&A or 220+ A-Z Dictionary has a high-confidence match
+    // and no custom browser key overrides it, return the verified answer immediately in 0ms for $0!
+    // Otherwise (or for any open-ended question), query /api/ask-guide (or browser key) and fall back cleanly.
+    if (localReply && localReply.matched && !browserApiKey) {
+      appendAgentMessage("assistant", localReply.title, localReply.body, localReply.stopId, localReply.stopTitle);
+      return;
+    }
+
+    askGeminiLiveIfConfigured(
+      q,
+      function (liveText, label) {
+        appendAgentMessage(
+          "assistant",
+          label || "Pipeline guide (Live Gemini)",
+          liveText,
+          localReply ? localReply.stopId : null,
+          localReply ? localReply.stopTitle : null
+        );
+      },
+      function () {
+        if (localReply) {
           appendAgentMessage("assistant", localReply.title, localReply.body, localReply.stopId, localReply.stopTitle);
         }
-      );
-    } else if (localReply) {
-      appendAgentMessage("assistant", localReply.title, localReply.body, localReply.stopId, localReply.stopTitle);
-    }
+      }
+    );
   }
 
   var setAgentPanelCollapsedFn = null;
