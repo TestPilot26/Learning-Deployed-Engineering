@@ -606,6 +606,10 @@
         renderGitLivingDiagram(containerEl);
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
+      } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
+        window.renderPythonCodeDiagram(containerEl);
+      } else if (stop.diagramType === "systems-agent-blueprint" && typeof window.renderSystemsAgentDiagram === "function") {
+        window.renderSystemsAgentDiagram(containerEl);
       } else if (stop.diagramType === "opensource-shipping" && typeof window.renderOpenSourceShippingDiagram === "function") {
         window.renderOpenSourceShippingDiagram(containerEl);
       }

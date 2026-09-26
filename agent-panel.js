@@ -129,14 +129,32 @@
       title: "6 critical watch-outs when building and shipping",
       stopId: "system-architecture",
       answer: "1. License traps: Stick to MIT/Apache-2.0; avoid AGPL/GPL for closed products.\n2. AI 'slopsquatting': Verify AI-suggested package names actually exist on npm/PyPI before installing.\n3. Leaking .env keys: Never put real keys in '.env.example' or commit '.env' to public GitHub.\n4. Runaway cloud bills: Set a hard $10–$25 monthly spend cap and add Upstash rate-limiting before sharing a public URL.\n5. Zombie repos: Avoid libraries unmaintained for 3+ years.\n6. Client trust: Always check auth and prices on the backend server, never just in browser JS."
+    },
+    {
+      keywords: ["how much python", "python in 2026", "dataframe", "pandas", "dictionary", "list of dictionaries", "pydantic", "protobuf", "stack trace", "evals", "golden eval"],
+      title: "How much Python you actually need in 2026 (Dicts, DataFrames, Schemas & Evals)",
+      stopId: "reading-code-stability",
+      answer: "In 2026, don't spend 6 months memorizing Python syntax textbooks—build real projects first with AI as your tutor and focus on reading & debugging 6 building blocks:\n1. Variables & Types (str, int, bool, None).\n2. Dictionaries & Lists -> Tables: One Dictionary {'name': 'Lucy', 'status': 'Doing'} is 1 row; a List of Dictionaries [{...}, {...}] is a whole Table (a Pandas DataFrame in Python/Colab!).\n3. Control flow & Functions (if/else, for-loops, def get_user(id) -> return).\n4. Strict Schemas (Pydantic / JSON Schema / Protobufs) so AI returns predictable fields.\n5. Stack traces: Read crash logs from the very bottom line up (KeyError, TypeError).\n6. Tests & Golden Evals: Test 30–50 real cases (and verify 'move to Doing' stays in Doing!) before shipping."
+    },
+    {
+      keywords: ["head", "git head", "squash", "mkdir vs touch", "mkdir first", "why so many steps"],
+      title: "Terminal 'head' vs. Git 'HEAD', 'mkdir' then 'touch', and 'Squash & Merge'",
+      stopId: "cli-and-terminal",
+      answer: "• Lowercase 'head -n 20 file.txt' (Terminal): Prints the top 20 lines of a file (opposite of 'tail').\n• Uppercase 'HEAD' (Git): Your 'You Are Here' pin pointing to the latest commit snapshot your folder is standing on.\n• 'mkdir' vs 'touch': Always run 'mkdir my-folder' FIRST to build the empty folder box, then 'touch my-folder/file.txt' SECOND to create the empty file inside it!\n• 'Squash & Merge': Combines 5 messy 'WIP / fix typo' commits on your branch into 1 clean commit when merging a Pull Request into main."
+    },
+    {
+      keywords: ["agent", "mcp", "model context protocol", "human in the loop", "prepare confirm", "sensitive data", "separate data"],
+      title: "AI Agents, MCP, Human-in-the-Loop ('Prepare -> Confirm') & Data Separation",
+      stopId: "system-dynamics",
+      answer: "• URL -> Backend Function: Calling '/api/users/42' triggers 'def get_user(42)' on your server, which queries the Database.\n• AI Agents & MCP: An agent runs in a Reason + Act loop calling tools connected via MCP (Model Context Protocol—the universal USB-C plug for tools).\n• Human-in-the-Loop ('Prepare -> Confirm'): Let AI read and summarize freely, but for any action that changes the world (sending emails, deleting data, charging money), stage a Preview Card first and wait for a human 'Approve' click.\n• Code vs. Sensitive Data: Never store private user CSVs or customer records inside your Git code repo—keep code in GitHub and sensitive data in an access-controlled Database or Cloud Storage bucket."
     }
   ];
 
   var STOP_STARTER_PROMPTS = {
     "default": [
+      "How much Python do I need in 2026?",
       "What is grep (and grep -rn)?",
       "How do Laptop, GitHub & Vercel connect?",
-      "Python vs TypeScript vs SQL?",
       "How do I build on top of open source?"
     ],
     "downloading-the-tools": [
@@ -152,27 +170,28 @@
       "Where do secret .env API keys go?"
     ],
     "git-and-shipping": [
+      "What is 'Squash & Merge' vs Commit?",
+      "What does 'HEAD' mean in Git?",
       "Branch vs clone vs fork?",
-      "How do I undo an AI mistake in Git?",
-      "What is a Pull Request (PR)?",
-      "Saving vs committing vs pushing?"
+      "How do I undo an AI mistake in Git?"
     ],
     "cli-and-terminal": [
       "What is grep (and grep -rn)?",
-      "What is a parent directory (..)?",
-      "How do I stop a stuck terminal command?",
-      "What is the difference between > and >>?"
+      "Why is mkdir first and touch second?",
+      "Terminal 'head' vs Git 'HEAD'?",
+      "What is a parent directory (..)?"
     ],
     "reading-code-stability": [
-      "What does it mean to 'trace' a file?",
-      "What did the Stanford security study find?",
-      "Why avoid innerHTML in web apps?",
-      "How do I red-team an AI prototype?"
+      "How much Python do I need in 2026?",
+      "How do Dicts, Lists & DataFrames fit together?",
+      "How do I read a Python stack trace?",
+      "What are Golden Evals & unit tests?"
     ],
     "system-dynamics": [
+      "What is Human-in-the-Loop ('Prepare -> Confirm')?",
+      "Why keep code repos separate from private data?",
       "Webhooks vs polling explained?",
-      "What is idempotency?",
-      "When do I need Redis or a job queue?"
+      "What is idempotency?"
     ],
     "system-architecture": [
       "How do I download & build on open source?",

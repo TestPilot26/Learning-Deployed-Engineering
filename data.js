@@ -123,6 +123,13 @@ window.PIPELINE_DATA = {
       resources: [
         {
           type: "Video",
+          badgeClass: "badge-info",
+          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
+          description: "How much Python you actually need in the AI era—why 'building first' and learning to read, debug, and structure code beats memorizing syntax textbooks.",
+          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
+        },
+        {
+          type: "Video",
           badgeClass: "badge-secondary",
           title: "Hello Interview: System design & app architecture w/ Meta Staff Engineer",
           description: "Clear visual framework for how frontend clients, APIs, databases, caches, and scaling pieces fit together.",
@@ -163,16 +170,16 @@ window.PIPELINE_DATA = {
       explainer: "Everyone who builds with AI hits this moment early on: your app is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we learn Git right away. Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your app works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to GitHub and Vercel.",
       experiences: [
         {
-          lead: "Saving (Cmd+S) vs. Committing (git commit) vs. Pushing (git push):",
-          body: "Cmd+S updates the file on your laptop right now. git commit takes a permanent, labeled snapshot you can rewind to anytime. git push uploads those snapshots to GitHub and triggers Vercel to update your live website."
+          lead: "Why are there so many steps? (Save vs. Commit vs. Push vs. PR vs. Squash & Merge):",
+          body: "Each step has a distinct job: Cmd+S saves to your laptop scratchpad; 'git commit' seals a local checkpoint; 'git push' uploads your branch to GitHub; a 'Pull Request (PR)' opens a review page with a preview link; and 'Squash & Merge' neatly combines your 5 messy 'WIP / fix typo' checkpoints into one clean update on main."
         },
         {
           lead: "Branching vs. Cloning vs. Copying a folder:",
           body: "Never duplicate folders on your desktop like 'project-v2-final-FINAL'. A Git branch lets you try a big AI experiment in a safe parallel timeline—and either merge it back in if it works, or throw it away in one second if it breaks."
         },
         {
-          lead: "Always check git diff before sealing a checkpoint:",
-          body: "Before you commit or open a Pull Request (PR), running git diff shows you every line removed (in red) and added (in green) so you can catch accidental deletions or stray passwords."
+          lead: "What 'HEAD' means in Git (and why you always check git diff):",
+          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Running 'git diff' compares your current unsaved edits against HEAD so you can spot accidental deletions or stray passwords before committing."
         }
       ],
       activity: {
@@ -231,16 +238,16 @@ window.PIPELINE_DATA = {
           body: "'grep' is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"Button\" .' searches inside every file and subfolder (-r) in a split second and prints the exact filename and line number (-n) where that word appears."
         },
         {
-          lead: "Following what your AI is doing in real time:",
-          body: "When an AI agent runs terminal commands, knowing pwd (which folder am I in?), ls -la (list all files, including hidden .env files), grep (search text inside files), and git diff lets you follow every step instead of treating AI like a black box."
+          lead: "Why 'mkdir' comes first and 'touch' comes second (and ls vs. ls -la):",
+          body: "'mkdir my-app' builds the empty folder box first (use 'mkdir -p a/b/c' to create nested parent folders all at once); then 'touch index.html' creates the empty file sheet inside it. When listing files, plain 'ls' hides secret dotfiles—always use 'ls -la' so hidden files like '.env' and '.git' show up."
         },
         {
-          lead: "One set of commands that works everywhere:",
-          body: "Buttons and menus move around in different apps, but basic terminal commands (cd, ls, pwd, mkdir, grep) work the exact same way on a Mac, Linux, VS Code, Cursor, and cloud servers."
+          lead: "Why 'head' means two different things (Terminal 'head' vs. Git 'HEAD'):",
+          body: "In the terminal, lowercase 'head -n 20 app.py' prints the top 20 lines of a file so a huge file doesn't flood your screen (its opposite is 'tail'). In Git, uppercase 'HEAD' is the 'You Are Here' pin pointing to your latest commit snapshot."
         },
         {
-          lead: "Breaking out of the 'ask AI 20 times' loop:",
-          body: "When your screen goes blank or a server won't start, pasting 'it still doesn't work' into chat ten times in a row is frustrating. Glancing at the red error line in the terminal (or running lsof -i :3000 to see if a port is busy) usually reveals the exact problem in 10 seconds."
+          lead: "When to use Absolute Paths (/ or ~) vs. Relative Paths (. or ..):",
+          body: "An Absolute Path ('cd ~/workspace/my-app') starts from your home or root folder, so it works no matter where you are standing. A Relative Path ('cd src/components' or 'cd ..') starts from the room you are standing in right now ('pwd')—if you're in the wrong folder, a relative path will say 'No such file or directory'."
         }
       ],
       activity: {
@@ -284,36 +291,55 @@ window.PIPELINE_DATA = {
     },
     {
       id: "reading-code-stability",
-      title: "Reading code & long-term stability",
-      stage: "Step 5 · Reliability",
+      title: "Reading code, Python essentials & long-term stability",
+      stage: "Step 5 · Python Literacy & Reliability",
       tone: "tone-secondary",
       badgeClass: "badge-secondary",
       icon: "troubleshoot",
-      teaser: "How to skim AI-written code—even before you could write it yourself—to spot silent bugs, missing error checks, and security traps.",
-      explainer: "You don't need to know how to write every line of code from memory—that's what AI is for. But there is a big difference between writing code and reading it. Often, an AI prototype works on your first try when you click the right button with clean test data, but breaks the moment a real user types something unexpected or has slow Wi-Fi. Learning how to skim the code AI generates lets you spot where it forgot to handle errors, where a secret password might be exposed, and how to keep your app stable as it grows.",
+      diagramType: "python-code-blueprint",
+      teaser: "How much Python you actually need in 2026 (building first vs. memorizing syntax), how Lists & Dictionaries make DataFrames/Tables, reading stack traces, and running Evals.",
+      explainer: "How much Python or coding syntax do you actually need to learn in 2026? You don't need to spend six months memorizing syntax textbooks—AI can write boilerplate code in seconds. Instead, the best way to learn now is to build first (using AI as your tutor) while learning the 6 core building blocks of code so you can read what AI wrote, trace how data moves from a Dictionary to a Table (DataFrame), read error stack traces from bottom to top, and run automated checks (Evals & tests) so your app stays reliable.",
       experiences: [
         {
-          lead: "Why 'it worked on the first try' can be a trap:",
-          body: "AI usually writes code for the 'happy path'—assuming the internet is fast, every form box is filled in properly, and only one person is clicking at a time. Skimming the code helps you ask: what happens if the server is slow, a box is left blank, or an API call fails?"
+          lead: "How much Python to learn in 2026 ('Build first, read & debug'):",
+          body: "Focus on reading and debugging 6 things: (1) Variables & types, (2) Lists [...] and Dictionaries {'key': 'val'}, (3) if/else branches and for-loops, (4) Functions (def -> return), (5) Strict data schemas (Pydantic / JSON Schema / Protobufs), and (6) Reading stack traces."
         },
         {
-          lead: "Keeping files small and organized:",
-          body: "If you let AI keep piling new features into one giant 2,000-line file, it eventually starts breaking old features every time it adds a new one. Asking AI to split your app into small, focused files (one for the screen, one for the server, one for data) keeps everything easy to maintain."
+          lead: "How Dictionaries, Lists, and Tables (Pandas DataFrames) fit together:",
+          body: "A Dictionary {'name': 'Lucy', 'status': 'Doing'} is one single row of labeled data. A List [row1, row2, row3] holds multiple rows in order. And a Table (or a Pandas DataFrame in Python / Colab) is simply a List of Dictionaries that lets you filter, sort, or analyze thousands of rows at once!"
         },
         {
-          lead: "Showing helpful errors instead of failing silently:",
-          body: "The most confusing bug is when a user clicks a button and nothing happens on screen. Always ask AI to add visible loading states and clear error messages so you and your users immediately know if something went wrong."
+          lead: "Reading error 'Stack Traces' from the bottom up:",
+          body: "When Python crashes and prints 25 scary lines of traceback text, don't panic—jump straight to the very last line! That bottom line names the exact bug (like KeyError: 'email' when a dictionary key is missing) and the line right above it tells you the exact file and line number."
+        },
+        {
+          lead: "Testing & Golden Evals (Making sure 'Move to Doing' stays in Doing):",
+          body: "Before trusting an AI prompt or backend function, write a quick test or 30-item 'Golden Eval' checklist: if you tell the app 'move Task A to Doing', does it reliably land in 'Doing' every time without breaking 'Done'?"
         }
       ],
       activity: {
-        title: "Fun activity: Stress-test your own prototype",
+        title: "Fun activity: Trace the 6 Python building blocks & test your app",
         steps: [
-          "Open one of your AI-built apps, turn off Wi-Fi (or slow it down in Chrome Inspect -> Network), click a button, and see if the app shows a helpful message or freezes silently.",
-          "Check your project files in your editor: if any single file is over 500–800 lines long, ask your AI assistant to split it into smaller, clearly named files.",
-          "Search your code (using grep -rn \"sk-\" . or your editor search) to make sure no secret API keys are sitting inside your normal code files."
+          "Click through all 6 blocks in the Interactive Python & Code Reading Blueprint above to see real examples of Dictionaries, DataFrames, Schemas, Stack Traces, and Evals.",
+          "Watch 'Python in 2026: Honest Truth About Learning It Now' in the resources below to see how to use AI as a tutor while building real projects.",
+          "Open one of your AI-built scripts, find a function (def ...), and trace what happens if an input field is missing or empty (None)."
         ]
       },
       resources: [
+        {
+          type: "Video",
+          badgeClass: "badge-info",
+          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
+          description: "Essential guide to how much Python you actually need in 2026—why 'building first' with AI and mastering code reading, debugging, and architecture beats textbook memorization.",
+          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
+        },
+        {
+          type: "Course",
+          badgeClass: "badge-success",
+          title: "Harvard CS50P: Introduction to Programming with Python",
+          description: "David Malan's clear, beginner-friendly visual introduction to Python functions, dictionaries, exceptions, and unit tests.",
+          url: "https://cs50.harvard.edu/python/"
+        },
         {
           type: "Explainer",
           badgeClass: "badge-info",
@@ -339,33 +365,38 @@ window.PIPELINE_DATA = {
     },
     {
       id: "system-dynamics",
-      title: "System dynamics & how pieces fit together",
-      stage: "Step 6 · Systems",
+      title: "System dynamics, AI agents & how pieces fit together",
+      stage: "Step 6 · Systems & AI Agents",
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "sync_alt",
-      teaser: "How information moves between the pieces of your app over time—handling slow tasks, double-clicks, page refreshes, and traffic spikes.",
-      explainer: "In Step 2, we looked at the map of an app's pieces (Front End, Back End, Database). This stop is about timing and traffic—how those pieces talk to each other in real life. Most bugs in a growing app aren't typos in the code; they happen when two things happen at once or a step takes too long: What happens if an AI task takes 30 seconds and the browser gets tired of waiting? What if someone impatiently clicks 'Pay' three times in a row? What if refreshing the page wipes out their work? Understanding how data moves over time helps you build apps that feel smooth and never lose user work.",
+      diagramType: "systems-agent-blueprint",
+      teaser: "How URLs map to backend Python functions, Polling vs. Webhooks, AI Agent tool-calling (MCP), Human-in-the-Loop approval cards, and keeping sensitive data separate from code.",
+      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop is about how data and AI agents actually move across those pieces in real life: how a browser URL triggers a specific Python function on the server, how apps handle slow 30-second tasks without freezing, how AI agents use tools (and why they should stage a 'Confirm' card before taking real-world actions), and why you always keep sensitive user data separate from your code repository.",
       experiences: [
         {
-          lead: "Asking 'Are you done yet?' (Polling) vs. 'Text me when it's ready' (Webhooks):",
-          body: "When your app waits for a slow job (like generating an AI report or confirming a Stripe payment), your screen can either keep asking the server 'Are you done yet?' every few seconds (called Polling), or the outside service can send your server a direct notification the moment it finishes (called a Webhook)."
+          lead: "How a website URL maps to a backend function & database:",
+          body: "When your browser calls a URL like '/api/users/42', the API acts as a switchboard that triggers a Python function on your server—like 'get_user(42)'—which looks up user #42 in the Database and hands back a clean JSON response."
         },
         {
-          lead: "Making sure a double-click doesn't double-charge (Idempotency):",
-          body: "On slow Wi-Fi, people often tap 'Submit' or 'Pay' two or three times. Engineers use the word 'Idempotency' for a simple protection: disabling the button while it loads and tagging the action with a unique receipt ID so the server only runs it once."
+          lead: "AI Agents, Tool Calling (MCP) & Human-in-the-Loop ('Prepare -> Confirm'):",
+          body: "An AI Agent is simply an AI model given a loop and a menu of tools it can call (like searching a database or drafting an email). Crucial rule: for any action that changes the outside world (sending an email, deleting a row, charging money), have the agent stage a Preview Card first so a human clicks 'Approve' before it runs!"
         },
         {
-          lead: "Why refreshing the page sometimes wipes out your work (State):",
-          body: "If you type into a page or open a tab and it disappears when you hit Refresh, that information was only sitting in temporary browser memory ('UI state'). Anything that needs to survive a page refresh must be saved in the Database, local storage, or the page URL."
+          lead: "Keep your code repo separate from sensitive user data:",
+          body: "Never store real user spreadsheets, private CSVs, or customer records inside your Git code folder (where anyone with repo access can see them). Keep only code in GitHub, and store real data in a proper Database (PostgreSQL / Supabase / Firestore) or secure cloud storage."
+        },
+        {
+          lead: "Polling vs. Webhooks & Double-Click Protection (Idempotency):",
+          body: "For slow jobs, either check status on a timer (Polling) or let the server ping you when done (Webhook). And always disable submit buttons while loading + attach a unique receipt ID (Idempotency) so double-clicks never create duplicate records."
         }
       ],
       activity: {
-        title: "Fun activity: Trace timing & double-clicks in your app",
+        title: "Fun activity: Walk through the live System & AI Agent flow",
         steps: [
-          "Pick an app you're building and draw three boxes on paper: Screen (Front End), Server (Back End), and Database / AI API.",
-          "Trace what happens if a user double-clicks the main submit button rapidly—does the button disable itself while loading, or does it send duplicate requests?",
-          "Refresh the browser in the middle of using your app and check what stays on screen (saved in the Database or URL) vs. what disappears (temporary browser state)."
+          "Click through all 6 stages in the Interactive System Dynamics & AI Agent Diagram above to see how URLs, Databases, Webhooks, and Human-in-the-Loop Agent approvals work.",
+          "Check your own project folder to verify that zero private user CSVs or sensitive datasets are mixed into your Git repository.",
+          "If your app uses AI to take actions (like updating tasks or sending messages), design a 'Prepare -> Confirm' preview card before the action executes."
         ]
       },
       resources: [
@@ -375,6 +406,13 @@ window.PIPELINE_DATA = {
           title: "Hello Interview: Core system design concepts & scaling dynamics",
           description: "Meta Staff Engineer breakdown of latency, throughput, caching, queues, and handling failure modes.",
           url: "https://www.youtube.com/watch?v=Ru54dxzCyD0"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
+          title: "Google AI for Developers: Function Calling & Structured Outputs",
+          description: "Official guide to giving AI models structured JSON schemas and custom Python/JS tools they can call safely.",
+          url: "https://ai.google.dev/gemini-api/docs/function-calling"
         },
         {
           type: "Explainer",
@@ -485,6 +523,12 @@ window.PIPELINE_DATA = {
       }
     ],
     library: [
+      {
+        title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
+        category: "Video",
+        badgeClass: "badge-info",
+        takeaway: "Why you don't need to memorize syntax textbooks in 2026—focus on building first, reading AI code, debugging stack traces, and understanding architecture."
+      },
       {
         title: "Harvard CS50x: Introduction to Computer Science",
         category: "Course",

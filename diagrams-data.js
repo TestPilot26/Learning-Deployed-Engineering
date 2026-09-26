@@ -188,11 +188,11 @@ window.PIPELINE_DIAGRAMS_DATA = {
       oneLiner: "Save a permanent checkpoint",
       badge: "Step 3 on sandbox · Save point",
       badgeClass: "badge-success",
-      title: "Commit (c3: AI edit — Saving a labeled checkpoint on your branch)",
+      title: "Commit & Git 'HEAD' (c3: AI edit — Saving a labeled checkpoint on your branch)",
       command: "git add . && git commit -m \"Add searchable terminal vocab\"",
-      labelDecoded: "What 'c3: AI edit' means on the graph: 'c3' is Commit #3—a permanent snapshot dot saved on the green sandbox branch right after you or your AI agent finishes an edit, with a short label ('AI edit') describing what changed.",
-      whatItIs: "Pressing Cmd+S in your editor only overwrites the file on your screen. Making a 'Commit' takes a permanent, labeled photograph of every file in your project at that exact moment and adds a new dot to your timeline.",
-      whyItSavesYou: "Every commit dot is a checkpoint you can rewind to at any time—even weeks later—if a future change introduces a bug."
+      labelDecoded: "What 'c3: AI edit' and 'HEAD' mean: 'c3' is Commit #3—a permanent snapshot dot saved on the green sandbox branch. In Git, 'HEAD' (all caps) is simply the 'You Are Here' pin that points to whichever commit dot your folder is standing on right now.",
+      whatItIs: "Pressing Cmd+S in your editor only overwrites the file on your screen. Making a 'Commit' takes a permanent, labeled photograph of every file in your project at that exact moment and moves your 'HEAD' ('You Are Here') pin forward to this new dot.",
+      whyItSavesYou: "Every commit dot is a checkpoint you can rewind to at any time—even weeks later—if a future AI edit introduces a bug."
     },
     {
       id: "git-diff",
@@ -206,8 +206,8 @@ window.PIPELINE_DIAGRAMS_DATA = {
       badgeClass: "badge-secondary",
       title: "Compare changes (c4: git diff ok — Checking what the AI actually touched)",
       command: "git status && git diff",
-      labelDecoded: "What 'c4: git diff ok' means on the graph: 'diff' is short for Difference. This dot represents inspecting the exact red (deleted) and green (added) lines between your last save point and your newest edits, and confirming everything looks clean ('ok').",
-      whatItIs: "Where you review a line-by-line highlight of everything that changed in your code files before you propose publishing it to the main app.",
+      labelDecoded: "What 'c4: git diff ok' means on the graph: 'diff' is short for Difference. This dot represents inspecting the exact red (deleted) and green (added) lines between your last save point (HEAD) and your newest edits, and confirming everything looks clean ('ok').",
+      whatItIs: "Where you review a line-by-line highlight of everything that changed in your code files before you upload ('git push') your branch to GitHub.",
       whyItSavesYou: "AI coding tools sometimes fix one button while accidentally deleting a paragraph or leaving a test password behind. 'git diff' spots that in 10 seconds."
     },
     {
@@ -217,12 +217,12 @@ window.PIPELINE_DIAGRAMS_DATA = {
       octicon: "pullRequest",
       word: "5. Pull Request (PR)",
       graphCodeLabel: "PR review",
-      oneLiner: "Preview link & review gate",
+      oneLiner: "Push & open review gate",
       badge: "Step 5 · Propose merging to main",
       badgeClass: "badge-secondary",
-      title: "Pull Request (PR review — The safety gate before going live)",
-      command: "gh pr create --title \"Add interactive app diagram\"",
-      labelDecoded: "What 'PR review' means: On GitHub, proposing to bring your sandbox branch back into 'main' is called a Pull Request ('PR')—you are requesting to pull your finished branch changes into the main project after reviewing the diff and preview link.",
+      title: "Push & open a Pull Request (PR review — The safety gate before going live)",
+      command: "git push -u origin feat/ai-experiment   # Then open Pull Request on GitHub",
+      labelDecoded: "Why there are two steps here ('git push' -> 'Pull Request'): First, 'git push' uploads your sandbox branch from your laptop to GitHub. Second, opening a 'Pull Request (PR)' on GitHub creates a review page proposing to pull your finished branch into 'main'.",
       whatItIs: "Before the green sandbox line is allowed to curve back up into the blue 'main' line, you open a PR on GitHub. It shows a clean before-and-after summary, runs automated checks, and tells Vercel to build a private Preview URL so you can test the changes on your phone.",
       whyItSavesYou: "Catches broken builds or mobile layout bugs on a private preview link before a single real visitor on your live site sees them."
     },
@@ -233,14 +233,14 @@ window.PIPELINE_DIAGRAMS_DATA = {
       octicon: "merge",
       word: "6. Merge",
       graphCodeLabel: "c5: merge PR",
-      oneLiner: "Join branch back into main",
+      oneLiner: "Squash & join into main",
       badge: "Step 6 on main · Combine timelines",
       badgeClass: "badge-info",
-      title: "Merge (c5: merge PR — Combining your sandbox work into main)",
-      command: "git checkout main && git merge feat/ai-experiment && git push",
-      labelDecoded: "What 'c5: merge PR' means on the graph: Notice how the green sandbox curve rises back up and joins the blue 'main' line at dot 'c5' (Commit #5). That junction point is a 'Merge Commit'—where your approved PR changes officially become part of 'main'.",
-      whatItIs: "Once your preview looks good, clicking 'Merge Pull Request' on GitHub (or running 'git merge') folds all the work from your green sandbox branch into your blue 'main' trunk.",
-      whyItSavesYou: "Your 'main' timeline moves forward cleanly in tested, approved steps—and if anything unexpected happens, GitHub has a 1-click 'Revert' button to undo that merge."
+      title: "Merge or 'Squash & Merge' (c5: merge PR — Combining your sandbox work into main)",
+      command: "git checkout main && git merge --squash feat/ai-experiment && git commit -m \"Ship feature\"",
+      labelDecoded: "What 'Merge' vs. 'Squash & Merge' means: When you click 'Squash and merge' on a GitHub PR, Git takes all the messy little commits you made on your sandbox branch ('wip', 'fix typo', 'try again') and squashes them together into ONE clean commit dot ('c5') on 'main'!",
+      whatItIs: "Once your preview link looks good, clicking 'Squash and merge' (or 'Merge pull request') on GitHub folds all the finished work from your green sandbox branch back into your blue 'main' trunk.",
+      whyItSavesYou: "Your 'main' timeline stays super clean—one commit per finished feature—so if anything unexpected happens, you can undo the entire feature in one click."
     },
     {
       id: "git-vercel-live",
