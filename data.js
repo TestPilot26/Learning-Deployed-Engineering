@@ -9,7 +9,7 @@
 // 7. System architecture & stress-tested blueprints
 
 window.PIPELINE_DATA = {
-  substackUrl: "https://substack.com",
+  substackUrl: "https://lulucalcott.substack.com/",
   stops: [
     {
       id: "downloading-the-tools",
