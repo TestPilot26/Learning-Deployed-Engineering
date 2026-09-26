@@ -297,69 +297,90 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-secondary",
       icon: "troubleshoot",
       diagramType: "python-code-blueprint",
-      teaser: "How much Python you actually need in 2026 (building first vs. memorizing syntax), how Lists & Dictionaries make DataFrames/Tables, reading stack traces, and running Evals.",
-      explainer: "How much Python or coding syntax do you actually need to learn in 2026? You don't need to spend six months memorizing syntax textbooks—AI can write boilerplate code in seconds. Instead, the best way to learn now is to build first (using AI as your tutor) while learning the 6 core building blocks of code so you can read what AI wrote, trace how data moves from a Dictionary to a Table (DataFrame), read error stack traces from bottom to top, and run automated checks (Evals & tests) so your app stays reliable.",
+      teaser: "Bad vs. good code side by side, what breakages actually look like when scaling from 1 to 5,000+ users, how to build automated breakage-tracking agents (Anthropic, Cognition, DeepMind & OpenAI), and the 6 Python essentials.",
+      explainer: "A prototype that works once on your laptop ('the first-go illusion') will often crack the moment 50 concurrent users click at once, an external AI API times out, or an input field is empty. Stanford's ACM CCS study (Perry et al.) proved that developers using AI assistants wrote less secure code while feeling more confident it was safe. You don't need to memorize syntax textbooks in 2026—instead, you need to know what fragile vs. production-grade code looks like side by side, what breakages look like on screen and in terminal logs as you scale users, how modern teams (Anthropic, Cognition, Google DeepMind, OpenAI) build automated agents that track and verify fixes, and the 6 core Python building blocks.",
       experiences: [
         {
-          lead: "How much Python to learn in 2026 ('Build first, read & debug'):",
-          body: "Focus on reading and debugging 6 things: (1) Variables & types, (2) Lists [...] and Dictionaries {'key': 'val'}, (3) if/else branches and for-loops, (4) Functions (def -> return), (5) Strict data schemas (Pydantic / JSON Schema / Protobufs), and (6) Reading stack traces."
+          lead: "What happens when you scale from 1 user (localhost) -> 50 users -> 5,000+ users:",
+          body: "On your laptop (1 user), 0ms network delay and clean test inputs hide every bug. At 50 concurrent users, missing fields ('None' / KeyError), double-clicks (race conditions), and global variable leaks appear. At 5,000+ users or viral traffic, opening a new database connection per request crashes Postgres ('503 Too Many Connections'), 'SELECT *' without 'LIMIT 20' runs the server out of RAM, and unthrottled AI endpoints rack up thousands of dollars in bot traffic."
         },
         {
-          lead: "How Dictionaries, Lists, and Tables (Pandas DataFrames) fit together:",
-          body: "A Dictionary {'name': 'Lucy', 'status': 'Doing'} is one single row of labeled data. A List [row1, row2, row3] holds multiple rows in order. And a Table (or a Pandas DataFrame in Python / Colab) is simply a List of Dictionaries that lets you filter, sort, or analyze thousands of rows at once!"
+          lead: "Spotting bad (fragile vibe-coded) code vs. good (production-grade) code:",
+          body: "Whenever you skim AI-generated code, check 5 things: (1) Are external API/LLM calls wrapped in a timeout (e.g. 10s), 'try/except', and a strict Pydantic/JSON Schema? (2) Does it swallow errors silently with 'except: pass'? (3) Does it run database queries inside a 'for' loop (the N+1 bug) or forget 'LIMIT 20'? (4) Does it check the logged-in server session ('session_user.id') rather than trusting a 'user_id' URL parameter? (5) Does it use atomic SQL updates + Idempotency Keys so double-clicks never double-charge?"
         },
         {
-          lead: "Reading error 'Stack Traces' from the bottom up:",
-          body: "When Python crashes and prints 25 scary lines of traceback text, don't panic—jump straight to the very last line! That bottom line names the exact bug (like KeyError: 'email' when a dictionary key is missing) and the line right above it tells you the exact file and line number."
+          lead: "How to build agents that track, reproduce & fix breakages automatically (Anthropic, Cognition, DeepMind & OpenAI):",
+          body: "Modern engineering teams don't wait for users to report crashes. They wire up a 4-stage loop: (1) Telemetry & Probers (Sentry/PostHog captures every crash stack trace + a Playwright cron job tests the live URL every 10 minutes), (2) Context-Rich Triage (Cognition's rule: feed the agent the exact bottom of the stack trace + 'git log -p -n 3' so it sees what changed), (3) Test-First Reproduction (Anthropic & DeepMind's rule: the agent writes a failing 'pytest' unit test that reproduces the bug FIRST, then edits code until the test passes), and (4) Human-Gated Draft PR (never auto-pushing to 'main' without review)."
         },
         {
-          lead: "Testing & Golden Evals (Making sure 'Move to Doing' stays in Doing):",
-          body: "Before trusting an AI prompt or backend function, write a quick test or 30-item 'Golden Eval' checklist: if you tell the app 'move Task A to Doing', does it reliably land in 'Doing' every time without breaking 'Done'?"
+          lead: "How much Python you actually need in 2026 (Dicts, Lists -> DataFrames, Schemas & Stack Traces):",
+          body: "Build real projects first with AI as your tutor and focus on reading 6 building blocks: Variables/Types, Dictionaries {'key': 'val'} (1 row) inside Lists [...] (a whole Table / Pandas DataFrame in Colab!), if/else & loops, Functions (def -> return), Pydantic Schemas, and reading Stack Traces from the VERY BOTTOM line up."
         }
       ],
       activity: {
-        title: "Fun activity: Trace the 6 Python building blocks & test your app",
+        title: "Fun activity: Stress-test bad vs. good code & trace the 6 Python blocks",
         steps: [
-          "Click through all 6 blocks in the Interactive Python & Code Reading Blueprint above to see real examples of Dictionaries, DataFrames, Schemas, Stack Traces, and Evals.",
-          "Watch 'Python in 2026: Honest Truth About Learning It Now' in the resources below to see how to use AI as a tutor while building real projects.",
-          "Open one of your AI-built scripts, find a function (def ...), and trace what happens if an input field is missing or empty (None)."
+          "In Diagram 1 above, click through all 3 Traffic Scale Tiers (1 user -> 50 users -> 5,000+ users) and all 6 Bad vs. Good Code Breakpoints to see what each crash looks like on screen and in the logs.",
+          "Search your own AI-generated project for silent failures ('except:' followed by 'pass' or empty 'catch {}') and missing 'timeout=' parameters on API calls.",
+          "In Diagram 2 above, click through the 6 Python Literacy blocks (Variables, Dicts/Lists/DataFrames, Pydantic Schemas, Stack Traces, and Golden Evals)."
         ]
       },
       resources: [
         {
-          type: "Video",
-          badgeClass: "badge-info",
-          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
-          description: "Essential guide to how much Python you actually need in 2026—why 'building first' with AI and mastering code reading, debugging, and architecture beats textbook memorization.",
-          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
-        },
-        {
-          type: "Course",
-          badgeClass: "badge-success",
-          title: "Harvard CS50P: Introduction to Programming with Python",
-          description: "David Malan's clear, beginner-friendly visual introduction to Python functions, dictionaries, exceptions, and unit tests.",
-          url: "https://cs50.harvard.edu/python/"
-        },
-        {
           type: "Explainer",
           badgeClass: "badge-info",
-          title: "Do Users Write More Insecure Code with AI Assistants? (Stanford)",
-          description: "Stanford study on why AI-generated code can look convincing at first glance while hiding security gaps.",
-          url: "https://dl.acm.org/doi/10.1145/3576915.3623157"
+          title: "Anthropic Engineering: Building Effective Agents",
+          description: "Erik Schluntz & Barry Zhang's landmark guide on why simple, composable workflows and deterministic evaluator-optimizer loops beat complex black-box agents.",
+          url: "https://www.anthropic.com/research/building-effective-agents"
         },
         {
           type: "Explainer",
           badgeClass: "badge-secondary",
-          title: "Google DORA State of DevOps report",
-          description: "Why shipping small, well-tested changes keeps apps much more reliable than giant all-at-once rewrites.",
-          url: "https://dora.dev/"
+          title: "Cognition (Devin): Don't Build Multi-Agents (Principles of Context Engineering)",
+          description: "Why multi-agent systems break when sub-agents lose shared context traces—and how to keep agent state and verification rock-solid.",
+          url: "https://cognition.ai/blog/dont-build-multi-agents"
         },
         {
           type: "Explainer",
           badgeClass: "badge-success",
-          title: "OWASP Top 10 Web Application Security Risks",
-          description: "The essential checklist for spotting common security mistakes when reviewing web application code.",
-          url: "https://owasp.org/www-project-top-ten/"
+          title: "Anthropic Engineering: Claude Code Best Practices (Test-Driven Agent Loops)",
+          description: "How to have coding agents write a failing reproduction test first, verify fixes automatically, and keep context windows clean.",
+          url: "https://www.anthropic.com/engineering/claude-code-best-practices"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
+          title: "OpenAI: A Practical Guide to Building Agents & Guardrails (PDF)",
+          description: "Engineering blueprint for tool risk tiers, structured output schemas, layered guardrails, and human-in-the-loop escalation.",
+          url: "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-secondary",
+          title: "Google DeepMind: Spec-Driven Code Repair & Frontier Safety Research",
+          description: "Research on iterative test-anchored code generation (generating edge-case tests before trusting code) and evaluating agent reliability.",
+          url: "https://deepmind.google/research/"
+        },
+        {
+          type: "Video",
+          badgeClass: "badge-info",
+          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
+          description: "Why 'building first' with AI and mastering code reading, stack-trace debugging, and architecture beats memorizing syntax textbooks.",
+          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-danger",
+          title: "Do Users Write More Insecure Code with AI Assistants? (Stanford ACM CCS)",
+          description: "Perry et al.'s empirical study showing why reviewing AI-generated code for auth bypasses, SQL injection, and leaked keys is critical.",
+          url: "https://dl.acm.org/doi/10.1145/3576915.3623157"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-success",
+          title: "Google DORA State of DevOps & OWASP Top 10 Security Risks",
+          description: "Why small, tested commits with automated rollback and observability outperform giant unverified code drops.",
+          url: "https://dora.dev/"
         }
       ]
     },
@@ -380,11 +401,11 @@ window.PIPELINE_DATA = {
         },
         {
           lead: "AI Agents, Tool Calling (MCP) & Human-in-the-Loop ('Prepare -> Confirm'):",
-          body: "An AI Agent is simply an AI model given a loop and a menu of tools it can call (like searching a database or drafting an email). Crucial rule: for any action that changes the outside world (sending an email, deleting a row, charging money), have the agent stage a Preview Card first so a human clicks 'Approve' before it runs!"
+          body: "An AI Agent is simply an AI model given a loop and a menu of tools it can call (like searching a database or drafting an email). Crucial rule from Anthropic and OpenAI: for any action that changes the outside world (sending an email, deleting a row, charging money), have the agent stage a Preview Card first so a human clicks 'Approve' before it runs!"
         },
         {
           lead: "Keep your code repo separate from sensitive user data:",
-          body: "Never store real user spreadsheets, private CSVs, or customer records inside your Git code folder (where anyone with repo access can see them). Keep only code in GitHub, and store real data in a proper Database (PostgreSQL / Supabase / Firestore) or secure cloud storage."
+          body: "Never store real user spreadsheets, private CSVs, or customer records inside your Git code folder (where anyone with repo access can see them). Keep only code in GitHub, and store real data in a proper Database (PostgreSQL / Neon / Supabase / Firestore) or secure cloud storage."
         },
         {
           lead: "Polling vs. Webhooks & Double-Click Protection (Idempotency):",
@@ -410,6 +431,13 @@ window.PIPELINE_DATA = {
         {
           type: "Explainer",
           badgeClass: "badge-info",
+          title: "Model Context Protocol (MCP): Open Standard for Connecting AI Agents to Tools",
+          description: "How MCP acts as a universal USB-C connector between AI models (Claude, Gemini, Cursor) and external databases or APIs.",
+          url: "https://modelcontextprotocol.io/"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
           title: "Google AI for Developers: Function Calling & Structured Outputs",
           description: "Official guide to giving AI models structured JSON schemas and custom Python/JS tools they can call safely.",
           url: "https://ai.google.dev/gemini-api/docs/function-calling"
@@ -418,7 +446,7 @@ window.PIPELINE_DATA = {
           type: "Explainer",
           badgeClass: "badge-info",
           title: "Designing Data-Intensive Applications (Martin Kleppmann)",
-          description: "The foundational guide to reliability, scalability, and maintainability in modern software systems.",
+          description: "The foundational guide to reliability, scalability, race conditions, and maintainability in modern software systems.",
           url: "https://dataintensive.net/"
         },
         {
