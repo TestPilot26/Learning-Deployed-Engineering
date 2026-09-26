@@ -315,13 +315,8 @@
     var lbl = document.createElement("span");
     lbl.textContent = item.label;
 
-    var tag = document.createElement("span");
-    tag.className = "diagram-pill-tag";
-    tag.textContent = item.tag;
-
     btn.appendChild(ic);
     btn.appendChild(lbl);
-    btn.appendChild(tag);
 
     btn.addEventListener("click", function () {
       onSelect(item);
@@ -330,127 +325,38 @@
     return btn;
   }
 
-  function createMiniIllustration(badgeText, badgeClass, iconName, barLabel) {
-    var box = document.createElement("div");
-    box.className = "app-mini-illustration";
-
-    var topBar = document.createElement("div");
-    topBar.className = "mini-window-bar";
-
-    var dots = document.createElement("div");
-    dots.className = "mini-window-dots";
-    ["mini-dot-primary", "mini-dot-tertiary", "mini-dot"].forEach(function (cls) {
-      var d = document.createElement("span");
-      d.className = "mini-dot " + cls;
-      dots.appendChild(d);
-    });
-
-    var badge = document.createElement("span");
-    badge.className = "badge " + badgeClass;
-    badge.textContent = badgeText;
-
-    topBar.appendChild(dots);
-    topBar.appendChild(badge);
-    box.appendChild(topBar);
-
-    var stage = document.createElement("div");
-    stage.className = "mini-illustration-stage";
-
-    var heroCircle = document.createElement("div");
-    heroCircle.className = "scene-node-icon-circle " + badgeClass;
-    var ic = document.createElement("span");
-    ic.className = "material-symbols-outlined scene-node-icon";
-    ic.textContent = iconName;
-    heroCircle.appendChild(ic);
-
-    var bars = document.createElement("div");
-    bars.className = "mini-mockup-bars";
-    var caption = document.createElement("strong");
-    caption.className = "diagram-node-title";
-    caption.textContent = barLabel;
-    var b1 = document.createElement("div");
-    b1.className = "mini-bar-wide";
-    var b2 = document.createElement("div");
-    b2.className = "mini-bar-short";
-    bars.appendChild(caption);
-    bars.appendChild(b1);
-    bars.appendChild(b2);
-
-    stage.appendChild(heroCircle);
-    stage.appendChild(bars);
-    box.appendChild(stage);
-    return box;
-  }
-
-  function createHorizontalBidirectionalSvg() {
-    var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("viewBox", "0 0 180 44");
-    svg.setAttribute("class", "bidirectional-svg");
-    svg.setAttribute("aria-hidden", "true");
-
-    // Top arrow: Front End -> Back End (Request)
-    var lineRight = document.createElementNS(SVG_NS, "line");
-    lineRight.setAttribute("x1", "14");
-    lineRight.setAttribute("y1", "13");
-    lineRight.setAttribute("x2", "156");
-    lineRight.setAttribute("y2", "13");
-    lineRight.setAttribute("class", "flow-animated-line");
-    var headRight = document.createElementNS(SVG_NS, "polygon");
-    headRight.setAttribute("points", "152,7 166,13 152,19");
-    headRight.setAttribute("class", "flow-arrow-head");
-
-    // Bottom arrow: Back End -> Front End (Response)
-    var lineLeft = document.createElementNS(SVG_NS, "line");
-    lineLeft.setAttribute("x1", "24");
-    lineLeft.setAttribute("y1", "31");
-    lineLeft.setAttribute("x2", "166");
-    lineLeft.setAttribute("y2", "31");
-    lineLeft.setAttribute("class", "flow-animated-line-reverse");
-    var headLeft = document.createElementNS(SVG_NS, "polygon");
-    headLeft.setAttribute("points", "28,25 14,31 28,37");
-    headLeft.setAttribute("class", "flow-arrow-head-tertiary");
-
-    svg.appendChild(lineRight);
-    svg.appendChild(headRight);
-    svg.appendChild(lineLeft);
-    svg.appendChild(headLeft);
-    return svg;
-  }
-
-  function createVerticalBidirectionalSvg() {
-    var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("viewBox", "0 0 48 44");
-    svg.setAttribute("class", "vertical-bidirectional-svg");
-    svg.setAttribute("aria-hidden", "true");
-
-    var lineDown = document.createElementNS(SVG_NS, "line");
-    lineDown.setAttribute("x1", "16");
-    lineDown.setAttribute("y1", "4");
-    lineDown.setAttribute("x2", "16");
-    lineDown.setAttribute("y2", "34");
-    lineDown.setAttribute("class", "flow-animated-line");
-    var headDown = document.createElementNS(SVG_NS, "polygon");
-    headDown.setAttribute("points", "10,30 16,40 22,30");
-    headDown.setAttribute("class", "flow-arrow-head");
-
-    var lineUp = document.createElementNS(SVG_NS, "line");
-    lineUp.setAttribute("x1", "32");
-    lineUp.setAttribute("y1", "10");
-    lineUp.setAttribute("x2", "32");
-    lineUp.setAttribute("y2", "40");
-    lineUp.setAttribute("class", "flow-animated-line-reverse");
-    var headUp = document.createElementNS(SVG_NS, "polygon");
-    headUp.setAttribute("points", "26,14 32,4 38,14");
-    headUp.setAttribute("class", "flow-arrow-head-tertiary");
-
-    svg.appendChild(lineDown);
-    svg.appendChild(headDown);
-    svg.appendChild(lineUp);
-    svg.appendChild(headUp);
-    return svg;
+  function getAppStageForItem(itemId) {
+    if (
+      itemId === "fe-overview" ||
+      itemId === "fe-ui" ||
+      itemId === "lang-html-css" ||
+      itemId === "lang-js-ts" ||
+      itemId === "tool-react-next"
+    ) {
+      return "stage-fe";
+    }
+    if (
+      itemId === "be-overview" ||
+      itemId === "lang-python" ||
+      itemId === "lang-nodejs" ||
+      itemId === "lang-go-rust" ||
+      itemId === "be-cache-queue" ||
+      itemId === "bridge-api" ||
+      itemId === "lang-json" ||
+      itemId === "bridge-auth"
+    ) {
+      return "stage-be";
+    }
+    if (itemId === "db-overview" || itemId === "tool-postgres" || itemId === "lang-sql") {
+      return "stage-db";
+    }
+    return "stage-user";
   }
 
   function renderAppInfraDiagram(container) {
+    var art = window.DiagramIllustrations;
+    if (!art) return;
+
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
 
@@ -461,12 +367,12 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Interactive diagram of an app — click any label or coding language to explore";
+    badge.textContent = "Interactive diagram of an app — click any stage or coding language pill to open its guide in the side panel";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Inside a modern app: the two main halves, how they talk, and where data lives";
+    h3.textContent = "Inside a modern app: how the screen, cloud server, database, and user connect";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     headerRow.appendChild(titleGroup);
@@ -475,166 +381,151 @@
     var selectedId = "fe-overview";
     var showFragileMode = false;
     var allPillBtns = [];
+    var stageCards = [];
 
-    function selectItem(item) {
-      selectedId = item.id;
+    function syncActiveStates() {
+      var activeStageKey = getAppStageForItem(selectedId);
       allPillBtns.forEach(function (b) {
         if (b.getAttribute("data-app-item-id") === selectedId) b.classList.add("active");
         else b.classList.remove("active");
       });
+      stageCards.forEach(function (sc) {
+        if (sc.getAttribute("data-stage-key") === activeStageKey) sc.classList.add("stage-active");
+        else sc.classList.remove("stage-active");
+      });
+    }
+
+    function selectItem(item) {
+      if (!item) return;
+      selectedId = item.id;
+      syncActiveStates();
       updateAppInspector(true);
     }
 
-    var canvas = document.createElement("div");
-    canvas.className = "app-anatomy-canvas";
+    function buildCluster(ids) {
+      var cluster = document.createElement("div");
+      cluster.className = "diagram-pill-cluster loop-stage-pills";
+      ids.forEach(function (id) {
+        cluster.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
+      });
+      return cluster;
+    }
+
+    var loopCanvas = document.createElement("div");
+    loopCanvas.className = "loop-diagram-canvas";
 
     // =========================================================================
-    // ROW 1: [Left Half: Front End]  <--->  [Center Bridge]  <--->  [Right Half: Back End]
+    // TOP ROW: [1. App or website] --Request--> [2. Cloud server] --Gets data--> [3. Database]
     // =========================================================================
-    var halvesRow = document.createElement("div");
-    halvesRow.className = "app-halves-row";
+    var topRow = document.createElement("div");
+    topRow.className = "loop-top-row";
 
-    // LEFT HALF: FRONT END
-    var feHalf = document.createElement("div");
-    feHalf.className = "app-half-card app-half-frontend";
-    feHalf.appendChild(
-      createMiniIllustration("Left half · What users see", "badge-info", "devices", "1. The front end (Browser / phone screen)")
+    // STAGE 1: App or Website (Front End)
+    var stage1 = art.createLoopStageCard({
+      stageKey: "stage-fe",
+      artSvg: art.createDeviceArt(),
+      title: "1. App or website",
+      subtitle: "Front end · What users see",
+      onStageClick: function () {
+        selectItem(APP_DIAGRAM_ITEMS["fe-overview"]);
+      },
+      pillsContainer: buildCluster([
+        "fe-overview",
+        "fe-ui",
+        "lang-html-css",
+        "lang-js-ts",
+        "tool-react-next"
+      ])
+    });
+    stageCards.push(stage1.card);
+    topRow.appendChild(stage1.card);
+
+    // ARROW 1: Request (API, JSON & Login Pass)
+    topRow.appendChild(
+      art.createHorizontalStepArrow(
+        "Request",
+        "API & JSON",
+        buildCluster(["bridge-api", "lang-json", "bridge-auth"])
+      )
     );
-    var feDesc = document.createElement("p");
-    feDesc.className = "resource-desc";
-    feDesc.textContent = "A front end is the visible screen you tap and click—common elements include the UI (User Interface, meaning buttons, forms, and layouts), and it is written in HTML, CSS, and JavaScript / TypeScript.";
-    feHalf.appendChild(feDesc);
 
-    var fePills = document.createElement("div");
-    fePills.className = "diagram-pill-cluster";
-    ["fe-overview", "fe-ui", "lang-html-css", "lang-js-ts", "tool-react-next"].forEach(function (id) {
-      fePills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
+    // STAGE 2: Cloud Server (Back End)
+    var stage2 = art.createLoopStageCard({
+      stageKey: "stage-be",
+      artSvg: art.createCloudServerArt("Cloud Server"),
+      title: "2. Cloud server",
+      subtitle: "Back end · Processes request",
+      onStageClick: function () {
+        selectItem(APP_DIAGRAM_ITEMS["be-overview"]);
+      },
+      pillsContainer: buildCluster([
+        "be-overview",
+        "lang-python",
+        "lang-nodejs",
+        "lang-go-rust",
+        "be-cache-queue"
+      ])
     });
-    feHalf.appendChild(fePills);
-    halvesRow.appendChild(feHalf);
+    stageCards.push(stage2.card);
+    topRow.appendChild(stage2.card);
 
-    // CENTER BRIDGE: BACK-AND-FORTH MESSENGER
-    var centerBridge = document.createElement("div");
-    centerBridge.className = "app-center-bridge";
-    var bridgeBadge = document.createElement("span");
-    bridgeBadge.className = "badge badge-secondary";
-    bridgeBadge.textContent = "Back & forth messenger";
-    centerBridge.appendChild(bridgeBadge);
-    centerBridge.appendChild(createHorizontalBidirectionalSvg());
-    var bridgeDesc = document.createElement("p");
-    bridgeDesc.className = "resource-desc";
-    bridgeDesc.textContent = "Talks back and forth between the front end screen and back end engine.";
-    centerBridge.appendChild(bridgeDesc);
-
-    var centerPills = document.createElement("div");
-    centerPills.className = "diagram-pill-cluster";
-    ["bridge-api", "lang-json", "bridge-auth"].forEach(function (id) {
-      centerPills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
-    });
-    centerBridge.appendChild(centerPills);
-    halvesRow.appendChild(centerBridge);
-
-    // RIGHT HALF: BACK END
-    var beHalf = document.createElement("div");
-    beHalf.className = "app-half-card app-half-backend";
-    beHalf.appendChild(
-      createMiniIllustration("Right half · Hidden engine", "badge-secondary", "dns", "2. The back end (Private cloud server)")
+    // ARROW 2: Gets Data (SQL)
+    topRow.appendChild(
+      art.createHorizontalStepArrow(
+        "Gets data",
+        "SQL queries",
+        buildCluster(["lang-sql"])
+      )
     );
-    var beDesc = document.createElement("p");
-    beDesc.className = "resource-desc";
-    beDesc.textContent = "A back end is the hidden brain on a private server—common elements include business rules, security checks, and background waiting lines, and it is often written in Python, Node.js, or Go.";
-    beHalf.appendChild(beDesc);
 
-    var bePills = document.createElement("div");
-    bePills.className = "diagram-pill-cluster";
-    ["be-overview", "lang-python", "lang-nodejs", "lang-go-rust", "be-cache-queue"].forEach(function (id) {
-      bePills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
+    // STAGE 3: Database
+    var stage3 = art.createLoopStageCard({
+      stageKey: "stage-db",
+      artSvg: art.createDatabaseArt("011010"),
+      title: "3. Database",
+      subtitle: "Permanent tables & storage",
+      onStageClick: function () {
+        selectItem(APP_DIAGRAM_ITEMS["db-overview"]);
+      },
+      pillsContainer: buildCluster(["db-overview", "tool-postgres"])
     });
-    beHalf.appendChild(bePills);
-    halvesRow.appendChild(beHalf);
+    stageCards.push(stage3.card);
+    topRow.appendChild(stage3.card);
 
-    canvas.appendChild(halvesRow);
+    loopCanvas.appendChild(topRow);
 
     // =========================================================================
-    // ROW 2: TWO VERTICAL FLOWING BRIDGES (Database Bridge & Outside Services Bridge)
+    // BOTTOM ROW: [Left Curved Return] <---> [4. User & outside services] <--- [Right Curved Return]
     // =========================================================================
-    var connectorsRow = document.createElement("div");
-    connectorsRow.className = "app-bottom-connectors-row";
+    var bottomRow = document.createElement("div");
+    bottomRow.className = "loop-bottom-row";
 
-    // Left vertical connector: Back End <-> Database
-    var dbBridge = document.createElement("div");
-    dbBridge.className = "app-vertical-bridge-card";
-    dbBridge.appendChild(createVerticalBidirectionalSvg());
-    var dbBridgeText = document.createElement("p");
-    dbBridgeText.className = "resource-desc";
-    dbBridgeText.textContent = "Talks back and forth between the back end and the database to save and search records:";
-    dbBridge.appendChild(dbBridgeText);
-    var dbBridgePills = document.createElement("div");
-    dbBridgePills.className = "diagram-pill-cluster";
-    dbBridgePills.appendChild(createPillBtn("lang-sql", selectedId, selectItem, allPillBtns));
-    dbBridge.appendChild(dbBridgePills);
-    connectorsRow.appendChild(dbBridge);
+    bottomRow.appendChild(art.createCurvedReturnWing("left", "Sends results"));
 
-    // Right vertical connector: Back End <-> Outside AI & Services
-    var extBridge = document.createElement("div");
-    extBridge.className = "app-vertical-bridge-card";
-    extBridge.appendChild(createVerticalBidirectionalSvg());
-    var extBridgeText = document.createElement("p");
-    extBridgeText.className = "resource-desc";
-    extBridgeText.textContent = "Talks back and forth between your back end and outside AI models or payment tools:";
-    extBridge.appendChild(extBridgeText);
-    var extBridgePills = document.createElement("div");
-    extBridgePills.className = "diagram-pill-cluster";
-    ["bridge-env-keys", "bridge-webhooks"].forEach(function (id) {
-      extBridgePills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
+    var stage4 = art.createLoopStageCard({
+      stageKey: "stage-user",
+      artSvg: art.createUserArt(),
+      title: "4. User & outside services",
+      subtitle: "AI APIs, Stripe, .env & CLI",
+      onStageClick: function () {
+        selectItem(APP_DIAGRAM_ITEMS["ext-ai-stripe"]);
+      },
+      pillsContainer: buildCluster([
+        "ext-ai-stripe",
+        "bridge-env-keys",
+        "bridge-webhooks",
+        "lang-bash"
+      ])
     });
-    extBridge.appendChild(extBridgePills);
-    connectorsRow.appendChild(extBridge);
+    stageCards.push(stage4.card);
+    bottomRow.appendChild(stage4.card);
 
-    canvas.appendChild(connectorsRow);
+    bottomRow.appendChild(art.createCurvedReturnWing("right", "Returns data"));
 
-    // =========================================================================
-    // ROW 3: [Bottom-Left: Database Vault]  &  [Bottom-Right: Outside Services & Terminal]
-    // =========================================================================
-    var vaultsRow = document.createElement("div");
-    vaultsRow.className = "app-bottom-vaults-row";
+    loopCanvas.appendChild(bottomRow);
+    card.appendChild(loopCanvas);
+    syncActiveStates();
 
-    var dbVault = document.createElement("div");
-    dbVault.className = "app-half-card";
-    dbVault.appendChild(
-      createMiniIllustration("Permanent memory", "badge-info", "database", "3. Database filing cabinet")
-    );
-    var dbDesc = document.createElement("p");
-    dbDesc.className = "resource-desc";
-    dbDesc.textContent = "A database is where user accounts, posts, and saved work live permanently in organized tables so nothing vanishes when you close the tab.";
-    dbVault.appendChild(dbDesc);
-    var dbPills = document.createElement("div");
-    dbPills.className = "diagram-pill-cluster";
-    ["db-overview", "tool-postgres"].forEach(function (id) {
-      dbPills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
-    });
-    dbVault.appendChild(dbPills);
-    vaultsRow.appendChild(dbVault);
-
-    var extVault = document.createElement("div");
-    extVault.className = "app-half-card";
-    extVault.appendChild(
-      createMiniIllustration("Outside superpowers & CLI", "badge-success", "hub", "4. Outside AI brains, Stripe & your terminal")
-    );
-    var extDesc = document.createElement("p");
-    extDesc.className = "resource-desc";
-    extDesc.textContent = "Outside services are heavy tools your back end rents (like Gemini/Claude AI models or Stripe payments), controlled alongside your terminal.";
-    extVault.appendChild(extDesc);
-    var extPills = document.createElement("div");
-    extPills.className = "diagram-pill-cluster";
-    ["ext-ai-stripe", "lang-bash"].forEach(function (id) {
-      extPills.appendChild(createPillBtn(id, selectedId, selectItem, allPillBtns));
-    });
-    extVault.appendChild(extPills);
-    vaultsRow.appendChild(extVault);
-
-    canvas.appendChild(vaultsRow);
-    card.appendChild(canvas);
 
     function updateAppInspector(isUserClick) {
       var item = APP_DIAGRAM_ITEMS[selectedId] || APP_DIAGRAM_ITEMS["fe-overview"];

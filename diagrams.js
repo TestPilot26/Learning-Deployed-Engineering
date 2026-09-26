@@ -28,63 +28,21 @@
     return svg;
   }
 
-  function createFlowConnector(stepText) {
-    var col = document.createElement("div");
-    col.className = "scene-bridge-connector";
-
-    var badge = document.createElement("span");
-    badge.className = "badge badge-info";
-    badge.textContent = stepText;
-
-    var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("viewBox", "0 0 80 28");
-    svg.setAttribute("class", "flow-connector-svg");
-    var line = document.createElementNS(SVG_NS, "line");
-    line.setAttribute("x1", "6");
-    line.setAttribute("y1", "14");
-    line.setAttribute("x2", "66");
-    line.setAttribute("y2", "14");
-    line.setAttribute("class", "flow-animated-line");
-    var head = document.createElementNS(SVG_NS, "polygon");
-    head.setAttribute("points", "62,7 74,14 62,21");
-    head.setAttribute("class", "flow-arrow-head");
-    svg.appendChild(line);
-    svg.appendChild(head);
-
-    col.appendChild(badge);
-    col.appendChild(svg);
-    return col;
-  }
-
-  function createIllustratedNodeButton(node, isSelected, onSelect) {
+  function createCompactToolPill(node, shortLabel, isSelected, onSelect) {
     var btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "scene-node-pill" + (isSelected ? " active" : "");
+    btn.className = "diagram-label-pill" + (isSelected ? " active" : "");
     btn.setAttribute("data-node-id", node.id);
 
-    var iconCircle = document.createElement("div");
-    iconCircle.className = "scene-node-icon-circle " + (node.badgeClass || "badge-info");
     var ic = document.createElement("span");
-    ic.className = "material-symbols-outlined scene-node-icon";
+    ic.className = "material-symbols-outlined diagram-pill-icon";
     ic.textContent = node.icon;
-    iconCircle.appendChild(ic);
 
-    var textCol = document.createElement("div");
-    textCol.className = "scene-node-text-col";
+    var lbl = document.createElement("span");
+    lbl.textContent = shortLabel || node.title;
 
-    var title = document.createElement("strong");
-    title.className = "diagram-node-title";
-    title.textContent = node.title;
-
-    var summary = document.createElement("span");
-    summary.className = "resource-desc";
-    summary.textContent = node.summary;
-
-    textCol.appendChild(title);
-    textCol.appendChild(summary);
-
-    btn.appendChild(iconCircle);
-    btn.appendChild(textCol);
+    btn.appendChild(ic);
+    btn.appendChild(lbl);
     btn.addEventListener("click", function () {
       onSelect(node);
     });
@@ -92,11 +50,17 @@
   }
 
   // ============================================================================
-  // RENDERER 1: Stop 1 — Illustrated Laptop -> Cloud -> Live Internet Map
+  // RENDERER 1: Stop 1 — Illustrated 4-Stage Loop (Computer -> Cloud -> Hosting -> User)
   // ============================================================================
   function renderToolsFlowDiagram(container) {
     var nodes = getDiagramData().toolsFlowNodes || [];
-    if (!nodes.length) return;
+    var art = window.DiagramIllustrations;
+    if (!nodes.length || !art) return;
+
+    var nodeById = {};
+    nodes.forEach(function (n) {
+      nodeById[n.id] = n;
+    });
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
@@ -109,12 +73,12 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Interactive visual map — click any icon to explore";
+    badge.textContent = "Interactive diagram — click any stage or tool pill to open its guide in the side panel";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How your computer, cloud storage, and the live internet connect";
+    h3.textContent = "How your computer, cloud storage, live hosting, and the browser connect";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     headerRow.appendChild(titleGroup);
@@ -122,139 +86,136 @@
 
     var selectedNodeId = nodes[0].id;
     var allButtons = [];
+    var stageCards = [];
 
-    function selectNode(node) {
-      selectedNodeId = node.id;
+    function getStageForNode(nodeId) {
+      if (nodeId === "cloud-github") return "stage-cloud";
+      if (nodeId === "cloud-vercel") return "stage-hosting";
+      if (nodeId === "browser-devtools") return "stage-user";
+      return "stage-computer";
+    }
+
+    function syncActiveStates() {
+      var activeStageKey = getStageForNode(selectedNodeId);
       allButtons.forEach(function (b) {
         if (b.getAttribute("data-node-id") === selectedNodeId) b.classList.add("active");
         else b.classList.remove("active");
       });
+      stageCards.forEach(function (sc) {
+        if (sc.getAttribute("data-stage-key") === activeStageKey) sc.classList.add("stage-active");
+        else sc.classList.remove("stage-active");
+      });
+    }
+
+    function selectNode(node) {
+      if (!node) return;
+      selectedNodeId = node.id;
+      syncActiveStates();
       showToolsInspector(node, true);
     }
 
-    // Illustrated 3-Hub Visual Map: [1. Laptop Screen & Base] ---> [2. Cloud Vault] ---> [3. Live Internet Globe]
-    var sceneLayout = document.createElement("div");
-    sceneLayout.className = "illustrated-scene-layout";
-
-    function createSceneHubBanner(badgeCls, iconName, titleText, subText) {
-      var banner = document.createElement("div");
-      banner.className = "scene-hub-banner";
-      var heroBadge = document.createElement("div");
-      heroBadge.className = "scene-hub-hero-icon " + badgeCls;
-      var ic = document.createElement("span");
-      ic.className = "material-symbols-outlined stop-hero-icon";
-      ic.textContent = iconName;
-      heroBadge.appendChild(ic);
-      var titleWrap = document.createElement("div");
-      var h4 = document.createElement("h4");
-      h4.textContent = titleText;
-      var sub = document.createElement("p");
-      sub.className = "resource-desc";
-      sub.textContent = subText;
-      titleWrap.appendChild(h4);
-      titleWrap.appendChild(sub);
-      banner.appendChild(heroBadge);
-      banner.appendChild(titleWrap);
-      return banner;
+    function buildPillsCluster(itemsSpec) {
+      var cluster = document.createElement("div");
+      cluster.className = "diagram-pill-cluster loop-stage-pills";
+      itemsSpec.forEach(function (spec) {
+        var n = nodeById[spec.id];
+        if (!n) return;
+        var pill = createCompactToolPill(n, spec.label, n.id === selectedNodeId, selectNode);
+        allButtons.push(pill);
+        cluster.appendChild(pill);
+      });
+      return cluster;
     }
 
-    // HUB 1: Illustrated Computer (Screen Frame + Base Stand)
-    var computerCol = document.createElement("div");
-    computerCol.className = "computer-illustration-wrap";
+    var loopCanvas = document.createElement("div");
+    loopCanvas.className = "loop-diagram-canvas";
 
-    var monitorScreen = document.createElement("div");
-    monitorScreen.className = "computer-screen-frame";
-    monitorScreen.appendChild(
-      createSceneHubBanner(
-        "badge-info",
-        "laptop_mac",
-        "1. Your computer (Local device)",
-        "Where your code library lives privately on your machine—good for building, testing, and making mistakes safely before anyone else can see it."
-      )
-    );
+    // TOP ROW: [1. Your computer] ---> [2. Cloud storage (GitHub)] ---> [3. Live hosting (Vercel)]
+    var topRow = document.createElement("div");
+    topRow.className = "loop-top-row";
 
-    var computerOrbitGrid = document.createElement("div");
-    computerOrbitGrid.className = "computer-orbit-grid";
-    nodes.filter(function (n) { return n.hub === "computer"; }).forEach(function (node) {
-      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
-      allButtons.push(btn);
-      computerOrbitGrid.appendChild(btn);
+    var stage1 = art.createLoopStageCard({
+      stageKey: "stage-computer",
+      artSvg: art.createDeviceArt(),
+      title: "1. Your computer",
+      subtitle: "Edit & test privately",
+      onStageClick: function () {
+        selectNode(nodeById["ide-editor"]);
+      },
+      pillsContainer: buildPillsCluster([
+        { id: "ide-editor", label: "Code editor" },
+        { id: "plain-text", label: "Text files" },
+        { id: "homebrew-runtime", label: "Homebrew & engines" },
+        { id: "local-git", label: "Local Git" },
+        { id: "env-secrets", label: "Secret .env" }
+      ])
     });
-    monitorScreen.appendChild(computerOrbitGrid);
+    stageCards.push(stage1.card);
+    topRow.appendChild(stage1.card);
 
-    var laptopKeyboardBase = document.createElement("div");
-    laptopKeyboardBase.className = "computer-keyboard-base";
-    var notch = document.createElement("div");
-    notch.className = "computer-trackpad-notch";
-    laptopKeyboardBase.appendChild(notch);
+    topRow.appendChild(art.createHorizontalStepArrow("git push", "Uploads code"));
 
-    computerCol.appendChild(monitorScreen);
-    computerCol.appendChild(laptopKeyboardBase);
-    sceneLayout.appendChild(computerCol);
-
-    // Connector 1 -> 2
-    sceneLayout.appendChild(createFlowConnector("Upload ('git push')"));
-
-    // Right Column stacking Cloud Storage above Live Internet Hosting
-    var cloudAndWebCol = document.createElement("div");
-    cloudAndWebCol.className = "cloud-web-column";
-
-    // HUB 2: Illustrated Cloud Vault (GitHub)
-    var cloudBox = document.createElement("div");
-    cloudBox.className = "cloud-illustration-frame";
-    cloudBox.appendChild(
-      createSceneHubBanner(
-        "badge-secondary",
-        "cloud_done",
-        "2. Cloud storage (GitHub)",
-        "Where your code is stored remotely online so you never lose work and can share it."
-      )
-    );
-    nodes.filter(function (n) { return n.hub === "cloud"; }).forEach(function (node) {
-      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
-      allButtons.push(btn);
-      cloudBox.appendChild(btn);
+    var stage2 = art.createLoopStageCard({
+      stageKey: "stage-cloud",
+      artSvg: art.createCloudServerArt("GitHub Cloud"),
+      title: "2. Cloud storage",
+      subtitle: "Saves & backs up repo",
+      onStageClick: function () {
+        selectNode(nodeById["cloud-github"]);
+      },
+      pillsContainer: buildPillsCluster([
+        { id: "cloud-github", label: "Personal GitHub" }
+      ])
     });
-    cloudAndWebCol.appendChild(cloudBox);
+    stageCards.push(stage2.card);
+    topRow.appendChild(stage2.card);
 
-    // Vertical animated arrow from Cloud to Live Internet
-    var downConnector = document.createElement("div");
-    downConnector.className = "vertical-bridge-connector";
-    var downBadge = document.createElement("span");
-    downBadge.className = "badge badge-success";
-    downBadge.textContent = "Auto-builds website when GitHub updates";
-    var downIcon = document.createElement("span");
-    downIcon.className = "material-symbols-outlined bullet-icon";
-    downIcon.textContent = "south";
-    downConnector.appendChild(downBadge);
-    downConnector.appendChild(downIcon);
-    cloudAndWebCol.appendChild(downConnector);
+    topRow.appendChild(art.createHorizontalStepArrow("Auto-builds", "Deploys on push"));
 
-    // HUB 3: Illustrated Live Internet / Hosting Environment (Vercel + Browser)
-    var internetBox = document.createElement("div");
-    internetBox.className = "internet-illustration-frame";
-    internetBox.appendChild(
-      createSceneHubBanner(
-        "badge-success",
-        "language",
-        "3. Live internet hosting (Vercel & Browser)",
-        "Where anyone in the world can open your live website link on their phone or computer."
-      )
-    );
-
-    var netNodesStack = document.createElement("div");
-    netNodesStack.className = "flow-zone-nodes";
-    nodes.filter(function (n) { return n.hub === "internet"; }).forEach(function (node) {
-      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
-      allButtons.push(btn);
-      netNodesStack.appendChild(btn);
+    var stage3 = art.createLoopStageCard({
+      stageKey: "stage-hosting",
+      artSvg: art.createDatabaseArt("https://"),
+      title: "3. Live hosting",
+      subtitle: "Public web server",
+      onStageClick: function () {
+        selectNode(nodeById["cloud-vercel"]);
+      },
+      pillsContainer: buildPillsCluster([
+        { id: "cloud-vercel", label: "Vercel hosting" }
+      ])
     });
-    internetBox.appendChild(netNodesStack);
+    stageCards.push(stage3.card);
+    topRow.appendChild(stage3.card);
 
-    cloudAndWebCol.appendChild(internetBox);
-    sceneLayout.appendChild(cloudAndWebCol);
+    loopCanvas.appendChild(topRow);
 
-    card.appendChild(sceneLayout);
+    // BOTTOM ROW: [Left Curved Return Wing] <---> [4. User & browser] <--- [Right Curved Return Wing]
+    var bottomRow = document.createElement("div");
+    bottomRow.className = "loop-bottom-row";
+
+    bottomRow.appendChild(art.createCurvedReturnWing("left", "Inspects & edits"));
+
+    var stage4 = art.createLoopStageCard({
+      stageKey: "stage-user",
+      artSvg: art.createUserArt(),
+      title: "4. User & browser",
+      subtitle: "Opens site & inspects",
+      onStageClick: function () {
+        selectNode(nodeById["browser-devtools"]);
+      },
+      pillsContainer: buildPillsCluster([
+        { id: "browser-devtools", label: "Chrome DevTools" }
+      ])
+    });
+    stageCards.push(stage4.card);
+    bottomRow.appendChild(stage4.card);
+
+    bottomRow.appendChild(art.createCurvedReturnWing("right", "Serves live site"));
+
+    loopCanvas.appendChild(bottomRow);
+    card.appendChild(loopCanvas);
+
+    syncActiveStates();
     showToolsInspector(nodes[0], false);
     container.appendChild(card);
   }

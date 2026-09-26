@@ -260,3 +260,267 @@ window.PIPELINE_DIAGRAMS_DATA = {
     }
   ]
 };
+
+// Shared Illustrated SVG Stage Artwork & Aligned Loop Arrows (Zero hardcoded hex; 100% GM3 tokens)
+(function () {
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS(SVG_NS, tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        el.setAttribute(k, attrs[k]);
+      });
+    }
+    return el;
+  }
+
+  // Illustration 1: Smartphone + Laptop with Green Checkmark & Magnifying Glass
+  function createDeviceArt() {
+    var svg = svgEl("svg", { viewBox: "0 0 180 124", class: "stage-art-svg", "aria-hidden": "true" });
+    // Soft oval floor shadow + arc halo
+    svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
+    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "72", ry: "10", fill: "var(--color-surface-container-highest)" }));
+
+    // Laptop screen & base
+    svg.appendChild(svgEl("rect", { x: "68", y: "38", width: "76", height: "52", rx: "6", fill: "var(--color-on-surface)", stroke: "var(--color-on-surface)", "stroke-width": "2" }));
+    svg.appendChild(svgEl("rect", { x: "73", y: "43", width: "66", height: "42", rx: "3", fill: "var(--color-surface-container-lowest)" }));
+    // Green checkmark card inside laptop screen
+    svg.appendChild(svgEl("rect", { x: "86", y: "51", width: "42", height: "26", rx: "4", fill: "var(--color-tertiary-container)" }));
+    svg.appendChild(svgEl("path", { d: "M 99 64 L 105 70 L 117 57", fill: "none", stroke: "var(--color-on-tertiary-container)", "stroke-width": "3.5", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+    // Laptop base keyboard lip
+    svg.appendChild(svgEl("path", { d: "M 58 90 L 154 90 L 148 98 L 64 98 Z", fill: "var(--color-on-surface-variant)" }));
+
+    // Smartphone on the left
+    svg.appendChild(svgEl("rect", { x: "28", y: "26", width: "42", height: "72", rx: "7", fill: "var(--color-on-surface)" }));
+    svg.appendChild(svgEl("rect", { x: "32", y: "34", width: "34", height: "54", rx: "3", fill: "var(--color-primary-container)" }));
+    svg.appendChild(svgEl("line", { x1: "44", y1: "30", x2: "54", y2: "30", stroke: "var(--color-surface-container-lowest)", "stroke-width": "2", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("rect", { x: "37", y: "42", width: "24", height: "14", rx: "2", fill: "var(--color-primary)" }));
+    svg.appendChild(svgEl("line", { x1: "37", y1: "64", x2: "58", y2: "64", stroke: "var(--color-on-primary-container)", "stroke-width": "3", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("line", { x1: "37", y1: "72", x2: "52", y2: "72", stroke: "var(--color-on-primary-container)", "stroke-width": "3", "stroke-linecap": "round" }));
+
+    // Magnifying glass overlapping phone & laptop
+    svg.appendChild(svgEl("line", { x1: "83", y1: "82", x2: "97", y2: "96", stroke: "var(--color-on-surface)", "stroke-width": "6", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("circle", { cx: "74", cy: "73", r: "13", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "4" }));
+    return svg;
+  }
+
+  // Illustration 2: Fluffy Cloud + 3 Server Racks with Status LEDs
+  function createCloudServerArt(cloudText) {
+    var svg = svgEl("svg", { viewBox: "0 0 190 124", class: "stage-art-svg", "aria-hidden": "true" });
+    svg.appendChild(svgEl("ellipse", { cx: "95", cy: "110", rx: "70", ry: "9", fill: "var(--color-surface-container-highest)" }));
+
+    // Fluffy Cloud at top
+    svg.appendChild(
+      svgEl("path", {
+        d: "M 52 56 C 36 56, 30 42, 42 33 C 44 19, 62 15, 73 23 C 82 9, 108 9, 117 23 C 130 17, 146 25, 144 38 C 156 42, 152 56, 136 56 Z",
+        fill: "var(--color-primary-container)",
+        stroke: "var(--color-primary)",
+        "stroke-width": "3",
+        "stroke-linejoin": "round"
+      })
+    );
+    var txt = svgEl("text", {
+      x: "95",
+      y: "43",
+      "text-anchor": "middle",
+      fill: "var(--color-on-primary-container)",
+      "font-family": "var(--font-family-display)",
+      "font-size": "13",
+      "font-weight": "700"
+    });
+    txt.textContent = cloudText || "Cloud Server";
+    svg.appendChild(txt);
+
+    // 3 vertical conduits connecting cloud to server racks
+    [62, 95, 128].forEach(function (cx) {
+      svg.appendChild(svgEl("line", { x1: String(cx), y1: "56", x2: String(cx), y2: "66", stroke: "var(--color-primary)", "stroke-width": "3" }));
+    });
+
+    // 3 Server Racks
+    [44, 77, 110].forEach(function (rx) {
+      svg.appendChild(svgEl("rect", { x: String(rx), y: "64", width: "36", height: "44", rx: "4", fill: "var(--color-on-surface-variant)" }));
+      [70, 82, 94].forEach(function (ry) {
+        svg.appendChild(svgEl("rect", { x: String(rx + 4), y: String(ry), width: "28", height: "8", rx: "2", fill: "var(--color-surface-container-lowest)" }));
+        svg.appendChild(svgEl("circle", { cx: String(rx + 9), cy: String(ry + 4), r: "2", fill: "var(--color-tertiary)" }));
+        svg.appendChild(svgEl("line", { x1: String(rx + 15), y1: String(ry + 4), x2: String(rx + 27), y2: String(ry + 4), stroke: "var(--color-outline)", "stroke-width": "2", "stroke-linecap": "round" }));
+      });
+    });
+    return svg;
+  }
+
+  // Illustration 3: 3-Tier Cylinder Database + Magnifying Glass with "011010" (or custom lens text)
+  function createDatabaseArt(lensText) {
+    var svg = svgEl("svg", { viewBox: "0 0 180 124", class: "stage-art-svg", "aria-hidden": "true" });
+    svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
+    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "70", ry: "10", fill: "var(--color-surface-container-highest)" }));
+
+    // 3-Tier Cylinder Body
+    svg.appendChild(svgEl("rect", { x: "38", y: "34", width: "76", height: "64", rx: "8", fill: "var(--color-surface-container-high)", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
+    svg.appendChild(svgEl("ellipse", { cx: "76", cy: "34", rx: "38", ry: "10", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
+    svg.appendChild(svgEl("path", { d: "M 38 55 A 38 9 0 0 0 114 55", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
+    svg.appendChild(svgEl("path", { d: "M 38 76 A 38 9 0 0 0 114 76", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
+    svg.appendChild(svgEl("path", { d: "M 38 98 A 38 9 0 0 0 114 98", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
+
+    // Magnifying glass handle + lens with binary "011010"
+    svg.appendChild(svgEl("line", { x1: "136", y1: "82", x2: "156", y2: "102", stroke: "var(--color-on-surface)", "stroke-width": "8", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("circle", { cx: "118", cy: "64", r: "26", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "4.5" }));
+    var binTxt = svgEl("text", {
+      x: "118",
+      y: "68",
+      "text-anchor": "middle",
+      fill: "var(--color-primary)",
+      "font-family": "monospace",
+      "font-size": "12",
+      "font-weight": "700"
+    });
+    binTxt.textContent = lensText || "011010";
+    svg.appendChild(binTxt);
+    return svg;
+  }
+
+  // Illustration 4: Person / User Avatar + Speech Bubble with Green Checkmark
+  function createUserArt() {
+    var svg = svgEl("svg", { viewBox: "0 0 180 116", class: "stage-art-svg", "aria-hidden": "true" });
+    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "104", rx: "66", ry: "9", fill: "var(--color-surface-container-highest)" }));
+
+    // Person shoulders / shirt
+    svg.appendChild(svgEl("path", { d: "M 42 102 C 42 78, 94 78, 94 102 Z", fill: "var(--color-primary-container)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
+    // Person head
+    svg.appendChild(svgEl("circle", { cx: "68", cy: "54", r: "18", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
+    // Hair arc
+    svg.appendChild(svgEl("path", { d: "M 50 52 C 50 34, 86 34, 86 52 C 78 44, 58 44, 50 52 Z", fill: "var(--color-on-surface)" }));
+
+    // Speech bubble on the right with green checkmark circle
+    svg.appendChild(
+      svgEl("path", {
+        d: "M 102 26 H 142 A 6 6 0 0 1 148 32 V 64 A 6 6 0 0 1 142 70 H 116 L 104 80 L 106 70 H 102 A 6 6 0 0 1 96 64 V 32 A 6 6 0 0 1 102 26 Z",
+        fill: "var(--color-surface-container-lowest)",
+        stroke: "var(--color-on-surface)",
+        "stroke-width": "2.5",
+        "stroke-linejoin": "round"
+      })
+    );
+    svg.appendChild(svgEl("circle", { cx: "122", cy: "48", r: "13", fill: "var(--color-tertiary-container)" }));
+    svg.appendChild(svgEl("path", { d: "M 116 48 L 120 53 L 129 43", fill: "none", stroke: "var(--color-on-tertiary-container)", "stroke-width": "3", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+    return svg;
+  }
+
+  // Aligned Horizontal Arrow between Top-Row Stages (supports optional compact pills below arrow)
+  function createHorizontalStepArrow(topLabel, subLabel, extraEl) {
+    var wrap = document.createElement("div");
+    wrap.className = "loop-horiz-arrow-col";
+
+    var lbl = document.createElement("span");
+    lbl.className = "loop-arrow-caption";
+    lbl.textContent = topLabel;
+    wrap.appendChild(lbl);
+
+    var svg = svgEl("svg", { viewBox: "0 0 116 32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
+    svg.appendChild(svgEl("line", { x1: "4", y1: "16", x2: "98", y2: "16", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("polygon", { points: "94,7 112,16 94,25", fill: "var(--color-primary)" }));
+    wrap.appendChild(svg);
+
+    if (subLabel) {
+      var sub = document.createElement("span");
+      sub.className = "loop-arrow-subcaption";
+      sub.textContent = subLabel;
+      wrap.appendChild(sub);
+    }
+    if (extraEl) {
+      wrap.appendChild(extraEl);
+    }
+    return wrap;
+  }
+
+  // Curved Bottom Loop Arrow ("left" curves up-left to Stage 1; "right" curves down-left from Stage 3)
+  function createCurvedReturnWing(side, labelText) {
+    var wrap = document.createElement("div");
+    wrap.className = "loop-curved-wing";
+
+    var svg = svgEl("svg", { viewBox: "0 0 240 110", class: "loop-curved-svg", "aria-hidden": "true" });
+    if (side === "left") {
+      // Curves between Stage 1 bottom (x=54, y=10) and Stage 4 left (x=226, y=68)
+      svg.appendChild(svgEl("path", { d: "M 54 18 C 54 70, 124 70, 218 70", fill: "none", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
+      // Upward arrowhead pointing to Stage 1
+      svg.appendChild(svgEl("polygon", { points: "45,22 54,4 63,22", fill: "var(--color-primary)" }));
+      // Rightward arrowhead pointing to User
+      svg.appendChild(svgEl("polygon", { points: "214,61 232,70 214,79", fill: "var(--color-primary)" }));
+      var tLeft = svgEl("text", { x: "142", y: "52", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
+      tLeft.textContent = labelText || "Sends results";
+      svg.appendChild(tLeft);
+    } else {
+      // Curves from Stage 3 bottom (x=186, y=8) down-left into Stage 4 right (x=14, y=70)
+      svg.appendChild(svgEl("path", { d: "M 186 10 C 186 70, 116 70, 22 70", fill: "none", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
+      // Leftward arrowhead pointing into User
+      svg.appendChild(svgEl("polygon", { points: "26,61 8,70 26,79", fill: "var(--color-primary)" }));
+      var tRight = svgEl("text", { x: "98", y: "52", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
+      tRight.textContent = labelText || "Returns data";
+      svg.appendChild(tRight);
+    }
+    wrap.appendChild(svg);
+    return wrap;
+  }
+
+  // Reusable Clickable Illustrated Stage Card (Click illustration/title OR compact pills to open side panel)
+  function createLoopStageCard(opts) {
+    var stageCard = document.createElement("div");
+    stageCard.className = "loop-stage-card";
+    if (opts.stageKey) {
+      stageCard.setAttribute("data-stage-key", opts.stageKey);
+    }
+
+    var headerBtn = document.createElement("button");
+    headerBtn.type = "button";
+    headerBtn.className = "loop-stage-header-btn";
+    if (opts.primaryIdAttr && opts.primaryId) {
+      headerBtn.setAttribute(opts.primaryIdAttr, opts.primaryId);
+    }
+
+    var artWrap = document.createElement("div");
+    artWrap.className = "loop-stage-art-wrap";
+    if (opts.artSvg) {
+      artWrap.appendChild(opts.artSvg);
+    }
+    headerBtn.appendChild(artWrap);
+
+    var titleEl = document.createElement("strong");
+    titleEl.className = "loop-stage-title";
+    titleEl.textContent = opts.title || "";
+    headerBtn.appendChild(titleEl);
+
+    if (opts.subtitle) {
+      var subEl = document.createElement("span");
+      subEl.className = "loop-stage-subtitle";
+      subEl.textContent = opts.subtitle;
+      headerBtn.appendChild(subEl);
+    }
+
+    if (typeof opts.onStageClick === "function") {
+      headerBtn.addEventListener("click", opts.onStageClick);
+    }
+
+    stageCard.appendChild(headerBtn);
+
+    if (opts.pillsContainer) {
+      stageCard.appendChild(opts.pillsContainer);
+    }
+
+    return {
+      card: stageCard,
+      headerBtn: headerBtn
+    };
+  }
+
+  window.DiagramIllustrations = {
+    createDeviceArt: createDeviceArt,
+    createCloudServerArt: createCloudServerArt,
+    createDatabaseArt: createDatabaseArt,
+    createUserArt: createUserArt,
+    createHorizontalStepArrow: createHorizontalStepArrow,
+    createCurvedReturnWing: createCurvedReturnWing,
+    createLoopStageCard: createLoopStageCard
+  };
+})();
+
+

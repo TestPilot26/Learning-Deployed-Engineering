@@ -70,80 +70,9 @@
 }
 
 /* ============================================================================
-   STOP 1: ILLUSTRATED COMPUTER -> CLOUD -> LIVE INTERNET SCENE
+   4-STAGE ILLUSTRATED LOOP DIAGRAM (STOPS 1, 2 & 7 — REFERENCE AESTHETIC)
    ============================================================================ */
-.illustrated-scene-layout {
-  display: grid;
-  grid-template-columns: 1.3fr auto 1fr;
-  gap: 16px;
-  align-items: center;
-}
-
-.computer-illustration-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.computer-screen-frame {
-  width: 100%;
-  background-color: var(--color-surface-container);
-  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-sm);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.computer-keyboard-base {
-  width: 92%;
-  height: 16px;
-  background-color: var(--color-surface-container-highest);
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.computer-trackpad-notch {
-  width: 64px;
-  height: 6px;
-  background-color: var(--color-surface-container-low);
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-}
-
-.scene-hub-banner {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.scene-hub-hero-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.computer-orbit-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.cloud-web-column {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.cloud-illustration-frame,
-.internet-illustration-frame {
+.loop-diagram-canvas {
   background-color: var(--color-surface-container);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -152,31 +81,153 @@
   gap: 16px;
 }
 
-.flow-zone-nodes {
-  display: flex;
-  flex-direction: column;
+.loop-top-row {
+  display: grid;
+  grid-template-columns: 1fr 136px 1fr 136px 1fr;
   gap: 8px;
+  align-items: start;
 }
 
-.scene-bridge-connector {
+.loop-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.loop-stage-card {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  text-align: center;
+  gap: 12px;
+  transition: transform 150ms ease, background-color 150ms ease;
 }
 
-.vertical-bridge-connector {
+.loop-stage-card.stage-active {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.loop-stage-header-btn {
+  width: 100%;
+  background: transparent;
+  border-radius: var(--radius-md);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.loop-stage-header-btn:hover {
+  background-color: var(--color-surface-container-low);
+  transform: translateY(-2px);
+}
+
+.loop-stage-art-wrap {
+  width: 100%;
+  height: 112px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 4px 0;
 }
 
-.flow-connector-svg {
-  width: 72px;
-  height: 28px;
+.stage-art-svg {
+  width: 100%;
+  max-width: 176px;
+  height: 112px;
+  display: block;
+  overflow: visible;
+}
+
+.loop-stage-title {
+  font-family: var(--font-family-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.loop-stage-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+}
+
+.loop-stage-pills {
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.loop-Stage-pills .diagram-label-pill,
+.loop-stage-pills .diagram-label-pill,
+.loop-horiz-arrow-col .diagram-label-pill {
+  padding: 6px 12px;
+  font-size: 12px;
+  background-color: var(--color-surface-container-low);
+}
+
+.loop-stage-pills .diagram-label-pill:hover,
+.loop-horiz-arrow-col .diagram-label-pill:hover {
+  background-color: var(--color-surface-container-high);
+}
+
+.loop-stage-pills .diagram-label-pill.active,
+.loop-horiz-arrow-col .diagram-label-pill.active {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+/* Aligned Horizontal Step Arrows Between Top-Row Stages */
+.loop-horiz-arrow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 4px;
+  padding-top: 48px;
+}
+
+.loop-arrow-caption {
+  font-family: var(--font-family-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.loop-horiz-arrow-svg {
+  width: 100%;
+  max-width: 116px;
+  height: 32px;
+  display: block;
+  overflow: visible;
+}
+
+.loop-arrow-subcaption {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-on-surface-variant);
+}
+
+/* Curved Return Wings on the Bottom Loop Row */
+.loop-curved-wing {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loop-curved-svg {
+  width: 100%;
+  max-width: 240px;
+  height: 110px;
+  display: block;
   overflow: visible;
 }
 
@@ -186,102 +237,11 @@
   }
 }
 
-@keyframes dashFlowReverse {
-  to {
-    stroke-dashoffset: 20;
-  }
-}
-
-.flow-animated-line {
-  stroke: var(--color-primary);
-  stroke-width: 3;
-  stroke-dasharray: 6 4;
-  animation: dashFlow 0.9s linear infinite;
-}
-
-.flow-animated-line-reverse {
-  stroke: var(--color-tertiary);
-  stroke-width: 3;
-  stroke-dasharray: 6 4;
-  animation: dashFlowReverse 0.9s linear infinite;
-}
-
-.flow-arrow-head {
-  fill: var(--color-primary);
-}
-
-.flow-arrow-head-tertiary {
-  fill: var(--color-tertiary);
-}
-
-.scene-node-pill {
-  background-color: var(--color-surface-container-lowest);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  text-align: left;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  width: 100%;
-  transition: transform 150ms ease, background-color 150ms ease;
-}
-
-.scene-node-pill:hover {
-  background-color: var(--color-surface-container-high);
-  transform: translateY(-2px);
-}
-
-.scene-node-pill.active {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 1px;
-}
-
-.scene-node-icon-circle {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform 200ms ease;
-}
-
-.scene-node-pill:hover .scene-node-icon-circle {
-  transform: scale(1.08);
-}
-
-.scene-node-icon {
-  font-size: 24px;
-}
-
-.scene-node-text-col {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .diagram-node-title {
   font-family: var(--font-family-display);
   font-size: 15px;
   font-weight: 600;
   color: var(--color-on-surface);
-}
-
-/* ============================================================================
-   STOP 2: ILLUSTRATED APP HALVES + BIDIRECTIONAL FLOWING BRIDGES DIAGRAM
-   ============================================================================ */
-.app-anatomy-canvas {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.app-halves-row {
-  display: grid;
-  grid-template-columns: 1fr 240px 1fr;
-  gap: 16px;
-  align-items: stretch;
 }
 
 .app-half-card {
@@ -292,24 +252,6 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-}
-
-.app-half-frontend {
-  border-radius: var(--radius-lg) var(--radius-sm) var(--radius-sm) var(--radius-lg);
-}
-
-.app-half-backend {
-  border-radius: var(--radius-sm) var(--radius-lg) var(--radius-lg) var(--radius-sm);
-}
-
-/* Cute Miniature Visual Illustration Header inside each Half */
-.app-mini-illustration {
-  background-color: var(--color-surface-container-lowest);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .mini-window-bar {
@@ -340,104 +282,9 @@
   background-color: var(--color-tertiary);
 }
 
-.mini-illustration-stage {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding-top: 4px;
-}
-
-.mini-mockup-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-
-.mini-bar-wide {
-  height: 8px;
-  width: 85%;
-  border-radius: var(--radius-full);
-  background-color: var(--color-surface-container-high);
-}
-
-.mini-bar-short {
-  height: 8px;
-  width: 55%;
-  border-radius: var(--radius-full);
-  background-color: var(--color-primary-container);
-}
-
-.mini-pill-row {
-  display: flex;
-  gap: 4px;
-  padding-top: 2px;
-}
-
-.mini-ui-chip {
-  height: 12px;
-  width: 36px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-tertiary-container);
-}
-
-/* Center Bidirectional Messenger Bridge between Front End & Back End */
-.app-center-bridge {
-  background-color: var(--color-surface-container-low);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 12px;
-}
-
-.bidirectional-svg {
-  width: 100%;
-  max-width: 180px;
-  height: 44px;
-  overflow: visible;
-}
-
-.vertical-bidirectional-svg {
-  width: 48px;
-  height: 44px;
-  overflow: visible;
-}
-
-/* Bottom Row: Database & Outside Superpowers connected below the App */
-.app-bottom-connectors-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.app-vertical-bridge-card {
-  background-color: var(--color-surface-container-low);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 8px;
-}
-
 .app-bottom-vaults-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-/* Inspector Detail Card */
-.diagram-inspector-card {
-  background-color: var(--color-surface-container);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
   gap: 16px;
 }
 
@@ -713,9 +560,11 @@
 }
 
 @media (max-width: 900px) {
-  .illustrated-scene-layout, .computer-orbit-grid, .app-halves-row, .app-bottom-connectors-row, .app-bottom-vaults-row, .terminal-keyboard-stage, .hands-popup-row {
+  .loop-top-row, .loop-bottom-row, .app-bottom-vaults-row, .terminal-keyboard-stage, .hands-popup-row {
     grid-template-columns: 1fr;
   }
+  .loop-horiz-arrow-col { padding-top: 8px; }
+  .loop-curved-wing { display: none; }
   .keyboard-row { grid-template-columns: repeat(2, 1fr); }
-  .app-half-frontend, .app-half-backend { border-radius: var(--radius-lg); }
 }
+

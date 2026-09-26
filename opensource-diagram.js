@@ -362,13 +362,8 @@
     var text = document.createElement("span");
     text.textContent = item.label;
 
-    var tagSpan = document.createElement("span");
-    tagSpan.className = "diagram-pill-subtag";
-    tagSpan.textContent = item.tag;
-
     btn.appendChild(icon);
     btn.appendChild(text);
-    btn.appendChild(tagSpan);
 
     btn.addEventListener("click", function () {
       onSelect(item, true);
@@ -377,43 +372,52 @@
     return btn;
   }
 
-  function createFlowArrowSvg() {
-    var svg = document.createElementNS(SVG_NS, "svg");
-    svg.setAttribute("viewBox", "0 0 80 28");
-    svg.setAttribute("class", "bidi-horizontal-svg");
-    svg.setAttribute("aria-hidden", "true");
-
-    var line = document.createElementNS(SVG_NS, "line");
-    line.setAttribute("x1", "6");
-    line.setAttribute("y1", "14");
-    line.setAttribute("x2", "68");
-    line.setAttribute("y2", "14");
-    line.setAttribute("class", "bidi-line-req");
-
-    var head = document.createElementNS(SVG_NS, "polygon");
-    head.setAttribute("points", "64,9 74,14 64,19");
-    head.setAttribute("class", "bidi-head-req");
-
-    svg.appendChild(line);
-    svg.appendChild(head);
-    return svg;
+  function getOsStageForId(id) {
+    if (id === "os-discover-vet" || id === "os-fork-template") return "os-stage-1";
+    if (id === "os-install-pkg" || id === "os-clone-setup") return "os-stage-2";
+    if (id === "os-import-compose") return "os-stage-3";
+    if (id === "os-customize-ship") return "os-stage-4";
+    return "";
   }
 
   function renderOpenSourceShippingDiagram(container) {
+    var art = window.DiagramIllustrations;
+    if (!art) return;
+
     var selectedId = "os-discover-vet";
     var allBtns = [];
+    var stageCards = [];
 
-    function selectItem(item, isUserClick) {
-      selectedId = item.id;
+    function syncActiveStates() {
+      var activeStage = getOsStageForId(selectedId);
       allBtns.forEach(function (b) {
         if (b.getAttribute("data-os-item-id") === selectedId) b.classList.add("active");
         else b.classList.remove("active");
       });
+      stageCards.forEach(function (sc) {
+        if (sc.getAttribute("data-stage-key") === activeStage) sc.classList.add("stage-active");
+        else sc.classList.remove("stage-active");
+      });
+    }
+
+    function selectItem(item, isUserClick) {
+      if (!item) return;
+      selectedId = item.id;
+      syncActiveStates();
       showOpenSourceInspector(item, isUserClick);
     }
 
+    function buildCluster(ids) {
+      var cluster = document.createElement("div");
+      cluster.className = "diagram-pill-cluster loop-stage-pills";
+      ids.forEach(function (id) {
+        cluster.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
+      });
+      return cluster;
+    }
+
     // =========================================================================
-    // CARD 1: ILLUSTRATED DIAGRAM — THE 2 WAYS TO BUILD ON OPEN SOURCE
+    // CARD 1: 4-STAGE ILLUSTRATED LOOP — HOW TO USE & BUILD ON OPEN SOURCE
     // =========================================================================
     var osCard = document.createElement("div");
     osCard.className = "surface-card section-spacer diagram-shell-card";
@@ -425,73 +429,91 @@
     osBadgeRow.className = "badge-row";
     var osBadge = document.createElement("span");
     osBadge.className = "badge badge-info";
-    osBadge.textContent = "Interactive diagram 1 — click any step to open its guide in the side panel";
+    osBadge.textContent = "Interactive diagram 1 — click any stage or step pill to open its guide in the side panel";
     osBadgeRow.appendChild(osBadge);
     var osH3 = document.createElement("h3");
     osH3.className = "vocab-section-heading";
-    osH3.textContent = "How to download, use & build on top of open source: The 2 tracks";
-    var osSub = document.createElement("p");
-    osSub.className = "text-muted";
-    osSub.textContent = "You don't build production software from scratch—you either snap in open-source building blocks (Track A: npm / pip install) or start from a full open-source starter repo (Track B: Fork & git clone). Click any step below:";
+    osH3.textContent = "How to download, use & build on top of open source";
     osTitleGroup.appendChild(osBadgeRow);
     osTitleGroup.appendChild(osH3);
-    osTitleGroup.appendChild(osSub);
     osHeader.appendChild(osTitleGroup);
     osCard.appendChild(osHeader);
 
-    var tracksStack = document.createElement("div");
-    tracksStack.className = "app-anatomy-canvas";
+    var loopCanvas = document.createElement("div");
+    loopCanvas.className = "loop-diagram-canvas";
 
-    // TRACK A: LIBRARY / PACKAGE TRACK (Brick by brick)
-    var trackACard = document.createElement("div");
-    trackACard.className = "app-half-card";
-    var trackABanner = document.createElement("div");
-    trackABanner.className = "mini-window-bar";
-    var trackABadge = document.createElement("span");
-    trackABadge.className = "badge badge-info";
-    trackABadge.textContent = "Track A · Snap in a building block (Libraries & packages)";
-    var trackACaption = document.createElement("span");
-    trackACaption.className = "text-muted";
-    trackACaption.textContent = "When you already have a project and need icons, Stripe, auth, or AI SDKs";
-    trackABanner.appendChild(trackABadge);
-    trackABanner.appendChild(trackACaption);
-    trackACard.appendChild(trackABanner);
+    var topRow = document.createElement("div");
+    topRow.className = "loop-top-row";
 
-    var trackARow = document.createElement("div");
-    trackARow.className = "os-flow-steps-row";
-    ["os-discover-vet", "os-install-pkg", "os-import-compose"].forEach(function (id, idx) {
-      trackARow.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
-      if (idx < 2) trackARow.appendChild(createFlowArrowSvg());
+    var stage1 = art.createLoopStageCard({
+      stageKey: "os-stage-1",
+      artSvg: art.createDeviceArt(),
+      title: "1. Discover & vet",
+      subtitle: "Check license & health",
+      onStageClick: function () {
+        selectItem(OPEN_SOURCE_ITEMS["os-discover-vet"], true);
+      },
+      pillsContainer: buildCluster(["os-discover-vet", "os-fork-template"])
     });
-    trackACard.appendChild(trackARow);
-    tracksStack.appendChild(trackACard);
+    stageCards.push(stage1.card);
+    topRow.appendChild(stage1.card);
 
-    // TRACK B: FULL REPO / STARTER TEMPLATE TRACK (Whole house frame)
-    var trackBCard = document.createElement("div");
-    trackBCard.className = "app-half-card";
-    var trackBBanner = document.createElement("div");
-    trackBBanner.className = "mini-window-bar";
-    var trackBBadge = document.createElement("span");
-    trackBBadge.className = "badge badge-secondary";
-    trackBBadge.textContent = "Track B · Build on top of a full open-source repo (Templates & forks)";
-    var trackBCaption = document.createElement("span");
-    trackBCaption.className = "text-muted";
-    trackBCaption.textContent = "When you want a complete working app on your laptop in 2 minutes and customize it";
-    trackBBanner.appendChild(trackBBadge);
-    trackBBanner.appendChild(trackBCaption);
-    trackBCard.appendChild(trackBBanner);
+    topRow.appendChild(art.createHorizontalStepArrow("Download", "npm or git clone"));
 
-    var trackBRow = document.createElement("div");
-    trackBRow.className = "os-flow-steps-row";
-    ["os-fork-template", "os-clone-setup", "os-customize-ship"].forEach(function (id, idx) {
-      trackBRow.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
-      if (idx < 2) trackBRow.appendChild(createFlowArrowSvg());
+    var stage2 = art.createLoopStageCard({
+      stageKey: "os-stage-2",
+      artSvg: art.createCloudServerArt("Open Source"),
+      title: "2. Install & configure",
+      subtitle: "Lock versions & .env",
+      onStageClick: function () {
+        selectItem(OPEN_SOURCE_ITEMS["os-install-pkg"], true);
+      },
+      pillsContainer: buildCluster(["os-install-pkg", "os-clone-setup"])
     });
-    trackBCard.appendChild(trackBRow);
-    tracksStack.appendChild(trackBCard);
+    stageCards.push(stage2.card);
+    topRow.appendChild(stage2.card);
 
-    osCard.appendChild(tracksStack);
+    topRow.appendChild(art.createHorizontalStepArrow("Compose", "Import & wire DB"));
+
+    var stage3 = art.createLoopStageCard({
+      stageKey: "os-stage-3",
+      artSvg: art.createDatabaseArt("import"),
+      title: "3. Import & build",
+      subtitle: "Snap into your code",
+      onStageClick: function () {
+        selectItem(OPEN_SOURCE_ITEMS["os-import-compose"], true);
+      },
+      pillsContainer: buildCluster(["os-import-compose"])
+    });
+    stageCards.push(stage3.card);
+    topRow.appendChild(stage3.card);
+
+    loopCanvas.appendChild(topRow);
+
+    var bottomRow = document.createElement("div");
+    bottomRow.className = "loop-bottom-row";
+
+    bottomRow.appendChild(art.createCurvedReturnWing("left", "Pulls updates"));
+
+    var stage4 = art.createLoopStageCard({
+      stageKey: "os-stage-4",
+      artSvg: art.createUserArt(),
+      title: "4. Customize & ship",
+      subtitle: "Push & deploy live",
+      onStageClick: function () {
+        selectItem(OPEN_SOURCE_ITEMS["os-customize-ship"], true);
+      },
+      pillsContainer: buildCluster(["os-customize-ship"])
+    });
+    stageCards.push(stage4.card);
+    bottomRow.appendChild(stage4.card);
+
+    bottomRow.appendChild(art.createCurvedReturnWing("right", "Deploys to web"));
+
+    loopCanvas.appendChild(bottomRow);
+    osCard.appendChild(loopCanvas);
     container.appendChild(osCard);
+    syncActiveStates();
 
     // =========================================================================
     // CARD 2: INTERACTIVE SHIPPING STACK MAP (WHERE TO FIND THE BEST RESOURCES)
