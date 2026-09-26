@@ -84,10 +84,14 @@
     <nav class="top-nav-actions" aria-label="Primary navigation">
       <button type="button" class="nav-btn" id="btn-nav-archive">
         <span class="material-symbols-outlined btn-icon-sm">inventory_2</span>
-        <span>Archive</span>
+        <span class="btn-label-text">Archive</span>
+      </button>
+      <button type="button" class="nav-btn active" id="btn-toggle-agent-panel" aria-label="Toggle pipeline guide side panel">
+        <span class="material-symbols-outlined btn-icon-sm">chat</span>
+        <span class="btn-label-text">Pipeline guide</span>
       </button>
       <a class="nav-btn nav-btn-primary" id="btn-nav-substack" href="https://substack.com" target="_blank" rel="noopener noreferrer">
-        <span>My Substack</span>
+        <span class="btn-label-text">My Substack</span>
         <span class="material-symbols-outlined btn-icon-sm">open_in_new</span>
       </a>
       <button type="button" class="icon-only-btn" id="btn-theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
@@ -96,80 +100,145 @@
     </nav>
   </header>
 
-  <!-- Main Content -->
-  <main class="main-container" role="main">
-    <!-- View 1: Winding Scroll Pathway -->
-    <section id="view-pipeline" class="view-section active-view" aria-label="Learning pathway">
-      <div class="pipeline-stage-wrapper" id="pipeline-stage-wrapper">
-        <div class="pathway-svg-container" aria-hidden="true">
-          <svg class="pathway-svg" id="pathway-svg" preserveAspectRatio="none">
-            <path class="pathway-track" id="pathway-track-path" d="M 120 0 L 120 400"></path>
-            <path class="pathway-progress" id="pathway-progress-path" d="M 120 0 L 120 400"></path>
-          </svg>
-        </div>
-
-        <div class="pipeline-stops" id="pipeline-stops-container"></div>
-      </div>
-    </section>
-
-    <!-- View 2: Dedicated Stop Page -->
-    <section id="view-stop-detail" class="view-section" aria-label="Stop details">
-      <div class="detail-top-bar">
-        <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-stop">
-          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
-          <span>Back to pipeline</span>
-        </button>
-      </div>
-
-      <div class="stop-hero-card">
-        <div class="stop-hero-icon-box">
-          <span class="material-symbols-outlined stop-hero-icon" id="detail-stop-icon">home_repair_service</span>
-        </div>
-        <div class="stop-hero-content">
-          <div class="badge-row">
-            <span class="badge badge-info" id="detail-stop-badge">Foundations</span>
+  <!-- App Workspace Shell: Main Content + Persistent Side-Panel Agent -->
+  <div class="app-workspace-shell">
+    <main class="main-container" role="main">
+      <!-- View 1: Winding Scroll Pathway -->
+      <section id="view-pipeline" class="view-section active-view" aria-label="Learning pathway">
+        <div class="pipeline-stage-wrapper" id="pipeline-stage-wrapper">
+          <div class="pathway-svg-container" aria-hidden="true">
+            <svg class="pathway-svg" id="pathway-svg" preserveAspectRatio="none">
+              <path class="pathway-track" id="pathway-track-path" d="M 120 0 L 120 400"></path>
+              <path class="pathway-progress" id="pathway-progress-path" d="M 120 0 L 120 400"></path>
+            </svg>
           </div>
-          <h2 id="detail-stop-title">Downloading the tools</h2>
-          <p id="detail-stop-explainer"></p>
-        </div>
-      </div>
 
-      <div class="bento-grid">
-        <div class="surface-card">
-          <h3>My experiences &amp; field notes</h3>
-          <ul class="bullet-list" id="detail-experiences-list"></ul>
+          <div class="pipeline-stops" id="pipeline-stops-container"></div>
+        </div>
+      </section>
+
+      <!-- View 2: Dedicated Stop Page -->
+      <section id="view-stop-detail" class="view-section" aria-label="Stop details">
+        <div class="detail-top-bar">
+          <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-stop">
+            <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+            <span>Back to pipeline</span>
+          </button>
         </div>
 
-        <div class="surface-card">
-          <h3 id="detail-activity-title">Fun activity</h3>
-          <div class="activity-step-list" id="detail-activity-steps"></div>
-        </div>
-      </div>
-
-      <!-- Searchable Terminal Vocab Section (Shown on Command Line Interface stop) -->
-      <div class="surface-card section-spacer" id="terminal-vocab-section">
-        <div class="search-bar-row">
-          <div>
+        <div class="stop-hero-card">
+          <div class="stop-hero-icon-box">
+            <span class="material-symbols-outlined stop-hero-icon" id="detail-stop-icon">home_repair_service</span>
+          </div>
+          <div class="stop-hero-content">
             <div class="badge-row">
-              <span class="badge badge-success">Command line interface</span>
+              <span class="badge badge-info" id="detail-stop-badge">Step 1 · Foundations</span>
             </div>
-            <h3 class="vocab-section-heading">Terminal vocab &amp; command reference</h3>
+            <h2 id="detail-stop-title">Downloading the tools</h2>
+            <p id="detail-stop-explainer"></p>
           </div>
+        </div>
+
+        <!-- Interactive Living Diagram Slot (Stop 1 Flow, Stop 2 App Infra, Stop 3 Git Graph) -->
+        <div id="detail-interactive-diagram"></div>
+
+        <div class="bento-grid">
+          <div class="surface-card">
+            <h3>My experiences &amp; field notes</h3>
+            <ul class="bullet-list" id="detail-experiences-list"></ul>
+          </div>
+
+          <div class="surface-card">
+            <h3 id="detail-activity-title">Fun activity</h3>
+            <div class="activity-step-list" id="detail-activity-steps"></div>
+          </div>
+        </div>
+
+        <!-- Searchable Terminal Vocab Section (Shown on Command Line Interface stop) -->
+        <div class="surface-card section-spacer" id="terminal-vocab-section">
+          <div class="search-bar-row">
+            <div>
+              <div class="badge-row">
+                <span class="badge badge-success">Command line interface</span>
+              </div>
+              <h3 class="vocab-section-heading">Terminal vocab &amp; command reference</h3>
+            </div>
+
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-adornment">search</span>
+              <input
+                type="text"
+                id="input-terminal-vocab-search"
+                class="m3-input-field"
+                placeholder="Search commands, flags, shortcuts (e.g. grep, pwd, Tab)"
+                aria-label="Search terminal vocab"
+              />
+              <button
+                type="button"
+                class="input-clear-btn"
+                id="btn-clear-terminal-vocab"
+                aria-label="Clear terminal vocab search"
+                title="Clear search"
+              >
+                <span class="material-symbols-outlined btn-icon-sm">close</span>
+              </button>
+            </div>
+          </div>
+
+          <p id="terminal-vocab-why" class="text-muted"></p>
+
+          <div class="safety-callout" id="terminal-vocab-safety">
+            <span class="material-symbols-outlined safety-icon">warning</span>
+            <span id="terminal-vocab-safety-text"></span>
+          </div>
+
+          <div class="badge-row" id="terminal-vocab-categories" role="tablist" aria-label="Filter terminal vocabulary by category"></div>
+
+          <div class="vocab-cards-grid" id="terminal-vocab-grid"></div>
+
+          <h3 class="vocab-section-heading">Mental models &amp; workspace walkthroughs</h3>
+          <div class="essay-section-list" id="terminal-vocab-deep-dives"></div>
+        </div>
+
+        <div class="surface-card">
+          <h3>Linked videos, explainers &amp; resources</h3>
+          <div class="resources-grid" id="detail-resources-grid"></div>
+        </div>
+
+        <div class="stop-footer-nav">
+          <button type="button" class="back-btn" id="btn-prev-stop">
+            <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+            <span id="prev-stop-label">Previous stop</span>
+          </button>
+          <button type="button" class="nav-btn nav-btn-primary" id="btn-next-stop">
+            <span id="next-stop-label">Next stop</span>
+            <span class="material-symbols-outlined btn-icon-sm">arrow_forward</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- View 3: Archive View -->
+      <section id="view-archive" class="view-section" aria-label="Archive">
+        <div class="search-bar-row">
+          <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-archive">
+            <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+            <span>Back to pipeline</span>
+          </button>
 
           <div class="input-wrapper">
             <span class="material-symbols-outlined input-adornment">search</span>
             <input
               type="text"
-              id="input-terminal-vocab-search"
+              id="input-archive-search"
               class="m3-input-field"
-              placeholder="Search commands, flags, shortcuts (e.g. grep, pwd, Tab)"
-              aria-label="Search terminal vocab"
+              placeholder="Filter essays, books, courses, or terminal vocab"
+              aria-label="Filter archive"
             />
             <button
               type="button"
               class="input-clear-btn"
-              id="btn-clear-terminal-vocab"
-              aria-label="Clear terminal vocab search"
+              id="btn-clear-archive-search"
+              aria-label="Clear search"
               title="Clear search"
             >
               <span class="material-symbols-outlined btn-icon-sm">close</span>
@@ -177,91 +246,111 @@
           </div>
         </div>
 
-        <p id="terminal-vocab-why" class="text-muted"></p>
+        <div class="archive-bento">
+          <div class="surface-card">
+            <div class="badge-row">
+              <span class="badge badge-info">Featured essay</span>
+            </div>
+            <h2 id="archive-essay-title">What vibe-coding engineers need to learn</h2>
+            <p class="text-muted" id="archive-essay-subtitle"></p>
+            <div class="essay-section-list" id="archive-essay-sections"></div>
+          </div>
 
-        <div class="safety-callout" id="terminal-vocab-safety">
-          <span class="material-symbols-outlined safety-icon">warning</span>
-          <span id="terminal-vocab-safety-text"></span>
+          <div class="surface-card">
+            <div class="badge-row">
+              <span class="badge badge-success">Books, courses &amp; papers</span>
+            </div>
+            <h2>Reading &amp; course shelf</h2>
+            <div class="essay-section-list" id="archive-library-list"></div>
+          </div>
         </div>
+      </section>
+    </main>
 
-        <div class="badge-row" id="terminal-vocab-categories" role="tablist" aria-label="Filter terminal vocabulary by category"></div>
-
-        <div class="vocab-cards-grid" id="terminal-vocab-grid"></div>
-
-        <h3 class="vocab-section-heading">Mental models &amp; workspace walkthroughs</h3>
-        <div class="essay-section-list" id="terminal-vocab-deep-dives"></div>
-      </div>
-
-      <div class="surface-card">
-        <h3>Linked videos, explainers &amp; resources</h3>
-        <div class="resources-grid" id="detail-resources-grid"></div>
-      </div>
-
-      <div class="stop-footer-nav">
-        <button type="button" class="back-btn" id="btn-prev-stop">
-          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
-          <span id="prev-stop-label">Previous stop</span>
-        </button>
-        <button type="button" class="nav-btn nav-btn-primary" id="btn-next-stop">
-          <span id="next-stop-label">Next stop</span>
-          <span class="material-symbols-outlined btn-icon-sm">arrow_forward</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- View 3: Archive View -->
-    <section id="view-archive" class="view-section" aria-label="Archive">
-      <div class="search-bar-row">
-        <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-archive">
-          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
-          <span>Back to pipeline</span>
-        </button>
-
-        <div class="input-wrapper">
-          <span class="material-symbols-outlined input-adornment">search</span>
-          <input
-            type="text"
-            id="input-archive-search"
-            class="m3-input-field"
-            placeholder="Filter essays, books, courses, or terminal vocab"
-            aria-label="Filter archive"
-          />
-          <button
-            type="button"
-            class="input-clear-btn"
-            id="btn-clear-archive-search"
-            aria-label="Clear search"
-            title="Clear search"
-          >
+    <!-- Persistent Right-Hand Side-Panel Companion Agent -->
+    <aside class="agent-side-panel" id="agent-side-panel" aria-label="Pipeline guide assistant">
+      <div class="agent-panel-header">
+        <div class="agent-header-title-group">
+          <div class="badge-row">
+            <span class="badge badge-info" id="agent-context-badge">Full pipeline</span>
+          </div>
+          <h3>Pipeline guide</h3>
+        </div>
+        <div class="agent-header-actions">
+          <button type="button" class="icon-only-btn" id="btn-agent-api-key-toggle" aria-label="Configure optional Gemini API key" title="Optional live Gemini API key">
+            <span class="material-symbols-outlined btn-icon-sm">key</span>
+          </button>
+          <button type="button" class="icon-only-btn" id="btn-collapse-agent-panel" aria-label="Collapse pipeline guide" title="Collapse panel">
             <span class="material-symbols-outlined btn-icon-sm">close</span>
           </button>
         </div>
       </div>
 
-      <div class="archive-bento">
-        <div class="surface-card">
-          <div class="badge-row">
-            <span class="badge badge-info">Featured essay</span>
-          </div>
-          <h2 id="archive-essay-title">What vibe-coding engineers need to learn</h2>
-          <p class="text-muted" id="archive-essay-subtitle"></p>
-          <div class="essay-section-list" id="archive-essay-sections"></div>
+      <!-- Optional API Key Drawer (Hidden by default) -->
+      <div class="agent-key-drawer" id="agent-key-drawer">
+        <div class="input-wrapper agent-input-full">
+          <span class="material-symbols-outlined input-adornment">vpn_key</span>
+          <input
+            type="password"
+            id="input-agent-api-key"
+            class="m3-input-field"
+            placeholder="Optional Gemini API key (local only)"
+            aria-label="Optional Gemini API key"
+          />
+          <button
+            type="button"
+            class="input-clear-btn"
+            id="btn-clear-agent-api-key"
+            aria-label="Clear API key"
+            title="Clear API key"
+          >
+            <span class="material-symbols-outlined btn-icon-sm">close</span>
+          </button>
         </div>
-
-        <div class="surface-card">
-          <div class="badge-row">
-            <span class="badge badge-success">Books, courses &amp; papers</span>
-          </div>
-          <h2>Reading &amp; course shelf</h2>
-          <div class="essay-section-list" id="archive-library-list"></div>
-        </div>
+        <button type="button" class="nav-btn nav-btn-primary" id="btn-save-agent-api-key">Save key</button>
       </div>
-    </section>
-  </main>
+
+      <!-- Context-Aware Quick Question Chips -->
+      <div class="agent-starter-chips" id="agent-starter-chips" aria-label="Suggested questions"></div>
+
+      <!-- Scrollable Conversation Log -->
+      <div class="agent-messages-list" id="agent-messages-list" role="log" aria-live="polite"></div>
+
+      <!-- Question Input Form with Outlined Field & Inline Clear Button -->
+      <form class="agent-input-form" id="form-agent-question">
+        <div class="input-wrapper agent-input-full">
+          <span class="material-symbols-outlined input-adornment">help</span>
+          <input
+            type="text"
+            id="input-agent-question"
+            class="m3-input-field"
+            placeholder="Ask about this site, Git, languages, CLI..."
+            aria-label="Ask the pipeline guide"
+          />
+          <button
+            type="button"
+            class="input-clear-btn"
+            id="btn-clear-agent-question"
+            aria-label="Clear question"
+            title="Clear question"
+          >
+            <span class="material-symbols-outlined btn-icon-sm">close</span>
+          </button>
+        </div>
+        <button type="submit" class="nav-btn nav-btn-primary agent-send-btn" aria-label="Ask question">
+          <span>Ask</span>
+          <span class="material-symbols-outlined btn-icon-sm">send</span>
+        </button>
+      </form>
+    </aside>
+  </div>
 
   <script src="./data.js"></script>
   <script src="./terminal-vocab-data.js"></script>
   <script src="./diagnostics-theme.js"></script>
+  <script src="./diagrams-data.js"></script>
+  <script src="./diagrams.js"></script>
+  <script src="./agent-panel.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

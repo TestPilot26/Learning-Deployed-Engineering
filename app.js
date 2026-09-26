@@ -299,6 +299,14 @@ function renderStopDetail(stopId) {
     });
   }
 
+  var diagramContainer = document.getElementById("detail-interactive-diagram");
+  if (window.PipelineDiagrams && diagramContainer) {
+    window.PipelineDiagrams.renderForStop(stop, diagramContainer);
+  }
+  if (window.PipelineAgent) {
+    window.PipelineAgent.setContext(stop.id, stop.title);
+  }
+
   var vocabSection = document.getElementById("terminal-vocab-section");
   if (vocabSection) {
     if (stop.hasTerminalVocab && window.TERMINAL_VOCAB_DATA) {
@@ -587,10 +595,12 @@ function handleRouteChange() {
     }
     if (hash === "#archive") {
       switchActiveView("view-archive");
+      if (window.PipelineAgent) window.PipelineAgent.setContext("archive", "Archive & shelf");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     switchActiveView("view-pipeline");
+    if (window.PipelineAgent) window.PipelineAgent.setContext(null, "Full pipeline");
     setTimeout(updatePathwayGeometry, 40);
   };
   if (typeof document.startViewTransition === "function") document.startViewTransition(applyRoute);
@@ -656,6 +666,7 @@ function init() {
 
   renderPipelineStops();
   renderArchiveView("");
+  if (window.PipelineAgent) window.PipelineAgent.init();
 
   window.addEventListener("hashchange", handleRouteChange);
   window.addEventListener("resize", updatePathwayGeometry);
