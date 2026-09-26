@@ -221,6 +221,7 @@ window.PIPELINE_DATA = {
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "terminal",
+      diagramType: "terminal-interactive",
       hasTerminalVocab: true,
       teaser: "Tracking what AI is doing in real time, navigating any system with confidence, and searchable terminal vocab.",
       explainer: "Learning terminal essentials matters for two big reasons: first, you can track what AI is actually doing as it's doing it (watching which files it reads, edits, or runs instead of treating it as a black box); second, you'll find it much easier to navigate many different types of systems—from your own laptop to cloud VMs and production logs.",

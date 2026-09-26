@@ -634,6 +634,8 @@
         renderAppInfrastructureDiagram(containerEl);
       } else if (stop.diagramType === "git-living") {
         renderGitLivingDiagram(containerEl);
+      } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
+        window.renderTerminalInteractiveDiagram(containerEl);
       }
     }
   };

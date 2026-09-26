@@ -580,101 +580,109 @@
   align-items: center;
   gap: 8px;
 }
-
-.git-on-graph-node.active .git-node-word {
-  color: var(--color-on-primary-container);
-}
-
-.git-node-shorthand {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-surface-container);
-  color: var(--color-primary);
-  font-family: monospace;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.git-on-graph-node.active .git-node-shorthand {
-  background-color: var(--color-surface-container-lowest);
-}
-
-.git-node-subtitle {
-  font-size: 12px;
-  color: var(--color-on-surface-variant);
-  line-height: 1.35;
-}
-
-.git-on-graph-node.active .git-node-subtitle {
-  color: var(--color-on-primary-container);
-}
+.git-on-graph-node.active .git-node-word { color: var(--color-on-primary-container); }
+.git-node-shorthand { display: inline-block; padding: 2px 8px; border-radius: var(--radius-full); background-color: var(--color-surface-container); color: var(--color-primary); font-family: monospace; font-size: 11px; font-weight: 600; }
+.git-on-graph-node.active .git-node-shorthand { background-color: var(--color-surface-container-lowest); }
+.git-node-subtitle { font-size: 12px; color: var(--color-on-surface-variant); line-height: 1.35; }
+.git-on-graph-node.active .git-node-subtitle { color: var(--color-on-primary-container); }
 
 /* Middle SVG Bridge Layer Animating the Branch Split & Merge Curve */
-.git-curves-svg {
-  width: 100%;
-  min-width: 720px;
-  height: 76px;
-  display: block;
-  overflow: visible;
-}
+.git-curves-svg { width: 100%; min-width: 720px; height: 76px; display: block; overflow: visible; }
+.git-branch-line-feature { fill: none; stroke: var(--color-tertiary); stroke-width: 5; stroke-linecap: round; }
+.git-branch-line-animated { fill: none; stroke: var(--color-surface-container-lowest); stroke-width: 2.5; stroke-dasharray: 6 8; animation: dashFlow 0.9s linear infinite; }
+.git-traveller-dot { fill: var(--color-tertiary); stroke: var(--color-surface-container-lowest); stroke-width: 2.5; }
+.git-svg-curve-caption { fill: var(--color-on-surface-variant); font-family: var(--font-family-display); font-size: 12px; font-weight: 600; }
+.octicon-svg { width: 18px; height: 18px; color: var(--color-primary); flex-shrink: 0; }
+.git-on-graph-node.active .octicon-svg { color: var(--color-on-primary-container); }
+.octicon-svg-lg { width: 20px; height: 20px; color: var(--color-primary); flex-shrink: 0; }
 
-.git-branch-line-feature {
-  fill: none;
-  stroke: var(--color-tertiary);
-  stroke-width: 5;
-  stroke-linecap: round;
+/* ============================================================================
+   STOP 4: ILLUSTRATED TERMINAL WINDOW & POP-UP KEYBOARD WITH IMAGINARY HANDS
+   ============================================================================ */
+.terminal-keyboard-stage { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; align-items: stretch; }
+.term-illustration-window, .keyboard-illustration-panel {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-
-.git-branch-line-animated {
-  fill: none;
-  stroke: var(--color-surface-container-lowest);
-  stroke-width: 2.5;
-  stroke-dasharray: 6 8;
-  animation: dashFlow 0.9s linear infinite;
+.term-window-title { font-family: monospace; font-size: 12px; font-weight: 600; color: var(--color-on-surface-variant); }
+.term-screen-body {
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  min-height: 200px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-x: auto;
 }
+.term-prompt-line { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.term-prompt-prefix { color: var(--color-tertiary); font-weight: 700; }
+.term-typed-command { color: var(--color-primary); font-weight: 700; }
+@keyframes termBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.term-blinking-cursor { color: var(--color-primary); animation: termBlink 1s infinite; }
+.term-output-block { display: flex; flex-direction: column; gap: 2px; }
+.term-output-line { color: var(--color-on-surface); white-space: pre; }
+.term-output-comment { color: var(--color-on-surface-variant); font-style: italic; white-space: pre-wrap; }
 
-.git-traveller-dot {
-  fill: var(--color-tertiary);
-  stroke: var(--color-surface-container-lowest);
-  stroke-width: 2.5;
+.hands-popup-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.hand-guide-pill { background-color: var(--color-surface-container-lowest); border-radius: var(--radius-md); padding: 12px; display: flex; align-items: flex-start; gap: 8px; }
+.hand-guide-icon { font-size: 20px; color: var(--color-primary); margin-top: 2px; }
+.hand-guide-label { font-family: var(--font-family-display); font-size: 13px; color: var(--color-on-surface); }
+
+.keyboard-rows-wrap { display: flex; flex-direction: column; gap: 12px; padding-top: 8px; }
+.keyboard-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.keycap-btn {
+  position: relative;
+  background-color: var(--color-surface-container-lowest);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  transition: transform 180ms cubic-bezier(0.2, 0, 0, 1), background-color 150ms ease;
 }
-
-.git-svg-curve-caption {
-  fill: var(--color-on-surface-variant);
-  font-family: var(--font-family-display);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.octicon-svg {
-  width: 18px;
-  height: 18px;
-  color: var(--color-primary);
-  flex-shrink: 0;
-}
-
-.git-on-graph-node.active .octicon-svg {
+.keycap-btn:hover { background-color: var(--color-surface-container-high); transform: translateY(-2px); }
+.keycap-btn.popped {
+  background-color: var(--color-primary-container);
   color: var(--color-on-primary-container);
+  transform: translateY(-6px) scale(1.04);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
 }
-
-.octicon-svg-lg {
-  width: 20px;
-  height: 20px;
-  color: var(--color-primary);
-  flex-shrink: 0;
+.keycap-main-label { font-family: monospace; font-size: 13px; font-weight: 700; color: var(--color-on-surface); }
+.keycap-btn.popped .keycap-main-label, .keycap-btn.popped .keycap-sub-label { color: var(--color-on-primary-container); }
+.keycap-sub-label { font-size: 11px; color: var(--color-on-surface-variant); }
+.keycap-finger-pop {
+  display: none;
+  position: absolute;
+  top: -14px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-tertiary-container);
+  color: var(--color-on-tertiary-container);
+  font-size: 11px;
+  font-weight: 700;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
 }
+.keycap-btn.popped .keycap-finger-pop { display: inline-flex; }
+.keycap-finger-icon { font-size: 14px; }
 
 @media (max-width: 900px) {
-  .illustrated-scene-layout,
-  .computer-orbit-grid,
-  .app-halves-row,
-  .app-bottom-connectors-row,
-  .app-bottom-vaults-row {
+  .illustrated-scene-layout, .computer-orbit-grid, .app-halves-row, .app-bottom-connectors-row, .app-bottom-vaults-row, .terminal-keyboard-stage, .hands-popup-row {
     grid-template-columns: 1fr;
   }
-  .app-half-frontend,
-  .app-half-backend {
-    border-radius: var(--radius-lg);
-  }
+  .keyboard-row { grid-template-columns: repeat(2, 1fr); }
+  .app-half-frontend, .app-half-backend { border-radius: var(--radius-lg); }
 }
