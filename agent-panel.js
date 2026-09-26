@@ -395,8 +395,8 @@
     }
   }
 
-  var setSidePanelCollapsedFn = null;
-  var setSidePanelTabFn = null;
+  var setAgentPanelCollapsedFn = null;
+  var setInspectorPanelCollapsedFn = null;
   var popPulseTimer = null;
 
   function renderStarterChips() {
@@ -417,14 +417,31 @@
     });
   }
 
+  function renderDefaultInspectorPlaceholder() {
+    var bodyEl = document.getElementById("side-inspector-body");
+    if (!bodyEl || bodyEl.children.length > 0) return;
+    var h4 = document.createElement("h4");
+    h4.textContent = "Click any diagram element to inspect it";
+    var p = document.createElement("p");
+    p.className = "resource-desc";
+    p.textContent = "Whenever you click a stage card, coding language pill, Git node, keyboard key, or path piece inside any step, this left-hand panel opens with a plain-English breakdown and code example.";
+    bodyEl.appendChild(h4);
+    bodyEl.appendChild(p);
+  }
+
   function showInspectorInSidePanel(populateFn, options) {
     var opts = options || {};
     var bodyEl = document.getElementById("side-inspector-body");
-    var panelEl = document.getElementById("agent-side-panel");
+    var inspectorPanelEl = document.getElementById("inspector-side-panel");
+    var inspectorBadgeEl = document.getElementById("inspector-context-badge");
     if (!bodyEl || typeof populateFn !== "function") return;
 
     bodyEl.replaceChildren();
     populateFn(bodyEl);
+
+    if (inspectorBadgeEl) {
+      inspectorBadgeEl.textContent = opts.itemTitle || currentContextLabel || "Selected item";
+    }
 
     if (opts.itemTitle) {
       var askWrap = document.createElement("div");
@@ -440,7 +457,7 @@
       askBtn.appendChild(askIcon);
       askBtn.appendChild(askTxt);
       askBtn.addEventListener("click", function () {
-        if (setSidePanelTabFn) setSidePanelTabFn("guide");
+        if (setAgentPanelCollapsedFn) setAgentPanelCollapsedFn(false);
         handleUserQuestion("Can you explain " + opts.itemTitle + " and how it fits in?");
       });
       askWrap.appendChild(askBtn);
@@ -448,31 +465,31 @@
     }
 
     bodyEl.scrollTop = 0;
-    if (setSidePanelTabFn) setSidePanelTabFn("inspector");
 
-    if (opts.autoOpen && setSidePanelCollapsedFn) {
-      setSidePanelCollapsedFn(false);
+    if (opts.autoOpen && setInspectorPanelCollapsedFn) {
+      setInspectorPanelCollapsedFn(false);
     }
 
-    if (opts.pulse && panelEl) {
-      panelEl.classList.remove("side-panel-pop-pulse");
-      void panelEl.offsetWidth;
-      panelEl.classList.add("side-panel-pop-pulse");
+    if (opts.pulse && inspectorPanelEl) {
+      inspectorPanelEl.classList.remove("side-panel-pop-pulse");
+      void inspectorPanelEl.offsetWidth;
+      inspectorPanelEl.classList.add("side-panel-pop-pulse");
       if (popPulseTimer) clearTimeout(popPulseTimer);
       popPulseTimer = setTimeout(function () {
-        panelEl.classList.remove("side-panel-pop-pulse");
+        inspectorPanelEl.classList.remove("side-panel-pop-pulse");
       }, 650);
     }
   }
 
   function initAgentPanel() {
-    var panelEl = document.getElementById("agent-side-panel");
-    var toggleTopBtn = document.getElementById("btn-toggle-agent-panel");
-    var collapseBtn = document.getElementById("btn-collapse-agent-panel");
-    var tabInspectorBtn = document.getElementById("btn-side-tab-inspector");
-    var tabGuideBtn = document.getElementById("btn-side-tab-guide");
-    var inspectorPaneEl = document.getElementById("side-inspector-pane");
-    var guidePaneEl = document.getElementById("side-guide-pane");
+    var agentPanelEl = document.getElementById("agent-side-panel");
+    var toggleAgentBtn = document.getElementById("btn-toggle-agent-panel");
+    var collapseAgentBtn = document.getElementById("btn-collapse-agent-panel");
+
+    var inspectorPanelEl = document.getElementById("inspector-side-panel");
+    var toggleInspectorBtn = document.getElementById("btn-toggle-inspector-panel");
+    var collapseInspectorBtn = document.getElementById("btn-collapse-inspector-panel");
+
     var formEl = document.getElementById("form-agent-question");
     var inputEl = document.getElementById("input-agent-question");
     var clearBtnEl = document.getElementById("btn-clear-agent-question");
@@ -482,37 +499,7 @@
     var keyClearBtnEl = document.getElementById("btn-clear-agent-api-key");
     var keySaveBtnEl = document.getElementById("btn-save-agent-api-key");
 
-    if (!panelEl) return;
-
-    function setSideTab(mode) {
-      var isInspector = mode === "inspector";
-      if (tabInspectorBtn) {
-        tabInspectorBtn.classList.toggle("active", isInspector);
-        tabInspectorBtn.setAttribute("aria-selected", isInspector ? "true" : "false");
-      }
-      if (tabGuideBtn) {
-        tabGuideBtn.classList.toggle("active", !isInspector);
-        tabGuideBtn.setAttribute("aria-selected", !isInspector ? "true" : "false");
-      }
-      if (inspectorPaneEl) {
-        inspectorPaneEl.classList.toggle("side-pane-hidden", !isInspector);
-      }
-      if (guidePaneEl) {
-        guidePaneEl.classList.toggle("side-pane-hidden", isInspector);
-      }
-    }
-    setSidePanelTabFn = setSideTab;
-
-    if (tabInspectorBtn) {
-      tabInspectorBtn.addEventListener("click", function () {
-        setSideTab("inspector");
-      });
-    }
-    if (tabGuideBtn) {
-      tabGuideBtn.addEventListener("click", function () {
-        setSideTab("guide");
-      });
-    }
+    if (!agentPanelEl) return;
 
     if (inputEl && clearBtnEl && window.InlineClear) {
       window.InlineClear.bind(inputEl, clearBtnEl, function () {});
@@ -525,37 +512,71 @@
       });
     }
 
-    function setPanelCollapsed(collapsed) {
+    function setAgentPanelCollapsed(collapsed) {
       if (collapsed) {
-        panelEl.classList.add("collapsed");
+        agentPanelEl.classList.add("collapsed");
         document.body.classList.add("agent-panel-collapsed");
-        if (toggleTopBtn) toggleTopBtn.classList.remove("active");
+        if (toggleAgentBtn) toggleAgentBtn.classList.remove("active");
       } else {
-        panelEl.classList.remove("collapsed");
+        agentPanelEl.classList.remove("collapsed");
         document.body.classList.remove("agent-panel-collapsed");
-        if (toggleTopBtn) toggleTopBtn.classList.add("active");
+        if (toggleAgentBtn) toggleAgentBtn.classList.add("active");
       }
       setTimeout(function () {
         if (typeof window.updatePathwayGeometry === "function") window.updatePathwayGeometry();
       }, 220);
     }
-    setSidePanelCollapsedFn = setPanelCollapsed;
+    setAgentPanelCollapsedFn = setAgentPanelCollapsed;
 
-    if (toggleTopBtn) {
-      toggleTopBtn.addEventListener("click", function () {
-        setPanelCollapsed(!panelEl.classList.contains("collapsed"));
+    function setInspectorPanelCollapsed(collapsed) {
+      if (!inspectorPanelEl) return;
+      if (collapsed) {
+        inspectorPanelEl.classList.add("collapsed");
+        document.body.classList.add("inspector-panel-collapsed");
+        if (toggleInspectorBtn) toggleInspectorBtn.classList.remove("active");
+      } else {
+        renderDefaultInspectorPlaceholder();
+        inspectorPanelEl.classList.remove("collapsed");
+        document.body.classList.remove("inspector-panel-collapsed");
+        if (toggleInspectorBtn) toggleInspectorBtn.classList.add("active");
+      }
+      setTimeout(function () {
+        if (typeof window.updatePathwayGeometry === "function") window.updatePathwayGeometry();
+      }, 220);
+    }
+    setInspectorPanelCollapsedFn = setInspectorPanelCollapsed;
+
+    // Start with the Guide panel open on the right, and Selected Item panel collapsed on the left
+    setAgentPanelCollapsed(false);
+    setInspectorPanelCollapsed(true);
+    renderDefaultInspectorPlaceholder();
+
+    if (toggleAgentBtn) {
+      toggleAgentBtn.addEventListener("click", function () {
+        setAgentPanelCollapsed(!agentPanelEl.classList.contains("collapsed"));
       });
     }
 
-    if (collapseBtn) {
-      collapseBtn.addEventListener("click", function () {
-        setPanelCollapsed(true);
+    if (collapseAgentBtn) {
+      collapseAgentBtn.addEventListener("click", function () {
+        setAgentPanelCollapsed(true);
+      });
+    }
+
+    if (toggleInspectorBtn && inspectorPanelEl) {
+      toggleInspectorBtn.addEventListener("click", function () {
+        setInspectorPanelCollapsed(!inspectorPanelEl.classList.contains("collapsed"));
+      });
+    }
+
+    if (collapseInspectorBtn) {
+      collapseInspectorBtn.addEventListener("click", function () {
+        setInspectorPanelCollapsed(true);
       });
     }
 
     if (keyToggleBtn && keyDrawerEl) {
       keyToggleBtn.addEventListener("click", function () {
-        setSideTab("guide");
         var isHidden = keyDrawerEl.style.display === "none" || !keyDrawerEl.style.display;
         keyDrawerEl.style.display = isHidden ? "flex" : "none";
       });
@@ -608,9 +629,17 @@
       var badgeEl = document.getElementById("agent-context-badge");
       if (badgeEl) badgeEl.textContent = currentContextLabel;
       renderStarterChips();
+      // Keep the Selected Item panel collapsed when entering a new stop/view until the user clicks on something
+      if (setInspectorPanelCollapsedFn) {
+        setInspectorPanelCollapsedFn(window.location.search.indexOf("inspect=1") === -1);
+      }
     },
-    setTab: function (mode) {
-      if (setSidePanelTabFn) setSidePanelTabFn(mode);
+    setTab: function () {},
+    setInspectorCollapsed: function (collapsed) {
+      if (setInspectorPanelCollapsedFn) setInspectorPanelCollapsedFn(Boolean(collapsed));
+    },
+    setGuideCollapsed: function (collapsed) {
+      if (setAgentPanelCollapsedFn) setAgentPanelCollapsedFn(Boolean(collapsed));
     },
     showInspector: showInspectorInSidePanel
   };

@@ -74,7 +74,7 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./diagrams.css" />
 </head>
-<body>
+<body class="inspector-panel-collapsed">
   <!-- Top App Bar -->
   <header class="top-app-bar" role="banner">
     <div class="brand-group">
@@ -93,7 +93,11 @@
         <span class="material-symbols-outlined btn-icon-sm">inventory_2</span>
         <span class="btn-label-text">Archive</span>
       </button>
-      <button type="button" class="nav-btn active" id="btn-toggle-agent-panel" aria-label="Toggle pipeline guide side panel">
+      <button type="button" class="nav-btn" id="btn-toggle-inspector-panel" aria-label="Toggle selected item left panel">
+        <span class="material-symbols-outlined btn-icon-sm">info</span>
+        <span class="btn-label-text">Selected item</span>
+      </button>
+      <button type="button" class="nav-btn active" id="btn-toggle-agent-panel" aria-label="Toggle pipeline guide right panel">
         <span class="material-symbols-outlined btn-icon-sm">chat</span>
         <span class="btn-label-text">Pipeline guide</span>
       </button>
@@ -107,8 +111,29 @@
     </nav>
   </header>
 
-  <!-- App Workspace Shell: Main Content + Persistent Side-Panel Agent -->
+  <!-- App Workspace Shell: Left Selected Item Panel + Main Content + Right Pipeline Guide Panel -->
   <div class="app-workspace-shell">
+    <!-- Left-Hand Pop-Out Selected Item Panel (Starts collapsed; opens when you click a diagram item) -->
+    <aside class="inspector-side-panel collapsed" id="inspector-side-panel" aria-label="Selected item explanation panel">
+      <div class="agent-panel-header">
+        <div class="agent-header-title-group">
+          <div class="badge-row">
+            <span class="badge badge-info" id="inspector-context-badge">Selected item</span>
+          </div>
+          <strong class="side-panel-heading">Selected item details</strong>
+        </div>
+        <div class="agent-header-actions">
+          <button type="button" class="icon-only-btn" id="btn-collapse-inspector-panel" aria-label="Collapse selected item panel" title="Collapse selected item panel">
+            <span class="material-symbols-outlined btn-icon-sm">close</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="side-inspector-pane" id="side-inspector-pane">
+        <div class="side-inspector-body" id="side-inspector-body"></div>
+      </div>
+    </aside>
+
     <main class="main-container" role="main">
       <!-- View 1: Winding Scroll Pathway -->
       <section id="view-pipeline" class="view-section active-view" aria-label="Learning pathway">
@@ -277,41 +302,27 @@
       </section>
     </main>
 
-    <!-- Persistent & Pop-Out Right-Hand Side Panel (Component Explanation + Pipeline Guide) -->
-    <aside class="agent-side-panel" id="agent-side-panel" aria-label="Explanation and pipeline guide side panel">
+    <!-- Right-Hand Persistent Pipeline Guide Panel (Starts open) -->
+    <aside class="agent-side-panel" id="agent-side-panel" aria-label="Pipeline guide side panel">
       <div class="agent-panel-header">
         <div class="agent-header-title-group">
           <div class="badge-row">
             <span class="badge badge-info" id="agent-context-badge">Full pipeline</span>
           </div>
-          <div class="side-panel-mode-tabs" role="tablist" aria-label="Side panel mode">
-            <button type="button" class="side-mode-tab" id="btn-side-tab-inspector" role="tab" aria-selected="false">
-              <span class="material-symbols-outlined btn-icon-sm">info</span>
-              <span>Selected item</span>
-            </button>
-            <button type="button" class="side-mode-tab active" id="btn-side-tab-guide" role="tab" aria-selected="true">
-              <span class="material-symbols-outlined btn-icon-sm">chat</span>
-              <span>Pipeline guide</span>
-            </button>
-          </div>
+          <strong class="side-panel-heading">Pipeline guide</strong>
         </div>
         <div class="agent-header-actions">
           <button type="button" class="icon-only-btn" id="btn-agent-api-key-toggle" aria-label="Configure optional Gemini API key" title="Optional live Gemini API key">
             <span class="material-symbols-outlined btn-icon-sm">key</span>
           </button>
-          <button type="button" class="icon-only-btn" id="btn-collapse-agent-panel" aria-label="Close side panel" title="Close side panel">
+          <button type="button" class="icon-only-btn" id="btn-collapse-agent-panel" aria-label="Collapse pipeline guide panel" title="Collapse pipeline guide panel">
             <span class="material-symbols-outlined btn-icon-sm">close</span>
           </button>
         </div>
       </div>
 
-      <!-- Pane 1: Pop-out Component / Button Explanation Inspector -->
-      <div class="side-inspector-pane side-pane-hidden" id="side-inspector-pane" role="tabpanel">
-        <div class="side-inspector-body" id="side-inspector-body"></div>
-      </div>
-
-      <!-- Pane 2: Interactive Pipeline Guide Q&A -->
-      <div class="side-guide-pane" id="side-guide-pane" role="tabpanel">
+      <!-- Interactive Pipeline Guide Q&A -->
+      <div class="side-guide-pane" id="side-guide-pane">
         <!-- Optional API Key Drawer (Hidden by default) -->
         <div class="agent-key-drawer" id="agent-key-drawer">
           <div class="input-wrapper agent-input-full">

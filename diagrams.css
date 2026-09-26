@@ -29,7 +29,9 @@
   font-family: var(--font-family-display);
   font-size: 13px;
   font-weight: 600;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: left;
+  max-width: 100%;
   transition: transform 150ms ease, background-color 150ms ease;
 }
 
@@ -48,6 +50,7 @@
 .diagram-pill-icon {
   font-size: 18px;
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .diagram-label-pill.active .diagram-pill-icon {
@@ -101,7 +104,7 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 164px 1fr 164px 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(84px, 124px) minmax(0, 1fr) minmax(84px, 124px) minmax(0, 1fr);
   gap: 8px;
   align-items: start;
 }
@@ -110,7 +113,7 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr);
   gap: 8px;
   align-items: center;
 }
@@ -118,6 +121,7 @@
 .loop-stage-card {
   position: relative;
   z-index: 2;
+  min-width: 0;
   background-color: var(--color-surface-container-lowest);
   border-radius: var(--radius-lg);
   padding: 16px;

@@ -328,7 +328,7 @@
             handCard.appendChild(hp);
             inspectorEl.appendChild(handCard);
           },
-          { autoOpen: false, pulse: true, itemTitle: kObj.keyLabel }
+          { autoOpen: true, pulse: true, itemTitle: kObj.keyLabel }
         );
       }
     }
