@@ -81,22 +81,23 @@
     },
     {
       id: "term-grep",
-      pillLabel: "5. Search all code (grep -rn)",
-      badge: "Step 5 · How AI finds code",
+      pillLabel: "5. What is grep? Search files (grep -rn)",
+      badge: "Step 5 · Ctrl+F for your terminal",
       badgeClass: "badge-info",
       activeKeys: ["key-grep", "key-enter"],
-      leftHandText: "Hands type 'grep -rn \"APP_BUILD\" .'",
+      leftHandText: "Hands type 'grep -rn \"APP_BUILD\" .' (grep = search text inside files)",
       rightHandText: "Right pinky taps [Enter ↵] to scan every file in milliseconds",
-      typedFrames: ["grep -rn", "grep -rn \"APP_BUILD\"", "grep -rn \"APP_BUILD\" ."],
+      typedFrames: ["grep", "grep -rn", "grep -rn \"APP_BUILD\"", "grep -rn \"APP_BUILD\" ."],
       promptSuffix: "grep -rn \"APP_BUILD\" .",
-      keyPopBadge: "Enter ↵ pressed!",
+      keyPopBadge: "grep = Search inside files!",
       terminalOutput: [
-        "./diagnostics-theme.js:4:var APP_BUILD = \"2026-09-26g\";",
+        "# What is 'grep'? It is Ctrl+F (or Cmd+F) for the terminal!",
+        "./diagnostics-theme.js:4:var APP_BUILD = \"2026-09-26m\";",
         "./diagnostics-theme.js:10:    if (last && last !== APP_BUILD) {",
         "",
-        "# Found 2 matches across all files (with exact file path & line number!)."
+        "# Found 2 matches across all subfolders (-r) with exact line numbers (-n)."
       ],
-      whatHappened: "When you see an AI coding agent run 'grep -rn', it is searching inside every file in your folder (-r) and printing the exact line number (-n) where that word lives so it knows which line to edit."
+      whatHappened: "What is 'grep'? Think of 'grep' as Cmd+F (or Ctrl+F) for your terminal! Instead of opening 50 files one by one to find where a word lives, 'grep' searches inside files and prints every matching line. (Its name comes from an old 1970s Unix command: Global Regular Expression Print.) Adding '-rn' tells grep to search recursively through all subfolders (-r) and print exact line numbers (-n)."
     },
     {
       id: "term-ctrl-c",
@@ -528,7 +529,7 @@
       roleLabel: "4. Workspace",
       colorClass: "badge-secondary",
       title: "Workspace: Your coding workbench that holds your projects",
-      comparison: "Workspace vs. Folder vs. File: A 'Workspace' is the overarching workbench (a parent folder like '~/workspace', a VS Code/Cursor window session, or a cloud CitC workspace) where you keep your active coding projects and editor settings.",
+      comparison: "Workspace vs. Folder vs. File: A 'Workspace' is the overarching workbench (a parent folder like '~/workspace', a VS Code/Cursor window session, or a cloud dev environment like GitHub Codespaces) where you keep your active coding projects and editor settings.",
       whatItDoes: "Keeps all your coding projects in one clean, easy-to-find place instead of scattering them across Downloads and Desktop.",
       howToGetThere: "mkdir -p ~/workspace && cd ~/workspace   # Creates & enters your workbench"
     },

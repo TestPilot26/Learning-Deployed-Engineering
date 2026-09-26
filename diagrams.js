@@ -360,7 +360,7 @@
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How Git commits, branches, PRs/CLs, and merges work";
+    h3.textContent = "How Git commits, branches, Pull Requests (PRs), and merges work";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
 

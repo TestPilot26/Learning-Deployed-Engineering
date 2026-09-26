@@ -53,10 +53,16 @@
       answer: "Fragile vibe-coded apps typically fail in 4 ways: (1) putting secret API keys inside frontend browser code, (2) letting the browser mutate database tables without server-side authentication checks, (3) running slow 30-second AI calls synchronously so the page hangs, and (4) skipping idempotency so clicking 'Submit' twice double-charges or duplicates data. Good architecture separates Client UI, Auth/API Server, and Database/Queue boundaries."
     },
     {
-      keywords: ["git", "commit", "branch", "pull request", "pr", "cl", "changelist", "merge", "diff"],
-      title: "Git essentials: Commit, Branch, Diff, PR/CL & Merge",
+      keywords: ["git", "commit", "branch", "pull request", "pr", "merge", "diff"],
+      title: "Git essentials: Commit, Branch, Diff, Pull Request (PR) & Merge",
       stopId: "git-and-shipping",
-      answer: "• git diff: Shows exact green (+) and red (-) line changes before you save.\n• git commit: Saves a permanent timestamped checkpoint on your laptop.\n• git branch: Creates a parallel timeline so you can test risky AI edits without touching 'main'.\n• Pull Request (PR) / Changelist (CL): A review page comparing your branch against 'main' with a live preview link.\n• git merge: Joins your verified branch back into 'main' and triggers production deployment."
+      answer: "• git diff: Shows exact green (+) and red (-) line changes before you save.\n• git commit: Saves a permanent timestamped checkpoint on your laptop.\n• git branch: Creates a parallel timeline so you can test risky AI edits without touching 'main'.\n• Pull Request (PR): A review page on GitHub comparing your branch against 'main' with a live preview link.\n• git merge: Joins your verified branch back into 'main' and triggers production deployment."
+    },
+    {
+      keywords: ["grep", "what is grep", "grep -rn", "search files", "regular expression print", "ctrl+f", "cmd+f"],
+      title: "What is 'grep' (and why do AI agents run 'grep -rn' constantly)?",
+      stopId: "cli-and-terminal",
+      answer: "'grep' is your terminal's 'Ctrl+F' / 'Cmd+F' across files and folders! Its name comes from an old 1970s Unix editor command: g/re/p (Global Regular Expression Print — meaning: globally search for a text pattern and print every matching line).\n• grep \"TODO\" notes.txt — searches inside one file.\n• grep -rn \"fetchUser\" src/ — searches recursively (-r) through every subfolder in src/ and prints the exact filename and line number (-n) where 'fetchUser' appears.\n• grep -i \"error\" server.log — searches case-insensitively (-i)."
     },
     {
       keywords: ["clone", "fork", "copy", "duplicate", "branch vs clone", "git clone"],
@@ -116,7 +122,7 @@
 
   var STOP_STARTER_PROMPTS = {
     "default": [
-      "What is a plain text file vs Word doc?",
+      "What is grep (and grep -rn)?",
       "How do Laptop, GitHub & Vercel connect?",
       "Python vs TypeScript vs SQL?",
       "How do I build on top of open source?"
@@ -136,11 +142,11 @@
     "git-and-shipping": [
       "Branch vs clone vs fork?",
       "How do I undo an AI mistake in Git?",
-      "What is a Pull Request (PR) / CL?",
+      "What is a Pull Request (PR)?",
       "Saving vs committing vs pushing?"
     ],
     "cli-and-terminal": [
-      "What does grep -rn do?",
+      "What is grep (and grep -rn)?",
       "How do I stop a stuck terminal command?",
       "What is the difference between > and >>?",
       "Why use the terminal instead of GUI?"

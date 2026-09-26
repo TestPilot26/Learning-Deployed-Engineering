@@ -159,8 +159,8 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "commit",
       diagramType: "git-living",
-      teaser: "Living diagram of commits, branches, PRs/CLs, merges, and how cloning, branching, and forking keep your code safe.",
-      explainer: "Version control comes right after terminology because you need a seatbelt before you let an AI agent edit twenty files at once. GitClear's study of 211 million lines of code found that two-week code churn more than doubled from 3.3% to 7.1% in the AI era. Understanding commits (save checkpoints), branches (parallel safe timelines), diffs (line-by-line inspection), and Pull Requests / Changelists means an AI hallucination can never destroy a working prototype.",
+      teaser: "Living diagram of commits, branches, Pull Requests (PRs), merges, and how cloning, branching, and forking keep your code safe.",
+      explainer: "Version control comes right after terminology because you need a seatbelt before you let an AI agent edit twenty files at once. GitClear's study of 211 million lines of code found that two-week code churn more than doubled from 3.3% to 7.1% in the AI era. Understanding commits (save checkpoints), branches (parallel safe timelines), diffs (line-by-line inspection), and Pull Requests (PRs) means an AI hallucination can never destroy a working prototype.",
       experiences: [
         {
           lead: "Saving (Cmd+S) vs. Committing (git commit) vs. Pushing (git push):",
@@ -171,14 +171,14 @@ window.PIPELINE_DATA = {
           body: "Never duplicate folders like 'project-v2-final-FINAL'. A Git branch lets you try a risky AI refactor in an isolated timeline and either merge it if it works or delete it in one second if it breaks."
         },
         {
-          lead: "Always read git diff before committing:",
+          lead: "Always read git diff before opening a Pull Request (PR):",
           body: "Before sealing a commit or opening a Pull Request (PR), reading the red/green diff lines catches stray console logs, accidentally deleted functions, or leaked secrets."
         }
       ],
       activity: {
         title: "Fun activity: Drive the living Git timeline",
         steps: [
-          "Click each node on the Living Git & Deployment Diagram below (Commit, Branch, Diff, Pull Request / CL, Merge, and Clone vs. Fork) to see how code moves safely to production.",
+          "Click each node on the Living Git & Deployment Diagram below (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Vercel Live) to see how code moves safely to production.",
           "Make a clean git commit in your local repo, then ask an AI agent to change a component and run git diff to see the exact lines added and removed.",
           "Create a branch with git checkout -b test-experiment, make an edit, and switch back to main with git checkout main to watch your files instantly revert."
         ]
@@ -223,16 +223,20 @@ window.PIPELINE_DATA = {
       icon: "terminal",
       diagramType: "terminal-interactive",
       hasTerminalVocab: true,
-      teaser: "Tracking what AI is doing in real time, navigating any system with confidence, and searchable terminal vocab.",
-      explainer: "Learning terminal essentials matters for two big reasons: first, you can track what AI is actually doing as it's doing it (watching which files it reads, edits, or runs instead of treating it as a black box); second, you'll find it much easier to navigate many different types of systems—from your own laptop to cloud VMs and production logs.",
+      teaser: "Tracking what AI is doing in real time, what 'grep' and paths actually mean, and a searchable Unix/macOS/Linux command reference.",
+      explainer: "Learning terminal essentials matters for two big reasons: first, you can track what AI is actually doing as it's doing it (watching which files it reads, searches with grep, edits, or runs instead of treating it as a black box); second, you'll find it much easier to navigate any system—from your own laptop to cloud servers and live logs.",
       experiences: [
         {
+          lead: "What 'grep' is (and why AI agents run it constantly):",
+          body: "'grep' (short for Global Regular Expression Print) is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"keyword\" .' searches every file and subfolder (-r) in milliseconds and prints the exact filename and line number (-n) where that text appears."
+        },
+        {
           lead: "Tracking AI in real time:",
-          body: "When an AI agent runs shell commands, knowing pwd, ls -la, grep, and git diff lets you follow every step as it happens and catch mistakes immediately."
+          body: "When an AI agent runs shell commands, knowing pwd (where am I?), ls -la (list all files including hidden .env), grep (search text inside files), and git diff lets you follow every step as it happens."
         },
         {
           lead: "Universal navigation across systems:",
-          body: "Graphical interfaces change between tools, but the command line works the same way on macOS, Linux, cloud servers, and container environments."
+          body: "Graphical interfaces change between apps, but standard Unix/POSIX terminal commands work the exact same way on macOS, Linux, GitHub Codespaces, and cloud servers."
         },
         {
           lead: "Escaping the 20-prompt guessing loop:",

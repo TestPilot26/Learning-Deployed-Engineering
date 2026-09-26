@@ -206,7 +206,7 @@
       headline: "SQL — Structured Query Language (How the back end talks to the database)",
       oneLiner: "Talks back and forth between the Back End engine and the Database vault to save, search, and update rows.",
       whatItIs: "SQL (pronounced 'sequel' or 'S-Q-L') is the universal language for asking questions of a database. It reads almost like an English sentence: `SELECT name, email FROM users WHERE active = true`. Even when you use modern helper tools (like Supabase, Prisma, or Drizzle), they translate your requests into SQL under the hood.",
-      whenToUse: "Pros: used by almost every major database for 50 years (PostgreSQL, SQLite, BigQuery, Spanner); prevents data from getting scrambled. Tradeoff: only for talking to databases, not for drawing screens.",
+      whenToUse: "Pros: used by almost every major database for 50 years (PostgreSQL, SQLite, MySQL, Snowflake); prevents data from getting scrambled. Tradeoff: only for talking to databases, not for drawing screens.",
       codeExample: "SELECT title, step_number FROM pipeline_stops ORDER BY step_number ASC;",
       goodSetup: "Uses parameterized queries (`WHERE id = $1`) so user input can never trick the database.",
       fragileSetup: "Glues raw user text directly into a SQL string ('SQL Injection'), allowing a clever visitor to wipe the table."

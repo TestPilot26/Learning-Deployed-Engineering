@@ -25,15 +25,15 @@ window.TERMINAL_VOCAB_DATA = {
     },
     {
       id: "Viewing & grep",
-      label: "Reading & searching files",
+      label: "Reading & searching files (grep, cat, tail)",
       badgeClass: "badge-success",
-      helpfulFor: "Helpful for reading file contents, watching live server logs stream in real time, and searching code with grep."
+      helpfulFor: "What is 'grep'? It is simply Ctrl+F (or Cmd+F) for your terminal—searching inside one file or across hundreds of files at once to print every line containing your keyword."
     },
     {
       id: "Flags",
-      label: "Grep & command flags",
+      label: "Search (grep) & command flags",
       badgeClass: "badge-neutral",
-      helpfulFor: "Helpful for modifying how grep and directory commands behave (case-insensitive, recursive, line numbers, parent folders)."
+      helpfulFor: "Flags (starting with '-' like -i, -r, -n) are extra options you attach to a command—for example, telling grep to ignore uppercase/lowercase (-i), search all subfolders (-r), or show line numbers (-n)."
     },
     {
       id: "Shortcuts",
@@ -78,7 +78,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Navigation",
       badgeClass: "badge-info",
       description: "Navigates between directories/folders, up a level (..), or to home (~).",
-      example: "cd project/, cd .., cd ~"
+      example: "cd my-app/, cd .., cd ~"
     },
     {
       command: "mkdir",
@@ -108,10 +108,10 @@ window.TERMINAL_VOCAB_DATA = {
     // File Creation & Management
     {
       command: "touch",
-      name: "Touch",
+      name: "Touch (Create Empty File)",
       category: "Files",
       badgeClass: "badge-secondary",
-      description: "Creates a new empty file if it doesn't exist, or updates its modification timestamp.",
+      description: "Creates a new empty plain-text file if it doesn't exist, or updates its modification timestamp.",
       example: "touch notes.txt"
     },
     {
@@ -120,7 +120,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Files",
       badgeClass: "badge-secondary",
       description: "Copies files or directories (with -r) from one location to another.",
-      example: "cp source.txt dest.txt"
+      example: "cp .env.example .env"
     },
     {
       command: "mv",
@@ -132,29 +132,29 @@ window.TERMINAL_VOCAB_DATA = {
     },
     {
       command: "rm / rm -r",
-      name: "Remove",
+      name: "Remove (Permanent Delete)",
       category: "Files",
       badgeClass: "badge-secondary",
       description: "Deletes files permanently. Adding -r (recursive) deletes a folder and everything inside it.",
       example: "rm file.txt, rm -r old_folder/"
     },
 
-    // File Viewing & Text Searching
-    {
-      command: "cat",
-      name: "Concatenate",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Outputs the entire contents of a file directly into the terminal window.",
-      example: "cat notes.txt"
-    },
+    // File Viewing & Text Searching (grep placed first & explained clearly)
     {
       command: "grep",
-      name: "Global Regular Expression Print",
+      name: "Search Inside Files ('Ctrl+F' for Terminal)",
       category: "Viewing & grep",
       badgeClass: "badge-success",
-      description: "Ctrl + F for the terminal: searches for a specific text pattern inside files or piped output.",
-      example: "grep \"error\" logfile.txt"
+      description: "Searches inside a file (or across a whole folder with -rn) for a word or pattern and prints every matching line. Short for 'Global Regular Expression Print'.",
+      example: "grep \"error\" server.log   |   grep -rn \"Button\" src/"
+    },
+    {
+      command: "cat",
+      name: "Concatenate & Print File",
+      category: "Viewing & grep",
+      badgeClass: "badge-success",
+      description: "Outputs the entire text contents of a file directly into the terminal window.",
+      example: "cat package.json"
     },
     {
       command: "head",
@@ -162,7 +162,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Viewing & grep",
       badgeClass: "badge-success",
       description: "Displays the first few lines of a file (defaults to 10; use -n 20 for 20 lines).",
-      example: "head -n 20 logfile.txt"
+      example: "head -n 20 server.log"
     },
     {
       command: "tail -f",
@@ -177,8 +177,8 @@ window.TERMINAL_VOCAB_DATA = {
       name: "Scrollable Viewer",
       category: "Viewing & grep",
       badgeClass: "badge-success",
-      description: "Opens a scrollable page viewer for long files (press q to exit).",
-      example: "less big_file.log"
+      description: "Opens a scrollable page viewer for long files (use Up/Down arrows to scroll, press q to exit).",
+      example: "less server.log"
     },
     {
       command: "wc -l",
@@ -186,57 +186,57 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Viewing & grep",
       badgeClass: "badge-success",
       description: "Counts total lines in a file or piped command output.",
-      example: "ls src/ | wc -l"
+      example: "wc -l src/app.js"
     },
 
-    // Grep & Command Flags (Matching the screenshot layout)
+    // Search (grep) & Command Flags (100% standard Unix/macOS/Linux)
     {
       command: "-i",
-      name: "Ignore Case",
+      name: "Ignore Case (grep flag)",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Case-insensitive search (matches Theory, THEORY, or theory).",
-      example: "grep -i \"theory\" README.md"
+      description: "Tells grep to search case-insensitively (matches Login, LOGIN, or login).",
+      example: "grep -i \"login\" README.md"
     },
     {
       command: "-r (or -R)",
-      name: "Recursive",
+      name: "Recursive (Subfolders flag)",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Searches all files in the directory and all its subfolders.",
-      example: "grep -r \"TODO\" ."
+      description: "Tells grep, cp, or rm to operate on the folder and every nested subfolder inside it.",
+      example: "grep -r \"TODO\" src/"
     },
     {
       command: "-n",
-      name: "Line Numbers",
+      name: "Line Numbers (grep flag)",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Prints the exact line number where the match was found.",
-      example: "grep -n \"error\" log.txt"
+      description: "Tells grep to print the exact line number next to every match it finds.",
+      example: "grep -rn \"fetch\" src/"
     },
     {
       command: "-v",
-      name: "Invert Match",
+      name: "Invert Match (Exclude flag)",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Prints all lines that do NOT match the pattern.",
-      example: "grep -v \"DEBUG\" log.txt"
+      description: "Tells grep to hide lines that match the word and only print lines that do NOT contain it.",
+      example: "grep -v \"DEBUG\" server.log"
     },
     {
       command: "mkdir -p",
       name: "Make Parent Directories",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Creates the entire nested folder hierarchy in one go if parent folders don't exist yet.",
-      example: "mkdir -p src/experiments/theory_of_change"
+      description: "Creates a whole nested chain of folders in one command if the parent folders don't exist yet.",
+      example: "mkdir -p src/components/ui"
     },
     {
       command: "-f",
-      name: "Force / Fresh Flag",
+      name: "Force (rm -f) or Follow (tail -f)",
       category: "Flags",
       badgeClass: "badge-neutral",
-      description: "Forces an operation without prompting or initializes a fresh workspace state.",
-      example: "jjd -f codelab-workspace"
+      description: "In 'rm -f' it forces deletion without asking for confirmation; in 'tail -f' it follows a log file live.",
+      example: "rm -f temp.log   |   tail -f app.log"
     },
 
     // Keyboard Shortcuts
@@ -245,15 +245,15 @@ window.TERMINAL_VOCAB_DATA = {
       name: "Auto-completion",
       category: "Shortcuts",
       badgeClass: "badge-info",
-      description: "Auto-completes partially typed folder/file names (press Tab twice to list all options).",
-      example: "cd exp[Tab] -> cd experimental/"
+      description: "Auto-completes partially typed folder/file names (press Tab twice to list all matching options).",
+      example: "cd comp[Tab] -> cd components/"
     },
     {
       command: "Ctrl + C",
       name: "Kill / Cancel Process",
       category: "Shortcuts",
       badgeClass: "badge-info",
-      description: "Immediately stops the currently running command or server and returns to a fresh prompt.",
+      description: "Immediately stops the currently running command or local server and returns to a fresh prompt.",
       example: "Press Ctrl + C to stop localhost server"
     },
     {
@@ -270,7 +270,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Shortcuts",
       badgeClass: "badge-info",
       description: "Searches backward through your past commands as you type a keyword.",
-      example: "Ctrl + R then type 'theory_of_change'"
+      example: "Ctrl + R then type 'npm run'"
     },
     {
       command: "Ctrl + L (or clear)",
@@ -285,8 +285,8 @@ window.TERMINAL_VOCAB_DATA = {
       name: "Start / End of Line",
       category: "Shortcuts",
       badgeClass: "badge-info",
-      description: "Jumps the cursor to the very beginning (Ctrl + A) or very end (Ctrl + E) of the line.",
-      example: "Ctrl + A to insert sudo at the start"
+      description: "Jumps the cursor to the very beginning (Ctrl + A) or very end (Ctrl + E) of the current command line.",
+      example: "Ctrl + A to jump to the start of the line"
     },
 
     // Relative & Absolute Paths
@@ -296,7 +296,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Paths",
       badgeClass: "badge-secondary",
       description: "Refers to the exact folder you are sitting in right now.",
-      example: "./script.sh"
+      example: "grep -rn \"API_URL\" ."
     },
     {
       command: "..",
@@ -319,8 +319,8 @@ window.TERMINAL_VOCAB_DATA = {
       name: "Home Directory",
       category: "Paths",
       badgeClass: "badge-secondary",
-      description: "Shorthand for your user home folder (e.g. /Users/lucy) from anywhere.",
-      example: "cd ~/deployed-eng-pipeline"
+      description: "Shorthand for your user home folder (e.g. /Users/lucy on Mac or /home/lucy on Linux) from anywhere.",
+      example: "cd ~/workspace/my-app"
     },
 
     // Pipes & Redirects
@@ -329,8 +329,8 @@ window.TERMINAL_VOCAB_DATA = {
       name: "Pipe Operator",
       category: "Operators",
       badgeClass: "badge-success",
-      description: "Takes the output of the command on the left and feeds it as input to the command on the right.",
-      example: "ls -la | grep \"theory\""
+      description: "Takes the output of the command on the left and feeds it as input to the command on the right (often paired with grep).",
+      example: "ls -la | grep \".env\""
     },
     {
       command: ">",
@@ -346,7 +346,7 @@ window.TERMINAL_VOCAB_DATA = {
       category: "Operators",
       badgeClass: "badge-success",
       description: "Appends command output to the bottom of a file without erasing existing lines.",
-      example: "git status >> my_recent_changes.txt"
+      example: "git status >> recent_changes.txt"
     }
   ],
 
@@ -388,12 +388,24 @@ window.TERMINAL_VOCAB_DATA = {
 
   deepDives: [
     {
+      title: "What is 'grep' (and why do AI coding agents run 'grep -rn' constantly)?",
+      badge: "Understanding grep",
+      badgeClass: "badge-success",
+      summary: "'grep' is simply Ctrl+F (or Cmd+F) for the terminal—it searches inside a file or across an entire project folder in milliseconds and prints every line that matches.",
+      points: [
+        "Why is it called 'grep'? It comes from an old 1970s Unix text-editor command 'g/re/p' which stood for Global Regular Expression Print—meaning 'search globally for a pattern and print matching lines'.",
+        "Searching inside a single file: Running grep \"error\" server.log scans server.log and prints only the lines containing the word 'error'.",
+        "Searching an entire project folder ('grep -rn'): Adding -r (recursive across all subfolders) and -n (show line numbers)—like grep -rn \"CheckoutButton\" .—scans every file in your current folder (.) and prints exact matches like src/components/Cart.tsx:42.",
+        "Filtering another command's output ('| grep'): You can pipe any long terminal list into grep—for example, ls -la | grep \".env\" filters a busy folder list down to only lines mentioning .env."
+      ]
+    },
+    {
       title: "How Tab auto-completion saves typing and catches typos early",
       badge: "Shortcuts in practice",
       badgeClass: "badge-info",
       summary: "Type the first 3 letters of any folder and press Tab—if it doesn't complete, you immediately know there's a typo.",
       points: [
-        "To navigate to experimental/consequence_eng/theory_of_change, you only type: cd exp [Tab] con [Tab] the [Tab].",
+        "To navigate to src/components/dashboard, you only type: cd sr [Tab] comp [Tab] dash [Tab].",
         "If pressing Tab does nothing, either there is a spelling typo in the letters you typed, or two folders start with those same letters (press Tab twice to list all matches)."
       ]
     },
@@ -403,9 +415,9 @@ window.TERMINAL_VOCAB_DATA = {
       badgeClass: "badge-secondary",
       summary: "Relative paths start from your current pwd; absolute paths start from the root slash (/) or home (~).",
       points: [
-        "Suppose your project lives at /Users/lucy/workspace/project/experimental/consequence_eng/theory_of_change.",
-        "Scenario A (Sitting in /Users/lucy/workspace/project): Both the absolute path (cd /Users/lucy/workspace/project/experimental/...) and the relative path (cd experimental/consequence_eng/theory_of_change) work because experimental/ sits directly inside your current folder.",
-        "Scenario B (Sitting in your home folder ~): The absolute path still works from anywhere, but the relative path fails with 'No such file or directory' because there is no experimental/ folder directly inside ~."
+        "Suppose your project lives at /Users/lucy/workspace/my-app/src/components.",
+        "Scenario A (Sitting in /Users/lucy/workspace/my-app): Both the absolute path (cd /Users/lucy/workspace/my-app/src/components) and the relative path (cd src/components) work because src/ sits directly inside your current folder.",
+        "Scenario B (Sitting in your home folder ~): The absolute path still works from anywhere, but the relative path (cd src/components) fails with 'No such file or directory' because there is no src/ folder directly inside ~."
       ]
     },
     {
@@ -415,10 +427,10 @@ window.TERMINAL_VOCAB_DATA = {
       summary: "Connect small commands like Lego bricks: filter file lists with | grep, save logs with >>, and count items with | wc -l.",
       points: [
         "Mental model for grep: [ All Text / File Contents ] -> [ grep \"keyword\" ] -> [ Only matching lines shown ].",
-        "Save your recent commit log to a file (overwrite): git log -n 10 > my_recent_changes.txt",
-        "Append today's working tree status to that same file: git status >> my_recent_changes.txt",
-        "Find a specific file in a busy folder: ls -la experimental/consequence_eng/theory_of_change | grep \"orchestrator\"",
-        "Count how many items live inside a directory: ls experimental/consequence_eng/theory_of_change | wc -l"
+        "Save your recent commit log to a file (overwrite): git log -n 10 > recent_changes.txt",
+        "Append today's working tree status to that same file: git status >> recent_changes.txt",
+        "Find a specific file in a busy folder: ls -la src/components | grep \"Navbar\"",
+        "Count how many items live inside a directory: ls src/components | wc -l"
       ]
     }
   ]
