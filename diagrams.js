@@ -312,25 +312,23 @@
     var topRow = document.createElement("div");
     topRow.className = "git-node-top-row";
 
-    var wordSpan = document.createElement("span");
-    wordSpan.className = "git-node-word";
-    wordSpan.appendChild(createOcticonSvg(gNode.octicon, "octicon-svg"));
-    var wText = document.createElement("span");
-    wText.textContent = gNode.word;
-    wordSpan.appendChild(wText);
+    topRow.appendChild(createOcticonSvg(gNode.octicon, "octicon-svg"));
 
     var shortCode = document.createElement("code");
     shortCode.className = "git-node-shorthand";
     shortCode.textContent = gNode.graphCodeLabel;
-
-    topRow.appendChild(wordSpan);
     topRow.appendChild(shortCode);
+
+    var wordSpan = document.createElement("strong");
+    wordSpan.className = "git-node-word";
+    wordSpan.textContent = gNode.word;
 
     var sub = document.createElement("span");
     sub.className = "git-node-subtitle";
     sub.textContent = gNode.oneLiner;
 
     btn.appendChild(topRow);
+    btn.appendChild(wordSpan);
     btn.appendChild(sub);
     btn.addEventListener("click", function () {
       onSelect(gNode);
@@ -355,7 +353,7 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Interactive animated Git timeline — click any icon or word on the lines below";
+    badge.textContent = "Interactive animated Git timeline — click any step on the pipeline lines below";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
@@ -395,7 +393,7 @@
     headerRow.appendChild(stepBtn);
     card.appendChild(headerRow);
 
-    // Unified Animated Diagram Stage where clickable Octicon+word buttons sit directly on the tracks
+    // Unified Animated Diagram Stage where clickable Octicon+word buttons sit directly on the continuous tracks
     var graphWrap = document.createElement("div");
     graphWrap.className = "git-graph-stage";
 
@@ -407,12 +405,12 @@
     mainBadge.textContent = "main branch (Production -> Vercel)";
     var mainExplain = document.createElement("span");
     mainExplain.className = "resource-desc";
-    mainExplain.textContent = "Your real live website timeline—every change merged into this blue line goes live to the public.";
+    mainExplain.textContent = "Continuous blue production line—every change merged into this line goes live to the public.";
     mainBanner.appendChild(mainBadge);
     mainBanner.appendChild(mainExplain);
     graphWrap.appendChild(mainBanner);
 
-    // Top Track Lane: [1. Clone / Init] --- [2. Branch] --- (main stays untouched) --- [6. Merge] --- [7. Vercel Live!]
+    // Top Track Lane: [1. Clone / Init] --- [2. Branch] --- (main continues untouched) --- [6. Merge] --- [7. Vercel Live!]
     var mainLane = document.createElement("div");
     mainLane.className = "git-track-lane git-track-lane-main";
 
@@ -424,7 +422,7 @@
 
     var safePass = document.createElement("div");
     safePass.className = "git-safe-pass-pill";
-    safePass.textContent = "main stays safe & live while you test on the sandbox branch below";
+    safePass.textContent = "main continues safely while you build on the green branch below →";
 
     mainLane.appendChild(n1);
     mainLane.appendChild(n2);
@@ -433,69 +431,55 @@
     mainLane.appendChild(n7);
     graphWrap.appendChild(mainLane);
 
-    // Middle Animated SVG Curve Layer connecting [2. Branch] down to [3. Commit] and [5. Pull Request] up to [6. Merge]
+    // Continuous Underlying SVG Pipeline Layer showing the full split -> sandbox flow -> merge back to main
     var curvesSvg = document.createElementNS(SVG_NS, "svg");
-    curvesSvg.setAttribute("viewBox", "0 0 900 76");
+    curvesSvg.setAttribute("viewBox", "0 0 900 84");
     curvesSvg.setAttribute("class", "git-curves-svg");
     curvesSvg.setAttribute("aria-hidden", "true");
 
-    var splitPathStr = "M 265 4 C 265 42, 265 42, 265 72";
-    var splitCurve = document.createElementNS(SVG_NS, "path");
-    splitCurve.setAttribute("d", splitPathStr);
-    splitCurve.setAttribute("class", "git-branch-line-feature");
-    var splitAnim = document.createElementNS(SVG_NS, "path");
-    splitAnim.setAttribute("d", splitPathStr);
-    splitAnim.setAttribute("class", "git-branch-line-animated");
+    // Continuous green branch-and-merge pipeline path (down from Col 2, across Cols 2-4, and curving up into Col 4)
+    var fullBranchFlowPath = "M 262 0 C 262 46, 286 76, 330 76 L 570 76 C 614 76, 638 46, 638 0";
+    var baseFlowTrack = document.createElementNS(SVG_NS, "path");
+    baseFlowTrack.setAttribute("d", fullBranchFlowPath);
+    baseFlowTrack.setAttribute("class", "git-branch-line-feature");
 
-    var splitDot = document.createElementNS(SVG_NS, "circle");
-    splitDot.setAttribute("r", "6");
-    splitDot.setAttribute("class", "git-traveller-dot");
-    var splitMotion = document.createElementNS(SVG_NS, "animateMotion");
-    splitMotion.setAttribute("dur", "2.2s");
-    splitMotion.setAttribute("repeatCount", "indefinite");
-    splitMotion.setAttribute("path", splitPathStr);
-    splitDot.appendChild(splitMotion);
+    var animFlowTrack = document.createElementNS(SVG_NS, "path");
+    animFlowTrack.setAttribute("d", fullBranchFlowPath);
+    animFlowTrack.setAttribute("class", "git-branch-line-animated");
 
+    // Travelling commit dot along the full branch -> diff -> PR -> merge loop
+    var flowDot = document.createElementNS(SVG_NS, "circle");
+    flowDot.setAttribute("r", "6");
+    flowDot.setAttribute("class", "git-traveller-dot");
+    var flowMotion = document.createElementNS(SVG_NS, "animateMotion");
+    flowMotion.setAttribute("dur", "3.6s");
+    flowMotion.setAttribute("repeatCount", "indefinite");
+    flowMotion.setAttribute("path", fullBranchFlowPath);
+    flowDot.appendChild(flowMotion);
+
+    // Left callout pill (centered cleanly inside the curve, never clipped)
     var splitLabel = document.createElementNS(SVG_NS, "text");
     splitLabel.setAttribute("x", "282");
-    splitLabel.setAttribute("y", "42");
+    splitLabel.setAttribute("y", "36");
     splitLabel.setAttribute("class", "git-svg-curve-caption");
-    splitLabel.textContent = "↘ Splits off into sandbox branch (c2: branch off)";
+    splitLabel.textContent = "↘ Splits off from main (c2)";
 
-    var mergePathStr = "M 635 72 C 635 42, 635 42, 635 4";
-    var mergeCurve = document.createElementNS(SVG_NS, "path");
-    mergeCurve.setAttribute("d", mergePathStr);
-    mergeCurve.setAttribute("class", "git-branch-line-feature");
-    var mergeAnim = document.createElementNS(SVG_NS, "path");
-    mergeAnim.setAttribute("d", mergePathStr);
-    mergeAnim.setAttribute("class", "git-branch-line-animated");
-
-    var mergeDot = document.createElementNS(SVG_NS, "circle");
-    mergeDot.setAttribute("r", "6");
-    mergeDot.setAttribute("class", "git-traveller-dot");
-    var mergeMotion = document.createElementNS(SVG_NS, "animateMotion");
-    mergeMotion.setAttribute("dur", "2.2s");
-    mergeMotion.setAttribute("repeatCount", "indefinite");
-    mergeMotion.setAttribute("path", mergePathStr);
-    mergeDot.appendChild(mergeMotion);
-
+    // Right callout pill (right-aligned inside the curve so it never clips off the right edge!)
     var mergeLabel = document.createElementNS(SVG_NS, "text");
-    mergeLabel.setAttribute("x", "652");
-    mergeLabel.setAttribute("y", "42");
+    mergeLabel.setAttribute("x", "618");
+    mergeLabel.setAttribute("y", "36");
+    mergeLabel.setAttribute("text-anchor", "end");
     mergeLabel.setAttribute("class", "git-svg-curve-caption");
-    mergeLabel.textContent = "↗ Approved PR merges back into main (c5: merge PR)";
+    mergeLabel.textContent = "Approved PR merges into main (c5) ↗";
 
-    curvesSvg.appendChild(splitCurve);
-    curvesSvg.appendChild(splitAnim);
-    curvesSvg.appendChild(splitDot);
+    curvesSvg.appendChild(baseFlowTrack);
+    curvesSvg.appendChild(animFlowTrack);
+    curvesSvg.appendChild(flowDot);
     curvesSvg.appendChild(splitLabel);
-    curvesSvg.appendChild(mergeCurve);
-    curvesSvg.appendChild(mergeAnim);
-    curvesSvg.appendChild(mergeDot);
     curvesSvg.appendChild(mergeLabel);
     graphWrap.appendChild(curvesSvg);
 
-    // Bottom Track Lane: [spacer] --- [3. Commit] --- [4. git diff] --- [5. Pull Request (PR / CL)] --- [spacer]
+    // Bottom Track Lane: [spacer] --- [3. Commit] --- [4. git diff] --- [5. Pull Request (PR)] --- [spacer]
     var sandboxLane = document.createElement("div");
     sandboxLane.className = "git-track-lane git-track-lane-sandbox";
 
@@ -519,7 +503,7 @@
     sbBadge.textContent = "feat/ai-experiment branch (Safe sandbox)";
     var sbExplain = document.createElement("span");
     sbExplain.className = "resource-desc";
-    sbExplain.textContent = "Your parallel practice timeline—save commits and check diffs here before merging back to main.";
+    sbExplain.textContent = "Continuous green sandbox line—save commits and check diffs here before merging back up into main.";
     sandboxBanner.appendChild(sbBadge);
     sandboxBanner.appendChild(sbExplain);
     graphWrap.appendChild(sandboxBanner);

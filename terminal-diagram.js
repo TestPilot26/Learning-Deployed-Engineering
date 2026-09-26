@@ -4,166 +4,128 @@
 // Zero innerHTML (SecureCoder compliant) and 100% GM3 token-driven (BillSkill compliant).
 
 (function () {
-  var TERMINAL_SCENARIOS = [
+  var GUIDED_MISSIONS = [
     {
-      id: "term-pwd",
-      pillLabel: "1. Where am I? (pwd)",
-      badge: "Step 1 · Check location",
-      badgeClass: "badge-info",
-      activeKeys: ["key-pwd", "key-enter"],
-      leftHandText: "Left hand types 'p-w-d' on the home row",
-      rightHandText: "Right pinky taps [Enter ↵] to run the command",
-      typedFrames: ["p", "pw", "pwd"],
-      promptSuffix: "pwd",
-      keyPopBadge: "Enter ↵ pressed!",
-      terminalOutput: [
-        "/Users/lucy/deployed-eng-pipeline",
-        "",
-        "# Terminal response: You are inside your 'deployed-eng-pipeline' project folder."
-      ],
-      whatHappened: "When you open a fresh terminal window, it doesn't show folder icons—so your first move is typing 'pwd' (Print Working Directory) and pressing Enter ↵. The terminal replies with the exact folder path you are standing in."
+      id: "mission-tab",
+      pillLabel: "1. Try Tab ⇥ (Auto-complete)",
+      setupDir: "~/workspace/my-app",
+      prefillCmd: "cd comp",
+      glowKey: "key-tab",
+      instruction: "We typed 'cd comp' into the live prompt below. Press [Tab ⇥] on your keyboard (or click the glowing [Tab ⇥] key on the right) to watch it finish spelling 'cd components/' for you!"
     },
     {
-      id: "term-tab",
-      pillLabel: "2. Auto-complete (Tab ⇥)",
-      badge: "Step 2 · Speed shortcut",
-      badgeClass: "badge-success",
-      activeKeys: ["key-tab", "key-enter"],
-      leftHandText: "Left ring finger taps [Tab ⇥] after typing just 'cd dep'",
-      rightHandText: "Right pinky taps [Enter ↵] once the full folder name pops in",
-      typedFrames: ["cd d", "cd de", "cd dep", "cd deployed-eng-pipeline/"],
-      promptSuffix: "cd deployed-eng-pipeline/",
-      keyPopBadge: "Tab ⇥ auto-completed!",
-      terminalOutput: [
-        "lucy@macbook ~/deployed-eng-pipeline % ",
-        "",
-        "# Terminal response: 'cd dep' + [Tab ⇥] expanded to 'cd deployed-eng-pipeline/' automatically!"
-      ],
-      whatHappened: "Never type long folder or file names by hand! Type the first 2 or 3 letters ('cd dep') and tap Tab ⇥ with your left ring finger. The terminal finishes spelling the name for you—proving the folder exists and preventing typos."
+      id: "mission-history",
+      pillLabel: "2. Try ↑ / ↓ Arrows (Command history)",
+      setupDir: "~/workspace/my-app",
+      prefillCmd: "",
+      glowKey: "key-up",
+      instruction: "Don't type anything! Press your [↑ Up Arrow] key (or click [↑ Up] on the right) 2 or 3 times to cycle backward through commands you ran earlier, then press [Enter ↵]."
     },
     {
-      id: "term-ls-la",
-      pillLabel: "3. See hidden files (ls -la)",
-      badge: "Step 3 · X-ray folder view",
-      badgeClass: "badge-info",
-      activeKeys: ["key-ls", "key-enter"],
-      leftHandText: "Hands type 'ls -la' (list all files in long detail)",
-      rightHandText: "Right pinky taps [Enter ↵] to reveal hidden dot-files",
-      typedFrames: ["ls", "ls -", "ls -l", "ls -la"],
-      promptSuffix: "ls -la",
-      keyPopBadge: "Enter ↵ pressed!",
-      terminalOutput: [
-        "drwxr-xr-x  12 lucy  staff   384 Sep 26 20:15 .",
-        "drwxr-xr-x   5 lucy  staff   160 Sep 26 18:00 ..",
-        "-rw-------   1 lucy  staff    64 Sep 26 19:10 .env          <-- Hidden secret API keys!",
-        "drwxr-xr-x  13 lucy  staff   416 Sep 26 20:15 .git          <-- Hidden Git history!",
-        "-rw-r--r--   1 lucy  staff  4210 Sep 26 20:15 index.html"
-      ],
-      whatHappened: "Mac Finder and Windows Explorer hide any file that starts with a dot (like '.env' or '.git'). Running 'ls -la' tells the terminal to list ALL files (-a) in a detailed table (-l) so nothing is hidden from you."
+      id: "mission-ctrl-c",
+      pillLabel: "3. Try Ctrl + C (Stop running server)",
+      setupDir: "~/workspace/my-app",
+      prefillCmd: "",
+      startServer: true,
+      glowKey: "key-ctrl-c",
+      instruction: "A local server (npm run dev) is running and holding the terminal hostage! Press [Ctrl + C] on your keyboard (or click [Ctrl + C] on the right) to stop the server and get your prompt back."
     },
     {
-      id: "term-arrows",
-      pillLabel: "4. Recall history (↑ / ↓ Arrows)",
-      badge: "Step 4 · Time saver",
-      badgeClass: "badge-secondary",
-      activeKeys: ["key-up", "key-down"],
-      leftHandText: "Left hand rests—no retyping needed!",
-      rightHandText: "Right fingers tap [↑ Up] to recall older commands and [↓ Down] to move forward",
-      typedFrames: ["ls -la", "cd deployed-eng-pipeline/", "git status && git diff"],
-      promptSuffix: "git status && git diff",
-      keyPopBadge: "↑ Up / ↓ Down tapped!",
-      terminalOutput: [
-        "# Tap [↑ Up] once  --> recalls: ls -la",
-        "# Tap [↑ Up] twice --> recalls: git status && git diff",
-        "# Tap [↓ Down]     --> steps forward again in your command history!"
-      ],
-      whatHappened: "You almost never need to retype a command you ran earlier. Tapping the ↑ Up Arrow key cycles backward through your past commands one by one; tapping ↓ Down Arrow moves forward again."
+      id: "mission-parent",
+      pillLabel: "4. Try cd .. (Step up to parent directory)",
+      setupDir: "~/workspace/my-app/components",
+      prefillCmd: "cd ..",
+      glowKey: "key-enter",
+      instruction: "You are standing inside the child subfolder '~/workspace/my-app/components'. Press [Enter ↵] to run 'cd ..' and watch your prompt step one level up into the parent directory ('~/workspace/my-app')!"
     },
     {
-      id: "term-grep",
-      pillLabel: "5. What is grep? Search files (grep -rn)",
-      badge: "Step 5 · Ctrl+F for your terminal",
-      badgeClass: "badge-info",
-      activeKeys: ["key-grep", "key-enter"],
-      leftHandText: "Hands type 'grep -rn \"APP_BUILD\" .' (grep = search text inside files)",
-      rightHandText: "Right pinky taps [Enter ↵] to scan every file in milliseconds",
-      typedFrames: ["grep", "grep -rn", "grep -rn \"APP_BUILD\"", "grep -rn \"APP_BUILD\" ."],
-      promptSuffix: "grep -rn \"APP_BUILD\" .",
-      keyPopBadge: "grep = Search inside files!",
-      terminalOutput: [
-        "# What is 'grep'? It is Ctrl+F (or Cmd+F) for the terminal!",
-        "./diagnostics-theme.js:4:var APP_BUILD = \"2026-09-26m\";",
-        "./diagnostics-theme.js:10:    if (last && last !== APP_BUILD) {",
-        "",
-        "# Found 2 matches across all subfolders (-r) with exact line numbers (-n)."
-      ],
-      whatHappened: "What is 'grep'? Think of 'grep' as Cmd+F (or Ctrl+F) for your terminal! Instead of opening 50 files one by one to find where a word lives, 'grep' searches inside files and prints every matching line. (Its name comes from an old 1970s Unix command: Global Regular Expression Print.) Adding '-rn' tells grep to search recursively through all subfolders (-r) and print exact line numbers (-n)."
-    },
-    {
-      id: "term-ctrl-c",
-      pillLabel: "6. Emergency brake (Ctrl + C)",
-      badge: "Step 6 · Stop a running command",
-      badgeClass: "badge-success",
-      activeKeys: ["key-ctrl", "key-c"],
-      leftHandText: "Left pinky holds [Ctrl] while left index finger taps [C]",
-      rightHandText: "Stops the running server immediately and gives your prompt back!",
-      typedFrames: ["python3 -m http.server 8420", "python3 -m http.server 8420   ^C"],
-      promptSuffix: "python3 -m http.server 8420   ^C",
-      keyPopBadge: "Ctrl + C pressed!",
-      terminalOutput: [
-        "Serving HTTP on 0.0.0.0 port 8420 (http://0.0.0.0:8420/) ...",
-        "^C",
-        "KeyboardInterrupt received: shutting down server safely.",
-        "lucy@macbook ~/deployed-eng-pipeline %   <-- Your prompt is back and ready!"
-      ],
-      whatHappened: "In a terminal, Ctrl + C does NOT mean Copy! It is the universal Emergency Brake (Cancel). Anytime a local server is running or an AI command is stuck, pressing Ctrl + C safely stops it and returns your typing prompt."
-    },
-    {
-      id: "term-ctrl-l",
-      pillLabel: "7. Clear screen (Ctrl + L)",
-      badge: "Step 7 · Clean workspace",
-      badgeClass: "badge-secondary",
-      activeKeys: ["key-ctrl", "key-l"],
-      leftHandText: "Left pinky holds [Ctrl] while right ring finger taps [L]",
-      rightHandText: "Wipes old log clutter off the window (files & ↑ history stay safe!)",
-      typedFrames: ["clear   # (or press Ctrl + L)"],
-      promptSuffix: "clear   # (or press Ctrl + L)",
-      keyPopBadge: "Ctrl + L pressed!",
-      terminalOutput: [
-        "lucy@macbook ~/deployed-eng-pipeline % ",
-        "",
-        "# Screen wiped clean! Your cursor is back at the very top of a fresh window."
-      ],
-      whatHappened: "When your terminal fills up with hundreds of lines of logs and gets overwhelming to read, pressing Ctrl + L (or typing 'clear') gives you a fresh blank screen without deleting any files or losing your ↑ Up Arrow history."
+      id: "mission-grep",
+      pillLabel: "5. Try grep -rn (Search inside files)",
+      setupDir: "~/workspace/my-app",
+      prefillCmd: "grep -rn \"Button\" .",
+      glowKey: "key-enter",
+      instruction: "We loaded 'grep -rn \"Button\" .' into the prompt. Press [Enter ↵] to search every file in your folder for the word 'Button' and print exact line numbers."
     }
   ];
 
-  var KEYBOARD_LAYOUT = [
-    [
-      { id: "key-tab", topLabel: "Tab ⇥", subLabel: "Auto-complete", triggerScenario: "term-tab", wide: true },
-      { id: "key-pwd", topLabel: "p w d", subLabel: "Where am I?", triggerScenario: "term-pwd" },
-      { id: "key-ls", topLabel: "ls -la", subLabel: "List all files", triggerScenario: "term-ls-la" },
-      { id: "key-grep", topLabel: "grep -rn", subLabel: "Search code", triggerScenario: "term-grep" },
-      { id: "key-enter", topLabel: "Enter ↵", subLabel: "Run command", triggerScenario: "term-pwd", wide: true }
-    ],
-    [
-      { id: "key-ctrl", topLabel: "Ctrl ^", subLabel: "Hold modifier", triggerScenario: "term-ctrl-c", wide: true },
-      { id: "key-c", topLabel: "C", subLabel: "+ Ctrl = Stop!", triggerScenario: "term-ctrl-c" },
-      { id: "key-l", topLabel: "L", subLabel: "+ Ctrl = Clear", triggerScenario: "term-ctrl-l" },
-      { id: "key-up", topLabel: "↑ Up", subLabel: "Previous cmd", triggerScenario: "term-arrows" },
-      { id: "key-down", topLabel: "↓ Down", subLabel: "Next cmd", triggerScenario: "term-arrows" }
-    ]
+  var INTERACTIVE_KEYS = [
+    {
+      id: "key-tab",
+      keyLabel: "Tab ⇥",
+      actionTitle: "Auto-complete folder or file name",
+      whatItDoes: "Finishes spelling a half-typed folder or file name (e.g. 'cd comp' -> 'cd components/') so you don't make typos.",
+      handNote: "Left ring finger taps [Tab ⇥] after typing 2–3 letters"
+    },
+    {
+      id: "key-enter",
+      keyLabel: "Enter ↵",
+      actionTitle: "Run the command on the prompt line",
+      whatItDoes: "Sends whatever command is on your prompt line to the computer and prints the terminal's response below.",
+      handNote: "Right pinky taps [Enter ↵] to execute the command"
+    },
+    {
+      id: "key-up",
+      keyLabel: "↑ Up Arrow",
+      actionTitle: "Recall previous command from history",
+      whatItDoes: "Steps backward through commands you ran earlier so you never have to retype long commands by hand.",
+      handNote: "Right fingers tap [↑ Up] to recall older commands"
+    },
+    {
+      id: "key-down",
+      keyLabel: "↓ Down Arrow",
+      actionTitle: "Step forward in command history",
+      whatItDoes: "Steps forward again if you pressed ↑ Up Arrow too many times.",
+      handNote: "Right fingers tap [↓ Down] to move forward in history"
+    },
+    {
+      id: "key-ctrl-c",
+      keyLabel: "Ctrl + C",
+      actionTitle: "Emergency brake (Stop server / cancel)",
+      whatItDoes: "Immediately stops a running server (like 'npm run dev') or cancels a half-typed line and gives your prompt back. (Not Copy!)",
+      handNote: "Left pinky holds [Ctrl] + left index taps [C]"
+    },
+    {
+      id: "key-ctrl-l",
+      keyLabel: "Ctrl + L",
+      actionTitle: "Clear screen clutter (Keep history)",
+      whatItDoes: "Wipes old output lines off the terminal window and brings your prompt to the top without deleting files or history.",
+      handNote: "Left pinky holds [Ctrl] + right ring finger taps [L]"
+    }
   ];
 
-  var activeTypingTimer = null;
+  var TAB_COMPLETION_PAIRS = [
+    { partial: "cd comp", completed: "cd components/", note: "Expanded 'comp' -> 'components/' folder!" },
+    { partial: "cd s", completed: "cd src/", note: "Expanded 's' -> 'src/' subfolder!" },
+    { partial: "cat pack", completed: "cat package.json", note: "Expanded 'pack' -> 'package.json' file!" },
+    { partial: "grep -rn \"Button\" s", completed: "grep -rn \"Button\" src/", note: "Expanded 's' -> 'src/' folder for grep!" }
+  ];
+
+  var activeServerTimer = null;
 
   function renderTerminalInteractiveDiagram(container) {
+    if (activeServerTimer) {
+      clearInterval(activeServerTimer);
+      activeServerTimer = null;
+    }
+
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
 
-    var selectedIdx = 0;
-    var scenarioBtns = [];
-    var keycapMap = {};
+    // Sandbox State
+    var currentDir = "~/workspace/my-app";
+    var cmdHistory = [
+      "pwd",
+      "ls -la",
+      "cd components/",
+      "cd ..",
+      "grep -rn \"Button\" ."
+    ];
+    var historyCursor = cmdHistory.length;
+    var tabCycleIdx = 0;
+    var isServerRunning = false;
+    var serverTickCount = 0;
+    var keyBtnsMap = {};
+    var missionBtns = [];
 
     // Header Row
     var headerRow = document.createElement("div");
@@ -173,58 +135,59 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-success";
-    badge.textContent = "Interactive terminal & pop-up keyboard — click any command or keycap below";
+    badge.textContent = "Live interactive terminal sandbox — press your real keyboard keys or click any key card!";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Watch commands type out, see which keys your hands press, and read the terminal response";
+    h3.textContent = "Test out the terminal keys yourself: Try Tab, ↑/↓ Arrows, Enter, Ctrl+C, and Ctrl+L live";
+    var subP = document.createElement("p");
+    subP.className = "text-muted";
+    subP.textContent = "Pick a guided mission below, type directly in the terminal box, and press your real laptop keys (or click the big key buttons on the right) to see what each key actually does.";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
-
-    var nextBtn = document.createElement("button");
-    nextBtn.type = "button";
-    nextBtn.className = "nav-btn nav-btn-primary";
-    var nextIcon = document.createElement("span");
-    nextIcon.className = "material-symbols-outlined btn-icon-sm";
-    nextIcon.textContent = "play_arrow";
-    var nextLabel = document.createElement("span");
-    nextLabel.textContent = "Next terminal demo (1/" + TERMINAL_SCENARIOS.length + ")";
-    nextBtn.appendChild(nextIcon);
-    nextBtn.appendChild(nextLabel);
-
+    titleGroup.appendChild(subP);
     headerRow.appendChild(titleGroup);
-    headerRow.appendChild(nextBtn);
     card.appendChild(headerRow);
 
-    // Scenario Selector Pills
-    var pillBar = document.createElement("div");
-    pillBar.className = "diagram-pill-cluster";
-    TERMINAL_SCENARIOS.forEach(function (scen, idx) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "diagram-label-pill" + (idx === 0 ? " active" : "");
-      btn.setAttribute("data-scen-id", scen.id);
+    // 1. Guided "Try It Yourself" Mission Bar
+    var missionBar = document.createElement("div");
+    missionBar.className = "diagram-pill-cluster";
+    GUIDED_MISSIONS.forEach(function (m, idx) {
+      var mBtn = document.createElement("button");
+      mBtn.type = "button";
+      mBtn.className = "diagram-label-pill" + (idx === 0 ? " active" : "");
       var ic = document.createElement("span");
       ic.className = "material-symbols-outlined diagram-pill-icon";
-      ic.textContent = "terminal";
+      ic.textContent = "play_circle";
       var txt = document.createElement("span");
-      txt.textContent = scen.pillLabel;
-      btn.appendChild(ic);
-      btn.appendChild(txt);
-      btn.addEventListener("click", function () {
-        selectScenario(idx, true);
+      txt.textContent = m.pillLabel;
+      mBtn.appendChild(ic);
+      mBtn.appendChild(txt);
+      mBtn.addEventListener("click", function () {
+        loadMission(idx);
       });
-      scenarioBtns.push(btn);
-      pillBar.appendChild(btn);
+      missionBtns.push(mBtn);
+      missionBar.appendChild(mBtn);
     });
-    card.appendChild(pillBar);
+    card.appendChild(missionBar);
 
-    // Main Side-by-Side Illustrated Stage: [Left: Illustrated Terminal Window] + [Right: Pop-Up Keyboard & Imaginary Hands]
+    // Mission Instruction Callout Banner
+    var missionBanner = document.createElement("div");
+    missionBanner.className = "term-mission-banner";
+    var mbIcon = document.createElement("span");
+    mbIcon.className = "material-symbols-outlined term-mission-icon";
+    mbIcon.textContent = "lightbulb";
+    var mbText = document.createElement("span");
+    missionBanner.appendChild(mbIcon);
+    missionBanner.appendChild(mbText);
+    card.appendChild(missionBanner);
+
+    // 2. Main Side-by-Side Stage: [Left: Live Interactive Terminal] + [Right: Click-to-Test Keyboard Keys]
     var stageGrid = document.createElement("div");
     stageGrid.className = "terminal-keyboard-stage";
 
-    // LEFT COLUMN: ILLUSTRATED TERMINAL WINDOW
+    // LEFT COLUMN: LIVE TERMINAL WINDOW
     var termWindow = document.createElement("div");
     termWindow.className = "term-illustration-window";
 
@@ -239,40 +202,55 @@
     });
     var termTitle = document.createElement("span");
     termTitle.className = "term-window-title";
-    termTitle.textContent = "lucy@macbook: ~/deployed-eng-pipeline (zsh)";
-    var termPopStatus = document.createElement("span");
-    termPopStatus.className = "badge badge-info";
+    var termStatusBadge = document.createElement("span");
+    termStatusBadge.className = "badge badge-info";
+    termStatusBadge.textContent = "Interactive prompt ready";
     termTopBar.appendChild(dots);
     termTopBar.appendChild(termTitle);
-    termTopBar.appendChild(termPopStatus);
+    termTopBar.appendChild(termStatusBadge);
     termWindow.appendChild(termTopBar);
 
     var termScreen = document.createElement("div");
     termScreen.className = "term-screen-body";
 
-    var promptLine = document.createElement("div");
-    promptLine.className = "term-prompt-line";
-    var promptPrefix = document.createElement("span");
-    promptPrefix.className = "term-prompt-prefix";
-    promptPrefix.textContent = "lucy@macbook ~/deployed-eng-pipeline % ";
-    var typedCmdSpan = document.createElement("span");
-    typedCmdSpan.className = "term-typed-command";
-    var cursorSpan = document.createElement("span");
-    cursorSpan.className = "term-blinking-cursor";
-    cursorSpan.textContent = "▋";
-    promptLine.appendChild(promptPrefix);
-    promptLine.appendChild(typedCmdSpan);
-    promptLine.appendChild(cursorSpan);
+    var logContainer = document.createElement("div");
+    logContainer.className = "term-output-block";
+    termScreen.appendChild(logContainer);
 
-    var outputBlock = document.createElement("div");
-    outputBlock.className = "term-output-block";
+    // Live Input Prompt Row inside the terminal screen
+    var livePromptRow = document.createElement("div");
+    livePromptRow.className = "term-live-input-row";
+    var promptPrefixSpan = document.createElement("span");
+    promptPrefixSpan.className = "term-prompt-prefix";
+    var cmdInput = document.createElement("input");
+    cmdInput.type = "text";
+    cmdInput.className = "term-live-input";
+    cmdInput.setAttribute("aria-label", "Interactive terminal command prompt");
+    cmdInput.setAttribute("autocomplete", "off");
+    cmdInput.setAttribute("spellcheck", "false");
+    cmdInput.placeholder = "Type a command or press Tab, ↑, ↓, Enter, Ctrl+C...";
+    livePromptRow.appendChild(promptPrefixSpan);
+    livePromptRow.appendChild(cmdInput);
+    termScreen.appendChild(livePromptRow);
 
-    termScreen.appendChild(promptLine);
-    termScreen.appendChild(outputBlock);
     termWindow.appendChild(termScreen);
+
+    // Live Key Feedback Box at the bottom of the terminal window
+    var feedbackBox = document.createElement("div");
+    feedbackBox.className = "term-key-feedback-box";
+    var fbBadge = document.createElement("span");
+    fbBadge.className = "badge badge-success";
+    fbBadge.textContent = "What your last key press did";
+    var fbText = document.createElement("p");
+    fbText.className = "resource-desc";
+    fbText.textContent = "Click any glowing key on the right (or press it on your physical keyboard while inside the terminal box) to see what it does live!";
+    feedbackBox.appendChild(fbBadge);
+    feedbackBox.appendChild(fbText);
+    termWindow.appendChild(feedbackBox);
+
     stageGrid.appendChild(termWindow);
 
-    // RIGHT COLUMN: POP-UP KEYBOARD DECK & IMAGINARY HANDS
+    // RIGHT COLUMN: CLICK-TO-TEST KEYBOARD KEYS
     var kbPanel = document.createElement("div");
     kbPanel.className = "keyboard-illustration-panel";
 
@@ -280,210 +258,444 @@
     kbHeader.className = "mini-window-bar";
     var kbTitle = document.createElement("strong");
     kbTitle.className = "diagram-node-title";
-    kbTitle.textContent = "Your keyboard & imaginary hands (click any key!)";
+    kbTitle.textContent = "Click any key below (or press it on your keyboard) to test it live";
     var kbBadge = document.createElement("span");
     kbBadge.className = "badge badge-secondary";
-    kbBadge.textContent = "Pop-up keys";
+    kbBadge.textContent = "6 essential keys";
     kbHeader.appendChild(kbTitle);
     kbHeader.appendChild(kbBadge);
     kbPanel.appendChild(kbHeader);
 
-    // Imaginary Hands Pop-up Callout Cards (Left Hand + Right Hand)
-    var handsRow = document.createElement("div");
-    handsRow.className = "hands-popup-row";
+    var keysGrid = document.createElement("div");
+    keysGrid.className = "testable-keys-grid";
 
-    var leftHandCard = document.createElement("div");
-    leftHandCard.className = "hand-guide-pill";
-    var lhIcon = document.createElement("span");
-    lhIcon.className = "material-symbols-outlined hand-guide-icon";
-    lhIcon.textContent = "back_hand";
-    var lhTextWrap = document.createElement("div");
-    var lhTitle = document.createElement("strong");
-    lhTitle.className = "hand-guide-label";
-    lhTitle.textContent = "Left hand";
-    var lhBody = document.createElement("p");
-    lhBody.className = "resource-desc";
-    lhTextWrap.appendChild(lhTitle);
-    lhTextWrap.appendChild(lhBody);
-    leftHandCard.appendChild(lhIcon);
-    leftHandCard.appendChild(lhTextWrap);
+    INTERACTIVE_KEYS.forEach(function (kDef) {
+      var kCard = document.createElement("button");
+      kCard.type = "button";
+      kCard.className = "testable-key-card";
+      kCard.setAttribute("data-key-id", kDef.id);
 
-    var rightHandCard = document.createElement("div");
-    rightHandCard.className = "hand-guide-pill";
-    var rhIcon = document.createElement("span");
-    rhIcon.className = "material-symbols-outlined hand-guide-icon";
-    rhIcon.textContent = "pan_tool_alt";
-    var rhTextWrap = document.createElement("div");
-    var rhTitle = document.createElement("strong");
-    rhTitle.className = "hand-guide-label";
-    rhTitle.textContent = "Right hand";
-    var rhBody = document.createElement("p");
-    rhBody.className = "resource-desc";
-    rhTextWrap.appendChild(rhTitle);
-    rhTextWrap.appendChild(rhBody);
-    rightHandCard.appendChild(rhIcon);
-    rightHandCard.appendChild(rhTextWrap);
+      var topLine = document.createElement("div");
+      topLine.className = "testable-key-top";
 
-    handsRow.appendChild(leftHandCard);
-    handsRow.appendChild(rightHandCard);
-    kbPanel.appendChild(handsRow);
+      var capPill = document.createElement("kbd");
+      capPill.className = "testable-keycap-pill";
+      capPill.textContent = kDef.keyLabel;
 
-    // Physical Pop-Up Keycaps Grid
-    var kbRowsWrap = document.createElement("div");
-    kbRowsWrap.className = "keyboard-rows-wrap";
+      var tryTag = document.createElement("span");
+      tryTag.className = "testable-key-try-tag";
+      tryTag.textContent = "Click to test ↵";
 
-    KEYBOARD_LAYOUT.forEach(function (row) {
-      var rEl = document.createElement("div");
-      rEl.className = "keyboard-row";
-      row.forEach(function (kDef) {
-        var kBtn = document.createElement("button");
-        kBtn.type = "button";
-        kBtn.className = "keycap-btn" + (kDef.wide ? " keycap-wide" : "");
-        kBtn.setAttribute("data-key-id", kDef.id);
+      topLine.appendChild(capPill);
+      topLine.appendChild(tryTag);
 
-        // Floating imaginary finger press badge that pops up when active
-        var fingerPop = document.createElement("span");
-        fingerPop.className = "keycap-finger-pop";
-        var fIcon = document.createElement("span");
-        fIcon.className = "material-symbols-outlined keycap-finger-icon";
-        fIcon.textContent = "touch_app";
-        var fTxt = document.createElement("span");
-        fTxt.textContent = "Press!";
-        fingerPop.appendChild(fIcon);
-        fingerPop.appendChild(fTxt);
+      var titleStrong = document.createElement("strong");
+      titleStrong.className = "testable-key-title";
+      titleStrong.textContent = kDef.actionTitle;
 
-        var kTop = document.createElement("strong");
-        kTop.className = "keycap-main-label";
-        kTop.textContent = kDef.topLabel;
+      var descSpan = document.createElement("span");
+      descSpan.className = "testable-key-desc";
+      descSpan.textContent = kDef.whatItDoes;
 
-        var kSub = document.createElement("span");
-        kSub.className = "keycap-sub-label";
-        kSub.textContent = kDef.subLabel;
+      var handSmall = document.createElement("span");
+      handSmall.className = "testable-key-hand";
+      handSmall.textContent = "Hands: " + kDef.handNote;
 
-        kBtn.appendChild(fingerPop);
-        kBtn.appendChild(kTop);
-        kBtn.appendChild(kSub);
+      kCard.appendChild(topLine);
+      kCard.appendChild(titleStrong);
+      kCard.appendChild(descSpan);
+      kCard.appendChild(handSmall);
 
-        kBtn.addEventListener("click", function () {
-          var targetIdx = 0;
-          TERMINAL_SCENARIOS.forEach(function (s, idx) {
-            if (s.id === kDef.triggerScenario) targetIdx = idx;
-          });
-          selectScenario(targetIdx, true);
-        });
-
-        keycapMap[kDef.id] = kBtn;
-        rEl.appendChild(kBtn);
+      kCard.addEventListener("click", function () {
+        triggerKeyAction(kDef.id, true);
       });
-      kbRowsWrap.appendChild(rEl);
+
+      keyBtnsMap[kDef.id] = kCard;
+      keysGrid.appendChild(kCard);
     });
 
-    kbPanel.appendChild(kbRowsWrap);
+    kbPanel.appendChild(keysGrid);
     stageGrid.appendChild(kbPanel);
     card.appendChild(stageGrid);
 
-    function selectScenario(idx, isUserClick) {
-      selectedIdx = idx;
-      var scen = TERMINAL_SCENARIOS[selectedIdx];
-      nextLabel.textContent = "Next terminal demo (" + (selectedIdx + 1) + "/" + TERMINAL_SCENARIOS.length + ")";
+    function updatePromptPrefix() {
+      termTitle.textContent = "lucy@macbook: " + currentDir + " (zsh)";
+      promptPrefixSpan.textContent = "lucy@macbook " + currentDir + " % ";
+    }
 
-      scenarioBtns.forEach(function (b, i) {
-        if (i === selectedIdx) b.classList.add("active");
-        else b.classList.remove("active");
+    function appendLogLines(cmdText, linesArray) {
+      if (cmdText !== null) {
+        var echoRow = document.createElement("div");
+        echoRow.className = "term-output-cmd-echo";
+        echoRow.textContent = "lucy@macbook " + currentDir + " % " + cmdText;
+        logContainer.appendChild(echoRow);
+      }
+      (linesArray || []).forEach(function (lineStr) {
+        var lineDiv = document.createElement("div");
+        lineDiv.className = lineStr.indexOf("#") === 0 ? "term-output-comment" : "term-output-line";
+        lineDiv.textContent = lineStr || " ";
+        logContainer.appendChild(lineDiv);
       });
+      termScreen.scrollTop = termScreen.scrollHeight;
+    }
 
-      // Pop up the active keycaps and show the imaginary finger press badge!
-      Object.keys(keycapMap).forEach(function (kId) {
-        var btn = keycapMap[kId];
-        if (scen.activeKeys.indexOf(kId) !== -1) {
+    function flashKeyCard(keyId, badgeLabel, explanationText) {
+      Object.keys(keyBtnsMap).forEach(function (id) {
+        var btn = keyBtnsMap[id];
+        if (id === keyId) {
           btn.classList.add("popped");
         } else {
           btn.classList.remove("popped");
         }
       });
+      fbBadge.textContent = badgeLabel;
+      fbText.textContent = explanationText;
 
-      lhBody.textContent = scen.leftHandText;
-      rhBody.textContent = scen.rightHandText;
-      termPopStatus.textContent = scen.keyPopBadge;
-
-      if (isUserClick && window.PipelineAgent && typeof window.PipelineAgent.showInspector === "function") {
+      var kObj = null;
+      INTERACTIVE_KEYS.forEach(function (k) {
+        if (k.id === keyId) kObj = k;
+      });
+      if (kObj && window.PipelineAgent && typeof window.PipelineAgent.showInspector === "function") {
         window.PipelineAgent.showInspector(
           function (inspectorEl) {
             var topRow = document.createElement("div");
             topRow.className = "resource-title-row";
             var b = document.createElement("span");
             b.className = "badge badge-info";
-            b.textContent = scen.keyPopBadge;
+            b.textContent = badgeLabel;
             topRow.appendChild(b);
             inspectorEl.appendChild(topRow);
 
             var h4 = document.createElement("h4");
-            h4.textContent = scen.pillLabel;
+            h4.textContent = kObj.keyLabel + " — " + kObj.actionTitle;
             inspectorEl.appendChild(h4);
 
             var pWhat = document.createElement("p");
             pWhat.className = "resource-desc";
-            pWhat.textContent = scen.whatHappened;
+            pWhat.textContent = explanationText;
             inspectorEl.appendChild(pWhat);
 
-            var handsBox = document.createElement("div");
-            handsBox.className = "nested-card";
-            var lhP = document.createElement("p");
-            lhP.className = "resource-desc";
-            lhP.textContent = "Left hand: " + scen.leftHandText;
-            var rhP = document.createElement("p");
-            rhP.className = "resource-desc";
-            rhP.textContent = "Right hand: " + scen.rightHandText;
-            handsBox.appendChild(lhP);
-            handsBox.appendChild(rhP);
-            inspectorEl.appendChild(handsBox);
-
-            var cmdBox = document.createElement("div");
-            cmdBox.className = "vocab-example-box";
-            cmdBox.textContent = scen.promptSuffix;
-            inspectorEl.appendChild(cmdBox);
+            var handCard = document.createElement("div");
+            handCard.className = "nested-card";
+            var hp = document.createElement("p");
+            hp.className = "resource-desc";
+            hp.textContent = kObj.whatItDoes + " (" + kObj.handNote + ")";
+            handCard.appendChild(hp);
+            inspectorEl.appendChild(handCard);
           },
-          {
-            autoOpen: true,
-            pulse: true,
-            itemTitle: scen.pillLabel
-          }
+          { autoOpen: false, pulse: true, itemTitle: kObj.keyLabel }
         );
       }
-
-      // Animate typing the command frames into the terminal screen
-      if (activeTypingTimer) {
-        clearInterval(activeTypingTimer);
-        activeTypingTimer = null;
-      }
-      var frames = scen.typedFrames || [scen.promptSuffix];
-      var frameIdx = 0;
-      typedCmdSpan.textContent = frames[0] || "";
-      outputBlock.replaceChildren();
-
-      activeTypingTimer = setInterval(function () {
-        frameIdx += 1;
-        if (frameIdx < frames.length) {
-          typedCmdSpan.textContent = frames[frameIdx];
-        } else {
-          clearInterval(activeTypingTimer);
-          activeTypingTimer = null;
-          typedCmdSpan.textContent = scen.promptSuffix;
-          scen.terminalOutput.forEach(function (lineStr) {
-            var lineDiv = document.createElement("div");
-            lineDiv.className = lineStr.indexOf("#") === 0 ? "term-output-comment" : "term-output-line";
-            lineDiv.textContent = lineStr || " ";
-            outputBlock.appendChild(lineDiv);
-          });
-        }
-      }, 180);
     }
 
-    nextBtn.addEventListener("click", function () {
-      selectScenario((selectedIdx + 1) % TERMINAL_SCENARIOS.length, true);
+    function stopRunningServerWithCtrlC() {
+      if (activeServerTimer) {
+        clearInterval(activeServerTimer);
+        activeServerTimer = null;
+      }
+      isServerRunning = false;
+      cmdInput.disabled = false;
+      cmdInput.placeholder = "Type a command or press Tab, ↑, ↓, Enter, Ctrl+C...";
+      termStatusBadge.className = "badge badge-success";
+      termStatusBadge.textContent = "Prompt unlocked!";
+      appendLogLines(null, [
+        "^C",
+        "Server stopped safely with Ctrl + C! Your command prompt is unlocked and ready."
+      ]);
+      cmdInput.focus();
+    }
+
+    function startSimulatedServer() {
+      if (activeServerTimer) clearInterval(activeServerTimer);
+      isServerRunning = true;
+      serverTickCount = 0;
+      cmdInput.value = "";
+      cmdInput.disabled = true;
+      cmdInput.placeholder = "[Server running on :3000 — Press Ctrl+C to stop it!]";
+      termStatusBadge.className = "badge badge-warning";
+      termStatusBadge.textContent = "Server running (Press Ctrl+C!)";
+      appendLogLines("npm run dev", [
+        "Starting local development server on http://localhost:3000 ...",
+        "[ready] Listening on port 3000 — terminal prompt is busy while server runs.",
+        "# Tip: Press Ctrl + C on your keyboard (or click [Ctrl + C] on the right) to stop it!"
+      ]);
+      activeServerTimer = setInterval(function () {
+        serverTickCount += 1;
+        if (serverTickCount <= 6) {
+          appendLogLines(null, [
+            "[localhost:3000] GET /index.html 200 OK (" + (12 + serverTickCount * 3) + "ms) — press Ctrl+C to stop"
+          ]);
+        }
+      }, 1600);
+    }
+
+    function triggerKeyAction(keyId, fromClick) {
+      if (keyId === "key-tab") {
+        if (isServerRunning) {
+          stopRunningServerWithCtrlC();
+        }
+        var raw = cmdInput.value;
+        var trimmed = raw.trim();
+        var matchedNote = "";
+        if (!trimmed || trimmed.slice(-1) === "/" || trimmed === "cat package.json") {
+          // Load a partial command and immediately show how Tab finishes it
+          var pair = TAB_COMPLETION_PAIRS[tabCycleIdx % TAB_COMPLETION_PAIRS.length];
+          tabCycleIdx += 1;
+          cmdInput.value = pair.completed;
+          matchedNote = "Auto-completed '" + pair.partial + "' -> '" + pair.completed + "' (" + pair.note + "). Now press [Enter ↵] to run it!";
+        } else if (trimmed.indexOf("comp") !== -1) {
+          cmdInput.value = "cd components/";
+          matchedNote = "Auto-completed '" + trimmed + "' -> 'cd components/'! Now press [Enter ↵] to step inside.";
+        } else if (trimmed.indexOf("pack") !== -1) {
+          cmdInput.value = "cat package.json";
+          matchedNote = "Auto-completed '" + trimmed + "' -> 'cat package.json'! Now press [Enter ↵] to read the file.";
+        } else if (trimmed === "cd s" || trimmed === "cd sr") {
+          cmdInput.value = "cd src/";
+          matchedNote = "Auto-completed '" + trimmed + "' -> 'cd src/'! Now press [Enter ↵] to step inside.";
+        } else {
+          cmdInput.value = trimmed + " components/";
+          matchedNote = "Tab ⇥ auto-completed 'components/' onto your command! Press [Enter ↵] to run it.";
+        }
+        flashKeyCard("key-tab", "Tab ⇥ pressed!", matchedNote);
+        if (fromClick) cmdInput.focus();
+      } else if (keyId === "key-up") {
+        if (isServerRunning) {
+          flashKeyCard("key-ctrl-c", "Server is running!", "Press [Ctrl + C] first to stop the running server before recalling history.");
+          return;
+        }
+        if (historyCursor > 0) {
+          historyCursor -= 1;
+        } else {
+          historyCursor = cmdHistory.length - 1;
+        }
+        cmdInput.value = cmdHistory[historyCursor] || "pwd";
+        flashKeyCard(
+          "key-up",
+          "↑ Up Arrow pressed! (History " + (historyCursor + 1) + "/" + cmdHistory.length + ")",
+          "Recalled past command '" + cmdInput.value + "' without typing! Tap [↑ Up] again for older commands, or press [Enter ↵] to run it."
+        );
+        if (fromClick) cmdInput.focus();
+      } else if (keyId === "key-down") {
+        if (isServerRunning) return;
+        if (historyCursor < cmdHistory.length - 1) {
+          historyCursor += 1;
+          cmdInput.value = cmdHistory[historyCursor];
+          flashKeyCard(
+            "key-down",
+            "↓ Down Arrow pressed! (History " + (historyCursor + 1) + "/" + cmdHistory.length + ")",
+            "Stepped forward in your command history to '" + cmdInput.value + "'."
+          );
+        } else {
+          historyCursor = cmdHistory.length;
+          cmdInput.value = "";
+          flashKeyCard(
+            "key-down",
+            "↓ Down Arrow pressed! (Back to fresh blank prompt)",
+            "Reached the newest end of your history—your prompt line is blank and ready for a new command."
+          );
+        }
+        if (fromClick) cmdInput.focus();
+      } else if (keyId === "key-ctrl-c") {
+        if (isServerRunning) {
+          stopRunningServerWithCtrlC();
+          flashKeyCard(
+            "key-ctrl-c",
+            "Ctrl + C pressed! (Stopped server)",
+            "Emergency brake! Ctrl + C sent an interrupt signal (^C) that stopped the running server and gave you your typing prompt back."
+          );
+        } else if (cmdInput.value.trim()) {
+          var cancelled = cmdInput.value;
+          appendLogLines(cancelled + " ^C", [
+            "# Cancelled half-typed command with Ctrl + C without running it."
+          ]);
+          cmdInput.value = "";
+          flashKeyCard(
+            "key-ctrl-c",
+            "Ctrl + C pressed! (Cancelled line)",
+            "Cancelled '" + cancelled + "' with ^C and gave you a fresh blank prompt! (Tip: Click Mission #3 above to test stopping a live server with Ctrl+C.)"
+          );
+        } else {
+          // Start the live server so the user can immediately press Ctrl+C again to stop it!
+          startSimulatedServer();
+          flashKeyCard(
+            "key-ctrl-c",
+            "Live server started — press Ctrl + C again to stop it!",
+            "We just started a live server ('npm run dev') that locked your prompt. Press [Ctrl + C] one more time to stop it with ^C!"
+          );
+        }
+      } else if (keyId === "key-ctrl-l") {
+        logContainer.replaceChildren();
+        appendLogLines(null, [
+          "# Screen wiped clean with Ctrl + L! (Your files and ↑ Up Arrow history are still 100% safe.)"
+        ]);
+        flashKeyCard(
+          "key-ctrl-l",
+          "Ctrl + L pressed! (Screen cleared)",
+          "Wiped all the old log clutter off the terminal screen so your prompt is cleanly at the top."
+        );
+        if (fromClick) cmdInput.focus();
+      } else if (keyId === "key-enter") {
+        if (isServerRunning) {
+          flashKeyCard("key-ctrl-c", "Server is running!", "Press [Ctrl + C] first to stop the running server.");
+          return;
+        }
+        var cmdToRun = cmdInput.value.trim() || "ls -la";
+        executeSandboxCommand(cmdToRun);
+        if (fromClick) cmdInput.focus();
+      }
+    }
+
+    function executeSandboxCommand(rawCmd) {
+      var cmd = rawCmd.trim();
+      if (!cmd) return;
+      cmdHistory.push(cmd);
+      historyCursor = cmdHistory.length;
+      cmdInput.value = "";
+
+      if (cmd === "clear") {
+        triggerKeyAction("key-ctrl-l", false);
+        return;
+      }
+      if (cmd === "npm run dev" || cmd.indexOf("http.server") !== -1) {
+        startSimulatedServer();
+        flashKeyCard("key-ctrl-c", "Server running — press Ctrl + C to stop!", "Started local server! Notice how your prompt is busy—press [Ctrl + C] to stop it.");
+        return;
+      }
+
+      var out = [];
+      var explain = "";
+
+      if (cmd === "pwd") {
+        var fullPath = currentDir.replace("~", "/Users/lucy");
+        out = [fullPath, "# Printed your Current Working Directory (where you are standing right now)."];
+        explain = "Ran 'pwd' (Print Working Directory) -> You are inside " + fullPath + ".";
+      } else if (cmd === "ls" || cmd === "ls -la") {
+        out = [
+          "drwxr-xr-x  10 lucy  staff   320 Sep 26 20:15 .            <-- Current directory",
+          "drwxr-xr-x   6 lucy  staff   192 Sep 26 18:00 ..           <-- Parent directory (one folder up)",
+          "-rw-------   1 lucy  staff    64 Sep 26 19:10 .env         <-- Hidden secret API keys (revealed by -a)",
+          "drwxr-xr-x   5 lucy  staff   160 Sep 26 20:15 components/",
+          "drwxr-xr-x   4 lucy  staff   128 Sep 26 20:15 src/",
+          "-rw-r--r--   1 lucy  staff   842 Sep 26 20:15 package.json"
+        ];
+        explain = "Ran '" + cmd + "' -> Listed all files and subfolders (including hidden dotfiles like .env and parent '..').";
+      } else if (cmd === "cd .." || cmd === "cd ../") {
+        var oldDir = currentDir;
+        if (currentDir.indexOf("/components") !== -1 || currentDir.indexOf("/src") !== -1) {
+          currentDir = "~/workspace/my-app";
+        } else if (currentDir === "~/workspace/my-app") {
+          currentDir = "~/workspace";
+        } else {
+          currentDir = "~";
+        }
+        appendLogLines(cmd, [
+          "# Stepped UP one folder level from '" + oldDir + "' into its Parent Directory: '" + currentDir + "'"
+        ]);
+        updatePromptPrefix();
+        flashKeyCard("key-enter", "Enter ↵ ran 'cd ..'!", "Moved one folder level up into the Parent Directory (" + currentDir + "). Look at the green prompt prefix—it updated to " + currentDir + "!");
+        return;
+      } else if (cmd.indexOf("cd ") === 0) {
+        var target = cmd.slice(3).trim().replace(/\/$/, "");
+        if (target === "~") {
+          currentDir = "~";
+        } else if (target === ".") {
+          // stay in currentDir
+        } else {
+          currentDir = "~/workspace/my-app/" + target;
+        }
+        appendLogLines(cmd, [
+          "# Stepped DOWN into child subfolder: '" + currentDir + "' (Tip: type 'cd ..' + Enter to step back up to the parent folder!)"
+        ]);
+        updatePromptPrefix();
+        flashKeyCard("key-enter", "Enter ↵ ran '" + cmd + "'!", "Moved inside folder '" + currentDir + "'. Try typing 'cd ..' and pressing Enter to step back up to its parent directory!");
+        return;
+      } else if (cmd.indexOf("grep") === 0) {
+        out = [
+          "./components/CheckoutButton.tsx:14:export function Button({ label }) {",
+          "./src/App.tsx:42:      <Button label=\"Deploy to Vercel\" />",
+          "# grep searched inside every file (-r) and printed exact line numbers (-n)!"
+        ];
+        explain = "Ran '" + cmd + "' -> Found 2 matching lines across your files with exact line numbers (14 and 42).";
+      } else if (cmd.indexOf("cat ") === 0) {
+        out = [
+          "{",
+          "  \"name\": \"my-app\",",
+          "  \"scripts\": { \"dev\": \"next dev\", \"build\": \"next build\" }",
+          "}"
+        ];
+        explain = "Ran '" + cmd + "' -> Printed the plain-text contents of the file directly into the terminal.";
+      } else {
+        out = [
+          "Executed: " + cmd,
+          "# Command completed! Try pressing [↑ Up Arrow] to recall it, or [Ctrl + L] to clear the screen."
+        ];
+        explain = "Ran '" + cmd + "'! Press [↑ Up Arrow] to see that it was added to your command history.";
+      }
+
+      appendLogLines(cmd, out);
+      flashKeyCard("key-enter", "Enter ↵ executed '" + cmd + "'!", explain);
+    }
+
+    // Listen to real physical keyboard presses inside the live terminal prompt!
+    cmdInput.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        triggerKeyAction("key-tab", false);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        triggerKeyAction("key-up", false);
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        triggerKeyAction("key-down", false);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        triggerKeyAction("key-enter", false);
+      } else if ((e.ctrlKey || e.metaKey) && (e.key === "c" || e.key === "C")) {
+        e.preventDefault();
+        triggerKeyAction("key-ctrl-c", false);
+      } else if ((e.ctrlKey || e.metaKey) && (e.key === "l" || e.key === "L")) {
+        e.preventDefault();
+        triggerKeyAction("key-ctrl-l", false);
+      }
     });
 
-    selectScenario(0, false);
+    function loadMission(idx) {
+      var m = GUIDED_MISSIONS[idx];
+      missionBtns.forEach(function (b, i) {
+        if (i === idx) b.classList.add("active");
+        else b.classList.remove("active");
+      });
+
+      if (activeServerTimer) {
+        clearInterval(activeServerTimer);
+        activeServerTimer = null;
+      }
+      isServerRunning = false;
+      cmdInput.disabled = false;
+      currentDir = m.setupDir || "~/workspace/my-app";
+      updatePromptPrefix();
+      mbText.textContent = m.instruction;
+
+      if (m.startServer) {
+        startSimulatedServer();
+      } else {
+        termStatusBadge.className = "badge badge-info";
+        termStatusBadge.textContent = "Interactive prompt ready";
+        cmdInput.value = m.prefillCmd || "";
+      }
+
+      Object.keys(keyBtnsMap).forEach(function (kId) {
+        if (kId === m.glowKey) keyBtnsMap[kId].classList.add("popped");
+        else keyBtnsMap[kId].classList.remove("popped");
+      });
+    }
+
+    // Initialize welcome lines & Mission 1
+    appendLogLines(null, [
+      "# Welcome to the live terminal sandbox! Folders here: components/  src/  package.json  .env",
+      "# Click any key on the right OR type below and press Tab, ↑, ↓, Enter, Ctrl+C, or Ctrl+L."
+    ]);
+    loadMission(0);
     renderPathAnatomyCard(container);
     container.appendChild(card);
   }

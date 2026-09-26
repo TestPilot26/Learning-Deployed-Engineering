@@ -406,7 +406,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
     return svg;
   }
 
-  // Aligned Horizontal Arrow between Top-Row Stages (supports optional compact pills below arrow)
+  // Aligned Horizontal Arrow between Top-Row Stages (with continuous underlying pipeline track)
   function createHorizontalStepArrow(topLabel, subLabel, extraEl) {
     var wrap = document.createElement("div");
     wrap.className = "loop-horiz-arrow-col";
@@ -416,9 +416,13 @@ window.PIPELINE_DIAGRAMS_DATA = {
     lbl.textContent = topLabel;
     wrap.appendChild(lbl);
 
-    var svg = svgEl("svg", { viewBox: "0 0 116 32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
-    svg.appendChild(svgEl("line", { x1: "4", y1: "16", x2: "98", y2: "16", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("polygon", { points: "94,7 112,16 94,25", fill: "var(--color-primary)" }));
+    var svg = svgEl("svg", { viewBox: "0 0 136 32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
+    // Continuous soft background pipeline rail
+    svg.appendChild(svgEl("line", { x1: "-16", y1: "16", x2: "152", y2: "16", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
+    // Solid primary pipeline flow line + animated dashes
+    svg.appendChild(svgEl("line", { x1: "-12", y1: "16", x2: "118", y2: "16", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
+    svg.appendChild(svgEl("line", { x1: "-12", y1: "16", x2: "114", y2: "16", stroke: "var(--color-surface-container-lowest)", "stroke-width": "2", "stroke-dasharray": "5 7", class: "loop-anim-dash" }));
+    svg.appendChild(svgEl("polygon", { points: "114,7 132,16 114,25", fill: "var(--color-primary)" }));
     wrap.appendChild(svg);
 
     if (subLabel) {
@@ -433,28 +437,27 @@ window.PIPELINE_DIAGRAMS_DATA = {
     return wrap;
   }
 
-  // Curved Bottom Loop Arrow ("left" curves up-left to Stage 1; "right" curves down-left from Stage 3)
+  // Curved Bottom Loop Arrow ("left" curves up-left to Stage 1; "right" curves down-left from Stage 3) with underlying pipeline rail
   function createCurvedReturnWing(side, labelText) {
     var wrap = document.createElement("div");
     wrap.className = "loop-curved-wing";
 
-    var svg = svgEl("svg", { viewBox: "0 0 240 110", class: "loop-curved-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 240 116", class: "loop-curved-svg", "aria-hidden": "true" });
     if (side === "left") {
-      // Curves between Stage 1 bottom (x=54, y=10) and Stage 4 left (x=226, y=68)
-      svg.appendChild(svgEl("path", { d: "M 54 18 C 54 70, 124 70, 218 70", fill: "none", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
-      // Upward arrowhead pointing to Stage 1
-      svg.appendChild(svgEl("polygon", { points: "45,22 54,4 63,22", fill: "var(--color-primary)" }));
-      // Rightward arrowhead pointing to User
-      svg.appendChild(svgEl("polygon", { points: "214,61 232,70 214,79", fill: "var(--color-primary)" }));
-      var tLeft = svgEl("text", { x: "142", y: "52", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
+      var leftPath = "M 54 14 C 54 74, 124 74, 232 74";
+      svg.appendChild(svgEl("path", { d: leftPath, fill: "none", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
+      svg.appendChild(svgEl("path", { d: leftPath, fill: "none", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
+      svg.appendChild(svgEl("polygon", { points: "45,20 54,2 63,20", fill: "var(--color-primary)" }));
+      svg.appendChild(svgEl("polygon", { points: "220,65 238,74 220,83", fill: "var(--color-primary)" }));
+      var tLeft = svgEl("text", { x: "144", y: "54", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
       tLeft.textContent = labelText || "Sends results";
       svg.appendChild(tLeft);
     } else {
-      // Curves from Stage 3 bottom (x=186, y=8) down-left into Stage 4 right (x=14, y=70)
-      svg.appendChild(svgEl("path", { d: "M 186 10 C 186 70, 116 70, 22 70", fill: "none", stroke: "var(--color-primary)", "stroke-width": "4.5", "stroke-linecap": "round" }));
-      // Leftward arrowhead pointing into User
-      svg.appendChild(svgEl("polygon", { points: "26,61 8,70 26,79", fill: "var(--color-primary)" }));
-      var tRight = svgEl("text", { x: "98", y: "52", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
+      var rightPath = "M 186 6 C 186 74, 116 74, 18 74";
+      svg.appendChild(svgEl("path", { d: rightPath, fill: "none", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
+      svg.appendChild(svgEl("path", { d: rightPath, fill: "none", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
+      svg.appendChild(svgEl("polygon", { points: "24,65 6,74 24,83", fill: "var(--color-primary)" }));
+      var tRight = svgEl("text", { x: "96", y: "54", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
       tRight.textContent = labelText || "Returns data";
       svg.appendChild(tRight);
     }
