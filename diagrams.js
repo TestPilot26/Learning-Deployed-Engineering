@@ -16,6 +16,8 @@
     var octicons = dData.octiconPaths || {};
     var svg = document.createElementNS(SVG_NS, "svg");
     svg.setAttribute("viewBox", "0 0 16 16");
+    svg.setAttribute("width", className === "octicon-svg-lg" ? "20" : "15");
+    svg.setAttribute("height", className === "octicon-svg-lg" ? "20" : "15");
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("class", className || "octicon-svg");
     var paths = octicons[iconKey] || octicons.commit || [];
@@ -434,6 +436,8 @@
     // Continuous Underlying SVG Pipeline Layer showing the full split -> sandbox flow -> merge back to main
     var curvesSvg = document.createElementNS(SVG_NS, "svg");
     curvesSvg.setAttribute("viewBox", "0 0 900 84");
+    curvesSvg.setAttribute("width", "100%");
+    curvesSvg.setAttribute("height", "84");
     curvesSvg.setAttribute("class", "git-curves-svg");
     curvesSvg.setAttribute("aria-hidden", "true");
 

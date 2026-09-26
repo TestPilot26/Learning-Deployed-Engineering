@@ -277,7 +277,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
 
   // Illustration 1: Smartphone + Laptop with Green Checkmark & Magnifying Glass
   function createDeviceArt() {
-    var svg = svgEl("svg", { viewBox: "0 0 180 124", class: "stage-art-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 180 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
     // Soft oval floor shadow + arc halo
     svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
     svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "72", ry: "10", fill: "var(--color-surface-container-highest)" }));
@@ -307,7 +307,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
 
   // Illustration 2: Fluffy Cloud + 3 Server Racks with Status LEDs
   function createCloudServerArt(cloudText) {
-    var svg = svgEl("svg", { viewBox: "0 0 190 124", class: "stage-art-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 190 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
     svg.appendChild(svgEl("ellipse", { cx: "95", cy: "110", rx: "70", ry: "9", fill: "var(--color-surface-container-highest)" }));
 
     // Fluffy Cloud at top
@@ -351,7 +351,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
 
   // Illustration 3: 3-Tier Cylinder Database + Magnifying Glass with "011010" (or custom lens text)
   function createDatabaseArt(lensText) {
-    var svg = svgEl("svg", { viewBox: "0 0 180 124", class: "stage-art-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 180 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
     svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
     svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "70", ry: "10", fill: "var(--color-surface-container-highest)" }));
 
@@ -381,7 +381,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
 
   // Illustration 4: Person / User Avatar + Speech Bubble with Green Checkmark
   function createUserArt() {
-    var svg = svgEl("svg", { viewBox: "0 0 180 116", class: "stage-art-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 180 116", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
     svg.appendChild(svgEl("ellipse", { cx: "90", cy: "104", rx: "66", ry: "9", fill: "var(--color-surface-container-highest)" }));
 
     // Person shoulders / shirt
@@ -416,7 +416,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
     lbl.textContent = topLabel;
     wrap.appendChild(lbl);
 
-    var svg = svgEl("svg", { viewBox: "0 0 136 32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 136 32", width: "136", height: "32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
     // Continuous soft background pipeline rail
     svg.appendChild(svgEl("line", { x1: "-16", y1: "16", x2: "152", y2: "16", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
     // Solid primary pipeline flow line + animated dashes
@@ -442,7 +442,7 @@ window.PIPELINE_DIAGRAMS_DATA = {
     var wrap = document.createElement("div");
     wrap.className = "loop-curved-wing";
 
-    var svg = svgEl("svg", { viewBox: "0 0 240 116", class: "loop-curved-svg", "aria-hidden": "true" });
+    var svg = svgEl("svg", { viewBox: "0 0 240 116", width: "240", height: "112", class: "loop-curved-svg", "aria-hidden": "true" });
     if (side === "left") {
       var leftPath = "M 54 14 C 54 74, 124 74, 232 74";
       svg.appendChild(svgEl("path", { d: leftPath, fill: "none", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
