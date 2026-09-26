@@ -338,6 +338,10 @@
     }
   }
 
+  var setSidePanelCollapsedFn = null;
+  var setSidePanelTabFn = null;
+  var popPulseTimer = null;
+
   function renderStarterChips() {
     var chipsContainer = document.getElementById("agent-starter-chips");
     if (!chipsContainer) return;
@@ -356,10 +360,62 @@
     });
   }
 
+  function showInspectorInSidePanel(populateFn, options) {
+    var opts = options || {};
+    var bodyEl = document.getElementById("side-inspector-body");
+    var panelEl = document.getElementById("agent-side-panel");
+    if (!bodyEl || typeof populateFn !== "function") return;
+
+    bodyEl.replaceChildren();
+    populateFn(bodyEl);
+
+    if (opts.itemTitle) {
+      var askWrap = document.createElement("div");
+      askWrap.className = "side-inspector-ask-row";
+      var askBtn = document.createElement("button");
+      askBtn.type = "button";
+      askBtn.className = "agent-jump-btn";
+      var askIcon = document.createElement("span");
+      askIcon.className = "material-symbols-outlined btn-icon-sm";
+      askIcon.textContent = "chat";
+      var askTxt = document.createElement("span");
+      askTxt.textContent = "Ask Pipeline guide about " + opts.itemTitle;
+      askBtn.appendChild(askIcon);
+      askBtn.appendChild(askTxt);
+      askBtn.addEventListener("click", function () {
+        if (setSidePanelTabFn) setSidePanelTabFn("guide");
+        handleUserQuestion("Can you explain " + opts.itemTitle + " and how it fits in?");
+      });
+      askWrap.appendChild(askBtn);
+      bodyEl.appendChild(askWrap);
+    }
+
+    bodyEl.scrollTop = 0;
+    if (setSidePanelTabFn) setSidePanelTabFn("inspector");
+
+    if (opts.autoOpen && setSidePanelCollapsedFn) {
+      setSidePanelCollapsedFn(false);
+    }
+
+    if (opts.pulse && panelEl) {
+      panelEl.classList.remove("side-panel-pop-pulse");
+      void panelEl.offsetWidth;
+      panelEl.classList.add("side-panel-pop-pulse");
+      if (popPulseTimer) clearTimeout(popPulseTimer);
+      popPulseTimer = setTimeout(function () {
+        panelEl.classList.remove("side-panel-pop-pulse");
+      }, 650);
+    }
+  }
+
   function initAgentPanel() {
     var panelEl = document.getElementById("agent-side-panel");
     var toggleTopBtn = document.getElementById("btn-toggle-agent-panel");
     var collapseBtn = document.getElementById("btn-collapse-agent-panel");
+    var tabInspectorBtn = document.getElementById("btn-side-tab-inspector");
+    var tabGuideBtn = document.getElementById("btn-side-tab-guide");
+    var inspectorPaneEl = document.getElementById("side-inspector-pane");
+    var guidePaneEl = document.getElementById("side-guide-pane");
     var formEl = document.getElementById("form-agent-question");
     var inputEl = document.getElementById("input-agent-question");
     var clearBtnEl = document.getElementById("btn-clear-agent-question");
@@ -370,6 +426,36 @@
     var keySaveBtnEl = document.getElementById("btn-save-agent-api-key");
 
     if (!panelEl) return;
+
+    function setSideTab(mode) {
+      var isInspector = mode === "inspector";
+      if (tabInspectorBtn) {
+        tabInspectorBtn.classList.toggle("active", isInspector);
+        tabInspectorBtn.setAttribute("aria-selected", isInspector ? "true" : "false");
+      }
+      if (tabGuideBtn) {
+        tabGuideBtn.classList.toggle("active", !isInspector);
+        tabGuideBtn.setAttribute("aria-selected", !isInspector ? "true" : "false");
+      }
+      if (inspectorPaneEl) {
+        inspectorPaneEl.classList.toggle("side-pane-hidden", !isInspector);
+      }
+      if (guidePaneEl) {
+        guidePaneEl.classList.toggle("side-pane-hidden", isInspector);
+      }
+    }
+    setSidePanelTabFn = setSideTab;
+
+    if (tabInspectorBtn) {
+      tabInspectorBtn.addEventListener("click", function () {
+        setSideTab("inspector");
+      });
+    }
+    if (tabGuideBtn) {
+      tabGuideBtn.addEventListener("click", function () {
+        setSideTab("guide");
+      });
+    }
 
     if (inputEl && clearBtnEl && window.InlineClear) {
       window.InlineClear.bind(inputEl, clearBtnEl, function () {});
@@ -396,6 +482,7 @@
         if (typeof window.updatePathwayGeometry === "function") window.updatePathwayGeometry();
       }, 220);
     }
+    setSidePanelCollapsedFn = setPanelCollapsed;
 
     if (toggleTopBtn) {
       toggleTopBtn.addEventListener("click", function () {
@@ -411,6 +498,7 @@
 
     if (keyToggleBtn && keyDrawerEl) {
       keyToggleBtn.addEventListener("click", function () {
+        setSideTab("guide");
         var isHidden = keyDrawerEl.style.display === "none" || !keyDrawerEl.style.display;
         keyDrawerEl.style.display = isHidden ? "flex" : "none";
       });
@@ -463,6 +551,10 @@
       var badgeEl = document.getElementById("agent-context-badge");
       if (badgeEl) badgeEl.textContent = currentContextLabel;
       renderStarterChips();
-    }
+    },
+    setTab: function (mode) {
+      if (setSidePanelTabFn) setSidePanelTabFn(mode);
+    },
+    showInspector: showInspectorInSidePanel
   };
 })();

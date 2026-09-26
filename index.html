@@ -277,92 +277,109 @@
       </section>
     </main>
 
-    <!-- Persistent Right-Hand Side-Panel Companion Agent -->
-    <aside class="agent-side-panel" id="agent-side-panel" aria-label="Pipeline guide assistant">
+    <!-- Persistent & Pop-Out Right-Hand Side Panel (Component Explanation + Pipeline Guide) -->
+    <aside class="agent-side-panel" id="agent-side-panel" aria-label="Explanation and pipeline guide side panel">
       <div class="agent-panel-header">
         <div class="agent-header-title-group">
           <div class="badge-row">
             <span class="badge badge-info" id="agent-context-badge">Full pipeline</span>
           </div>
-          <h3>Pipeline guide</h3>
+          <div class="side-panel-mode-tabs" role="tablist" aria-label="Side panel mode">
+            <button type="button" class="side-mode-tab" id="btn-side-tab-inspector" role="tab" aria-selected="false">
+              <span class="material-symbols-outlined btn-icon-sm">info</span>
+              <span>Selected item</span>
+            </button>
+            <button type="button" class="side-mode-tab active" id="btn-side-tab-guide" role="tab" aria-selected="true">
+              <span class="material-symbols-outlined btn-icon-sm">chat</span>
+              <span>Pipeline guide</span>
+            </button>
+          </div>
         </div>
         <div class="agent-header-actions">
           <button type="button" class="icon-only-btn" id="btn-agent-api-key-toggle" aria-label="Configure optional Gemini API key" title="Optional live Gemini API key">
             <span class="material-symbols-outlined btn-icon-sm">key</span>
           </button>
-          <button type="button" class="icon-only-btn" id="btn-collapse-agent-panel" aria-label="Collapse pipeline guide" title="Collapse panel">
+          <button type="button" class="icon-only-btn" id="btn-collapse-agent-panel" aria-label="Close side panel" title="Close side panel">
             <span class="material-symbols-outlined btn-icon-sm">close</span>
           </button>
         </div>
       </div>
 
-      <!-- Optional API Key Drawer (Hidden by default) -->
-      <div class="agent-key-drawer" id="agent-key-drawer">
-        <div class="input-wrapper agent-input-full">
-          <span class="material-symbols-outlined input-adornment">vpn_key</span>
-          <input
-            type="password"
-            id="input-agent-api-key"
-            class="m3-input-field"
-            placeholder="Optional Gemini API key (local only)"
-            aria-label="Optional Gemini API key"
-          />
-          <button
-            type="button"
-            class="input-clear-btn"
-            id="btn-clear-agent-api-key"
-            aria-label="Clear API key"
-            title="Clear API key"
-          >
-            <span class="material-symbols-outlined btn-icon-sm">close</span>
-          </button>
-        </div>
-        <button type="button" class="nav-btn nav-btn-primary" id="btn-save-agent-api-key">Save key</button>
+      <!-- Pane 1: Pop-out Component / Button Explanation Inspector -->
+      <div class="side-inspector-pane side-pane-hidden" id="side-inspector-pane" role="tabpanel">
+        <div class="side-inspector-body" id="side-inspector-body"></div>
       </div>
 
-      <!-- Context-Aware Quick Question Chips -->
-      <div class="agent-starter-chips" id="agent-starter-chips" aria-label="Suggested questions"></div>
-
-      <!-- Scrollable Conversation Log -->
-      <div class="agent-messages-list" id="agent-messages-list" role="log" aria-live="polite"></div>
-
-      <!-- Question Input Form with Outlined Field & Inline Clear Button -->
-      <form class="agent-input-form" id="form-agent-question">
-        <div class="input-wrapper agent-input-full">
-          <span class="material-symbols-outlined input-adornment">help</span>
-          <input
-            type="text"
-            id="input-agent-question"
-            class="m3-input-field"
-            placeholder="Ask about this site, Git, languages, CLI..."
-            aria-label="Ask the pipeline guide"
-          />
-          <button
-            type="button"
-            class="input-clear-btn"
-            id="btn-clear-agent-question"
-            aria-label="Clear question"
-            title="Clear question"
-          >
-            <span class="material-symbols-outlined btn-icon-sm">close</span>
-          </button>
+      <!-- Pane 2: Interactive Pipeline Guide Q&A -->
+      <div class="side-guide-pane" id="side-guide-pane" role="tabpanel">
+        <!-- Optional API Key Drawer (Hidden by default) -->
+        <div class="agent-key-drawer" id="agent-key-drawer">
+          <div class="input-wrapper agent-input-full">
+            <span class="material-symbols-outlined input-adornment">vpn_key</span>
+            <input
+              type="password"
+              id="input-agent-api-key"
+              class="m3-input-field"
+              placeholder="Optional Gemini API key (local only)"
+              aria-label="Optional Gemini API key"
+            />
+            <button
+              type="button"
+              class="input-clear-btn"
+              id="btn-clear-agent-api-key"
+              aria-label="Clear API key"
+              title="Clear API key"
+            >
+              <span class="material-symbols-outlined btn-icon-sm">close</span>
+            </button>
+          </div>
+          <button type="button" class="nav-btn nav-btn-primary" id="btn-save-agent-api-key">Save key</button>
         </div>
-        <button type="submit" class="nav-btn nav-btn-primary agent-send-btn" aria-label="Ask question">
-          <span>Ask</span>
-          <span class="material-symbols-outlined btn-icon-sm">send</span>
-        </button>
-      </form>
+
+        <!-- Context-Aware Quick Question Chips -->
+        <div class="agent-starter-chips" id="agent-starter-chips" aria-label="Suggested questions"></div>
+
+        <!-- Scrollable Conversation Log -->
+        <div class="agent-messages-list" id="agent-messages-list" role="log" aria-live="polite"></div>
+
+        <!-- Question Input Form with Outlined Field & Inline Clear Button -->
+        <form class="agent-input-form" id="form-agent-question">
+          <div class="input-wrapper agent-input-full">
+            <span class="material-symbols-outlined input-adornment">help</span>
+            <input
+              type="text"
+              id="input-agent-question"
+              class="m3-input-field"
+              placeholder="Ask about this site, Git, languages, CLI..."
+              aria-label="Ask the pipeline guide"
+            />
+            <button
+              type="button"
+              class="input-clear-btn"
+              id="btn-clear-agent-question"
+              aria-label="Clear question"
+              title="Clear question"
+            >
+              <span class="material-symbols-outlined btn-icon-sm">close</span>
+            </button>
+          </div>
+          <button type="submit" class="nav-btn nav-btn-primary agent-send-btn" aria-label="Ask question">
+            <span>Ask</span>
+            <span class="material-symbols-outlined btn-icon-sm">send</span>
+          </button>
+        </form>
+      </div>
     </aside>
   </div>
 
   <script src="./data.js"></script>
   <script src="./terminal-vocab-data.js"></script>
   <script src="./diagnostics-theme.js"></script>
+  <script src="./agent-panel.js"></script>
   <script src="./diagrams-data.js"></script>
   <script src="./app-diagram.js"></script>
   <script src="./terminal-diagram.js"></script>
   <script src="./diagrams.js"></script>
-  <script src="./agent-panel.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

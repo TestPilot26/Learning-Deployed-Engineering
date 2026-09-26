@@ -475,8 +475,6 @@
     var selectedId = "fe-overview";
     var showFragileMode = false;
     var allPillBtns = [];
-    var inspectorEl = document.createElement("div");
-    inspectorEl.className = "diagram-inspector-card";
 
     function selectItem(item) {
       selectedId = item.id;
@@ -484,7 +482,7 @@
         if (b.getAttribute("data-app-item-id") === selectedId) b.classList.add("active");
         else b.classList.remove("active");
       });
-      updateAppInspector();
+      updateAppInspector(true);
     }
 
     var canvas = document.createElement("div");
@@ -638,80 +636,83 @@
     canvas.appendChild(vaultsRow);
     card.appendChild(canvas);
 
-    function updateAppInspector() {
+    function updateAppInspector(isUserClick) {
       var item = APP_DIAGRAM_ITEMS[selectedId] || APP_DIAGRAM_ITEMS["fe-overview"];
-      inspectorEl.replaceChildren();
+      if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
 
-      var topRow = document.createElement("div");
-      topRow.className = "diagram-inspector-footer";
+      window.PipelineAgent.showInspector(
+        function (inspectorEl) {
+          var badgeWrap = document.createElement("div");
+          badgeWrap.className = "badge-row";
+          var b1 = document.createElement("span");
+          b1.className = "badge " + item.badgeClass;
+          b1.textContent = item.tag;
+          var b2 = document.createElement("span");
+          b2.className = "badge badge-neutral";
+          b2.textContent = item.oneLiner;
+          badgeWrap.appendChild(b1);
+          badgeWrap.appendChild(b2);
+          inspectorEl.appendChild(badgeWrap);
 
-      var badgeWrap = document.createElement("div");
-      badgeWrap.className = "badge-row";
-      var b1 = document.createElement("span");
-      b1.className = "badge " + item.badgeClass;
-      b1.textContent = item.tag;
-      var b2 = document.createElement("span");
-      b2.className = "badge badge-neutral";
-      b2.textContent = item.oneLiner;
-      badgeWrap.appendChild(b1);
-      badgeWrap.appendChild(b2);
+          var h4 = document.createElement("h4");
+          h4.textContent = item.headline;
+          inspectorEl.appendChild(h4);
 
-      var modeBtn = document.createElement("button");
-      modeBtn.type = "button";
-      modeBtn.className = "nav-btn" + (showFragileMode ? "" : " active");
-      var mIcon = document.createElement("span");
-      mIcon.className = "material-symbols-outlined btn-icon-sm";
-      mIcon.textContent = showFragileMode ? "warning" : "verified";
-      var mLabel = document.createElement("span");
-      mLabel.textContent = showFragileMode
-        ? "Showing: Fragile vibe-coded setup (click to switch)"
-        : "Showing: Healthy deployed setup (click to compare)";
-      modeBtn.appendChild(mIcon);
-      modeBtn.appendChild(mLabel);
-      modeBtn.addEventListener("click", function () {
-        showFragileMode = !showFragileMode;
-        updateAppInspector();
-      });
+          var pWhat = document.createElement("p");
+          pWhat.className = "resource-desc";
+          pWhat.textContent = item.whatItIs;
+          inspectorEl.appendChild(pWhat);
 
-      topRow.appendChild(badgeWrap);
-      topRow.appendChild(modeBtn);
-      inspectorEl.appendChild(topRow);
+          var pWhen = document.createElement("p");
+          pWhen.className = "resource-desc";
+          pWhen.textContent = "When & why to use it: " + item.whenToUse;
+          inspectorEl.appendChild(pWhen);
 
-      var h4 = document.createElement("h4");
-      h4.textContent = item.headline;
-      inspectorEl.appendChild(h4);
+          var codeBox = document.createElement("div");
+          codeBox.className = "vocab-example-box";
+          codeBox.textContent = item.codeExample;
+          inspectorEl.appendChild(codeBox);
 
-      var pWhat = document.createElement("p");
-      pWhat.className = "resource-desc";
-      pWhat.textContent = item.whatItIs;
-      inspectorEl.appendChild(pWhat);
+          var archBox = document.createElement("div");
+          archBox.className = "arch-mode-banner " + (showFragileMode ? "bad-mode" : "good-mode");
+          var archIcon = document.createElement("span");
+          archIcon.className = "material-symbols-outlined safety-icon";
+          archIcon.textContent = showFragileMode ? "error" : "check_circle";
+          var archText = document.createElement("span");
+          archText.textContent = showFragileMode
+            ? "Fragile vibe-coded setup: " + item.fragileSetup
+            : "Healthy deployed setup: " + item.goodSetup;
+          archBox.appendChild(archIcon);
+          archBox.appendChild(archText);
+          inspectorEl.appendChild(archBox);
 
-      var pWhen = document.createElement("p");
-      pWhen.className = "resource-desc";
-      pWhen.textContent = "When & why to use it: " + item.whenToUse;
-      inspectorEl.appendChild(pWhen);
-
-      var codeBox = document.createElement("div");
-      codeBox.className = "vocab-example-box";
-      codeBox.textContent = item.codeExample;
-      inspectorEl.appendChild(codeBox);
-
-      var archBox = document.createElement("div");
-      archBox.className = "arch-mode-banner " + (showFragileMode ? "bad-mode" : "good-mode");
-      var archIcon = document.createElement("span");
-      archIcon.className = "material-symbols-outlined safety-icon";
-      archIcon.textContent = showFragileMode ? "error" : "check_circle";
-      var archText = document.createElement("span");
-      archText.textContent = showFragileMode
-        ? "Fragile vibe-coded setup: " + item.fragileSetup
-        : "Healthy deployed setup: " + item.goodSetup;
-      archBox.appendChild(archIcon);
-      archBox.appendChild(archText);
-      inspectorEl.appendChild(archBox);
+          var modeBtn = document.createElement("button");
+          modeBtn.type = "button";
+          modeBtn.className = "nav-btn" + (showFragileMode ? "" : " active");
+          var mIcon = document.createElement("span");
+          mIcon.className = "material-symbols-outlined btn-icon-sm";
+          mIcon.textContent = showFragileMode ? "warning" : "verified";
+          var mLabel = document.createElement("span");
+          mLabel.textContent = showFragileMode
+            ? "Switch to healthy deployed setup"
+            : "Compare fragile vibe-coded setup";
+          modeBtn.appendChild(mIcon);
+          modeBtn.appendChild(mLabel);
+          modeBtn.addEventListener("click", function () {
+            showFragileMode = !showFragileMode;
+            updateAppInspector(false);
+          });
+          inspectorEl.appendChild(modeBtn);
+        },
+        {
+          autoOpen: Boolean(isUserClick),
+          pulse: Boolean(isUserClick),
+          itemTitle: item.label
+        }
+      );
     }
 
-    updateAppInspector();
-    card.appendChild(inspectorEl);
+    updateAppInspector(false);
     container.appendChild(card);
   }
 

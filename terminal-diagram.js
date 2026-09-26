@@ -212,7 +212,7 @@
       btn.appendChild(ic);
       btn.appendChild(txt);
       btn.addEventListener("click", function () {
-        selectScenario(idx);
+        selectScenario(idx, true);
       });
       scenarioBtns.push(btn);
       pillBar.appendChild(btn);
@@ -368,7 +368,7 @@
           TERMINAL_SCENARIOS.forEach(function (s, idx) {
             if (s.id === kDef.triggerScenario) targetIdx = idx;
           });
-          selectScenario(targetIdx);
+          selectScenario(targetIdx, true);
         });
 
         keycapMap[kDef.id] = kBtn;
@@ -381,18 +381,7 @@
     stageGrid.appendChild(kbPanel);
     card.appendChild(stageGrid);
 
-    // Bottom Plain-English Explainer Banner
-    var explainBox = document.createElement("div");
-    explainBox.className = "arch-mode-banner good-mode";
-    var expIcon = document.createElement("span");
-    expIcon.className = "material-symbols-outlined safety-icon";
-    expIcon.textContent = "lightbulb";
-    var expText = document.createElement("span");
-    explainBox.appendChild(expIcon);
-    explainBox.appendChild(expText);
-    card.appendChild(explainBox);
-
-    function selectScenario(idx) {
+    function selectScenario(idx, isUserClick) {
       selectedIdx = idx;
       var scen = TERMINAL_SCENARIOS[selectedIdx];
       nextLabel.textContent = "Next terminal demo (" + (selectedIdx + 1) + "/" + TERMINAL_SCENARIOS.length + ")";
@@ -415,7 +404,51 @@
       lhBody.textContent = scen.leftHandText;
       rhBody.textContent = scen.rightHandText;
       termPopStatus.textContent = scen.keyPopBadge;
-      expText.textContent = scen.whatHappened;
+
+      if (isUserClick && window.PipelineAgent && typeof window.PipelineAgent.showInspector === "function") {
+        window.PipelineAgent.showInspector(
+          function (inspectorEl) {
+            var topRow = document.createElement("div");
+            topRow.className = "resource-title-row";
+            var b = document.createElement("span");
+            b.className = "badge badge-info";
+            b.textContent = scen.keyPopBadge;
+            topRow.appendChild(b);
+            inspectorEl.appendChild(topRow);
+
+            var h4 = document.createElement("h4");
+            h4.textContent = scen.pillLabel;
+            inspectorEl.appendChild(h4);
+
+            var pWhat = document.createElement("p");
+            pWhat.className = "resource-desc";
+            pWhat.textContent = scen.whatHappened;
+            inspectorEl.appendChild(pWhat);
+
+            var handsBox = document.createElement("div");
+            handsBox.className = "nested-card";
+            var lhP = document.createElement("p");
+            lhP.className = "resource-desc";
+            lhP.textContent = "Left hand: " + scen.leftHandText;
+            var rhP = document.createElement("p");
+            rhP.className = "resource-desc";
+            rhP.textContent = "Right hand: " + scen.rightHandText;
+            handsBox.appendChild(lhP);
+            handsBox.appendChild(rhP);
+            inspectorEl.appendChild(handsBox);
+
+            var cmdBox = document.createElement("div");
+            cmdBox.className = "vocab-example-box";
+            cmdBox.textContent = scen.promptSuffix;
+            inspectorEl.appendChild(cmdBox);
+          },
+          {
+            autoOpen: true,
+            pulse: true,
+            itemTitle: scen.pillLabel
+          }
+        );
+      }
 
       // Animate typing the command frames into the terminal screen
       if (activeTypingTimer) {
@@ -446,10 +479,10 @@
     }
 
     nextBtn.addEventListener("click", function () {
-      selectScenario((selectedIdx + 1) % TERMINAL_SCENARIOS.length);
+      selectScenario((selectedIdx + 1) % TERMINAL_SCENARIOS.length, true);
     });
 
-    selectScenario(0);
+    selectScenario(0, false);
     renderPathAnatomyCard(container);
     container.appendChild(card);
   }
@@ -573,8 +606,6 @@
 
     var selectedSeg = PATH_SEGMENTS[3]; // Default to "4. Workspace" so Workspace vs Folder vs File is immediately visible!
     var segBtns = [];
-    var inspectorEl = document.createElement("div");
-    inspectorEl.className = "diagram-inspector-card";
 
     var pathBar = document.createElement("div");
     pathBar.className = "path-anatomy-bar";
@@ -602,7 +633,7 @@
           if (other.getAttribute("data-seg-id") === selectedSeg.id) other.classList.add("active");
           else other.classList.remove("active");
         });
-        updatePathInspector(inspectorEl, selectedSeg);
+        showPathInspector(selectedSeg, true);
       });
 
       segBtns.push(btn);
@@ -617,9 +648,22 @@
     });
 
     pathCard.appendChild(pathBar);
-    updatePathInspector(inspectorEl, selectedSeg);
-    pathCard.appendChild(inspectorEl);
+    showPathInspector(selectedSeg, false);
     container.appendChild(pathCard);
+  }
+
+  function showPathInspector(seg, isUserClick) {
+    if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+    window.PipelineAgent.showInspector(
+      function (inspectorEl) {
+        updatePathInspector(inspectorEl, seg);
+      },
+      {
+        autoOpen: Boolean(isUserClick),
+        pulse: Boolean(isUserClick),
+        itemTitle: seg.roleLabel + " (" + seg.tokenText + ")"
+      }
+    );
   }
 
   function updatePathInspector(inspectorEl, seg) {

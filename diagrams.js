@@ -122,8 +122,6 @@
 
     var selectedNodeId = nodes[0].id;
     var allButtons = [];
-    var inspectorContainer = document.createElement("div");
-    inspectorContainer.className = "diagram-inspector-card";
 
     function selectNode(node) {
       selectedNodeId = node.id;
@@ -131,7 +129,7 @@
         if (b.getAttribute("data-node-id") === selectedNodeId) b.classList.add("active");
         else b.classList.remove("active");
       });
-      updateToolsInspector(inspectorContainer, node);
+      showToolsInspector(node, true);
     }
 
     // Illustrated 3-Hub Visual Map: [1. Laptop Screen & Base] ---> [2. Cloud Vault] ---> [3. Live Internet Globe]
@@ -257,9 +255,22 @@
     sceneLayout.appendChild(cloudAndWebCol);
 
     card.appendChild(sceneLayout);
-    updateToolsInspector(inspectorContainer, nodes[0]);
-    card.appendChild(inspectorContainer);
+    showToolsInspector(nodes[0], false);
     container.appendChild(card);
+  }
+
+  function showToolsInspector(node, isUserClick) {
+    if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+    window.PipelineAgent.showInspector(
+      function (inspectorEl) {
+        updateToolsInspector(inspectorEl, node);
+      },
+      {
+        autoOpen: Boolean(isUserClick),
+        pulse: Boolean(isUserClick),
+        itemTitle: node.title
+      }
+    );
   }
 
   function updateToolsInspector(inspectorEl, node) {
@@ -375,8 +386,6 @@
 
     var selectedIdx = 0;
     var gitBtns = [];
-    var inspectorEl = document.createElement("div");
-    inspectorEl.className = "diagram-inspector-card";
 
     var headerRow = document.createElement("div");
     headerRow.className = "search-bar-row diagram-header-row";
@@ -413,7 +422,7 @@
         if (other.getAttribute("data-node-id") === gNode.id) other.classList.add("active");
         else other.classList.remove("active");
       });
-      updateGitInspector(inspectorEl, gNode);
+      showGitInspector(gNode, true);
     }
 
     stepBtn.addEventListener("click", function () {
@@ -555,9 +564,22 @@
     graphWrap.appendChild(sandboxBanner);
 
     card.appendChild(graphWrap);
-    updateGitInspector(inspectorEl, gitNodes[0]);
-    card.appendChild(inspectorEl);
+    showGitInspector(gitNodes[0], false);
     container.appendChild(card);
+  }
+
+  function showGitInspector(gNode, isUserClick) {
+    if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+    window.PipelineAgent.showInspector(
+      function (inspectorEl) {
+        updateGitInspector(inspectorEl, gNode);
+      },
+      {
+        autoOpen: Boolean(isUserClick),
+        pulse: Boolean(isUserClick),
+        itemTitle: gNode.word
+      }
+    );
   }
 
   function updateGitInspector(inspectorEl, gNode) {
@@ -625,6 +647,9 @@
       containerEl.replaceChildren();
       if (!stop || !stop.diagramType) {
         containerEl.style.display = "none";
+        if (window.PipelineAgent && typeof window.PipelineAgent.setTab === "function") {
+          window.PipelineAgent.setTab("guide");
+        }
         return;
       }
       containerEl.style.display = "block";

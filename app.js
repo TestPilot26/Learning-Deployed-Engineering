@@ -463,12 +463,18 @@ function handleRouteChange() {
     }
     if (hash === "#archive") {
       switchActiveView("view-archive");
-      if (window.PipelineAgent) window.PipelineAgent.setContext("archive", "Archive & shelf");
+      if (window.PipelineAgent) {
+        window.PipelineAgent.setContext("archive", "Archive & shelf");
+        if (window.PipelineAgent.setTab) window.PipelineAgent.setTab("guide");
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
     switchActiveView("view-pipeline");
-    if (window.PipelineAgent) window.PipelineAgent.setContext(null, "Full pipeline");
+    if (window.PipelineAgent) {
+      window.PipelineAgent.setContext(null, "Full pipeline");
+      if (window.PipelineAgent.setTab) window.PipelineAgent.setTab("guide");
+    }
     setTimeout(updatePathwayGeometry, 40);
   };
   if (typeof document.startViewTransition === "function") document.startViewTransition(applyRoute);
