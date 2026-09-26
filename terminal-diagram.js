@@ -5,92 +5,37 @@
 
 (function () {
   var GUIDED_MISSIONS = [
-    {
-      id: "mission-tab",
-      pillLabel: "1. Try Tab ⇥ (Auto-complete)",
-      setupDir: "~/workspace/my-app",
-      prefillCmd: "cd comp",
-      glowKey: "key-tab",
-      instruction: "We typed 'cd comp' into the live prompt below. Press [Tab ⇥] on your keyboard (or click the glowing [Tab ⇥] key on the right) to watch it finish spelling 'cd components/' for you!"
-    },
-    {
-      id: "mission-history",
-      pillLabel: "2. Try ↑ / ↓ Arrows (Command history)",
-      setupDir: "~/workspace/my-app",
-      prefillCmd: "",
-      glowKey: "key-up",
-      instruction: "Don't type anything! Press your [↑ Up Arrow] key (or click [↑ Up] on the right) 2 or 3 times to cycle backward through commands you ran earlier, then press [Enter ↵]."
-    },
-    {
-      id: "mission-ctrl-c",
-      pillLabel: "3. Try Ctrl + C (Stop running server)",
-      setupDir: "~/workspace/my-app",
-      prefillCmd: "",
-      startServer: true,
-      glowKey: "key-ctrl-c",
-      instruction: "A local server (npm run dev) is running and holding the terminal hostage! Press [Ctrl + C] on your keyboard (or click [Ctrl + C] on the right) to stop the server and get your prompt back."
-    },
-    {
-      id: "mission-parent",
-      pillLabel: "4. Try cd .. (Step up to parent directory)",
-      setupDir: "~/workspace/my-app/components",
-      prefillCmd: "cd ..",
-      glowKey: "key-enter",
-      instruction: "You are standing inside the child subfolder '~/workspace/my-app/components'. Press [Enter ↵] to run 'cd ..' and watch your prompt step one level up into the parent directory ('~/workspace/my-app')!"
-    },
-    {
-      id: "mission-grep",
-      pillLabel: "5. Try grep -rn (Search inside files)",
-      setupDir: "~/workspace/my-app",
-      prefillCmd: "grep -rn \"Button\" .",
-      glowKey: "key-enter",
-      instruction: "We loaded 'grep -rn \"Button\" .' into the prompt. Press [Enter ↵] to search every file in your folder for the word 'Button' and print exact line numbers."
-    }
+    { id: "mission-tab", pillLabel: "1. Try Tab ⇥ (Auto-complete)", setupDir: "~/workspace/my-app", prefillCmd: "cd comp", glowKey: "key-tab",
+      instruction: "We typed 'cd comp' into the live prompt below. Press [Tab ⇥] on your keyboard (or click the glowing [Tab ⇥] key on the right) to watch it finish spelling 'cd components/' for you!" },
+    { id: "mission-history", pillLabel: "2. Try ↑ / ↓ Arrows (Command history)", setupDir: "~/workspace/my-app", prefillCmd: "", glowKey: "key-up",
+      instruction: "Don't type anything! Press your [↑ Up Arrow] key (or click [↑ Up] on the right) 2 or 3 times to cycle backward through commands you ran earlier, then press [Enter ↵]." },
+    { id: "mission-ctrl-c", pillLabel: "3. Try Ctrl + C (Stop running server)", setupDir: "~/workspace/my-app", prefillCmd: "", startServer: true, glowKey: "key-ctrl-c",
+      instruction: "A local server (npm run dev) is running and holding the terminal hostage! Press [Ctrl + C] on your keyboard (or click [Ctrl + C] on the right) to stop the server and get your prompt back." },
+    { id: "mission-parent", pillLabel: "4. Try cd .. (Step up to parent directory)", setupDir: "~/workspace/my-app/components", prefillCmd: "cd ..", glowKey: "key-enter",
+      instruction: "You are standing inside the child subfolder '~/workspace/my-app/components'. Press [Enter ↵] to run 'cd ..' and watch your prompt step one level up into the parent directory ('~/workspace/my-app')!" },
+    { id: "mission-grep", pillLabel: "5. Try grep -rn (Search inside files)", setupDir: "~/workspace/my-app", prefillCmd: "grep -rn \"Button\" .", glowKey: "key-enter",
+      instruction: "We loaded 'grep -rn \"Button\" .' into the prompt. Press [Enter ↵] to search every file in your folder for the word 'Button' and print exact line numbers." }
   ];
 
   var INTERACTIVE_KEYS = [
-    {
-      id: "key-tab",
-      keyLabel: "Tab ⇥",
-      actionTitle: "Auto-complete folder or file name",
+    { id: "key-tab", keyLabel: "Tab ⇥", actionTitle: "Auto-complete folder or file name",
       whatItDoes: "Finishes spelling a half-typed folder or file name (e.g. 'cd comp' -> 'cd components/') so you don't make typos.",
-      handNote: "Left ring finger taps [Tab ⇥] after typing 2–3 letters"
-    },
-    {
-      id: "key-enter",
-      keyLabel: "Enter ↵",
-      actionTitle: "Run the command on the prompt line",
+      handNote: "Left ring finger taps [Tab ⇥] after typing 2–3 letters" },
+    { id: "key-enter", keyLabel: "Enter ↵", actionTitle: "Run the command on the prompt line",
       whatItDoes: "Sends whatever command is on your prompt line to the computer and prints the terminal's response below.",
-      handNote: "Right pinky taps [Enter ↵] to execute the command"
-    },
-    {
-      id: "key-up",
-      keyLabel: "↑ Up Arrow",
-      actionTitle: "Recall previous command from history",
+      handNote: "Right pinky taps [Enter ↵] to execute the command" },
+    { id: "key-up", keyLabel: "↑ Up Arrow", actionTitle: "Recall previous command from history",
       whatItDoes: "Steps backward through commands you ran earlier so you never have to retype long commands by hand.",
-      handNote: "Right fingers tap [↑ Up] to recall older commands"
-    },
-    {
-      id: "key-down",
-      keyLabel: "↓ Down Arrow",
-      actionTitle: "Step forward in command history",
+      handNote: "Right fingers tap [↑ Up] to recall older commands" },
+    { id: "key-down", keyLabel: "↓ Down Arrow", actionTitle: "Step forward in command history",
       whatItDoes: "Steps forward again if you pressed ↑ Up Arrow too many times.",
-      handNote: "Right fingers tap [↓ Down] to move forward in history"
-    },
-    {
-      id: "key-ctrl-c",
-      keyLabel: "Ctrl + C",
-      actionTitle: "Emergency brake (Stop server / cancel)",
+      handNote: "Right fingers tap [↓ Down] to move forward in history" },
+    { id: "key-ctrl-c", keyLabel: "Ctrl + C", actionTitle: "Emergency brake (Stop server / cancel)",
       whatItDoes: "Immediately stops a running server (like 'npm run dev') or cancels a half-typed line and gives your prompt back. (Not Copy!)",
-      handNote: "Left pinky holds [Ctrl] + left index taps [C]"
-    },
-    {
-      id: "key-ctrl-l",
-      keyLabel: "Ctrl + L",
-      actionTitle: "Clear screen clutter (Keep history)",
+      handNote: "Left pinky holds [Ctrl] + left index taps [C]" },
+    { id: "key-ctrl-l", keyLabel: "Ctrl + L", actionTitle: "Clear screen clutter (Keep history)",
       whatItDoes: "Wipes old output lines off the terminal window and brings your prompt to the top without deleting files or history.",
-      handNote: "Left pinky holds [Ctrl] + right ring finger taps [L]"
-    }
+      handNote: "Left pinky holds [Ctrl] + right ring finger taps [L]" }
   ];
 
   var TAB_COMPLETION_PAIRS = [
@@ -701,122 +646,21 @@
   }
 
   var PATH_SEGMENTS = [
-    {
-      id: "seg-prompt",
-      tokenText: "lucy@macbook",
-      dividerAfter: ":",
-      roleLabel: "1. Who & computer",
-      colorClass: "badge-neutral",
-      title: "Prompt prefix: Who you are & which computer you're on (lucy@macbook)",
-      comparison: "Identity vs. Location: Before the colon (:) is WHO is typing ('lucy') and WHICH computer is listening ('macbook'—either your laptop or a remote cloud server). Everything after the colon is WHERE you are standing.",
-      whatItDoes: "Lets you see at a glance whether your terminal is running commands on your own laptop or on a remote production server.",
-      howToGetThere: "whoami && hostname   # Prints your username and computer name"
-    },
-    {
-      id: "seg-root",
-      tokenText: "/",
-      dividerAfter: "",
-      roleLabel: "2. Root drive",
-      colorClass: "badge-warning",
-      title: "Root slash (/): The bottom-most trunk of the whole computer",
-      comparison: "Leading '/' vs. Middle '/': A slash '/' at the very start of a path means the Root of the entire hard drive. Slashes in the middle of a path simply mean 'step inside the next folder'.",
-      whatItDoes: "Anchors an 'Absolute Path'—a full street address starting from the very bottom of your computer.",
-      howToGetThere: "cd / && ls   # Lists top-level system folders (you rarely edit here!)"
-    },
-    {
-      id: "seg-home",
-      tokenText: "Users/lucy (~)",
-      dividerAfter: "/",
-      roleLabel: "3. Home folder (~)",
-      colorClass: "badge-info",
-      title: "Your Home folder (/Users/lucy or the '~' shortcut)",
-      comparison: "Full path vs. '~' shortcut: Instead of typing '/Users/lucy' every time, you can type the squiggly tilde key '~'. Both point to your personal home folder (which holds Desktop, Downloads, and your code).",
-      whatItDoes: "Gives you a personal folder where you have full permission to create folders, projects, and settings files.",
-      howToGetThere: "cd ~   # (Or just type 'cd' + Enter from anywhere to teleport home!)"
-    },
-    {
-      id: "seg-workspace",
-      tokenText: "workspace",
-      dividerAfter: "/",
-      roleLabel: "4. Workspace",
-      colorClass: "badge-secondary",
-      title: "Workspace: Your coding workbench that holds your projects",
-      comparison: "Workspace vs. Folder vs. File: A 'Workspace' is the overarching workbench (a parent folder like '~/workspace', a VS Code/Cursor window session, or a cloud dev environment like GitHub Codespaces) where you keep your active coding projects and editor settings.",
-      whatItDoes: "Keeps all your coding projects in one clean, easy-to-find place instead of scattering them across Downloads and Desktop.",
-      howToGetThere: "mkdir -p ~/workspace && cd ~/workspace   # Creates & enters your workbench"
-    },
-    {
-      id: "seg-repo",
-      tokenText: "deployed-eng-pipeline",
-      dividerAfter: "/",
-      roleLabel: "5. Project repo folder",
-      colorClass: "badge-success",
-      title: "Project folder (Git Repository / 'Repo'): One specific app",
-      comparison: "Project Repo vs. Workspace: While your Workspace is the whole workbench, 'deployed-eng-pipeline' is the folder for ONE specific app. Because it has a hidden '.git' folder inside it, engineers call this folder a 'Repository' (or 'Repo').",
-      whatItDoes: "Holds all the code, configuration, and Git commit checkpoints for one website or application.",
-      howToGetThere: "cd ~/workspace/deployed-eng-pipeline && pwd"
-    },
-    {
-      id: "seg-subfolder",
-      tokenText: "src",
-      dividerAfter: "/",
-      roleLabel: "6. Child subfolder (Directory)",
-      colorClass: "badge-warning",
-      title: "Subfolder / Child Directory (src): A folder nested inside your project",
-      comparison: "Directory vs. Folder & Family Tree: 'Directory' is 100% the exact same thing as a 'Folder'! Folders nest like a family tree: 'deployed-eng-pipeline' is the Parent Directory ('..') that holds 'src', and 'src' is the Child Subfolder sitting inside it.",
-      whatItDoes: "Groups related code files together inside your project. Step inside with 'cd src', or step back up to its parent folder with 'cd ..'.",
-      howToGetThere: "cd src   # Step down into child subfolder  |  cd ..   # Step back up to parent!"
-    },
-    {
-      id: "seg-filename",
-      tokenText: "app",
-      dividerAfter: "",
-      roleLabel: "7. File name",
-      colorClass: "badge-info",
-      title: "File (app): A single plain-text code document",
-      comparison: "Folder vs. File: A Folder (Directory) is a container box you can walk inside with 'cd'. A File ('app.js') is a single document holding lines of text/code—if you try 'cd app.js', the terminal will say 'Not a directory'!",
-      whatItDoes: "Stores the actual instructions, HTML, styles, or logic that your editor and computer read.",
-      howToGetThere: "cat src/app.js   # Prints the file's contents  |  touch src/new.js   # Creates a file"
-    },
-    {
-      id: "seg-ext",
-      tokenText: ".js",
-      dividerAfter: "  ·  ",
-      roleLabel: "8. File extension",
-      colorClass: "badge-danger",
-      title: "File extension (.js): The language tag at the end of a file",
-      comparison: "Why the dot matters: The ending after the dot tells your computer and AI agent which language is inside: '.js' (JavaScript), '.py' (Python), '.html' (Webpage), '.css' (Styles), '.md' (Markdown notes), '.json' (Data).",
-      whatItDoes: "Turns on the right color highlighting in your code editor and tells the computer which tool should run the file.",
-      howToGetThere: "ls *.js   # Lists every JavaScript file in your current folder"
-    },
-    {
-      id: "seg-parent",
-      tokenText: ".. (Parent)",
-      dividerAfter: " ",
-      roleLabel: "9. Parent directory (..)",
-      colorClass: "badge-secondary",
-      title: "Parent Directory (..): The outer folder one level above you",
-      comparison: "Why is it called a 'Parent Directory'? Folders sit inside each other like a family tree. If you are standing inside 'deployed-eng-pipeline/src', then 'deployed-eng-pipeline' one level above you is your Parent Directory (written as two dots: '..').",
-      whatItDoes: "Lets you step one folder level up ('cd ..') without having to retype the full folder address from the beginning.",
-      howToGetThere: "cd ..   # Steps one folder level up into the parent directory"
-    },
-    {
-      id: "seg-current",
-      tokenText: ". (Current)",
-      dividerAfter: "",
-      roleLabel: "10. Working directory (.)",
-      colorClass: "badge-info",
-      title: "Current Working Directory (.): The folder you are standing in right now",
-      comparison: "Single dot (.) vs. Double dot (..): One dot '.' means 'right here in this current folder'. Two dots '..' means 'one folder level up in the parent folder'.",
-      whatItDoes: "Tells commands like 'grep -rn \"word\" .' or 'open .' to act on the exact folder you are currently standing inside.",
-      howToGetThere: "pwd   # Prints your current working directory  |  open .   # Opens it in Finder"
-    }
+    { id: "seg-prompt", tokenText: "lucy@macbook", dividerAfter: ":", roleLabel: "1. Who & computer", colorClass: "badge-neutral", title: "Prompt prefix: Who you are & which computer you're on (lucy@macbook)", comparison: "Identity vs. Location: Before the colon (:) is WHO is typing ('lucy') and WHICH computer is listening ('macbook'—either your laptop or a remote cloud server). Everything after the colon is WHERE you are standing.", whatItDoes: "Lets you see at a glance whether your terminal is running commands on your own laptop or on a remote production server.", howToGetThere: "whoami && hostname   # Prints your username and computer name" },
+    { id: "seg-root", tokenText: "/", dividerAfter: "", roleLabel: "2. Root drive", colorClass: "badge-warning", title: "Root slash (/): The bottom-most trunk of the whole computer", comparison: "Leading '/' vs. Middle '/': A slash '/' at the very start of a path means the Root of the entire hard drive. Slashes in the middle of a path simply mean 'step inside the next folder'.", whatItDoes: "Anchors an 'Absolute Path'—a full street address starting from the very bottom of your computer.", howToGetThere: "cd / && ls   # Lists top-level system folders (you rarely edit here!)" },
+    { id: "seg-home", tokenText: "Users/lucy (~)", dividerAfter: "/", roleLabel: "3. Home folder (~)", colorClass: "badge-info", title: "Your Home folder (/Users/lucy or the '~' shortcut)", comparison: "Full path vs. '~' shortcut: Instead of typing '/Users/lucy' every time, you can type the squiggly tilde key '~'. Both point to your personal home folder (which holds Desktop, Downloads, and your code).", whatItDoes: "Gives you a personal folder where you have full permission to create folders, projects, and settings files.", howToGetThere: "cd ~   # (Or just type 'cd' + Enter from anywhere to teleport home!)" },
+    { id: "seg-workspace", tokenText: "workspace", dividerAfter: "/", roleLabel: "4. Workspace", colorClass: "badge-secondary", title: "Workspace: Your coding workbench that holds your projects", comparison: "Workspace vs. Folder vs. File: A 'Workspace' is the overarching workbench (a parent folder like '~/workspace', a VS Code/Cursor window session, or a cloud dev environment like GitHub Codespaces) where you keep your active coding projects and editor settings.", whatItDoes: "Keeps all your coding projects in one clean, easy-to-find place instead of scattering them across Downloads and Desktop.", howToGetThere: "mkdir -p ~/workspace && cd ~/workspace   # Creates & enters your workbench" },
+    { id: "seg-repo", tokenText: "deployed-eng-pipeline", dividerAfter: "/", roleLabel: "5. Project repo folder", colorClass: "badge-success", title: "Project folder (Git Repository / 'Repo'): One specific app", comparison: "Project Repo vs. Workspace: While your Workspace is the whole workbench, 'deployed-eng-pipeline' is the folder for ONE specific app. Because it has a hidden '.git' folder inside it, engineers call this folder a 'Repository' (or 'Repo').", whatItDoes: "Holds all the code, configuration, and Git commit checkpoints for one website or application.", howToGetThere: "cd ~/workspace/deployed-eng-pipeline && pwd" },
+    { id: "seg-subfolder", tokenText: "src", dividerAfter: "/", roleLabel: "6. Child subfolder (Directory)", colorClass: "badge-warning", title: "Subfolder / Child Directory (src): A folder nested inside your project", comparison: "Directory vs. Folder & Family Tree: 'Directory' is 100% the exact same thing as a 'Folder'! Folders nest like a family tree: 'deployed-eng-pipeline' is the Parent Directory ('..') that holds 'src', and 'src' is the Child Subfolder sitting inside it.", whatItDoes: "Groups related code files together inside your project. Step inside with 'cd src', or step back up to its parent folder with 'cd ..'.", howToGetThere: "cd src   # Step down into child subfolder  |  cd ..   # Step back up to parent!" },
+    { id: "seg-filename", tokenText: "app", dividerAfter: "", roleLabel: "7. File name", colorClass: "badge-info", title: "File (app): A single plain-text code document", comparison: "Folder vs. File: A Folder (Directory) is a container box you can walk inside with 'cd'. A File ('app.js') is a single document holding lines of text/code—if you try 'cd app.js', the terminal will say 'Not a directory'!", whatItDoes: "Stores the actual instructions, HTML, styles, or logic that your editor and computer read.", howToGetThere: "cat src/app.js   # Prints the file's contents  |  touch src/new.js   # Creates a file" },
+    { id: "seg-ext", tokenText: ".js", dividerAfter: "  ·  ", roleLabel: "8. File extension", colorClass: "badge-danger", title: "File extension (.js): The language tag at the end of a file", comparison: "Why the dot matters: The ending after the dot tells your computer and AI agent which language is inside: '.js' (JavaScript), '.py' (Python), '.html' (Webpage), '.css' (Styles), '.md' (Markdown notes), '.json' (Data).", whatItDoes: "Turns on the right color highlighting in your code editor and tells the computer which tool should run the file.", howToGetThere: "ls *.js   # Lists every JavaScript file in your current folder" },
+    { id: "seg-parent", tokenText: ".. (Parent)", dividerAfter: " ", roleLabel: "9. Parent directory (..)", colorClass: "badge-secondary", title: "Parent Directory (..): The outer folder one level above you", comparison: "Why is it called a 'Parent Directory'? Folders sit inside each other like a family tree. If you are standing inside 'deployed-eng-pipeline/src', then 'deployed-eng-pipeline' one level above you is your Parent Directory (written as two dots: '..').", whatItDoes: "Lets you step one folder level up ('cd ..') without having to retype the full folder address from the beginning.", howToGetThere: "cd ..   # Steps one folder level up into the parent directory" },
+    { id: "seg-current", tokenText: ". (Current)", dividerAfter: "", roleLabel: "10. Working directory (.)", colorClass: "badge-info", title: "Current Working Directory (.): The folder you are standing in right now", comparison: "Single dot (.) vs. Double dot (..): One dot '.' means 'right here in this current folder'. Two dots '..' means 'one folder level up in the parent folder'.", whatItDoes: "Tells commands like 'grep -rn \"word\" .' or 'open .' to act on the exact folder you are currently standing inside.", howToGetThere: "pwd   # Prints your current working directory  |  open .   # Opens it in Finder" }
   ];
 
   function renderPathAnatomyCard(container) {
     var pathCard = document.createElement("div");
     pathCard.className = "surface-card section-spacer diagram-shell-card";
-
     var headerRow = document.createElement("div");
     headerRow.className = "search-bar-row diagram-header-row";
     var titleGroup = document.createElement("div");
@@ -826,7 +670,6 @@
     badge.className = "badge badge-info";
     badge.textContent = "Interactive path anatomy — click any colored piece of the path below";
     badgeRow.appendChild(badge);
-
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
     h3.textContent = "Workspace vs. parent directory (..) vs. subfolder vs. file: Reading a path";
@@ -839,9 +682,8 @@
     headerRow.appendChild(titleGroup);
     pathCard.appendChild(headerRow);
 
-    var selectedSeg = PATH_SEGMENTS[3]; // Default to "4. Workspace" so Workspace vs Folder vs File is immediately visible!
+    var selectedSeg = PATH_SEGMENTS[3];
     var segBtns = [];
-
     var pathBar = document.createElement("div");
     pathBar.className = "path-anatomy-bar";
 
@@ -850,18 +692,14 @@
       btn.type = "button";
       btn.className = "path-segment-btn " + seg.colorClass + (seg.id === selectedSeg.id ? " active" : "");
       btn.setAttribute("data-seg-id", seg.id);
-
       var tokenSpan = document.createElement("code");
       tokenSpan.className = "path-segment-code";
       tokenSpan.textContent = seg.tokenText;
-
       var roleSpan = document.createElement("span");
       roleSpan.className = "path-segment-role";
       roleSpan.textContent = seg.roleLabel;
-
       btn.appendChild(tokenSpan);
       btn.appendChild(roleSpan);
-
       btn.addEventListener("click", function () {
         selectedSeg = seg;
         segBtns.forEach(function (other) {
@@ -870,10 +708,8 @@
         });
         showPathInspector(selectedSeg, true);
       });
-
       segBtns.push(btn);
       pathBar.appendChild(btn);
-
       if (seg.dividerAfter) {
         var divSpan = document.createElement("span");
         divSpan.className = "path-slash-divider";
@@ -881,7 +717,6 @@
         pathBar.appendChild(divSpan);
       }
     });
-
     pathCard.appendChild(pathBar);
     showPathInspector(selectedSeg, false);
     container.appendChild(pathCard);
@@ -890,20 +725,13 @@
   function showPathInspector(seg, isUserClick) {
     if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
     window.PipelineAgent.showInspector(
-      function (inspectorEl) {
-        updatePathInspector(inspectorEl, seg);
-      },
-      {
-        autoOpen: Boolean(isUserClick),
-        pulse: Boolean(isUserClick),
-        itemTitle: seg.roleLabel + " (" + seg.tokenText + ")"
-      }
+      function (inspectorEl) { updatePathInspector(inspectorEl, seg); },
+      { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: seg.roleLabel + " (" + seg.tokenText + ")" }
     );
   }
 
   function updatePathInspector(inspectorEl, seg) {
     inspectorEl.replaceChildren();
-
     var topRow = document.createElement("div");
     topRow.className = "resource-title-row";
     var badge = document.createElement("span");
@@ -914,25 +742,20 @@
     codePill.textContent = "Path piece: " + seg.tokenText;
     topRow.appendChild(badge);
     topRow.appendChild(codePill);
-
     var h4 = document.createElement("h4");
     h4.textContent = seg.title;
-
     var compBox = document.createElement("div");
     compBox.className = "nested-card";
     var compBody = document.createElement("p");
     compBody.className = "resource-desc";
     compBody.textContent = seg.comparison;
     compBox.appendChild(compBody);
-
     var whatP = document.createElement("p");
     whatP.className = "resource-desc";
     whatP.textContent = "What it does: " + seg.whatItDoes;
-
     var cmdBox = document.createElement("div");
     cmdBox.className = "vocab-example-box";
     cmdBox.textContent = "How to get to it / use it:  " + seg.howToGetThere;
-
     inspectorEl.appendChild(topRow);
     inspectorEl.appendChild(h4);
     inspectorEl.appendChild(compBox);
