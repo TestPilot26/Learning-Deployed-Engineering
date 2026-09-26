@@ -1,7 +1,7 @@
-// Deployed Eng Pipeline — Interactive Living Diagrams Renderer
-// Renders Stop 1 (Local-to-GitHub-to-Vercel Flow), Stop 2 (Diagram of an App,
-// Infrastructure, Good vs. Fragile Architecture & Coding Languages), and
-// Stop 3 (Living Git Graph with authentic GitHub Octicon SVG icons).
+// Deployed Eng Pipeline — Illustrative Living Diagrams Renderer
+// Renders Stop 1 (Illustrated Computer + Cloud + Internet Scene),
+// Stop 2 (Illustrated App Map with Language Bridges + Good vs. Fragile toggle),
+// and Stop 3 (Living Git Timeline with official GitHub Octicon SVGs).
 // Zero innerHTML (SecureCoder compliant) and 100% GM3 token-driven (BillSkill compliant).
 
 (function () {
@@ -28,8 +28,71 @@
     return svg;
   }
 
+  function createFlowConnector(stepText) {
+    var col = document.createElement("div");
+    col.className = "scene-bridge-connector";
+
+    var badge = document.createElement("span");
+    badge.className = "badge badge-info";
+    badge.textContent = stepText;
+
+    var svg = document.createElementNS(SVG_NS, "svg");
+    svg.setAttribute("viewBox", "0 0 80 28");
+    svg.setAttribute("class", "flow-connector-svg");
+    var line = document.createElementNS(SVG_NS, "line");
+    line.setAttribute("x1", "6");
+    line.setAttribute("y1", "14");
+    line.setAttribute("x2", "66");
+    line.setAttribute("y2", "14");
+    line.setAttribute("class", "flow-animated-line");
+    var head = document.createElementNS(SVG_NS, "polygon");
+    head.setAttribute("points", "62,7 74,14 62,21");
+    head.setAttribute("class", "flow-arrow-head");
+    svg.appendChild(line);
+    svg.appendChild(head);
+
+    col.appendChild(badge);
+    col.appendChild(svg);
+    return col;
+  }
+
+  function createIllustratedNodeButton(node, isSelected, onSelect) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "scene-node-pill" + (isSelected ? " active" : "");
+    btn.setAttribute("data-node-id", node.id);
+
+    var iconCircle = document.createElement("div");
+    iconCircle.className = "scene-node-icon-circle " + (node.badgeClass || "badge-info");
+    var ic = document.createElement("span");
+    ic.className = "material-symbols-outlined scene-node-icon";
+    ic.textContent = node.icon;
+    iconCircle.appendChild(ic);
+
+    var textCol = document.createElement("div");
+    textCol.className = "scene-node-text-col";
+
+    var title = document.createElement("strong");
+    title.className = "diagram-node-title";
+    title.textContent = node.title;
+
+    var summary = document.createElement("span");
+    summary.className = "resource-desc";
+    summary.textContent = node.summary;
+
+    textCol.appendChild(title);
+    textCol.appendChild(summary);
+
+    btn.appendChild(iconCircle);
+    btn.appendChild(textCol);
+    btn.addEventListener("click", function () {
+      onSelect(node);
+    });
+    return btn;
+  }
+
   // ============================================================================
-  // RENDERER 1: Stop 1 — Local-to-GitHub-to-Vercel Living Diagram
+  // RENDERER 1: Stop 1 — Illustrated Laptop -> Cloud -> Live Internet Map
   // ============================================================================
   function renderToolsFlowDiagram(container) {
     var nodes = getDiagramData().toolsFlowNodes || [];
@@ -46,129 +109,154 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Interactive living diagram";
+    badge.textContent = "Interactive visual map — click any icon to explore";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How your laptop, GitHub, and Vercel connect";
+    h3.textContent = "How your computer, cloud storage, and the live internet connect";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     headerRow.appendChild(titleGroup);
     card.appendChild(headerRow);
 
-    var zonesGrid = document.createElement("div");
-    zonesGrid.className = "tools-flow-zones";
-
-    var zoneDefs = [
-      { key: "1. Your Laptop (Localhost)", icon: "laptop_mac", sub: "Private workshop on your hard drive" },
-      { key: "2. Cloud Git (GitHub)", icon: "cloud_done", sub: "Remote version history vault" },
-      { key: "3. Cloud Production (Vercel)", icon: "public", sub: "Builds & serves public https:// URL" }
-    ];
-
     var selectedNodeId = nodes[0].id;
-    var nodeButtons = [];
+    var allButtons = [];
     var inspectorContainer = document.createElement("div");
     inspectorContainer.className = "diagram-inspector-card";
 
-    zoneDefs.forEach(function (zDef, zIdx) {
-      var zoneCol = document.createElement("div");
-      zoneCol.className = "flow-zone-box";
-
-      var zHeader = document.createElement("div");
-      zHeader.className = "flow-zone-header";
-      var zIcon = document.createElement("span");
-      zIcon.className = "material-symbols-outlined bullet-icon";
-      zIcon.textContent = zDef.icon;
-      var zTitleWrap = document.createElement("div");
-      var zTitle = document.createElement("h4");
-      zTitle.textContent = zDef.key;
-      var zSub = document.createElement("span");
-      zSub.className = "caption";
-      zSub.textContent = zDef.sub;
-      zTitleWrap.appendChild(zTitle);
-      zTitleWrap.appendChild(zSub);
-      zHeader.appendChild(zIcon);
-      zHeader.appendChild(zTitleWrap);
-      zoneCol.appendChild(zHeader);
-
-      var nodesList = document.createElement("div");
-      nodesList.className = "flow-zone-nodes";
-
-      nodes.filter(function (n) { return n.zone === zDef.key; }).forEach(function (node) {
-        var btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "diagram-node-btn" + (node.id === selectedNodeId ? " active" : "");
-        btn.setAttribute("data-node-id", node.id);
-
-        var top = document.createElement("div");
-        top.className = "resource-title-row";
-        var nBadge = document.createElement("span");
-        nBadge.className = "badge " + node.badgeClass;
-        nBadge.textContent = node.badge;
-        var nIcon = document.createElement("span");
-        nIcon.className = "material-symbols-outlined btn-icon-sm";
-        nIcon.textContent = node.icon;
-        top.appendChild(nBadge);
-        top.appendChild(nIcon);
-
-        var nTitle = document.createElement("strong");
-        nTitle.className = "diagram-node-title";
-        nTitle.textContent = node.title;
-
-        var nSum = document.createElement("span");
-        nSum.className = "resource-desc";
-        nSum.textContent = node.summary;
-
-        btn.appendChild(top);
-        btn.appendChild(nTitle);
-        btn.appendChild(nSum);
-
-        btn.addEventListener("click", function () {
-          selectedNodeId = node.id;
-          nodeButtons.forEach(function (b) {
-            if (b.getAttribute("data-node-id") === selectedNodeId) b.classList.add("active");
-            else b.classList.remove("active");
-          });
-          updateToolsInspector(inspectorContainer, node);
-        });
-
-        nodeButtons.push(btn);
-        nodesList.appendChild(btn);
+    function selectNode(node) {
+      selectedNodeId = node.id;
+      allButtons.forEach(function (b) {
+        if (b.getAttribute("data-node-id") === selectedNodeId) b.classList.add("active");
+        else b.classList.remove("active");
       });
+      updateToolsInspector(inspectorContainer, node);
+    }
 
-      zoneCol.appendChild(nodesList);
-      zonesGrid.appendChild(zoneCol);
+    // Illustrated 3-Hub Visual Map: [1. Laptop Screen & Base] ---> [2. Cloud Vault] ---> [3. Live Internet Globe]
+    var sceneLayout = document.createElement("div");
+    sceneLayout.className = "illustrated-scene-layout";
 
-      if (zIdx < zoneDefs.length - 1) {
-        var arrowCol = document.createElement("div");
-        arrowCol.className = "flow-connector-col";
-        var arrowLabel = document.createElement("span");
-        arrowLabel.className = "badge badge-neutral";
-        arrowLabel.textContent = zIdx === 0 ? "git push" : "webhook build";
+    function createSceneHubBanner(badgeCls, iconName, titleText, subText) {
+      var banner = document.createElement("div");
+      banner.className = "scene-hub-banner";
+      var heroBadge = document.createElement("div");
+      heroBadge.className = "scene-hub-hero-icon " + badgeCls;
+      var ic = document.createElement("span");
+      ic.className = "material-symbols-outlined stop-hero-icon";
+      ic.textContent = iconName;
+      heroBadge.appendChild(ic);
+      var titleWrap = document.createElement("div");
+      var h4 = document.createElement("h4");
+      h4.textContent = titleText;
+      var sub = document.createElement("p");
+      sub.className = "resource-desc";
+      sub.textContent = subText;
+      titleWrap.appendChild(h4);
+      titleWrap.appendChild(sub);
+      banner.appendChild(heroBadge);
+      banner.appendChild(titleWrap);
+      return banner;
+    }
 
-        var svgArrow = document.createElementNS(SVG_NS, "svg");
-        svgArrow.setAttribute("viewBox", "0 0 64 24");
-        svgArrow.setAttribute("class", "flow-connector-svg");
-        var line = document.createElementNS(SVG_NS, "line");
-        line.setAttribute("x1", "4");
-        line.setAttribute("y1", "12");
-        line.setAttribute("x2", "54");
-        line.setAttribute("y2", "12");
-        line.setAttribute("class", "flow-animated-line");
-        var head = document.createElementNS(SVG_NS, "polygon");
-        head.setAttribute("points", "50,6 60,12 50,18");
-        head.setAttribute("class", "flow-arrow-head");
-        svgArrow.appendChild(line);
-        svgArrow.appendChild(head);
+    // HUB 1: Illustrated Computer (Screen Frame + Base Stand)
+    var computerCol = document.createElement("div");
+    computerCol.className = "computer-illustration-wrap";
 
-        arrowCol.appendChild(arrowLabel);
-        arrowCol.appendChild(svgArrow);
-        zonesGrid.appendChild(arrowCol);
-      }
+    var monitorScreen = document.createElement("div");
+    monitorScreen.className = "computer-screen-frame";
+    monitorScreen.appendChild(
+      createSceneHubBanner(
+        "badge-info",
+        "laptop_mac",
+        "1. Your computer (Local device)",
+        "Where your code library lives privately on your machine—good for building, testing, and making mistakes safely before anyone else can see it."
+      )
+    );
+
+    var computerOrbitGrid = document.createElement("div");
+    computerOrbitGrid.className = "computer-orbit-grid";
+    nodes.filter(function (n) { return n.hub === "computer"; }).forEach(function (node) {
+      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
+      allButtons.push(btn);
+      computerOrbitGrid.appendChild(btn);
     });
+    monitorScreen.appendChild(computerOrbitGrid);
 
-    card.appendChild(zonesGrid);
+    var laptopKeyboardBase = document.createElement("div");
+    laptopKeyboardBase.className = "computer-keyboard-base";
+    var notch = document.createElement("div");
+    notch.className = "computer-trackpad-notch";
+    laptopKeyboardBase.appendChild(notch);
+
+    computerCol.appendChild(monitorScreen);
+    computerCol.appendChild(laptopKeyboardBase);
+    sceneLayout.appendChild(computerCol);
+
+    // Connector 1 -> 2
+    sceneLayout.appendChild(createFlowConnector("Upload ('git push')"));
+
+    // Right Column stacking Cloud Storage above Live Internet Hosting
+    var cloudAndWebCol = document.createElement("div");
+    cloudAndWebCol.className = "cloud-web-column";
+
+    // HUB 2: Illustrated Cloud Vault (GitHub)
+    var cloudBox = document.createElement("div");
+    cloudBox.className = "cloud-illustration-frame";
+    cloudBox.appendChild(
+      createSceneHubBanner(
+        "badge-secondary",
+        "cloud_done",
+        "2. Cloud storage (GitHub)",
+        "Where your code is stored remotely online so you never lose work and can share it."
+      )
+    );
+    nodes.filter(function (n) { return n.hub === "cloud"; }).forEach(function (node) {
+      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
+      allButtons.push(btn);
+      cloudBox.appendChild(btn);
+    });
+    cloudAndWebCol.appendChild(cloudBox);
+
+    // Vertical animated arrow from Cloud to Live Internet
+    var downConnector = document.createElement("div");
+    downConnector.className = "vertical-bridge-connector";
+    var downBadge = document.createElement("span");
+    downBadge.className = "badge badge-success";
+    downBadge.textContent = "Auto-builds website when GitHub updates";
+    var downIcon = document.createElement("span");
+    downIcon.className = "material-symbols-outlined bullet-icon";
+    downIcon.textContent = "south";
+    downConnector.appendChild(downBadge);
+    downConnector.appendChild(downIcon);
+    cloudAndWebCol.appendChild(downConnector);
+
+    // HUB 3: Illustrated Live Internet / Hosting Environment (Vercel + Browser)
+    var internetBox = document.createElement("div");
+    internetBox.className = "internet-illustration-frame";
+    internetBox.appendChild(
+      createSceneHubBanner(
+        "badge-success",
+        "language",
+        "3. Live internet hosting (Vercel & Browser)",
+        "Where anyone in the world can open your live website link on their phone or computer."
+      )
+    );
+
+    var netNodesStack = document.createElement("div");
+    netNodesStack.className = "flow-zone-nodes";
+    nodes.filter(function (n) { return n.hub === "internet"; }).forEach(function (node) {
+      var btn = createIllustratedNodeButton(node, node.id === selectedNodeId, selectNode);
+      allButtons.push(btn);
+      netNodesStack.appendChild(btn);
+    });
+    internetBox.appendChild(netNodesStack);
+
+    cloudAndWebCol.appendChild(internetBox);
+    sceneLayout.appendChild(cloudAndWebCol);
+
+    card.appendChild(sceneLayout);
     updateToolsInspector(inspectorContainer, nodes[0]);
     card.appendChild(inspectorContainer);
     container.appendChild(card);
@@ -181,7 +269,7 @@
     topRow.className = "resource-title-row";
     var badge = document.createElement("span");
     badge.className = "badge " + node.badgeClass;
-    badge.textContent = node.zone + " · " + node.badge;
+    badge.textContent = node.badge;
     topRow.appendChild(badge);
 
     var h4 = document.createElement("h4");
@@ -232,12 +320,12 @@
   }
 
   // ============================================================================
-  // RENDERER 2: Stop 2 — Interactive Diagram of an App, Infra & Languages
+  // RENDERER 2: Stop 2 — Illustrated App Map + How Languages Talk Between Pieces
   // ============================================================================
   function renderAppInfrastructureDiagram(container) {
     var dData = getDiagramData();
     var nodes = dData.appInfraNodes || [];
-    var languages = dData.languageComparison || [];
+    var languages = dData.appLanguageBridges || [];
     if (!nodes.length) return;
 
     var card = document.createElement("div");
@@ -251,12 +339,12 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-secondary";
-    badge.textContent = "Interactive system architecture";
+    badge.textContent = "Interactive app map — click any piece to see its tools & languages";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Diagram of an app: Layers, tools & languages";
+    h3.textContent = "Diagram of an app: How the screen, brain, and database talk";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
 
@@ -267,7 +355,7 @@
     var btnGood = document.createElement("button");
     btnGood.type = "button";
     btnGood.className = "vocab-filter-chip badge-success selected";
-    btnGood.textContent = "Good production architecture";
+    btnGood.textContent = "Good architecture";
 
     var btnBad = document.createElement("button");
     btnBad.type = "button";
@@ -300,11 +388,11 @@
       if (archMode === "good") {
         archBanner.className = "arch-mode-banner good-mode";
         icon.textContent = "verified";
-        txt.textContent = "Good architecture pattern: Client UI never holds secrets; every request passes through Auth & the Backend API with validated schemas, parameterized SQL, and async queues for slow AI work.";
+        txt.textContent = "Good setup: The user's screen never holds secret passwords; every click passes through the Login Guard and Private Backend Brain before touching the Database Filing Cabinet.";
       } else {
         archBanner.className = "arch-mode-banner bad-mode";
         icon.textContent = "warning";
-        txt.textContent = "Fragile vibe-coded pattern: Secret API keys leaked in browser code, UI mutating database tables directly without server auth, synchronous 45-second AI calls blocking the page, and zero retry safety.";
+        txt.textContent = "Fragile setup: Secret AI keys pasted directly into browser code, the screen editing the database without a login check, and 45-second AI tasks freezing the page.";
       }
       archBanner.appendChild(icon);
       archBanner.appendChild(txt);
@@ -313,19 +401,25 @@
     nodes.forEach(function (node) {
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "diagram-node-btn" + (node.id === selectedNode.id ? " active" : "");
+      btn.className = "scene-node-pill" + (node.id === selectedNode.id ? " active" : "");
       btn.setAttribute("data-node-id", node.id);
 
+      var iconCircle = document.createElement("div");
+      iconCircle.className = "scene-node-icon-circle " + (node.badgeClass || "badge-info");
+      var ic = document.createElement("span");
+      ic.className = "material-symbols-outlined scene-node-icon";
+      ic.textContent = node.icon;
+      iconCircle.appendChild(ic);
+
+      var textCol = document.createElement("div");
+      textCol.className = "scene-node-text-col";
+
       var top = document.createElement("div");
-      top.className = "resource-title-row";
+      top.className = "badge-row";
       var b = document.createElement("span");
       b.className = "badge " + node.badgeClass;
       b.textContent = node.layer;
-      var ic = document.createElement("span");
-      ic.className = "material-symbols-outlined btn-icon-sm";
-      ic.textContent = node.icon;
       top.appendChild(b);
-      top.appendChild(ic);
 
       var t = document.createElement("strong");
       t.className = "diagram-node-title";
@@ -335,9 +429,17 @@
       s.className = "resource-desc";
       s.textContent = node.summary;
 
-      btn.appendChild(top);
-      btn.appendChild(t);
-      btn.appendChild(s);
+      var langBridge = document.createElement("span");
+      langBridge.className = "lang-bridge-callout";
+      langBridge.textContent = node.bridgeLang;
+
+      textCol.appendChild(top);
+      textCol.appendChild(t);
+      textCol.appendChild(s);
+      textCol.appendChild(langBridge);
+
+      btn.appendChild(iconCircle);
+      btn.appendChild(textCol);
 
       btn.addEventListener("click", function () {
         selectedNode = node;
@@ -375,7 +477,7 @@
 
     var langHeading = document.createElement("h3");
     langHeading.className = "vocab-section-heading";
-    langHeading.textContent = "Coding languages: Why we choose each one (pros & cons)";
+    langHeading.textContent = "Coding languages: How they talk between the pieces";
     card.appendChild(langHeading);
 
     var langGrid = document.createElement("div");
@@ -390,34 +492,34 @@
       namePill.className = "vocab-cmd-pill";
       namePill.textContent = lItem.lang;
       var lBadge = document.createElement("span");
-      lBadge.className = "badge " + lItem.badgeClass;
-      lBadge.textContent = lItem.badge;
+      lBadge.className = "badge badge-info";
+      lBadge.textContent = lItem.role;
       top.appendChild(namePill);
       top.appendChild(lBadge);
 
-      var whereP = document.createElement("p");
-      whereP.className = "resource-desc";
-      var whereStrong = document.createElement("strong");
-      whereStrong.textContent = "Where it lives: ";
-      whereP.appendChild(whereStrong);
-      whereP.appendChild(document.createTextNode(lItem.where));
+      var actionP = document.createElement("p");
+      actionP.className = "resource-desc";
+      var actStrong = document.createElement("strong");
+      actStrong.textContent = "What it does: ";
+      actionP.appendChild(actStrong);
+      actionP.appendChild(document.createTextNode(lItem.actionText));
 
       var prosP = document.createElement("p");
       prosP.className = "resource-desc";
       var prosStrong = document.createElement("strong");
-      prosStrong.textContent = "Pros: ";
+      prosStrong.textContent = "Why pick it: ";
       prosP.appendChild(prosStrong);
       prosP.appendChild(document.createTextNode(lItem.pros));
 
       var consP = document.createElement("p");
       consP.className = "resource-desc";
       var consStrong = document.createElement("strong");
-      consStrong.textContent = "Trade-offs: ";
+      consStrong.textContent = "Watch out for: ";
       consP.appendChild(consStrong);
       consP.appendChild(document.createTextNode(lItem.cons));
 
       lCard.appendChild(top);
-      lCard.appendChild(whereP);
+      lCard.appendChild(actionP);
       lCard.appendChild(prosP);
       lCard.appendChild(consP);
       langGrid.appendChild(lCard);
@@ -446,10 +548,10 @@
     detailsGrid.className = "vocab-cards-grid";
 
     var items = [
-      { label: "Common real-world tools & names", body: node.commonTools },
-      { label: "When to use which tool", body: node.useCases },
-      { label: "Languages & protocols that speak here", body: node.languages },
-      { label: "Language pros & cons at this layer", body: node.prosCons }
+      { label: "Popular tools people use for this", body: node.commonTools },
+      { label: "Which tool to pick when", body: node.useCases },
+      { label: "Languages that talk here", body: node.languages },
+      { label: "Why this piece matters", body: node.prosCons }
     ];
 
     items.forEach(function (info) {
@@ -473,7 +575,7 @@
     icon.textContent = archMode === "good" ? "check_circle" : "error";
     var textWrap = document.createElement("div");
     var lead = document.createElement("strong");
-    lead.textContent = archMode === "good" ? "In a good architecture: " : "In a fragile vibe-coded architecture: ";
+    lead.textContent = archMode === "good" ? "In a good setup: " : "In a fragile vibe-coded setup: ";
     var bodySpan = document.createElement("span");
     bodySpan.textContent = archMode === "good" ? node.goodArch : node.badArch;
     textWrap.appendChild(lead);
@@ -500,12 +602,12 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-info";
-    badge.textContent = "Living version control graph";
+    badge.textContent = "Living version control timeline — click any step below";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How Git commits, branches, PRs/CLs, and merges work";
+    h3.textContent = "How checkpoints (Commits), sandboxes (Branches), and publishing work";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     headerRow.appendChild(titleGroup);
@@ -537,24 +639,24 @@
     mainLabel.setAttribute("x", "50");
     mainLabel.setAttribute("y", "28");
     mainLabel.setAttribute("class", "git-svg-label");
-    mainLabel.textContent = "main branch (Production -> Vercel)";
+    mainLabel.textContent = "main timeline (Your real live website)";
     svg.appendChild(mainLabel);
 
     var featLabel = document.createElementNS(SVG_NS, "text");
-    featLabel.setAttribute("x", "255");
+    featLabel.setAttribute("x", "235");
     featLabel.setAttribute("y", "172");
     featLabel.setAttribute("class", "git-svg-label-secondary");
-    featLabel.textContent = "feat/ai-experiment branch (Safe sandbox)";
+    featLabel.textContent = "branch timeline (Safe practice sandbox to test AI edits)";
     svg.appendChild(featLabel);
 
     var svgDots = [
-      { cx: "80", cy: "55", label: "c1: init", type: "main" },
-      { cx: "170", cy: "55", label: "c2: branch off", type: "main" },
-      { cx: "280", cy: "135", label: "c3: AI edit", type: "feat" },
-      { cx: "370", cy: "135", label: "c4: git diff ok", type: "feat" },
-      { cx: "460", cy: "135", label: "PR / CL review", type: "pr" },
-      { cx: "560", cy: "55", label: "c5: merge PR", type: "merge" },
-      { cx: "675", cy: "55", label: "Vercel live!", type: "deploy" }
+      { cx: "80", cy: "55", label: "1. Start", type: "main" },
+      { cx: "170", cy: "55", label: "2. Split branch", type: "main" },
+      { cx: "280", cy: "135", label: "3. Save checkpoint", type: "feat" },
+      { cx: "370", cy: "135", label: "4. Check diff", type: "feat" },
+      { cx: "460", cy: "135", label: "5. Review PR", type: "pr" },
+      { cx: "560", cy: "55", label: "6. Merge back", type: "merge" },
+      { cx: "675", cy: "55", label: "7. Live on Vercel!", type: "deploy" }
     ];
 
     svgDots.forEach(function (dot) {
