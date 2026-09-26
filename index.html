@@ -156,12 +156,13 @@
 
         <!-- Searchable Terminal Vocab Section (Shown on Command Line Interface stop) -->
         <div class="surface-card section-spacer" id="terminal-vocab-section">
-          <div class="search-bar-row">
+          <div class="search-bar-row diagram-header-row">
             <div>
               <div class="badge-row">
                 <span class="badge badge-success">Command line interface</span>
               </div>
               <h3 class="vocab-section-heading">Terminal vocab &amp; command reference</h3>
+              <p id="terminal-vocab-why" class="text-muted"></p>
             </div>
 
             <div class="input-wrapper">
@@ -170,7 +171,7 @@
                 type="text"
                 id="input-terminal-vocab-search"
                 class="m3-input-field"
-                placeholder="Search commands, flags, shortcuts (e.g. grep, pwd, Tab)"
+                placeholder="Search commands, flags, shortcuts (e.g. grep, -i, Tab)"
                 aria-label="Search terminal vocab"
               />
               <button
@@ -185,18 +186,20 @@
             </div>
           </div>
 
-          <p id="terminal-vocab-why" class="text-muted"></p>
+          <!-- Compact Top-Level Tabs: Commands & flags | Tips & safety | Mental models & walkthroughs -->
+          <div class="vocab-top-tabs-bar" id="terminal-vocab-primary-tabs" role="tablist" aria-label="Terminal reference sections"></div>
+          <p class="text-muted vocab-tab-teaser" id="terminal-vocab-tab-summary"></p>
 
-          <div class="safety-callout" id="terminal-vocab-safety">
-            <span class="material-symbols-outlined safety-icon">warning</span>
-            <span id="terminal-vocab-safety-text"></span>
+          <!-- Pane 1: Grouped Compact Command & Flag Tables -->
+          <div id="terminal-vocab-commands-pane">
+            <div class="vocab-compact-chip-row" id="terminal-vocab-categories" role="tablist" aria-label="Filter terminal vocabulary by group"></div>
+            <div class="vocab-groups-stack" id="terminal-vocab-grid"></div>
           </div>
 
-          <div class="badge-row" id="terminal-vocab-categories" role="tablist" aria-label="Filter terminal vocabulary by category"></div>
+          <!-- Pane 2: Expandable Tips & Safety List -->
+          <div class="essay-section-list" id="terminal-vocab-tips-pane"></div>
 
-          <div class="vocab-cards-grid" id="terminal-vocab-grid"></div>
-
-          <h3 class="vocab-section-heading">Mental models &amp; workspace walkthroughs</h3>
+          <!-- Pane 3: Expandable Mental Models & Walkthroughs List -->
           <div class="essay-section-list" id="terminal-vocab-deep-dives"></div>
         </div>
 
