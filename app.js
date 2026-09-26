@@ -396,42 +396,10 @@ function renderArchiveView(filterQuery) {
       card.appendChild(desc);
       libListEl.appendChild(card);
     });
+  }
 
-    if (q && window.TERMINAL_VOCAB_DATA && window.TERMINAL_VOCAB_DATA.items) {
-      var matchAllCli = "command line interface".indexOf(q) !== -1 || "terminal vocab".indexOf(q) !== -1;
-      window.TERMINAL_VOCAB_DATA.items.forEach(function (vItem) {
-        if (
-          !matchAllCli &&
-          vItem.command.toLowerCase().indexOf(q) === -1 &&
-          vItem.name.toLowerCase().indexOf(q) === -1 &&
-          vItem.description.toLowerCase().indexOf(q) === -1
-        ) {
-          return;
-        }
-        var card = document.createElement("div");
-        card.className = "nested-card";
-        var topRow = document.createElement("div");
-        topRow.className = "resource-title-row";
-        var cmdCode = document.createElement("code");
-        cmdCode.className = "vocab-cmd-pill";
-        cmdCode.textContent = vItem.command;
-        var badge = document.createElement("span");
-        badge.className = "badge badge-success";
-        badge.textContent = "Command line interface";
-        topRow.appendChild(cmdCode);
-        topRow.appendChild(badge);
-        var title = document.createElement("h3");
-        title.className = "resource-title";
-        title.textContent = vItem.name;
-        var desc = document.createElement("p");
-        desc.className = "resource-desc";
-        desc.textContent = vItem.description;
-        card.appendChild(topRow);
-        card.appendChild(title);
-        card.appendChild(desc);
-        libListEl.appendChild(card);
-      });
-    }
+  if (window.ArchiveGlossary && typeof window.ArchiveGlossary.filterByQuery === "function") {
+    window.ArchiveGlossary.filterByQuery(filterQuery || "");
   }
 }
 
@@ -464,7 +432,7 @@ function handleRouteChange() {
     if (hash === "#archive") {
       switchActiveView("view-archive");
       if (window.PipelineAgent) {
-        window.PipelineAgent.setContext("archive", "Archive & shelf");
+        window.PipelineAgent.setContext("archive", "Archive & A–Z dictionary");
         if (window.PipelineAgent.setTab) window.PipelineAgent.setTab("guide");
       }
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -539,6 +507,7 @@ function init() {
   }
 
   renderPipelineStops();
+  if (typeof window.initArchiveGlossary === "function") window.initArchiveGlossary();
   renderArchiveView("");
   if (window.PipelineAgent) window.PipelineAgent.init();
 

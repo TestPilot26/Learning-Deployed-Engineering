@@ -67,17 +67,31 @@
     },
     "tool-react-next": {
       id: "tool-react-next",
-      label: "UI frameworks (React, Next.js...)",
+      label: "UI frameworks (React, Next.js, Gradio...)",
       tag: "Category · UI frameworks",
       icon: "widgets",
       badgeClass: "badge-info",
       headline: "Frontend UI frameworks & AI demo builders (e.g. React, Next.js, Vue, Svelte, Gradio, Streamlit)",
       oneLiner: "Reusable visual building blocks for screens—and no, not every project needs a full web framework!",
-      whatItIs: "Category definition: Instead of writing one giant 5,000-line HTML file, a UI Framework lets you break your screen into small, reusable LEGO bricks called Components (like `<StopCard />` or `<SearchBar />`).\n\nCommon examples by what you are building:\n• Full web apps (JavaScript/TypeScript): React, Next.js, Vue, Svelte, Angular (often styled with Tailwind CSS, shadcn/ui, or Material UI).\n• Fast Python AI demos & data dashboards (no HTML/JS required!): Gradio, Streamlit, Marimo (often hosted on Hugging Face Spaces).\n• Interactive data & ML notebooks: Google Colab, Jupyter Notebooks.\n• Mobile phone apps: Swift (iOS), Kotlin (Android), React Native, Flutter.",
+      whatItIs: "Category definition: Instead of writing one giant 5,000-line HTML file, a UI Framework lets you break your screen into small, reusable LEGO bricks called Components (like `<StopCard />` or `<SearchBar />`).\n\nCommon examples by what you are building:\n• Full web apps (JavaScript/TypeScript): React, Next.js, Vue, Svelte, Angular (often styled with Tailwind CSS, shadcn/ui, or Radix UI).\n• Fast Python AI demos & data dashboards (no HTML/JS required!): Gradio, Streamlit, Marimo (often hosted on Hugging Face Spaces).\n• Interactive data & ML notebooks: Google Colab, Jupyter Notebooks.\n• Mobile phone apps: Swift (iOS), Kotlin (Android), React Native, Expo, Flutter.",
       whenToUse: "Use plain HTML/CSS/JS for simple sites; Gradio, Streamlit, or Colab when sharing a Python AI model or data tool; and React / Next.js when building a multi-screen full-stack web app.",
       codeExample: "<StopCard title=\"Downloading the tools\" badge=\"Step 1\" />",
       goodSetup: "Picks the lightest-weight UI tool for the job and splits screens into small components under 300 lines each.",
       fragileSetup: "Dumps the entire app into one massive 2,500-line `page.tsx` file that confuses both humans and AI editors."
+    },
+    "tool-ai-builders": {
+      id: "tool-ai-builders",
+      label: "AI builders & IDEs (v0, Lovable, Cursor...)",
+      tag: "Category · AI builders & IDEs",
+      icon: "auto_awesome",
+      badgeClass: "badge-info",
+      headline: "AI UI generators vs. AI code editors (e.g. v0, Lovable, Bolt.new, Replit vs. Cursor, Windsurf, Claude Code)",
+      oneLiner: "Where browser prompt-to-app generators end and full local engineering editors begin.",
+      whatItIs: "Category definition: You will hear two different categories of AI coding tools mentioned constantly:\n1. Browser AI App & UI Generators (e.g. v0 by Vercel, Lovable, Bolt.new, Replit Agent, Google AI Studio Build): You type a prompt in your browser and they generate a working React/Tailwind prototype or full-stack starter in seconds.\n2. Local AI Code Editors & CLI Agents (e.g. Cursor, Windsurf, VS Code + GitHub Copilot, Claude Code, Gemini CLI): Professional editors installed on your computer where you open the actual codebase, run terminal commands, connect Git, and engineer production systems.",
+      whenToUse: "Many builders sketch their first UI screen in v0, Lovable, or Bolt.new, then export the code to GitHub and open it in Cursor, Windsurf, or VS Code to wire up real backend rules and tests.",
+      codeExample: "Prototype UI in v0 / Lovable  -->  Sync to GitHub  -->  Open in Cursor / VS Code",
+      goodSetup: "Uses browser AI builders for fast visual drafts, then moves into Git + a local editor for real security and testing.",
+      fragileSetup: "Tries to run a complex production business entirely inside a single unversioned browser prompt box."
     },
 
     // --- CENTER FLOWING BRIDGE (FRONT END <-> BACK END) ---
@@ -115,9 +129,9 @@
       tag: "Category · Authentication",
       icon: "verified_user",
       badgeClass: "badge-success",
-      headline: "Login & authentication providers (e.g. Auth.js, Better Auth, Clerk, Supabase Auth, Firebase Auth, Auth0)",
+      headline: "Login & authentication providers (e.g. Clerk, Better Auth, Auth.js, Supabase Auth, Firebase Auth, Auth0)",
       oneLiner: "Travels with every message from the screen to the back end to prove who is logged in.",
-      whatItIs: "Category definition: Authentication ('AuthN' — verifying who someone is) and Authorization ('AuthZ' — checking what they are allowed to do) give a signed-in user a tamper-proof digital wristband (an encrypted Session Cookie or JWT Token). Every time the API waiter walks to the Back End kitchen, it checks that wristband.\n\nCommon login tools & standards you will recognize:\n• Open-source auth libraries: Better Auth, Auth.js (NextAuth), Lucia.\n• Managed login platforms: Clerk, Supabase Auth, Firebase Authentication, Auth0, Okta, WorkOS.\n• Social sign-in standard: OAuth 2.0 / Passkeys ('Sign in with Google, GitHub, or Apple').",
+      whatItIs: "Category definition: Authentication ('AuthN' — verifying who someone is) and Authorization ('AuthZ' — checking what they are allowed to do) give a signed-in user a tamper-proof digital wristband (an encrypted Session Cookie or JWT Token). Every time the API waiter walks to the Back End kitchen, it checks that wristband.\n\nCommon login tools & standards you will recognize:\n• Open-source auth libraries: Better Auth, Auth.js (NextAuth).\n• Managed login platforms: Clerk, Supabase Auth, Firebase Authentication, Auth0, Okta, WorkOS.\n• Social sign-in standard: OAuth 2.0 / Passkeys ('Sign in with Google, GitHub, or Apple').",
       whenToUse: "Any time your app has user accounts, private data, or paid features. Always use a battle-tested auth library or service instead of inventing password encryption from scratch.",
       codeExample: "Authorization: Bearer <encrypted-login-pass>",
       goodSetup: "The Back End checks the digital wristband on every single request before reading or editing private records.",
@@ -147,7 +161,7 @@
       badgeClass: "badge-secondary",
       headline: "Python (The #1 language for AI, data science, and readable back ends)",
       oneLiner: "Talks between your Back End server, AI models, and data libraries to run smart logic and calculations.",
-      whatItIs: "Python is famous for reading almost like plain English (using clean indentation instead of curly braces). It is the native language of AI, machine learning, and data science.\n\nCommon Python frameworks & libraries you will recognize:\n• Backend web APIs: FastAPI, Flask, Django.\n• Data & notebooks: Pandas, Polars, NumPy, Jupyter, Google Colab.\n• AI & machine learning: Google GenAI SDK, OpenAI SDK, PyTorch, Hugging Face `transformers`, Pydantic.\n• Rapid AI web demos: Gradio, Streamlit.",
+      whatItIs: "Python is famous for reading almost like plain English (using clean indentation instead of curly braces). It is the native language of AI, machine learning, and data science.\n\nCommon Python frameworks & libraries you will recognize:\n• Backend web APIs: FastAPI, Flask, Django.\n• Data & notebooks: Pandas, Polars, NumPy, Jupyter, Google Colab.\n• AI & machine learning: Google GenAI SDK, OpenAI SDK, Anthropic SDK, PyTorch, Hugging Face `transformers`, LangChain, LlamaIndex, Pydantic.\n• Rapid AI web demos: Gradio, Streamlit.",
       whenToUse: "Pros: easiest language to read and the undisputed king of AI and data processing. Tradeoff: doesn't run natively inside browser buttons (browsers use HTML/CSS/JS).",
       codeExample: "response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt)",
       goodSetup: "Uses a clean web framework like FastAPI to receive JSON from the front end, run AI/data work in Python, and return the answer.",
@@ -183,32 +197,32 @@
     },
     "be-cache-queue": {
       id: "be-cache-queue",
-      label: "Caches & queues (Redis, Inngest...)",
+      label: "Caches & queues (Redis, Upstash, Inngest...)",
       tag: "Category · Speed & async",
       icon: "hourglass_top",
       badgeClass: "badge-secondary",
       headline: "In-memory caches & background job queues (e.g. Redis, Upstash, Inngest, Trigger.dev, Celery)",
       oneLiner: "Keeps frequent answers ready on the counter in 1 millisecond (Cache) and lines up slow 30-second AI jobs in the background (Queue).",
-      whatItIs: "Category definitions & common examples:\n• In-Memory Cache (e.g. Redis, Upstash, Memcached): Like keeping your most popular coffee order right on the counter so the server doesn't have to walk into the database vault every single time; also used for API rate-limiting.\n• Background Job Queue / Workflow Engine (e.g. Inngest, Trigger.dev, Celery in Python, BullMQ in Node, Cloudflare Queues): A numbered ticket line for slow jobs (like generating a long AI report or video) so the user's screen gets an instant 'Working on it!' reply instead of timing out.",
+      whatItIs: "Category definitions & common examples:\n• In-Memory Cache & Rate Limiting (e.g. Redis, Upstash, Memcached): Keeps frequent lookups in ultra-fast RAM so your server doesn't query the database every time; also used to rate-limit users (e.g. 'Max 10 AI prompts per minute').\n• Background Job Queue / Workflow Engine (e.g. Inngest, Trigger.dev, Celery in Python, BullMQ in Node, Cloudflare Queues): A numbered ticket line for slow jobs (like generating a long AI report or video) so the user's screen gets an instant 'Working on it!' reply instead of timing out.",
       whenToUse: "Add a Cache when many people read the same data (or to rate-limit bots); add a Queue whenever an AI or data task takes longer than 3–5 seconds.",
       codeExample: "Queue.add('generate-ai-report', { userId: 42 }) -> returns Ticket #108 immediately",
       goodSetup: "Acknowledges slow jobs right away and updates the screen smoothly when the background worker finishes.",
       fragileSetup: "Leaves the user staring at a frozen button for 40 seconds until the browser gives up and shows a network error."
     },
 
-    // --- BOTTOM-LEFT BRIDGE + DATABASE VAULT ---
+    // --- BOTTOM-LEFT BRIDGE + DATABASE & STORAGE VAULT ---
     "lang-sql": {
       id: "lang-sql",
-      label: "SQL & ORMs (Prisma, Drizzle...)",
-      tag: "Category · Query language",
+      label: "SQL & ORMs (Drizzle, Prisma...)",
+      tag: "Category · Query language & ORMs",
       icon: "table_chart",
       badgeClass: "badge-info",
-      headline: "SQL (Structured Query Language) & database helpers (e.g. Prisma, Drizzle, SQLAlchemy)",
+      headline: "SQL (Structured Query Language) & ORMs (e.g. Drizzle, Prisma, SQLAlchemy)",
       oneLiner: "Talks back and forth between the Back End engine and the Database vault to save, search, and update rows.",
-      whatItIs: "Category definition: SQL (pronounced 'sequel' or 'S-Q-L') is the universal language for asking questions of a relational database. It reads almost like an English sentence: `SELECT name, email FROM users WHERE active = true`.\n\nCommon database helper libraries ('ORMs' — Object-Relational Mappers) that write SQL for you:\n• TypeScript / Node.js: Drizzle ORM, Prisma, Supabase JS Client.\n• Python: SQLAlchemy, SQLModel, Django ORM.",
-      whenToUse: "Pros: used by almost every major relational database for 50 years; prevents data from getting scrambled. Tradeoff: only for talking to databases, not for drawing screens.",
+      whatItIs: "Category definition: SQL (pronounced 'sequel' or 'S-Q-L') is the universal language for asking questions of a relational database: `SELECT name, email FROM users WHERE active = true`.\n\nWhere ORMs come in ('Object-Relational Mappers'):\n• Instead of writing raw SQL strings by hand, most engineers use an ORM library that lets you query your database safely in TypeScript or Python with autocomplete:\n  - TypeScript / Node.js ORMs: Drizzle ORM, Prisma, Kysely.\n  - Python ORMs: SQLAlchemy, SQLModel, Django ORM.",
+      whenToUse: "Used whenever your backend reads or writes structured rows in PostgreSQL, Neon, Supabase, Turso, or SQLite.",
       codeExample: "SELECT title, step_number FROM pipeline_stops ORDER BY step_number ASC;",
-      goodSetup: "Uses parameterized queries (`WHERE id = $1`) or an ORM so user input can never trick the database.",
+      goodSetup: "Uses parameterized queries (`WHERE id = $1`) or an ORM (Drizzle / Prisma / SQLAlchemy) so user input can never trick the database.",
       fragileSetup: "Glues raw user text directly into a SQL string ('SQL Injection'), allowing a clever visitor to wipe the table."
     },
     "db-overview": {
@@ -227,17 +241,45 @@
     },
     "tool-postgres": {
       id: "tool-postgres",
-      label: "Cloud databases (Postgres, Supabase...)",
-      tag: "Category · Database platforms",
+      label: "SQL DBs (Postgres, Neon, Supabase...)",
+      tag: "Category · Serverless SQL DBs",
       icon: "storage",
       badgeClass: "badge-info",
-      headline: "Database categories & cloud platforms (e.g. PostgreSQL, Supabase, Neon, Firebase, MongoDB, Pinecone)",
-      oneLiner: "Every major type of database explained by category first—so you recognize every name you hear.",
-      whatItIs: "Databases fall into 4 main categories depending on what kind of data you are storing:\n1. Relational / SQL Databases (structured spreadsheet-like tables — best default for 90% of apps): PostgreSQL ('Postgres'), SQLite (single-file DB), MySQL. Popular cloud hosts with visual table dashboards: Supabase, Neon, Google Cloud SQL, AWS RDS.\n2. Document / NoSQL Databases (flexible JSON-like documents & real-time sync): Firebase / Cloud Firestore, MongoDB Atlas, Convex, AWS DynamoDB.\n3. Vector Databases (store AI embeddings for semantic search / RAG): pgvector (inside Postgres/Supabase), Pinecone, Weaviate, Chroma, Qdrant.\n4. Data Warehouses (for analyzing millions of analytics rows): Google BigQuery, Snowflake, Databricks, DuckDB.",
-      whenToUse: "Start with managed PostgreSQL (e.g. Supabase or Neon) or Firebase/Firestore for almost any web or AI app; use SQLite or DuckDB for local Python scripts.",
-      codeExample: "DATABASE_URL=\"postgresql://project.supabase.co:5432/postgres\"",
+      headline: "Relational / SQL Databases & Serverless Postgres (e.g. PostgreSQL, Neon, Supabase, Turso, PlanetScale, SQLite)",
+      oneLiner: "Where Neon, Supabase, and Turso come in—hosting structured SQL tables in the cloud without managing servers.",
+      whatItIs: "Category definition: A Relational (SQL) Database stores data in strict tables with rows and columns that link together cleanly. It is the gold-standard default for 90% of apps.\n\nWhere specific SQL tools & platforms come in:\n• PostgreSQL ('Postgres'): The world's most popular open-source relational database engine.\n• Neon: Serverless Postgres in the cloud—it spins up in 1 second, scales down to $0 when idle, and lets you 'branch' your database just like a Git branch for safe testing!\n• Supabase: Hosted Postgres plus a full Backend-as-a-Service suite (built-in user login, file storage, and auto-generated APIs).\n• SQLite & Turso: SQLite stores an entire SQL database inside a single file; Turso hosts SQLite at the cloud edge.\n• PlanetScale: Cloud-hosted MySQL built for massive scale.",
+      whenToUse: "Pick Neon when you want pure, instant serverless Postgres (especially with Vercel + Drizzle/Prisma); pick Supabase when you want Postgres + Auth + Storage bundled together.",
+      codeExample: "DATABASE_URL=\"postgresql://user:pass@ep-cool-sky.us-east-2.aws.neon.tech/neondb\"",
       goodSetup: "Enables Row-Level Security (RLS) or strict Back End checks so users can only read their own rows.",
       fragileSetup: "Leaves database tables publicly readable to anyone on the internet without permission rules."
+    },
+    "tool-nosql-vector": {
+      id: "tool-nosql-vector",
+      label: "NoSQL & Vector DBs (Firebase, Convex, Pinecone...)",
+      tag: "Category · NoSQL, Vector & Warehouses",
+      icon: "hub",
+      badgeClass: "badge-info",
+      headline: "Realtime Document (NoSQL) DBs, AI Vector DBs & Data Warehouses (e.g. Firebase, Convex, MongoDB, Pinecone, BigQuery)",
+      oneLiner: "When you need flexible JSON documents, live real-time sync, or AI semantic memory (RAG) instead of traditional SQL tables.",
+      whatItIs: "Beyond SQL tables, there are 3 other database categories you will encounter constantly:\n1. Document / Realtime NoSQL Databases (store flexible JSON objects & push live updates to screens automatically): Firebase / Cloud Firestore, Convex, MongoDB Atlas, AWS DynamoDB.\n2. Vector Databases (store numerical 'embeddings' so AI can search documents by meaning for RAG): Pinecone, pgvector (built right into Neon & Supabase!), Qdrant, Weaviate, Chroma.\n3. Analytics Data Warehouses (crunch millions of historical rows for charts, not live user clicks): Google BigQuery, Snowflake, Databricks, DuckDB.",
+      whenToUse: "Use Convex or Firebase when building collaborative real-time apps (like live chat); use pgvector (in Neon/Supabase) or Pinecone when giving an AI agent long-term memory over PDFs and docs.",
+      codeExample: "// Vector search: find top 5 docs closest in meaning to the user's question",
+      goodSetup: "Uses pgvector inside existing Postgres (Neon/Supabase) first before adding a separate Vector DB service.",
+      fragileSetup: "Uses an analytics warehouse (like BigQuery) for live user button clicks, resulting in slow 4-second page loads."
+    },
+    "tool-blob-storage": {
+      id: "tool-blob-storage",
+      label: "File storage (S3, Cloudflare R2, UploadThing...)",
+      tag: "Category · Object / Blob storage",
+      icon: "cloud_upload",
+      badgeClass: "badge-info",
+      headline: "Object / Blob File Storage (e.g. AWS S3, Cloudflare R2, UploadThing, Supabase Storage, Vercel Blob)",
+      oneLiner: "Where user-uploaded images, PDFs, audio, and videos actually live (never stuff raw 50MB files inside SQL rows!).",
+      whatItIs: "Category definition: Beginners often ask: 'Where do profile photos, PDFs, or AI-generated videos get saved? In Neon or Postgres?' No! Databases are built for text, numbers, and timestamps. Putting large binary files ('blobs') inside SQL rows makes your database slow and expensive.\n\nInstead, you upload files to Object / Blob Storage, which gives you back a fast CDN link (like `https://cdn.../avatar.png`), and you save only that short text URL inside your database row!\n\nCommon file storage platforms:\n• AWS S3 (Simple Storage Service) & Google Cloud Storage (GCS): The industry standards.\n• Cloudflare R2: S3-compatible storage with $0 egress bandwidth fees.\n• UploadThing, Supabase Storage & Vercel Blob: Easiest plug-and-play file uploaders for web apps.",
+      whenToUse: "Any time users upload profile pictures, PDFs, CSVs, audio recordings, or videos.",
+      codeExample: "1. Upload PDF to Cloudflare R2 / UploadThing -> 2. Save returned URL string in Neon/Supabase DB",
+      goodSetup: "Enforces file-size limits (e.g. max 10MB) and file-type checks before allowing uploads to your storage bucket.",
+      fragileSetup: "Allows anonymous visitors to upload unlimited 5GB video files straight to your cloud storage bucket."
     },
 
     // --- BOTTOM-RIGHT BRIDGE + OUTSIDE SUPERPOWERS VAULT ---
@@ -250,7 +292,7 @@
       headline: "Secret API keys & Environment Variables (.env)",
       oneLiner: "How your Back End proves its identity to paid services (like Gemini, OpenAI, or Stripe) without exposing passwords in your code.",
       whatItIs: "When your Back End calls an outside service like Gemini, OpenAI, Anthropic, or Stripe, it attaches a secret password called an API Key so they know whose account to bill. You store these keys in a private `.env` file on your laptop (hidden from Git via `.gitignore`) and paste them into your cloud host's encrypted 'Environment Variables / Secrets' settings box (in Vercel, Render, Cloud Run, or Hugging Face Spaces) for your live deployment.",
-      whenToUse: "Every single time you connect to an outside service, database, or AI model.",
+      whenToUse: "Every single time you connect to an outside service, database (like your `DATABASE_URL` for Neon/Supabase), or AI model.",
       codeExample: "const apiKey = process.env.GEMINI_API_KEY;   // Read safely on the Back End",
       goodSetup: "Keeps keys strictly on the Back End and sets a monthly dollar spending cap in the AI provider's billing dashboard.",
       fragileSetup: "Pastes `AIzaSy...` or `sk-...` directly into a Front End file and pushes it to a public GitHub repo."
@@ -263,7 +305,7 @@
       badgeClass: "badge-success",
       headline: "Webhooks (How outside services call your back end back)",
       oneLiner: "When a user finishes paying on Stripe or a GitHub push completes, a Webhook sends an automatic tap-on-the-shoulder message to your server.",
-      whatItIs: "Normally, your Back End calls an outside service first. A Webhook is the reverse: you give an external service (like Stripe, GitHub, Slack, or Twilio) a special URL on your Back End, and whenever an event happens ('Customer just paid $10!' or 'New code pushed to main!'), their server automatically messages your server to let it know.",
+      whatItIs: "Normally, your Back End calls an outside service first. A Webhook is the reverse: you give an external service (like Stripe, GitHub, Clerk, Slack, or Twilio) a special URL on your Back End, and whenever an event happens ('Customer just paid $10!' or 'New code pushed to main!'), their server automatically messages your server to let it know.",
       whenToUse: "Used for Stripe payment confirmations, GitHub-to-cloud auto-deployments, and Slack/Discord/WhatsApp bots.",
       codeExample: "Stripe Event ('checkout.completed')  -->  POST https://your-app.com/api/webhook",
       goodSetup: "Verifies the webhook's cryptographic signature and checks the event ID so duplicate deliveries aren't processed twice.",
@@ -271,17 +313,31 @@
     },
     "ext-ai-stripe": {
       id: "ext-ai-stripe",
-      label: "External APIs (AI, Stripe, Resend...)",
-      tag: "Category · Third-party APIs",
-      icon: "hub",
+      label: "AI models & GPUs (Gemini, OpenAI, HF, Modal...)",
+      tag: "Category · AI & GPU APIs",
+      icon: "auto_awesome",
       badgeClass: "badge-success",
-      headline: "Third-party APIs & platforms by category (AI models, Payments, Email, Monitoring)",
-      oneLiner: "Where your Back End rents specialized capabilities over the internet instead of building them from scratch.",
-      whatItIs: "Category definition: Even senior engineers don't train their own frontier LLM from scratch or build their own credit-card vault for a new app. Instead, your Back End sends a secure HTTPS request to specialized Third-Party APIs.\n\nMost common third-party API categories & recognizable examples:\n• Frontier AI model APIs: Google AI Studio / Vertex AI (Gemini), OpenAI API, Anthropic (Claude), OpenRouter.\n• Open-weight AI models & GPU hosting: Hugging Face, Replicate, Together AI, Modal, Ollama (runs models locally on your laptop).\n• Payments & subscriptions: Stripe, Lemon Squeezy, Polar, PayPal.\n• Email & SMS delivery: Resend, SendGrid, Postmark, Twilio.\n• Error tracking & product analytics: Sentry, PostHog, Datadog.",
-      whenToUse: "Whenever a specialized service already solves a hard problem (AI models, payments, email, SMS, maps) better and safer than custom code.",
-      codeExample: "Back End  <-- HTTPS + Secret Key -->  Gemini API / Hugging Face / Stripe API",
-      goodSetup: "Sets a timeout and a polite fallback message in case the outside service is having a slow day.",
-      fragileSetup: "Has zero error handling—so if an outside API hiccups for 2 seconds, the whole app crashes."
+      headline: "AI model APIs, gateways & serverless GPU hosts (e.g. Gemini, OpenAI, Claude, OpenRouter, Hugging Face, Modal, Replicate, Ollama)",
+      oneLiner: "How your Back End calls frontier LLMs, open-source models, or on-demand cloud GPUs.",
+      whatItIs: "Category breakdown of the AI model ecosystem:\n1. Frontier Model APIs (hosted by the labs): Google AI Studio / Vertex AI (Gemini), OpenAI API, Anthropic (Claude).\n2. Unified AI Gateways & SDKs (one API key or SDK to switch between any model): OpenRouter, Vercel AI SDK, LiteLLM.\n3. Open-Weight Model Hubs & Serverless GPUs (run open models like Llama, DeepSeek, Flux, or Whisper on cloud GPUs paid by the second): Hugging Face, Modal, Replicate, Together AI, Groq, Fireworks AI, Baseten.\n4. Local Model Runners (run open models offline on your own laptop for $0): Ollama, LM Studio.",
+      whenToUse: "Use Gemini / OpenAI / Claude APIs for frontier reasoning; Modal, Replicate, or Together AI for custom Python/GPU workloads; and Ollama for local offline testing.",
+      codeExample: "Back End  <-- HTTPS + Secret Key -->  Gemini / OpenRouter / Modal / Replicate",
+      goodSetup: "Sets a timeout, rate limit, and monthly billing cap so a runaway loop can never rack up a surprise bill.",
+      fragileSetup: "Calls paid AI APIs directly from browser JavaScript where anyone can steal your API key."
+    },
+    "ext-payments-ops": {
+      id: "ext-payments-ops",
+      label: "Payments, email, DNS & monitoring (Stripe, Resend, Sentry...)",
+      tag: "Category · Payments, Email & Ops",
+      icon: "credit_card",
+      badgeClass: "badge-success",
+      headline: "Payments, Email, Domains/DNS & Monitoring (e.g. Stripe, Resend, Cloudflare, Sentry, PostHog, LangSmith)",
+      oneLiner: "The essential operational services every real product plugs in to charge money, send emails, connect a domain, and catch bugs.",
+      whatItIs: "Every category of operational service you will see in real-world stacks:\n• Payments & Subscriptions: Stripe, Lemon Squeezy, Polar, Paddle, PayPal.\n• Transactional Email & SMS: Resend, SendGrid, Postmark, AWS SES, Twilio (for SMS/WhatsApp).\n• Domains & DNS (pointing `yourapp.com` to your host): Cloudflare DNS, Namecheap, Porkbun, AWS Route 53.\n• Crash Monitoring & Error Tracking: Sentry, LogRocket, Datadog.\n• Product Analytics & Feature Flags: PostHog, Amplitude, Google Analytics.\n• AI Tracing & Evals: LangSmith, Braintrust, Arize Phoenix, Weights & Biases.",
+      whenToUse: "Plug these in when turning a working prototype into a real product with custom domains, paying users, and error alerts.",
+      codeExample: "Stripe (billing) + Resend (emails) + Cloudflare (domain) + Sentry (crash alerts)",
+      goodSetup: "Uses hosted Stripe Checkout and sets up Sentry + PostHog so you know immediately if a user hits an error.",
+      fragileSetup: "Launches to users with zero error logging—so when the app breaks on iPhones, you have no idea."
     },
     "lang-bash": {
       id: "lang-bash",
@@ -331,7 +387,8 @@
       itemId === "fe-ui" ||
       itemId === "lang-html-css" ||
       itemId === "lang-js-ts" ||
-      itemId === "tool-react-next"
+      itemId === "tool-react-next" ||
+      itemId === "tool-ai-builders"
     ) {
       return "stage-fe";
     }
@@ -347,7 +404,13 @@
     ) {
       return "stage-be";
     }
-    if (itemId === "db-overview" || itemId === "tool-postgres" || itemId === "lang-sql") {
+    if (
+      itemId === "db-overview" ||
+      itemId === "tool-postgres" ||
+      itemId === "tool-nosql-vector" ||
+      itemId === "tool-blob-storage" ||
+      itemId === "lang-sql"
+    ) {
       return "stage-db";
     }
     return "stage-user";
@@ -434,7 +497,8 @@
         "fe-ui",
         "lang-html-css",
         "lang-js-ts",
-        "tool-react-next"
+        "tool-react-next",
+        "tool-ai-builders"
       ])
     });
     stageCards.push(stage1.card);
@@ -473,21 +537,26 @@
     topRow.appendChild(
       art.createHorizontalStepArrow(
         "Gets data",
-        "SQL queries",
+        "SQL & ORMs",
         buildCluster(["lang-sql"])
       )
     );
 
-    // STAGE 3: Database
+    // STAGE 3: Database & Storage
     var stage3 = art.createLoopStageCard({
       stageKey: "stage-db",
       artSvg: art.createDatabaseArt("011010"),
-      title: "3. Database",
-      subtitle: "Permanent tables & storage",
+      title: "3. Database & storage",
+      subtitle: "SQL, NoSQL, Vector & Files",
       onStageClick: function () {
         selectItem(APP_DIAGRAM_ITEMS["db-overview"]);
       },
-      pillsContainer: buildCluster(["db-overview", "tool-postgres"])
+      pillsContainer: buildCluster([
+        "db-overview",
+        "tool-postgres",
+        "tool-nosql-vector",
+        "tool-blob-storage"
+      ])
     });
     stageCards.push(stage3.card);
     topRow.appendChild(stage3.card);
@@ -506,12 +575,13 @@
       stageKey: "stage-user",
       artSvg: art.createUserArt(),
       title: "4. User & outside services",
-      subtitle: "AI APIs, Stripe, .env & CLI",
+      subtitle: "AI GPUs, Stripe, DNS & CLI",
       onStageClick: function () {
         selectItem(APP_DIAGRAM_ITEMS["ext-ai-stripe"]);
       },
       pillsContainer: buildCluster([
         "ext-ai-stripe",
+        "ext-payments-ops",
         "bridge-env-keys",
         "bridge-webhooks",
         "lang-bash"

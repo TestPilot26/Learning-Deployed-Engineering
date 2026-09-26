@@ -688,6 +688,64 @@
   flex-shrink: 0;
 }
 
+/* Archive A-Z Dictionary & Flashcard Producer */
+.archive-flashcard-banner {
+  background-color: var(--color-surface-container);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.archive-raw-flashcard-textarea {
+  width: 100%;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.archive-glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.archive-term-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.archive-term-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+.archive-term-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.archive-quiz-reveal-hint {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.archive-term-card.quiz-hidden {
+  cursor: pointer;
+}
+.archive-term-card.quiz-hidden .archive-term-body {
+  display: none;
+}
+.archive-term-card.quiz-hidden .archive-quiz-reveal-hint {
+  display: inline-block;
+}
+
 @media (max-width: 900px) {
   .loop-top-row, .loop-bottom-row, .app-bottom-vaults-row, .terminal-keyboard-stage, .testable-keys-grid {
     grid-template-columns: 1fr;
