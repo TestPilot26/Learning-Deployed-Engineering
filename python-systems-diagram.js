@@ -391,31 +391,12 @@
         },
         pillsContainer: makePills(st.pillIds)
       });
-      stageCards.push(stCard);
-      topRow.appendChild(stCard);
+      stageCards.push(stCard.card);
+      topRow.appendChild(stCard.card);
 
       if (idx < config.topStages.length - 1) {
         var arrowSpec = config.arrows[idx];
         var arrowCol = art.createHorizontalStepArrow(arrowSpec.topLabel, arrowSpec.bottomLabel);
-        if (arrowSpec.pillId && config.itemsMap[arrowSpec.pillId]) {
-          var aItem = config.itemsMap[arrowSpec.pillId];
-          var aPill = document.createElement("button");
-          aPill.type = "button";
-          aPill.className = "diagram-label-pill";
-          aPill.setAttribute("data-item-id", aItem.id);
-          var aIc = document.createElement("span");
-          aIc.className = "material-symbols-outlined diagram-pill-icon";
-          aIc.textContent = aItem.icon;
-          var aTx = document.createElement("span");
-          aTx.textContent = aItem.label;
-          aPill.appendChild(aIc);
-          aPill.appendChild(aTx);
-          aPill.addEventListener("click", function () {
-            selectItem(aItem.id, true);
-          });
-          allBtns.push(aPill);
-          arrowCol.appendChild(aPill);
-        }
         topRow.appendChild(arrowCol);
       }
     });
@@ -423,7 +404,7 @@
     loopCanvas.appendChild(topRow);
 
     var bottomRow = document.createElement("div");
-    bottomRow.className = "loop-bottom-return-row";
+    bottomRow.className = "loop-bottom-row";
     var leftWing = art.createCurvedReturnWing("left", config.returnLeftLabel);
     var rightWing = art.createCurvedReturnWing("right", config.returnRightLabel);
 
@@ -439,10 +420,10 @@
       },
       pillsContainer: makePills(bStage.pillIds)
     });
-    stageCards.push(stage4);
+    stageCards.push(stage4.card);
 
     bottomRow.appendChild(leftWing);
-    bottomRow.appendChild(stage4);
+    bottomRow.appendChild(stage4.card);
     bottomRow.appendChild(rightWing);
     loopCanvas.appendChild(bottomRow);
     card.appendChild(loopCanvas);
@@ -450,6 +431,27 @@
     syncActive();
     selectItem(selectedId, false);
     container.appendChild(card);
+  }
+
+  function renderRichOrPlain(el, text) {
+    el.replaceChildren();
+    var str = String(text || "");
+    var parts = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+    parts.forEach(function (part) {
+      if (!part) return;
+      if (part.slice(0, 2) === "**" && part.slice(-2) === "**") {
+        var strong = document.createElement("strong");
+        strong.textContent = part.slice(2, -2);
+        el.appendChild(strong);
+      } else if (part.charAt(0) === "`" && part.charAt(part.length - 1) === "`") {
+        var code = document.createElement("code");
+        code.className = "vocab-inline-example";
+        code.textContent = part.slice(1, -1);
+        el.appendChild(code);
+      } else {
+        el.appendChild(document.createTextNode(part));
+      }
+    });
   }
 
   function renderItemInspector(inspectorEl, item) {
@@ -466,25 +468,27 @@
     topRow.appendChild(codePill);
 
     var h4 = document.createElement("h4");
-    h4.textContent = item.headline;
+    renderRichOrPlain(h4, item.headline);
 
     var oneLinerBox = document.createElement("div");
     oneLinerBox.className = "nested-card";
     var oneLinerP = document.createElement("p");
     oneLinerP.className = "resource-desc";
-    oneLinerP.textContent = item.oneLiner;
+    renderRichOrPlain(oneLinerP, item.oneLiner);
     oneLinerBox.appendChild(oneLinerP);
 
     var whatP = document.createElement("p");
     whatP.className = "resource-desc";
-    whatP.textContent = item.whatItIs;
+    renderRichOrPlain(whatP, item.whatItIs);
 
     var whyP = document.createElement("p");
     whyP.className = "resource-desc";
-    whyP.textContent = "Why it matters: " + item.whyItMatters;
+    renderRichOrPlain(whyP, "**Why it matters:** " + item.whyItMatters);
 
     var codeBox = document.createElement("div");
     codeBox.className = "vocab-example-box";
+    codeBox.style.whiteSpace = "pre-wrap";
+    codeBox.style.lineHeight = "1.45";
     codeBox.textContent = item.codeExample;
 
     inspectorEl.appendChild(topRow);
@@ -539,7 +543,7 @@
       returnRightLabel: "Catch regressions",
       bottomStage: {
         stageKey: "stage-py-evals",
-        artSvg: art.createUserBrowserArt("Tests & Golden Evals"),
+        artSvg: art.createUserArt(),
         title: "4. Automated unit tests (pytest) & Golden AI Evals",
         subtitle: "Test 30–50 real examples (and check that 'Move to Doing' stays in Doing!) before shipping",
         defaultId: "py-unit-tests",
@@ -592,7 +596,7 @@
       returnRightLabel: "Stages preview card",
       bottomStage: {
         stageKey: "stage-sys-guardrail",
-        artSvg: art.createUserBrowserArt("Prepare -> Confirm"),
+        artSvg: art.createUserArt(),
         title: "4. Human-in-the-Loop ('Prepare -> Confirm') & observability",
         subtitle: "Stage a draft preview card for human approval before sending emails, deleting data, or charging money",
         defaultId: "sys-human-in-loop",
