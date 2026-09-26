@@ -450,7 +450,215 @@
     });
 
     selectScenario(0);
+    renderPathAnatomyCard(container);
     container.appendChild(card);
+  }
+
+  var PATH_SEGMENTS = [
+    {
+      id: "seg-prompt",
+      tokenText: "lucy@macbook",
+      dividerAfter: ":",
+      roleLabel: "1. Who & computer",
+      colorClass: "badge-neutral",
+      title: "Prompt prefix: Who you are & which computer you're on (lucy@macbook)",
+      comparison: "Identity vs. Location: Before the colon (:) is WHO is typing ('lucy') and WHICH computer is listening ('macbook'—either your laptop or a remote cloud server). Everything after the colon is WHERE you are standing.",
+      whatItDoes: "Lets you see at a glance whether your terminal is running commands on your own laptop or on a remote production server.",
+      howToGetThere: "whoami && hostname   # Prints your username and computer name"
+    },
+    {
+      id: "seg-root",
+      tokenText: "/",
+      dividerAfter: "",
+      roleLabel: "2. Root drive",
+      colorClass: "badge-warning",
+      title: "Root slash (/): The bottom-most trunk of the whole computer",
+      comparison: "Leading '/' vs. Middle '/': A slash '/' at the very start of a path means the Root of the entire hard drive. Slashes in the middle of a path simply mean 'step inside the next folder'.",
+      whatItDoes: "Anchors an 'Absolute Path'—a full street address starting from the very bottom of your computer.",
+      howToGetThere: "cd / && ls   # Lists top-level system folders (you rarely edit here!)"
+    },
+    {
+      id: "seg-home",
+      tokenText: "Users/lucy (~)",
+      dividerAfter: "/",
+      roleLabel: "3. Home folder (~)",
+      colorClass: "badge-info",
+      title: "Your Home folder (/Users/lucy or the '~' shortcut)",
+      comparison: "Full path vs. '~' shortcut: Instead of typing '/Users/lucy' every time, you can type the squiggly tilde key '~'. Both point to your personal home folder (which holds Desktop, Downloads, and your code).",
+      whatItDoes: "Gives you a personal folder where you have full permission to create folders, projects, and settings files.",
+      howToGetThere: "cd ~   # (Or just type 'cd' + Enter from anywhere to teleport home!)"
+    },
+    {
+      id: "seg-workspace",
+      tokenText: "workspace",
+      dividerAfter: "/",
+      roleLabel: "4. Workspace",
+      colorClass: "badge-secondary",
+      title: "Workspace: Your coding workbench that holds your projects",
+      comparison: "Workspace vs. Folder vs. File: A 'Workspace' is the overarching workbench (a parent folder like '~/workspace', a VS Code/Cursor window session, or a cloud CitC workspace) where you keep your active coding projects and editor settings.",
+      whatItDoes: "Keeps all your coding projects in one clean, easy-to-find place instead of scattering them across Downloads and Desktop.",
+      howToGetThere: "mkdir -p ~/workspace && cd ~/workspace   # Creates & enters your workbench"
+    },
+    {
+      id: "seg-repo",
+      tokenText: "deployed-eng-pipeline",
+      dividerAfter: "/",
+      roleLabel: "5. Project repo folder",
+      colorClass: "badge-success",
+      title: "Project folder (Git Repository / 'Repo'): One specific app",
+      comparison: "Project Repo vs. Workspace: While your Workspace is the whole workbench, 'deployed-eng-pipeline' is the folder for ONE specific app. Because it has a hidden '.git' folder inside it, engineers call this folder a 'Repository' (or 'Repo').",
+      whatItDoes: "Holds all the code, configuration, and Git commit checkpoints for one website or application.",
+      howToGetThere: "cd ~/workspace/deployed-eng-pipeline && pwd"
+    },
+    {
+      id: "seg-subfolder",
+      tokenText: "src",
+      dividerAfter: "/",
+      roleLabel: "6. Subfolder (Directory)",
+      colorClass: "badge-warning",
+      title: "Subfolder / Directory (src): An organizer drawer inside your project",
+      comparison: "Directory vs. Folder: 'Directory' is 100% the exact same thing as a 'Folder'! Engineers say 'Directory' in the terminal (which is why 'cd' stands for Change Directory and 'mkdir' stands for Make Directory).",
+      whatItDoes: "Groups related code files together inside your project. Tip: '.' means 'this current folder' and '..' means 'one folder up'.",
+      howToGetThere: "cd src   # Step inside 'src'  |  cd ..   # Step one level back up!"
+    },
+    {
+      id: "seg-filename",
+      tokenText: "app",
+      dividerAfter: "",
+      roleLabel: "7. File name",
+      colorClass: "badge-info",
+      title: "File (app): A single plain-text code document",
+      comparison: "Folder vs. File: A Folder (Directory) is a container box you can walk inside with 'cd'. A File ('app.js') is a single document holding lines of text/code—if you try 'cd app.js', the terminal will say 'Not a directory'!",
+      whatItDoes: "Stores the actual instructions, HTML, styles, or logic that your editor and computer read.",
+      howToGetThere: "cat src/app.js   # Prints the file's contents  |  touch src/new.js   # Creates a file"
+    },
+    {
+      id: "seg-ext",
+      tokenText: ".js",
+      dividerAfter: "",
+      roleLabel: "8. File extension",
+      colorClass: "badge-danger",
+      title: "File extension (.js): The language tag at the end of a file",
+      comparison: "Why the dot matters: The ending after the dot tells your computer and AI agent which language is inside: '.js' (JavaScript), '.py' (Python), '.html' (Webpage), '.css' (Styles), '.md' (Markdown notes), '.json' (Data).",
+      whatItDoes: "Turns on the right color highlighting in your code editor and tells the computer which tool should run the file.",
+      howToGetThere: "find . -name \"*.js\"   # Finds every JavaScript file in your folder"
+    }
+  ];
+
+  function renderPathAnatomyCard(container) {
+    var pathCard = document.createElement("div");
+    pathCard.className = "surface-card section-spacer diagram-shell-card";
+
+    var headerRow = document.createElement("div");
+    headerRow.className = "search-bar-row diagram-header-row";
+    var titleGroup = document.createElement("div");
+    var badgeRow = document.createElement("div");
+    badgeRow.className = "badge-row";
+    var badge = document.createElement("span");
+    badge.className = "badge badge-info";
+    badge.textContent = "Interactive path anatomy — click any colored piece of the path below";
+    badgeRow.appendChild(badge);
+
+    var h3 = document.createElement("h3");
+    h3.className = "vocab-section-heading";
+    h3.textContent = "Workspace vs. folder (directory) vs. file: Reading a terminal path";
+    var subP = document.createElement("p");
+    subP.className = "text-muted";
+    subP.textContent = "Every terminal command uses paths like this one. Click any colored piece below to see what it is, how a workspace differs from a folder or a file, and the exact command to get there.";
+    titleGroup.appendChild(badgeRow);
+    titleGroup.appendChild(h3);
+    titleGroup.appendChild(subP);
+    headerRow.appendChild(titleGroup);
+    pathCard.appendChild(headerRow);
+
+    var selectedSeg = PATH_SEGMENTS[3]; // Default to "4. Workspace" so Workspace vs Folder vs File is immediately visible!
+    var segBtns = [];
+    var inspectorEl = document.createElement("div");
+    inspectorEl.className = "diagram-inspector-card";
+
+    var pathBar = document.createElement("div");
+    pathBar.className = "path-anatomy-bar";
+
+    PATH_SEGMENTS.forEach(function (seg) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "path-segment-btn " + seg.colorClass + (seg.id === selectedSeg.id ? " active" : "");
+      btn.setAttribute("data-seg-id", seg.id);
+
+      var tokenSpan = document.createElement("code");
+      tokenSpan.className = "path-segment-code";
+      tokenSpan.textContent = seg.tokenText;
+
+      var roleSpan = document.createElement("span");
+      roleSpan.className = "path-segment-role";
+      roleSpan.textContent = seg.roleLabel;
+
+      btn.appendChild(tokenSpan);
+      btn.appendChild(roleSpan);
+
+      btn.addEventListener("click", function () {
+        selectedSeg = seg;
+        segBtns.forEach(function (other) {
+          if (other.getAttribute("data-seg-id") === selectedSeg.id) other.classList.add("active");
+          else other.classList.remove("active");
+        });
+        updatePathInspector(inspectorEl, selectedSeg);
+      });
+
+      segBtns.push(btn);
+      pathBar.appendChild(btn);
+
+      if (seg.dividerAfter) {
+        var divSpan = document.createElement("span");
+        divSpan.className = "path-slash-divider";
+        divSpan.textContent = seg.dividerAfter;
+        pathBar.appendChild(divSpan);
+      }
+    });
+
+    pathCard.appendChild(pathBar);
+    updatePathInspector(inspectorEl, selectedSeg);
+    pathCard.appendChild(inspectorEl);
+    container.appendChild(pathCard);
+  }
+
+  function updatePathInspector(inspectorEl, seg) {
+    inspectorEl.replaceChildren();
+
+    var topRow = document.createElement("div");
+    topRow.className = "resource-title-row";
+    var badge = document.createElement("span");
+    badge.className = "badge " + seg.colorClass;
+    badge.textContent = seg.roleLabel;
+    var codePill = document.createElement("code");
+    codePill.className = "vocab-cmd-pill";
+    codePill.textContent = "Path piece: " + seg.tokenText;
+    topRow.appendChild(badge);
+    topRow.appendChild(codePill);
+
+    var h4 = document.createElement("h4");
+    h4.textContent = seg.title;
+
+    var compBox = document.createElement("div");
+    compBox.className = "nested-card";
+    var compBody = document.createElement("p");
+    compBody.className = "resource-desc";
+    compBody.textContent = seg.comparison;
+    compBox.appendChild(compBody);
+
+    var whatP = document.createElement("p");
+    whatP.className = "resource-desc";
+    whatP.textContent = "What it does: " + seg.whatItDoes;
+
+    var cmdBox = document.createElement("div");
+    cmdBox.className = "vocab-example-box";
+    cmdBox.textContent = "How to get to it / use it:  " + seg.howToGetThere;
+
+    inspectorEl.appendChild(topRow);
+    inspectorEl.appendChild(h4);
+    inspectorEl.appendChild(compBox);
+    inspectorEl.appendChild(whatP);
+    inspectorEl.appendChild(cmdBox);
   }
 
   window.renderTerminalInteractiveDiagram = renderTerminalInteractiveDiagram;
