@@ -146,6 +146,52 @@
         </div>
       </div>
 
+      <!-- Searchable Terminal Vocab Section (Shown on Command Line Interface stop) -->
+      <div class="surface-card section-spacer" id="terminal-vocab-section">
+        <div class="search-bar-row">
+          <div>
+            <div class="badge-row">
+              <span class="badge badge-success">Command line interface</span>
+            </div>
+            <h3 class="vocab-section-heading">Terminal vocab &amp; command reference</h3>
+          </div>
+
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined input-adornment">search</span>
+            <input
+              type="text"
+              id="input-terminal-vocab-search"
+              class="m3-input-field"
+              placeholder="Search commands, flags, shortcuts (e.g. grep, pwd, Tab)"
+              aria-label="Search terminal vocab"
+            />
+            <button
+              type="button"
+              class="input-clear-btn"
+              id="btn-clear-terminal-vocab"
+              aria-label="Clear terminal vocab search"
+              title="Clear search"
+            >
+              <span class="material-symbols-outlined btn-icon-sm">close</span>
+            </button>
+          </div>
+        </div>
+
+        <p id="terminal-vocab-why" class="text-muted"></p>
+
+        <div class="safety-callout" id="terminal-vocab-safety">
+          <span class="material-symbols-outlined safety-icon">warning</span>
+          <span id="terminal-vocab-safety-text"></span>
+        </div>
+
+        <div class="badge-row" id="terminal-vocab-categories" role="tablist" aria-label="Filter terminal vocabulary by category"></div>
+
+        <div class="vocab-cards-grid" id="terminal-vocab-grid"></div>
+
+        <h3 class="vocab-section-heading">Mental models &amp; workspace walkthroughs</h3>
+        <div class="essay-section-list" id="terminal-vocab-deep-dives"></div>
+      </div>
+
       <div class="surface-card">
         <h3>Linked videos, explainers &amp; resources</h3>
         <div class="resources-grid" id="detail-resources-grid"></div>
@@ -177,7 +223,7 @@
             type="text"
             id="input-archive-search"
             class="m3-input-field"
-            placeholder="Filter essays, books, and courses"
+            placeholder="Filter essays, books, courses, or terminal vocab"
             aria-label="Filter archive"
           />
           <button
@@ -214,6 +260,7 @@
   </main>
 
   <script src="./data.js"></script>
+  <script src="./terminal-vocab-data.js"></script>
   <script src="./diagnostics-theme.js"></script>
   <script src="./app.js"></script>
 </body>

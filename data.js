@@ -119,20 +119,21 @@ window.PIPELINE_DATA = {
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "terminal",
-      teaser: "Breaking out of the chat copy-paste loop by inspecting state, logs, and processes directly in the terminal.",
-      explainer: "When you start vibe-coding, your main debugging loop is copying an error from a browser window into chat and hoping the AI guesses right. METR's 2025 randomized trial found developers took 19% longer when stuck in AI generation loops rather than isolating root causes directly with CLI tools.",
+      hasTerminalVocab: true,
+      teaser: "Tracking what AI is doing in real time, navigating any system with confidence, and searchable terminal vocab.",
+      explainer: "Learning terminal essentials matters for two big reasons: first, you can track what AI is actually doing as it's doing it (watching which files it reads, edits, or runs instead of treating it as a black box); second, you'll find it much easier to navigate many different types of systems—from your own laptop to cloud VMs and production logs.",
       experiences: [
         {
+          lead: "Tracking AI in real time:",
+          body: "When an AI agent runs shell commands, knowing pwd, ls -la, grep, and git diff lets you follow every step as it happens and catch mistakes immediately."
+        },
+        {
+          lead: "Universal navigation across systems:",
+          body: "Graphical interfaces change between tools, but the command line works the same way on macOS, Linux, cloud servers, and container environments."
+        },
+        {
           lead: "Escaping the 20-prompt guessing loop:",
-          body: "Reading the exact stack trace and line number in the terminal takes 30 seconds and stops the AI from rewriting working files."
-        },
-        {
-          lead: "Navigating without a mouse:",
-          body: "Using ls, cd, cat, grep, and tail -f to watch live server logs as requests arrive."
-        },
-        {
-          lead: "Managing local ports and processes:",
-          body: "Knowing how to start, stop, and check running dev servers on localhost."
+          body: "METR's 2025 trial found developers took 19% longer when stuck in blind AI prompt loops—checking logs and file state directly in the terminal takes 30 seconds."
         }
       ],
       activity: {

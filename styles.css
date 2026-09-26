@@ -373,6 +373,70 @@ p { margin: 0; max-width: 72ch; color: var(--color-on-surface); }
 .archive-bento { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: start; }
 .essay-section-list { display: flex; flex-direction: column; gap: 16px; }
 
+/* Searchable Terminal Vocab Section */
+.section-spacer { margin-bottom: 24px; }
+.vocab-section-heading { margin-top: 8px; }
+.safety-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--badge-error-bg);
+  color: var(--badge-error-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.safety-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+.vocab-filter-chip {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-body);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+.vocab-filter-chip:hover { transform: translateY(-1px); filter: brightness(0.94); }
+.vocab-filter-chip.selected { outline: 2px solid var(--color-primary); outline-offset: 1px; }
+
+.vocab-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.vocab-item-card {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+.vocab-cmd-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-primary);
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 600;
+}
+.vocab-example-box {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  font-family: monospace;
+  font-size: 13px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.vocab-example-box::-webkit-scrollbar { display: none; }
+
 /* Diagnostic Error Overlay */
 .app-error-overlay {
   position: fixed;
@@ -405,6 +469,6 @@ p { margin: 0; max-width: 72ch; color: var(--color-on-surface); }
   .stop-bubble-slot { grid-column: 1; grid-row: 1; }
   .stop-card-slot-left, .stop-card-slot-right { grid-column: 2; grid-row: 1; justify-content: flex-start; }
   .stop-summary-card { max-width: 100%; }
-  .bento-grid, .archive-bento, .resources-grid { grid-template-columns: 1fr; }
+  .bento-grid, .archive-bento, .resources-grid, .vocab-cards-grid { grid-template-columns: 1fr; }
   .stop-hero-card { flex-direction: column; padding: 24px; }
 }

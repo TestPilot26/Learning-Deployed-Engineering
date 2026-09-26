@@ -299,6 +299,16 @@ function renderStopDetail(stopId) {
     });
   }
 
+  var vocabSection = document.getElementById("terminal-vocab-section");
+  if (vocabSection) {
+    if (stop.hasTerminalVocab && window.TERMINAL_VOCAB_DATA) {
+      vocabSection.style.display = "flex";
+      renderTerminalVocabSection(currentVocabQuery, currentVocabCategory);
+    } else {
+      vocabSection.style.display = "none";
+    }
+  }
+
   if (prevBtn) {
     if (stopIndex > 0) {
       var prevStop = stops[stopIndex - 1];
@@ -323,6 +333,138 @@ function renderStopDetail(stopId) {
     }
   }
   return true;
+}
+
+var currentVocabQuery = "";
+var currentVocabCategory = "all";
+
+function renderTerminalVocabSection(query, categoryId) {
+  var vData = window.TERMINAL_VOCAB_DATA;
+  if (!vData) return;
+
+  currentVocabQuery = (query || "").trim();
+  currentVocabCategory = categoryId || "all";
+  var q = currentVocabQuery.toLowerCase();
+  if (q === "command line interface" || q === "cli" || q === "terminal") {
+    q = "";
+  }
+
+  var whyEl = document.getElementById("terminal-vocab-why");
+  var safetyTextEl = document.getElementById("terminal-vocab-safety-text");
+  var catRowEl = document.getElementById("terminal-vocab-categories");
+  var gridEl = document.getElementById("terminal-vocab-grid");
+  var deepDivesEl = document.getElementById("terminal-vocab-deep-dives");
+
+  if (whyEl) whyEl.textContent = vData.whyItMatters;
+  if (safetyTextEl) safetyTextEl.textContent = vData.safetyTip;
+
+  if (catRowEl) {
+    catRowEl.replaceChildren();
+    (vData.categories || []).forEach(function (cat) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      var isSelected = cat.id === currentVocabCategory;
+      chip.className = "vocab-filter-chip " + (cat.badgeClass || "badge-info") + (isSelected ? " selected" : "");
+      chip.id = "btn-vocab-cat-" + cat.id.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+      chip.setAttribute("role", "tab");
+      chip.setAttribute("aria-selected", isSelected ? "true" : "false");
+      chip.textContent = cat.label;
+      chip.addEventListener("click", function () {
+        renderTerminalVocabSection(currentVocabQuery, cat.id);
+      });
+      catRowEl.appendChild(chip);
+    });
+  }
+
+  if (gridEl) {
+    gridEl.replaceChildren();
+    (vData.items || []).forEach(function (item) {
+      if (currentVocabCategory !== "all" && item.category !== currentVocabCategory) return;
+      if (
+        q &&
+        item.command.toLowerCase().indexOf(q) === -1 &&
+        item.name.toLowerCase().indexOf(q) === -1 &&
+        item.description.toLowerCase().indexOf(q) === -1 &&
+        item.example.toLowerCase().indexOf(q) === -1 &&
+        item.category.toLowerCase().indexOf(q) === -1
+      ) {
+        return;
+      }
+
+      var card = document.createElement("div");
+      card.className = "vocab-item-card";
+
+      var topRow = document.createElement("div");
+      topRow.className = "resource-title-row";
+
+      var cmdPill = document.createElement("code");
+      cmdPill.className = "vocab-cmd-pill";
+      cmdPill.textContent = item.command;
+
+      var catBadge = document.createElement("span");
+      catBadge.className = "badge " + (item.badgeClass || "badge-info");
+      catBadge.textContent = item.category;
+
+      topRow.appendChild(cmdPill);
+      topRow.appendChild(catBadge);
+
+      var nameEl = document.createElement("h4");
+      nameEl.textContent = item.name;
+
+      var descEl = document.createElement("p");
+      descEl.className = "resource-desc";
+      descEl.textContent = item.description;
+
+      var exEl = document.createElement("div");
+      exEl.className = "vocab-example-box";
+      exEl.textContent = item.example;
+
+      card.appendChild(topRow);
+      card.appendChild(nameEl);
+      card.appendChild(descEl);
+      card.appendChild(exEl);
+      gridEl.appendChild(card);
+    });
+  }
+
+  if (deepDivesEl) {
+    deepDivesEl.replaceChildren();
+    (vData.deepDives || []).forEach(function (dd) {
+      var card = document.createElement("div");
+      card.className = "nested-card";
+
+      var topRow = document.createElement("div");
+      topRow.className = "badge-row";
+      var badge = document.createElement("span");
+      badge.className = "badge " + (dd.badgeClass || "badge-info");
+      badge.textContent = dd.badge;
+      topRow.appendChild(badge);
+
+      var h4 = document.createElement("h4");
+      h4.textContent = dd.title;
+
+      var ul = document.createElement("ul");
+      ul.className = "bullet-list";
+      (dd.points || []).forEach(function (pt) {
+        var li = document.createElement("li");
+        li.className = "bullet-item";
+        var icon = document.createElement("span");
+        icon.className = "material-symbols-outlined bullet-icon";
+        icon.textContent = "chevron_right";
+        var text = document.createElement("span");
+        text.className = "resource-desc";
+        text.textContent = pt;
+        li.appendChild(icon);
+        li.appendChild(text);
+        ul.appendChild(li);
+      });
+
+      card.appendChild(topRow);
+      card.appendChild(h4);
+      card.appendChild(ul);
+      deepDivesEl.appendChild(card);
+    });
+  }
 }
 
 function renderArchiveView(filterQuery) {
@@ -378,6 +520,42 @@ function renderArchiveView(filterQuery) {
       card.appendChild(desc);
       libListEl.appendChild(card);
     });
+
+    if (q && window.TERMINAL_VOCAB_DATA && window.TERMINAL_VOCAB_DATA.items) {
+      var matchAllCli = "command line interface".indexOf(q) !== -1 || "terminal vocab".indexOf(q) !== -1;
+      window.TERMINAL_VOCAB_DATA.items.forEach(function (vItem) {
+        if (
+          !matchAllCli &&
+          vItem.command.toLowerCase().indexOf(q) === -1 &&
+          vItem.name.toLowerCase().indexOf(q) === -1 &&
+          vItem.description.toLowerCase().indexOf(q) === -1
+        ) {
+          return;
+        }
+        var card = document.createElement("div");
+        card.className = "nested-card";
+        var topRow = document.createElement("div");
+        topRow.className = "resource-title-row";
+        var cmdCode = document.createElement("code");
+        cmdCode.className = "vocab-cmd-pill";
+        cmdCode.textContent = vItem.command;
+        var badge = document.createElement("span");
+        badge.className = "badge badge-success";
+        badge.textContent = "Command line interface";
+        topRow.appendChild(cmdCode);
+        topRow.appendChild(badge);
+        var title = document.createElement("h3");
+        title.className = "resource-title";
+        title.textContent = vItem.name;
+        var desc = document.createElement("p");
+        desc.className = "resource-desc";
+        desc.textContent = vItem.description;
+        card.appendChild(topRow);
+        card.appendChild(title);
+        card.appendChild(desc);
+        libListEl.appendChild(card);
+      });
+    }
   }
 }
 
@@ -463,6 +641,17 @@ function init() {
   if (searchInput && clearBtn) {
     InlineClear.bind(searchInput, clearBtn, function () { renderArchiveView(""); });
     searchInput.addEventListener("input", function () { renderArchiveView(searchInput.value); });
+  }
+
+  var vocabSearchInput = document.getElementById("input-terminal-vocab-search");
+  var vocabClearBtn = document.getElementById("btn-clear-terminal-vocab");
+  if (vocabSearchInput && vocabClearBtn) {
+    InlineClear.bind(vocabSearchInput, vocabClearBtn, function () {
+      renderTerminalVocabSection("", currentVocabCategory);
+    });
+    vocabSearchInput.addEventListener("input", function () {
+      renderTerminalVocabSection(vocabSearchInput.value, currentVocabCategory);
+    });
   }
 
   renderPipelineStops();
