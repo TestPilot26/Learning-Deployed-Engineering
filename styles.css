@@ -213,7 +213,7 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
 .agent-side-panel {
   position: sticky;
   top: 80px;
-  height: calc(100vh - 104px);
+  height: calc(100vh - 96px);
   background-color: var(--color-surface-container-lowest);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -222,6 +222,10 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
   gap: 16px;
   overflow: hidden;
   transition: transform 240ms cubic-bezier(0, 0, 0.2, 1), background-color 200ms ease;
+}
+.inspector-side-panel {
+  height: auto;
+  max-height: calc(100vh - 96px);
 }
 .inspector-side-panel.collapsed,
 .agent-side-panel.collapsed { display: none; }
@@ -235,8 +239,14 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
 
 .agent-panel-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
 .agent-header-title-group { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
-#agent-context-badge,
-#inspector-context-badge { max-width: 100%; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+.inspector-side-panel .badge,
+.agent-side-panel .badge {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  line-height: 1.35;
+}
 .side-panel-heading { font-family: var(--font-family-display); font-size: 16px; font-weight: 600; color: var(--color-on-surface); }
 .agent-header-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 
@@ -251,7 +261,9 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
 }
 .side-inspector-body {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -261,8 +273,25 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
   scrollbar-width: thin;
   scrollbar-color: var(--color-outline-variant) transparent;
 }
+.side-inspector-body > *,
+.agent-messages-list > * {
+  flex-shrink: 0;
+  min-width: 0;
+}
 .side-inspector-body .nav-btn { white-space: normal; text-align: left; max-width: 100%; }
-.side-inspector-body .vocab-example-box { white-space: pre-wrap; word-break: break-word; line-height: 1.45; }
+.side-inspector-body .vocab-cmd-pill,
+.side-inspector-body .vocab-inline-example {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  line-height: 1.4;
+}
+.side-inspector-body .vocab-example-box {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: visible;
+  line-height: 1.5;
+}
 .side-inspector-ask-row { padding-top: 8px; display: flex; }
 .agent-key-drawer {
   display: none;
@@ -285,15 +314,18 @@ body.inspector-panel-collapsed.agent-panel-collapsed .app-workspace-shell {
   color: var(--color-on-surface);
   font-size: 12px;
   font-weight: 500;
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: normal;
+  text-align: left;
+  max-width: 100%;
   transition: background-color 150ms ease, transform 150ms ease;
 }
 .agent-starter-chip:hover { background-color: var(--color-primary-container); color: var(--color-on-primary-container); transform: translateY(-1px); }
 
 .agent-messages-list {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;

@@ -457,17 +457,17 @@
     flowMotion.setAttribute("path", fullBranchFlowPath);
     flowDot.appendChild(flowMotion);
 
-    // Left callout pill (centered cleanly inside the curve, never clipped)
+    // Left callout pill (top row inside the curve, never overlaps mergeLabel)
     var splitLabel = document.createElementNS(SVG_NS, "text");
     splitLabel.setAttribute("x", "282");
-    splitLabel.setAttribute("y", "36");
+    splitLabel.setAttribute("y", "24");
     splitLabel.setAttribute("class", "git-svg-curve-caption");
     splitLabel.textContent = "↘ Splits off from main (c2)";
 
-    // Right callout pill (right-aligned inside the curve so it never clips off the right edge!)
+    // Right callout pill (bottom row inside the curve, right-aligned so it never clips or overlaps)
     var mergeLabel = document.createElementNS(SVG_NS, "text");
     mergeLabel.setAttribute("x", "618");
-    mergeLabel.setAttribute("y", "36");
+    mergeLabel.setAttribute("y", "52");
     mergeLabel.setAttribute("text-anchor", "end");
     mergeLabel.setAttribute("class", "git-svg-curve-caption");
     mergeLabel.textContent = "Approved PR merges into main (c5) ↗";

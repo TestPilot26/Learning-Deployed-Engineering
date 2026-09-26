@@ -378,10 +378,10 @@
 .git-track-lane {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
   align-items: stretch;
-  min-width: 760px;
+  min-width: 0;
   padding: 8px 0;
 }
 
@@ -418,7 +418,7 @@
   background-color: var(--color-surface-container-low);
   color: var(--color-on-surface-variant);
   border-radius: var(--radius-md);
-  padding: 12px;
+  padding: 10px;
   font-size: 12px;
   font-weight: 600;
   line-height: 1.35;
@@ -426,6 +426,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-width: 0;
 }
 
 .git-on-graph-node {
@@ -433,13 +434,14 @@
   z-index: 2;
   background-color: var(--color-surface-container-lowest);
   border-radius: var(--radius-md);
-  padding: 12px;
+  padding: 10px;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 6px;
   width: 100%;
+  min-width: 0;
   transition: transform 150ms ease, background-color 150ms ease;
 }
 
@@ -459,26 +461,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .git-node-word {
   font-family: var(--font-family-display);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.25;
   color: var(--color-on-surface);
   display: block;
+  word-break: break-word;
 }
 .git-on-graph-node.active .git-node-word { color: var(--color-on-primary-container); }
-.git-node-shorthand { display: inline-block; padding: 2px 8px; border-radius: var(--radius-full); background-color: var(--color-surface-container); color: var(--color-primary); font-family: monospace; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.git-node-shorthand { display: inline-block; padding: 2px 6px; border-radius: var(--radius-full); background-color: var(--color-surface-container); color: var(--color-primary); font-family: monospace; font-size: 11px; font-weight: 600; white-space: normal; word-break: break-word; max-width: 100%; }
 .git-on-graph-node.active .git-node-shorthand { background-color: var(--color-surface-container-lowest); }
-.git-node-subtitle { font-size: 12px; color: var(--color-on-surface-variant); line-height: 1.35; display: block; }
+.git-node-subtitle { font-size: 12px; color: var(--color-on-surface-variant); line-height: 1.35; display: block; word-break: break-word; }
 .git-on-graph-node.active .git-node-subtitle { color: var(--color-on-primary-container); }
 
 /* Continuous Middle SVG Pipeline Layer Animating the Branch Split & Merge Curve */
-.git-curves-svg { width: 100%; min-width: 760px; height: 84px; display: block; overflow: visible; }
+.git-curves-svg { width: 100%; min-width: 0; height: 84px; display: block; overflow: visible; }
 .git-branch-line-feature { fill: none; stroke: var(--color-tertiary); stroke-width: 6; stroke-linecap: round; }
 .git-branch-line-animated { fill: none; stroke: var(--color-surface-container-lowest); stroke-width: 2.5; stroke-dasharray: 6 8; animation: dashFlow 0.9s linear infinite; }
 .git-traveller-dot { fill: var(--color-tertiary); stroke: var(--color-surface-container-lowest); stroke-width: 2.5; }
