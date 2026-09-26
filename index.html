@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Deployed Eng Pipeline — By Lucy</title>
+  <meta name="description" content="A learning pathway from vibe-coding to deployed software engineering, by Lucy." />
+
+  <script>
+    // Surface JS errors on screen & provide one-click cache-busting reload (Zero innerHTML).
+    window.__APP_LOADED__ = false;
+    (function () {
+      function showError(msg) {
+        var el = document.getElementById("app-error");
+        if (!el) {
+          el = document.createElement("div");
+          el.id = "app-error";
+          el.className = "app-error-overlay";
+
+          var header = document.createElement("div");
+          header.className = "app-error-header";
+          var strong = document.createElement("strong");
+          strong.textContent = "Runtime diagnostics";
+          header.appendChild(strong);
+
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.id = "btn-force-reload";
+          btn.className = "app-error-reload-btn";
+          btn.textContent = "Force clear cache & reload";
+          btn.onclick = function () {
+            if ("caches" in window) {
+              caches.keys().then(function (keys) {
+                keys.forEach(function (k) { caches.delete(k); });
+              });
+            }
+            window.location.reload();
+          };
+          header.appendChild(btn);
+          el.appendChild(header);
+
+          var body = document.createElement("div");
+          body.id = "app-error-body";
+          el.appendChild(body);
+          (document.body || document.documentElement).appendChild(el);
+        }
+        var bodyEl = document.getElementById("app-error-body") || el;
+        bodyEl.textContent += msg + "\n";
+      }
+      window.addEventListener("error", function (e) {
+        showError("[JS ERROR] " + (e.message || "") + (e.filename ? " @ " + e.filename + ":" + e.lineno + ":" + e.colno : ""));
+      });
+      window.addEventListener("unhandledrejection", function (e) {
+        showError("[PROMISE REJECTED] " + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+      });
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          if (!window.__APP_LOADED__) {
+            showError("[BOOT] app.js did not finish executing.");
+          }
+        }, 1500);
+      });
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./gm3-color-tokens.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Top App Bar -->
+  <header class="top-app-bar" role="banner">
+    <button type="button" class="brand-group" id="btn-brand-home" aria-label="Return to Deployed Eng Pipeline">
+      <h1 class="brand-title">Deployed Eng Pipeline</h1>
+      <span class="brand-byline">By Lucy</span>
+    </button>
+
+    <nav class="top-nav-actions" aria-label="Primary navigation">
+      <button type="button" class="nav-btn" id="btn-nav-archive">
+        <span class="material-symbols-outlined btn-icon-sm">inventory_2</span>
+        <span>Archive</span>
+      </button>
+      <a class="nav-btn nav-btn-primary" id="btn-nav-substack" href="https://substack.com" target="_blank" rel="noopener noreferrer">
+        <span>My Substack</span>
+        <span class="material-symbols-outlined btn-icon-sm">open_in_new</span>
+      </a>
+      <button type="button" class="icon-only-btn" id="btn-theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <span class="material-symbols-outlined" id="theme-toggle-icon">dark_mode</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container" role="main">
+    <!-- View 1: Winding Scroll Pathway -->
+    <section id="view-pipeline" class="view-section active-view" aria-label="Learning pathway">
+      <div class="pipeline-stage-wrapper" id="pipeline-stage-wrapper">
+        <div class="pathway-svg-container" aria-hidden="true">
+          <svg class="pathway-svg" id="pathway-svg" preserveAspectRatio="none">
+            <path class="pathway-track" id="pathway-track-path" d="M 120 0 L 120 400"></path>
+            <path class="pathway-progress" id="pathway-progress-path" d="M 120 0 L 120 400"></path>
+          </svg>
+        </div>
+
+        <div class="pipeline-stops" id="pipeline-stops-container"></div>
+      </div>
+    </section>
+
+    <!-- View 2: Dedicated Stop Page -->
+    <section id="view-stop-detail" class="view-section" aria-label="Stop details">
+      <div class="detail-top-bar">
+        <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-stop">
+          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+          <span>Back to pipeline</span>
+        </button>
+      </div>
+
+      <div class="stop-hero-card">
+        <div class="stop-hero-icon-box">
+          <span class="material-symbols-outlined stop-hero-icon" id="detail-stop-icon">home_repair_service</span>
+        </div>
+        <div class="stop-hero-content">
+          <div class="badge-row">
+            <span class="badge badge-info" id="detail-stop-badge">Foundations</span>
+          </div>
+          <h2 id="detail-stop-title">Downloading the tools</h2>
+          <p id="detail-stop-explainer"></p>
+        </div>
+      </div>
+
+      <div class="bento-grid">
+        <div class="surface-card">
+          <h3>My experiences &amp; field notes</h3>
+          <ul class="bullet-list" id="detail-experiences-list"></ul>
+        </div>
+
+        <div class="surface-card">
+          <h3 id="detail-activity-title">Fun activity</h3>
+          <div class="activity-step-list" id="detail-activity-steps"></div>
+        </div>
+      </div>
+
+      <div class="surface-card">
+        <h3>Linked videos, explainers &amp; resources</h3>
+        <div class="resources-grid" id="detail-resources-grid"></div>
+      </div>
+
+      <div class="stop-footer-nav">
+        <button type="button" class="back-btn" id="btn-prev-stop">
+          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+          <span id="prev-stop-label">Previous stop</span>
+        </button>
+        <button type="button" class="nav-btn nav-btn-primary" id="btn-next-stop">
+          <span id="next-stop-label">Next stop</span>
+          <span class="material-symbols-outlined btn-icon-sm">arrow_forward</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- View 3: Archive View -->
+    <section id="view-archive" class="view-section" aria-label="Archive">
+      <div class="search-bar-row">
+        <button type="button" class="back-btn pipeline-back-trigger" id="btn-back-from-archive">
+          <span class="material-symbols-outlined btn-icon-sm">arrow_back</span>
+          <span>Back to pipeline</span>
+        </button>
+
+        <div class="input-wrapper">
+          <span class="material-symbols-outlined input-adornment">search</span>
+          <input
+            type="text"
+            id="input-archive-search"
+            class="m3-input-field"
+            placeholder="Filter essays, books, and courses"
+            aria-label="Filter archive"
+          />
+          <button
+            type="button"
+            class="input-clear-btn"
+            id="btn-clear-archive-search"
+            aria-label="Clear search"
+            title="Clear search"
+          >
+            <span class="material-symbols-outlined btn-icon-sm">close</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="archive-bento">
+        <div class="surface-card">
+          <div class="badge-row">
+            <span class="badge badge-info">Featured essay</span>
+          </div>
+          <h2 id="archive-essay-title">What vibe-coding engineers need to learn</h2>
+          <p class="text-muted" id="archive-essay-subtitle"></p>
+          <div class="essay-section-list" id="archive-essay-sections"></div>
+        </div>
+
+        <div class="surface-card">
+          <div class="badge-row">
+            <span class="badge badge-success">Books, courses &amp; papers</span>
+          </div>
+          <h2>Reading &amp; course shelf</h2>
+          <div class="essay-section-list" id="archive-library-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./data.js"></script>
+  <script src="./diagnostics-theme.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
