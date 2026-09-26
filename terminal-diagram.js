@@ -548,12 +548,12 @@
       id: "seg-subfolder",
       tokenText: "src",
       dividerAfter: "/",
-      roleLabel: "6. Subfolder (Directory)",
+      roleLabel: "6. Child subfolder (Directory)",
       colorClass: "badge-warning",
-      title: "Subfolder / Directory (src): An organizer drawer inside your project",
-      comparison: "Directory vs. Folder: 'Directory' is 100% the exact same thing as a 'Folder'! Engineers say 'Directory' in the terminal (which is why 'cd' stands for Change Directory and 'mkdir' stands for Make Directory).",
-      whatItDoes: "Groups related code files together inside your project. Tip: '.' means 'this current folder' and '..' means 'one folder up'.",
-      howToGetThere: "cd src   # Step inside 'src'  |  cd ..   # Step one level back up!"
+      title: "Subfolder / Child Directory (src): A folder nested inside your project",
+      comparison: "Directory vs. Folder & Family Tree: 'Directory' is 100% the exact same thing as a 'Folder'! Folders nest like a family tree: 'deployed-eng-pipeline' is the Parent Directory ('..') that holds 'src', and 'src' is the Child Subfolder sitting inside it.",
+      whatItDoes: "Groups related code files together inside your project. Step inside with 'cd src', or step back up to its parent folder with 'cd ..'.",
+      howToGetThere: "cd src   # Step down into child subfolder  |  cd ..   # Step back up to parent!"
     },
     {
       id: "seg-filename",
@@ -569,13 +569,35 @@
     {
       id: "seg-ext",
       tokenText: ".js",
-      dividerAfter: "",
+      dividerAfter: "  ·  ",
       roleLabel: "8. File extension",
       colorClass: "badge-danger",
       title: "File extension (.js): The language tag at the end of a file",
       comparison: "Why the dot matters: The ending after the dot tells your computer and AI agent which language is inside: '.js' (JavaScript), '.py' (Python), '.html' (Webpage), '.css' (Styles), '.md' (Markdown notes), '.json' (Data).",
       whatItDoes: "Turns on the right color highlighting in your code editor and tells the computer which tool should run the file.",
-      howToGetThere: "find . -name \"*.js\"   # Finds every JavaScript file in your folder"
+      howToGetThere: "ls *.js   # Lists every JavaScript file in your current folder"
+    },
+    {
+      id: "seg-parent",
+      tokenText: ".. (Parent)",
+      dividerAfter: " ",
+      roleLabel: "9. Parent directory (..)",
+      colorClass: "badge-secondary",
+      title: "Parent Directory (..): The outer folder one level above you",
+      comparison: "Why is it called a 'Parent Directory'? Folders sit inside each other like a family tree. If you are standing inside 'deployed-eng-pipeline/src', then 'deployed-eng-pipeline' one level above you is your Parent Directory (written as two dots: '..').",
+      whatItDoes: "Lets you step one folder level up ('cd ..') without having to retype the full folder address from the beginning.",
+      howToGetThere: "cd ..   # Steps one folder level up into the parent directory"
+    },
+    {
+      id: "seg-current",
+      tokenText: ". (Current)",
+      dividerAfter: "",
+      roleLabel: "10. Working directory (.)",
+      colorClass: "badge-info",
+      title: "Current Working Directory (.): The folder you are standing in right now",
+      comparison: "Single dot (.) vs. Double dot (..): One dot '.' means 'right here in this current folder'. Two dots '..' means 'one folder level up in the parent folder'.",
+      whatItDoes: "Tells commands like 'grep -rn \"word\" .' or 'open .' to act on the exact folder you are currently standing inside.",
+      howToGetThere: "pwd   # Prints your current working directory  |  open .   # Opens it in Finder"
     }
   ];
 
@@ -595,10 +617,10 @@
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Workspace vs. folder (directory) vs. file: Reading a terminal path";
+    h3.textContent = "Workspace vs. parent directory (..) vs. subfolder vs. file: Reading a path";
     var subP = document.createElement("p");
     subP.className = "text-muted";
-    subP.textContent = "Every terminal command uses paths like this one. Click any colored piece below to see what it is, how a workspace differs from a folder or a file, and the exact command to get there.";
+    subP.textContent = "Every terminal command uses paths like this one. Click any colored piece below (including '..' Parent and '.' Current) to see what it means and how to get there.";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     titleGroup.appendChild(subP);

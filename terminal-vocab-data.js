@@ -9,23 +9,29 @@ window.TERMINAL_VOCAB_DATA = {
       id: "all",
       label: "All groups",
       badgeClass: "badge-info",
-      helpfulFor: "Browse all essential terminal commands, flags, shortcuts, paths, and operators grouped by what they help you do."
+      helpfulFor: "Browse all essential terminal concepts, commands, flags, shortcuts, paths, and operators grouped by what they help you do."
+    },
+    {
+      id: "Concepts",
+      label: "Core concepts (Directory, Parent, Flag)",
+      badgeClass: "badge-info",
+      helpfulFor: "Start here! Plain-English definitions for the words used in every terminal guide: Directory vs. Folder, Parent Directory (..), Working Directory (.), Subfolder, Flag (-r), and Dotfiles (.env)."
     },
     {
       id: "Navigation",
       label: "Navigating folders",
       badgeClass: "badge-info",
-      helpfulFor: "Helpful for checking which folder you (or your AI agent) are sitting in, moving between folders, and checking open ports."
+      helpfulFor: "Helpful for checking which folder you (or your AI agent) are sitting in, moving between folders, opening Finder/VS Code, and freeing stuck ports."
     },
     {
       id: "Files",
       label: "Creating & managing files",
       badgeClass: "badge-secondary",
-      helpfulFor: "Helpful for creating empty text files, backing up configs, renaming files, or deleting old folders."
+      helpfulFor: "Helpful for creating empty text files, printing text (echo), copying configs, renaming files, or deleting old folders."
     },
     {
       id: "Viewing & grep",
-      label: "Reading & searching files (grep, cat, tail)",
+      label: "Reading, searching (grep) & testing URLs",
       badgeClass: "badge-success",
       helpfulFor: "What is 'grep'? It is simply Ctrl+F (or Cmd+F) for your terminal—searching inside one file or across hundreds of files at once to print every line containing your keyword."
     },
@@ -33,7 +39,7 @@ window.TERMINAL_VOCAB_DATA = {
       id: "Flags",
       label: "Search (grep) & command flags",
       badgeClass: "badge-neutral",
-      helpfulFor: "Flags (starting with '-' like -i, -r, -n) are extra options you attach to a command—for example, telling grep to ignore uppercase/lowercase (-i), search all subfolders (-r), or show line numbers (-n)."
+      helpfulFor: "Flags (starting with '-' or '--' like -i, -r, -n, --help) are extra settings you attach to a command—like telling grep to ignore case (-i) or search all subfolders (-r)."
     },
     {
       id: "Shortcuts",
@@ -43,311 +49,177 @@ window.TERMINAL_VOCAB_DATA = {
     },
     {
       id: "Paths",
-      label: "Path shorthands",
+      label: "Path shorthands (., .., ~, /)",
       badgeClass: "badge-secondary",
-      helpfulFor: "Helpful for stepping up parent directories (..) or jumping straight to your home folder (~) from anywhere."
+      helpfulFor: "Helpful for stepping up to a parent directory (..), referencing your current folder (.), or jumping straight to your home folder (~)."
     },
     {
       id: "Operators",
-      label: "Pipes & redirects",
+      label: "Pipes, chains (&&) & redirects",
       badgeClass: "badge-success",
-      helpfulFor: "Helpful for chaining one command's output into another (|) or saving terminal output into a text file (>, >>)."
+      helpfulFor: "Helpful for running commands in sequence (&&), chaining output into another command (|), or saving output into a file (>, >>)."
     }
   ],
   items: [
-    // Navigation & Directory Management
-    {
-      command: "pwd",
-      name: "Print Working Directory",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Outputs the absolute path of the current directory you are in.",
-      example: "pwd"
-    },
-    {
-      command: "ls -la",
-      name: "List (All & Long)",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Lists all files (including hidden ones starting with .) with permissions, owner, size, and date.",
-      example: "ls -la"
-    },
-    {
-      command: "cd",
-      name: "Change Directory",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Navigates between directories/folders, up a level (..), or to home (~).",
-      example: "cd my-app/, cd .., cd ~"
-    },
-    {
-      command: "mkdir",
-      name: "Make Directory",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Creates a new folder/directory in the current location.",
-      example: "mkdir new_folder"
-    },
-    {
-      command: "which",
-      name: "Locate Executable",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Shows the exact folder path of the program that runs when you type a command.",
-      example: "which node   |   which git"
-    },
-    {
-      command: "lsof -i :PORT",
-      name: "List Open Port",
-      category: "Navigation",
-      badgeClass: "badge-info",
-      description: "Finds which running process is using a local port when a server says 'Address already in use'.",
-      example: "lsof -i :3000"
-    },
+    // 0. Core Concepts (Plain-English building blocks)
+    { command: "Directory", name: "Same Thing as a 'Folder'", category: "Concepts", badgeClass: "badge-info",
+      description: "In the terminal, a 'Directory' is 100% the exact same thing as a 'Folder' in Mac Finder or Windows Explorer (which is why cd = Change Directory and mkdir = Make Directory).",
+      example: "Folder == Directory (e.g. my-app/)" },
+    { command: "Parent Directory (..)", name: "The Folder One Level Above You", category: "Concepts", badgeClass: "badge-info",
+      description: "Folders nest like a family tree. The folder that holds your current folder is its 'Parent Directory' (written as '..'). If you are inside my-app/src, then my-app is the parent directory of src.",
+      example: "cd ..   # Steps up into the parent folder" },
+    { command: "Child / Subfolder", name: "A Folder Inside Your Current Folder", category: "Concepts", badgeClass: "badge-info",
+      description: "Any folder sitting inside another folder is called a 'child directory' or 'subfolder'. If my-app contains src/, then src/ is a child subfolder of my-app.",
+      example: "cd src   # Steps down into a child subfolder" },
+    { command: "Working Directory (.)", name: "The Folder You Are Standing In Now", category: "Concepts", badgeClass: "badge-info",
+      description: "Your terminal is always 'standing' inside one specific folder at a time—called your Current Working Directory (written as a single dot '.'). Run pwd anytime to see which one it is.",
+      example: "pwd   # Prints your current working directory" },
+    { command: "Flag / Option (-r, --help)", name: "Modifier Setting Attached to a Command", category: "Concepts", badgeClass: "badge-info",
+      description: "Words starting with '-' or '--' after a command that change how it behaves. Short flags use one dash (-r, -la); full-word flags use two dashes (--help, --version).",
+      example: "ls -la   |   git --help" },
+    { command: "Dotfile (.env, .git)", name: "Hidden Configuration or History File", category: "Concepts", badgeClass: "badge-info",
+      description: "Any file or folder whose name starts with a period (.) is hidden by default in Finder/Explorer so you don't accidentally delete secret keys (.env) or Git history (.git). Use ls -la to see them.",
+      example: "ls -la   # Reveals .env, .gitignore, and .git/" },
 
-    // File Creation & Management
-    {
-      command: "touch",
-      name: "Touch (Create Empty File)",
-      category: "Files",
-      badgeClass: "badge-secondary",
-      description: "Creates a new empty plain-text file if it doesn't exist, or updates its modification timestamp.",
-      example: "touch notes.txt"
-    },
-    {
-      command: "cp",
-      name: "Copy",
-      category: "Files",
-      badgeClass: "badge-secondary",
-      description: "Copies files or directories (with -r) from one location to another.",
-      example: "cp .env.example .env"
-    },
-    {
-      command: "mv",
-      name: "Move / Rename",
-      category: "Files",
-      badgeClass: "badge-secondary",
-      description: "Moves a file or folder to a new location, or renames it in place.",
-      example: "mv old_name.txt new_name.txt"
-    },
-    {
-      command: "rm / rm -r",
-      name: "Remove (Permanent Delete)",
-      category: "Files",
-      badgeClass: "badge-secondary",
-      description: "Deletes files permanently. Adding -r (recursive) deletes a folder and everything inside it.",
-      example: "rm file.txt, rm -r old_folder/"
-    },
+    // 1. Navigation & Directory Management
+    { command: "pwd", name: "Print Working Directory (Where Am I?)", category: "Navigation", badgeClass: "badge-info",
+      description: "Prints the full folder path of the directory you are standing in right now.",
+      example: "pwd  ->  /Users/lucy/workspace/my-app" },
+    { command: "ls / ls -la", name: "List Files (All & Long Detail)", category: "Navigation", badgeClass: "badge-info",
+      description: "Lists the files and subfolders inside your current directory. Adding -la shows hidden dotfiles (.env, .git) plus file sizes and dates.",
+      example: "ls -la" },
+    { command: "cd", name: "Change Directory (Move Between Folders)", category: "Navigation", badgeClass: "badge-info",
+      description: "Moves your terminal into a child subfolder (cd src), up one level to the parent directory (cd ..), or back to your home folder (cd ~).",
+      example: "cd src/   |   cd ..   |   cd ~" },
+    { command: "mkdir", name: "Make Directory (Create New Folder)", category: "Navigation", badgeClass: "badge-info",
+      description: "Creates a new empty folder inside your current working directory.",
+      example: "mkdir components" },
+    { command: "open . / code .", name: "Open Current Folder in Finder or VS Code", category: "Navigation", badgeClass: "badge-info",
+      description: "The bridge between terminal and screen! 'open .' (Mac) or 'explorer .' (Windows) opens your current folder(.) in a visual window; 'code .' or 'cursor .' opens it in your code editor.",
+      example: "open .   |   code .   |   cursor ." },
+    { command: "which", name: "Locate Installed Program", category: "Navigation", badgeClass: "badge-info",
+      description: "Checks if a tool (like node, python3, or git) is installed and prints the exact folder path where it lives.",
+      example: "which node   |   which git" },
+    { command: "lsof -i :PORT", name: "Find What Is Using a Local Port", category: "Navigation", badgeClass: "badge-info",
+      description: "Finds which running background program (and its Process ID / PID) is hogging a port when your server says 'Address already in use'.",
+      example: "lsof -i :3000" },
+    { command: "kill -9 <PID>", name: "Force-Stop a Stuck Process by ID", category: "Navigation", badgeClass: "badge-info",
+      description: "Shuts down a frozen background process using the PID number you found with lsof -i :3000 so the port is free again.",
+      example: "kill -9 48210" },
 
-    // File Viewing & Text Searching (grep placed first & explained clearly)
-    {
-      command: "grep",
-      name: "Search Inside Files ('Ctrl+F' for Terminal)",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Searches inside a file (or across a whole folder with -rn) for a word or pattern and prints every matching line. Short for 'Global Regular Expression Print'.",
-      example: "grep \"error\" server.log   |   grep -rn \"Button\" src/"
-    },
-    {
-      command: "cat",
-      name: "Concatenate & Print File",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Outputs the entire text contents of a file directly into the terminal window.",
-      example: "cat package.json"
-    },
-    {
-      command: "head",
-      name: "Head (First Lines)",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Displays the first few lines of a file (defaults to 10; use -n 20 for 20 lines).",
-      example: "head -n 20 server.log"
-    },
-    {
-      command: "tail -f",
-      name: "Tail Follow (Live Logs)",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Prints the end of a file and streams new log lines live as your app writes them.",
-      example: "tail -f server.log"
-    },
-    {
-      command: "less",
-      name: "Scrollable Viewer",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Opens a scrollable page viewer for long files (use Up/Down arrows to scroll, press q to exit).",
-      example: "less server.log"
-    },
-    {
-      command: "wc -l",
-      name: "Line Count",
-      category: "Viewing & grep",
-      badgeClass: "badge-success",
-      description: "Counts total lines in a file or piped command output.",
-      example: "wc -l src/app.js"
-    },
+    // 2. File Creation & Management
+    { command: "touch", name: "Create Empty Plain-Text File", category: "Files", badgeClass: "badge-secondary",
+      description: "Creates a brand-new empty plain-text file if it doesn't exist yet.",
+      example: "touch notes.txt   |   touch .env" },
+    { command: "echo", name: "Print Text or Variable", category: "Files", badgeClass: "badge-secondary",
+      description: "Prints text to the terminal screen, checks an environment variable ($PATH), or writes a line into a file when paired with > or >>.",
+      example: "echo \"Hello\"   |   echo $PATH" },
+    { command: "cp / cp -r", name: "Copy File or Folder", category: "Files", badgeClass: "badge-secondary",
+      description: "Copies a file to a new name or location. Add -r (recursive) to copy an entire folder and everything inside it.",
+      example: "cp .env.example .env   |   cp -r src/ src-backup/" },
+    { command: "mv", name: "Move or Rename File/Folder", category: "Files", badgeClass: "badge-secondary",
+      description: "Moves a file/folder into a different directory, or renames it in place.",
+      example: "mv old_name.js new_name.js" },
+    { command: "rm / rm -r", name: "Remove (Permanent Delete — No Trash!)", category: "Files", badgeClass: "badge-secondary",
+      description: "Permanently deletes a file (rm) or an entire folder and all its contents (rm -r). Bypasses the system Trash bin!",
+      example: "rm temp.txt   |   rm -r old_folder/" },
 
-    // Search (grep) & Command Flags (100% standard Unix/macOS/Linux)
-    {
-      command: "-i",
-      name: "Ignore Case (grep flag)",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "Tells grep to search case-insensitively (matches Login, LOGIN, or login).",
-      example: "grep -i \"login\" README.md"
-    },
-    {
-      command: "-r (or -R)",
-      name: "Recursive (Subfolders flag)",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "Tells grep, cp, or rm to operate on the folder and every nested subfolder inside it.",
-      example: "grep -r \"TODO\" src/"
-    },
-    {
-      command: "-n",
-      name: "Line Numbers (grep flag)",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "Tells grep to print the exact line number next to every match it finds.",
-      example: "grep -rn \"fetch\" src/"
-    },
-    {
-      command: "-v",
-      name: "Invert Match (Exclude flag)",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "Tells grep to hide lines that match the word and only print lines that do NOT contain it.",
-      example: "grep -v \"DEBUG\" server.log"
-    },
-    {
-      command: "mkdir -p",
-      name: "Make Parent Directories",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "Creates a whole nested chain of folders in one command if the parent folders don't exist yet.",
-      example: "mkdir -p src/components/ui"
-    },
-    {
-      command: "-f",
-      name: "Force (rm -f) or Follow (tail -f)",
-      category: "Flags",
-      badgeClass: "badge-neutral",
-      description: "In 'rm -f' it forces deletion without asking for confirmation; in 'tail -f' it follows a log file live.",
-      example: "rm -f temp.log   |   tail -f app.log"
-    },
+    // 3. File Viewing, Searching (grep) & Testing URLs
+    { command: "grep", name: "Search Inside Files ('Ctrl+F' for Terminal)", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "Searches inside a file (or across a whole project folder with -rn) for a word or pattern and prints every matching line. Short for 'Global Regular Expression Print'.",
+      example: "grep \"error\" server.log   |   grep -rn \"Button\" src/" },
+    { command: "cat", name: "Print Entire File to Screen", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "Dumps the entire text contents of a file directly into the terminal window (short for 'concatenate').",
+      example: "cat package.json" },
+    { command: "head / tail -f", name: "Preview Top Lines or Watch Live Logs", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "'head' shows the first 10 lines of a file; 'tail -f' shows the bottom lines and streams new log entries live as your app runs.",
+      example: "head -n 20 app.log   |   tail -f server.log" },
+    { command: "less", name: "Scrollable File Reader (Press 'q' to Exit)", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "Opens a long file in a neat page-by-page reader so it doesn't flood your screen. Use Up/Down arrows to scroll and press 'q' to quit back to the prompt!",
+      example: "less server.log   # (Press q to exit)" },
+    { command: "wc -l", name: "Count Total Lines", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "Counts how many lines are in a file (or how many matches came out of a piped command).",
+      example: "wc -l src/app.js" },
+    { command: "curl", name: "Fetch / Test a URL or API Endpoint", category: "Viewing & grep", badgeClass: "badge-success",
+      description: "Requests a web URL or localhost API right from the terminal and prints the raw response (or status headers with -I). AI agents use curl constantly to test if a server works.",
+      example: "curl -I http://localhost:3000   |   curl https://api.github.com" },
 
-    // Keyboard Shortcuts
-    {
-      command: "Tab",
-      name: "Auto-completion",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Auto-completes partially typed folder/file names (press Tab twice to list all matching options).",
-      example: "cd comp[Tab] -> cd components/"
-    },
-    {
-      command: "Ctrl + C",
-      name: "Kill / Cancel Process",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Immediately stops the currently running command or local server and returns to a fresh prompt.",
-      example: "Press Ctrl + C to stop localhost server"
-    },
-    {
-      command: "Up / Down Arrows",
-      name: "Command History",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Cycles through your previously executed commands so you don't have to retype them.",
-      example: "Press Up Arrow to rerun last command"
-    },
-    {
-      command: "Ctrl + R",
-      name: "Reverse History Search",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Searches backward through your past commands as you type a keyword.",
-      example: "Ctrl + R then type 'npm run'"
-    },
-    {
-      command: "Ctrl + L (or clear)",
-      name: "Clear Screen",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Wipes visual clutter off the terminal screen and brings the prompt to the top.",
-      example: "Ctrl + L"
-    },
-    {
-      command: "Ctrl + A / Ctrl + E",
-      name: "Start / End of Line",
-      category: "Shortcuts",
-      badgeClass: "badge-info",
-      description: "Jumps the cursor to the very beginning (Ctrl + A) or very end (Ctrl + E) of the current command line.",
-      example: "Ctrl + A to jump to the start of the line"
-    },
+    // 4. Search (grep) & Command Flags
+    { command: "--help (or -h)", name: "Built-in Command Manual & Cheat Sheet", category: "Flags", badgeClass: "badge-neutral",
+      description: "Prints a summary of what any command does and lists all of its available flags right on your screen.",
+      example: "git --help   |   grep --help   |   npm --help" },
+    { command: "-i", name: "Ignore Case (grep flag)", category: "Flags", badgeClass: "badge-neutral",
+      description: "Tells grep to search case-insensitively so uppercase and lowercase both match (matches Login, LOGIN, or login).",
+      example: "grep -i \"login\" README.md" },
+    { command: "-r (or -R)", name: "Recursive (Include All Subfolders)", category: "Flags", badgeClass: "badge-neutral",
+      description: "'Recursive' means 'step inside every child subfolder, and every subfolder inside that'. Used with grep -r (search all subfolders), cp -r (copy folder), and rm -r (delete folder).",
+      example: "grep -r \"TODO\" src/" },
+    { command: "-n", name: "Line Numbers (grep flag)", category: "Flags", badgeClass: "badge-neutral",
+      description: "Tells grep to print the exact line number next to every match it finds so you know right where to look in your editor.",
+      example: "grep -rn \"fetchUser\" src/" },
+    { command: "-v", name: "Invert Match (Exclude Noise)", category: "Flags", badgeClass: "badge-neutral",
+      description: "Tells grep to hide lines that contain that word and only print lines that do NOT match it (great for filtering out noisy logs).",
+      example: "grep -v \"DEBUG\" server.log" },
+    { command: "mkdir -p", name: "Make Parent Directories Automatically", category: "Flags", badgeClass: "badge-neutral",
+      description: "Normally 'mkdir a/b/c' fails if the outer parent folders 'a' and 'b' don't exist yet. Adding '-p' creates the whole nested chain of parent + child folders in one go.",
+      example: "mkdir -p src/components/ui" },
+    { command: "-f", name: "Force (rm -f) or Follow Live (tail -f)", category: "Flags", badgeClass: "badge-neutral",
+      description: "In 'rm -f' it forces deletion without asking 'are you sure?'; in 'tail -f' it follows a log file live as new lines arrive.",
+      example: "rm -f temp.log   |   tail -f app.log" },
+    { command: "sudo", name: "Superuser Do (Run as Administrator)", category: "Flags", badgeClass: "badge-neutral",
+      description: "Runs a command with full computer administrator privileges (prompts for your laptop password). Watch-out: never run 'sudo' for a normal project file unless you know why it needs system-wide access!",
+      example: "sudo lsof -i :80" },
 
-    // Relative & Absolute Paths
-    {
-      command: ".",
-      name: "Current Directory",
-      category: "Paths",
-      badgeClass: "badge-secondary",
-      description: "Refers to the exact folder you are sitting in right now.",
-      example: "grep -rn \"API_URL\" ."
-    },
-    {
-      command: "..",
-      name: "Parent Directory",
-      category: "Paths",
-      badgeClass: "badge-secondary",
-      description: "Refers to one folder level up from your current directory.",
-      example: "cd .."
-    },
-    {
-      command: "../..",
-      name: "Two Levels Up",
-      category: "Paths",
-      badgeClass: "badge-secondary",
-      description: "Steps two folder levels up the directory hierarchy.",
-      example: "cd ../../"
-    },
-    {
-      command: "~",
-      name: "Home Directory",
-      category: "Paths",
-      badgeClass: "badge-secondary",
-      description: "Shorthand for your user home folder (e.g. /Users/lucy on Mac or /home/lucy on Linux) from anywhere.",
-      example: "cd ~/workspace/my-app"
-    },
+    // 5. Keyboard Shortcuts
+    { command: "Tab", name: "Auto-Complete Folder & File Names", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Finishes typing a folder or file name for you (press Tab twice to see all matching options). Prevents spelling typos!",
+      example: "cd comp[Tab] -> cd components/" },
+    { command: "Ctrl + C", name: "Emergency Brake (Stop Running Command)", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Immediately stops the currently running command or local server and returns your typing prompt. (Does NOT mean Copy in a terminal!)",
+      example: "Press Ctrl + C to stop localhost server" },
+    { command: "Up / Down Arrows", name: "Cycle Through Past Commands", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Press Up Arrow to recall the commands you ran earlier one by one so you never have to retype them.",
+      example: "Press Up Arrow then Enter to rerun last command" },
+    { command: "Ctrl + R", name: "Search Past Command History", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Searches backward through your command history as you type any keyword from a command you ran days ago.",
+      example: "Ctrl + R then type 'npm run'" },
+    { command: "Ctrl + L (or clear)", name: "Clear Terminal Screen", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Wipes old log clutter off the terminal window and brings your prompt to the top without deleting any files.",
+      example: "Ctrl + L" },
+    { command: "Ctrl + A / Ctrl + E", name: "Jump to Start / End of Line", category: "Shortcuts", badgeClass: "badge-info",
+      description: "Jumps your cursor to the very beginning (Ctrl + A) or very end (Ctrl + E) of the command you are currently typing.",
+      example: "Ctrl + A to add 'sudo ' at the start of a line" },
 
-    // Pipes & Redirects
-    {
-      command: "|",
-      name: "Pipe Operator",
-      category: "Operators",
-      badgeClass: "badge-success",
-      description: "Takes the output of the command on the left and feeds it as input to the command on the right (often paired with grep).",
-      example: "ls -la | grep \".env\""
-    },
-    {
-      command: ">",
-      name: "Redirect (Overwrite)",
-      category: "Operators",
-      badgeClass: "badge-success",
-      description: "Saves command output into a file, overwriting existing contents.",
-      example: "echo \"Hello\" > notes.txt"
-    },
-    {
-      command: ">>",
-      name: "Redirect (Append)",
-      category: "Operators",
-      badgeClass: "badge-success",
-      description: "Appends command output to the bottom of a file without erasing existing lines.",
-      example: "git status >> recent_changes.txt"
-    }
+    // 6. Relative & Absolute Paths
+    { command: ".", name: "Current Directory ('Right Here')", category: "Paths", badgeClass: "badge-secondary",
+      description: "A single dot refers to the exact folder you are standing in right now (your Working Directory).",
+      example: "grep -rn \"API_URL\" .   |   open ." },
+    { command: "..", name: "Parent Directory ('One Folder Up')", category: "Paths", badgeClass: "badge-secondary",
+      description: "Two dots refer to the outer folder one level above you that holds your current folder. If you are in /Users/lucy/my-app/src, '..' is /Users/lucy/my-app.",
+      example: "cd ..   # Steps one folder level up" },
+    { command: "../..", name: "Grandparent Directory ('Two Folders Up')", category: "Paths", badgeClass: "badge-secondary",
+      description: "Steps two folder levels up the family tree (the parent of your parent directory).",
+      example: "cd ../../" },
+    { command: "~", name: "Home Directory (/Users/yourname)", category: "Paths", badgeClass: "badge-secondary",
+      description: "Shorthand for your personal user home folder (/Users/lucy on Mac or /home/lucy on Linux) from anywhere on the machine.",
+      example: "cd ~/workspace/my-app" },
+    { command: "/", name: "Root Directory (Bottom Trunk of Computer)", category: "Paths", badgeClass: "badge-secondary",
+      description: "A slash at the very start of a path means the root of the entire hard drive. Slashes in the middle of a path simply separate parent and child folders.",
+      example: "/Users/lucy/workspace/my-app" },
+
+    // 7. Pipes, Chains & Redirects
+    { command: "&&", name: "Chain Commands (Run Next If First Succeeds)", category: "Operators", badgeClass: "badge-success",
+      description: "Runs the first command, and ONLY if it succeeds without an error, immediately runs the second command. AI agents use && constantly to combine steps.",
+      example: "mkdir my-app && cd my-app" },
+    { command: "|", name: "Pipe Operator (Feed Output into Next Command)", category: "Operators", badgeClass: "badge-success",
+      description: "Takes the text output printed by the command on the left and feeds it directly into the command on the right (most often paired with grep).",
+      example: "ls -la | grep \".env\"" },
+    { command: ">", name: "Redirect & Overwrite File", category: "Operators", badgeClass: "badge-success",
+      description: "Saves a command's output into a text file, completely overwriting whatever was inside that file before.",
+      example: "echo \"Hello\" > notes.txt" },
+    { command: ">>", name: "Redirect & Append to End of File", category: "Operators", badgeClass: "badge-success",
+      description: "Tucks a command's output safely onto the bottom of a file without erasing existing lines.",
+      example: "git status >> recent_changes.txt" }
   ],
 
   tips: [
@@ -388,6 +260,18 @@ window.TERMINAL_VOCAB_DATA = {
 
   deepDives: [
     {
+      title: "The folder family tree: What is a 'Parent Directory' (..), 'Current Directory' (.), and 'Subfolder'?",
+      badge: "Folder family tree",
+      badgeClass: "badge-info",
+      summary: "Folders nest inside each other like Russian nesting dolls or a family tree: the outer folder is the Parent (..), where you stand now is Current (.), and inner folders are Children (subfolders).",
+      points: [
+        "Directory = Folder: First, remember that 'Directory' is simply the terminal's word for a normal Folder.",
+        "Imagine this path: /Users/lucy/workspace/my-app/src. Here, 'workspace' holds 'my-app', and 'my-app' holds 'src'.",
+        "If you are standing inside 'my-app' (your Current Working Directory, written as '.'): then 'workspace' one level above you is your Parent Directory (written as '..'), and 'src' inside you is a Child Directory (subfolder).",
+        "Moving up vs. down the tree: Typing cd src steps DOWN into the child subfolder. Typing cd .. steps UP into the parent directory. And mkdir -p a/b/c means 'create folder c, and automatically create its parent folders a and b if they don't exist yet'."
+      ]
+    },
+    {
       title: "What is 'grep' (and why do AI coding agents run 'grep -rn' constantly)?",
       badge: "Understanding grep",
       badgeClass: "badge-success",
@@ -421,12 +305,13 @@ window.TERMINAL_VOCAB_DATA = {
       ]
     },
     {
-      title: "Composing pipes (|), redirects (>, >>), and grep in real workflows",
+      title: "Composing pipes (|), chains (&&), redirects (>, >>), and grep in real workflows",
       badge: "Chaining commands",
       badgeClass: "badge-success",
-      summary: "Connect small commands like Lego bricks: filter file lists with | grep, save logs with >>, and count items with | wc -l.",
+      summary: "Connect small commands like Lego bricks: run in sequence with &&, filter lists with | grep, save logs with >>, and count items with | wc -l.",
       points: [
         "Mental model for grep: [ All Text / File Contents ] -> [ grep \"keyword\" ] -> [ Only matching lines shown ].",
+        "Create a folder and immediately step inside it: mkdir my-new-app && cd my-new-app",
         "Save your recent commit log to a file (overwrite): git log -n 10 > recent_changes.txt",
         "Append today's working tree status to that same file: git status >> recent_changes.txt",
         "Find a specific file in a busy folder: ls -la src/components | grep \"Navbar\"",

@@ -65,6 +65,18 @@
       answer: "'grep' is your terminal's 'Ctrl+F' / 'Cmd+F' across files and folders! Its name comes from an old 1970s Unix editor command: g/re/p (Global Regular Expression Print — meaning: globally search for a text pattern and print every matching line).\n• grep \"TODO\" notes.txt — searches inside one file.\n• grep -rn \"fetchUser\" src/ — searches recursively (-r) through every subfolder in src/ and prints the exact filename and line number (-n) where 'fetchUser' appears.\n• grep -i \"error\" server.log — searches case-insensitively (-i)."
     },
     {
+      keywords: ["parent directory", "parent folder", "directory", "subfolder", "child directory", "working directory", "..", "cd ..", "mkdir -p"],
+      title: "What is a 'Parent Directory' (..), 'Current Directory' (.), and 'Directory vs. Folder'?",
+      stopId: "cli-and-terminal",
+      answer: "• Directory = Folder: 'Directory' is 100% the exact same thing as a Folder!\n• The Folder Family Tree: Folders nest inside each other like a family tree (e.g. /Users/lucy/workspace/my-app/src).\n• Current Working Directory (.): The exact folder your terminal is standing inside right now (check with 'pwd').\n• Parent Directory (..): The outer folder ONE level above you that holds your current folder. If you are inside 'my-app/src', then 'my-app' is the parent directory, and typing 'cd ..' steps up into it.\n• Child Directory (Subfolder): A folder sitting inside your current folder (typing 'cd src' steps down into it)."
+    },
+    {
+      keywords: ["trace", "trace a file", "tracing", "walk through", "read code", "happy path"],
+      title: "What does it mean to 'trace' a file or trace code?",
+      stopId: "reading-code-stability",
+      answer: "To 'trace' a file means pretending you are the computer and following the code step-by-step with your eyes from the moment a user clicks a button to the final result:\n1. Start where the user clicks or types input.\n2. Follow what function gets called next and what data is passed in.\n3. Ask at each step: 'What if the internet drops right here, or this value is empty (null)? Does the code show a helpful message, or does it crash silently?'"
+    },
+    {
       keywords: ["clone", "fork", "copy", "duplicate", "branch vs clone", "git clone"],
       title: "Clone vs. Branch vs. Fork vs. Copy-Pasting a folder",
       stopId: "git-and-shipping",
@@ -147,11 +159,12 @@
     ],
     "cli-and-terminal": [
       "What is grep (and grep -rn)?",
+      "What is a parent directory (..)?",
       "How do I stop a stuck terminal command?",
-      "What is the difference between > and >>?",
-      "Why use the terminal instead of GUI?"
+      "What is the difference between > and >>?"
     ],
     "reading-code-stability": [
+      "What does it mean to 'trace' a file?",
       "What did the Stanford security study find?",
       "Why avoid innerHTML in web apps?",
       "How do I red-team an AI prototype?"
