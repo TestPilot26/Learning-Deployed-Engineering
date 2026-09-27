@@ -184,18 +184,30 @@
     return svg;
   }
 
-  // 8. Stop 1 Stage 3: Cloud Hosting & Live https:// Website / Globe
+  // 8. Stop 1 Stage 3: Cloud Hosting & Live Vercel Website
   function createLiveWebHostArt() {
     var svg = svgEl("svg", { viewBox: "0 0 180 120", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
-    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "108", rx: "68", ry: "8", fill: "var(--color-surface-container-highest)" }));
+    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "108", rx: "70", ry: "8", fill: "var(--color-surface-container-highest)" }));
     // Browser window frame
-    svg.appendChild(svgEl("rect", { x: "26", y: "22", width: "128", height: "76", rx: "8", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("rect", { x: "26", y: "22", width: "128", height: "22", rx: "6", fill: "var(--color-tertiary-container)" }));
-    svg.appendChild(svgText(90, 37, "https:// live", 11, 700, "var(--color-on-tertiary-container)", "monospace"));
-    // Globe inside browser
-    svg.appendChild(svgEl("circle", { cx: "90", cy: "70", r: "20", fill: "var(--color-primary-container)", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "70", rx: "9", ry: "20", fill: "none", stroke: "var(--color-primary)", "stroke-width": "2" }));
-    svg.appendChild(svgEl("line", { x1: "70", y1: "70", x2: "110", y2: "70", stroke: "var(--color-primary)", "stroke-width": "2" }));
+    svg.appendChild(svgEl("rect", { x: "22", y: "18", width: "136", height: "80", rx: "9", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
+    // Top browser bar
+    svg.appendChild(svgEl("rect", { x: "23.5", y: "19.5", width: "133", height: "22", rx: "7", fill: "var(--color-tertiary-container)" }));
+    // Window dots
+    svg.appendChild(svgEl("circle", { cx: "33", cy: "30.5", r: "2.6", fill: "var(--color-on-tertiary-container)" }));
+    svg.appendChild(svgEl("circle", { cx: "41", cy: "30.5", r: "2.6", fill: "var(--color-on-tertiary-container)" }));
+    // URL pill inside top bar
+    svg.appendChild(svgEl("rect", { x: "50", y: "23.5", width: "100", height: "14", rx: "7", fill: "var(--color-surface-container-lowest)" }));
+    svg.appendChild(svgEl("circle", { cx: "58", cy: "30.5", r: "3", fill: "var(--color-tertiary)" }));
+    svg.appendChild(svgText(103, 33.5, "app.vercel.app", 9, 700, "var(--color-on-surface)", "monospace"));
+    // Left: Deployed Vercel Prism Badge + Live Pulse
+    svg.appendChild(svgEl("rect", { x: "32", y: "48", width: "44", height: "40", rx: "7", fill: "var(--color-primary-container)", stroke: "var(--color-primary)", "stroke-width": "2" }));
+    svg.appendChild(svgEl("polygon", { points: "54,55 66,76 42,76", fill: "var(--color-primary)" }));
+    svg.appendChild(svgEl("circle", { cx: "65", cy: "56", r: "4.5", fill: "var(--color-tertiary)", stroke: "var(--color-surface-container-lowest)", "stroke-width": "1.5" }));
+    // Right: Mini live site hero + cards
+    svg.appendChild(svgEl("rect", { x: "84", y: "48", width: "64", height: "16", rx: "4", fill: "var(--color-tertiary-container)" }));
+    svg.appendChild(svgText(116, 59, "● Live 200 OK", 9, 700, "var(--color-on-tertiary-container)", "monospace"));
+    svg.appendChild(svgEl("rect", { x: "84", y: "70", width: "30", height: "18", rx: "4", fill: "var(--color-surface-container-high)", stroke: "var(--color-outline)", "stroke-width": "1.5" }));
+    svg.appendChild(svgEl("rect", { x: "118", y: "70", width: "30", height: "18", rx: "4", fill: "var(--color-primary-container)", stroke: "var(--color-primary)", "stroke-width": "1.5" }));
     return svg;
   }
 
