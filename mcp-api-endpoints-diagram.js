@@ -278,263 +278,54 @@
         ? "Diagram showing MCP universal USB-C hub connecting AI apps to MCP servers"
         : "Diagram showing M by N custom API spaghetti connecting AI apps to different APIs"
     });
-
-    // Background canvas
-    svg.appendChild(
-      svgEl("rect", {
-        x: "4",
-        y: "4",
-        width: "852",
-        height: "272",
-        rx: "16",
-        fill: "var(--color-surface-container-lowest)"
-      })
-    );
+    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "852", height: "272", rx: "16", fill: "var(--color-surface-container-lowest)" }));
 
     var leftApps = [
       { y: 36, title: "Claude / Cursor IDE", sub: isMcpMode ? "Includes MCP Client" : "Needs 3 custom wrappers" },
       { y: 114, title: "Your Custom AI Agent", sub: isMcpMode ? "Includes MCP Client" : "Needs 3 custom wrappers" },
       { y: 192, title: "Team Chat / Coding Bot", sub: isMcpMode ? "Includes MCP Client" : "Needs 3 custom wrappers" }
     ];
-
     var rightServices = [
-      {
-        y: 36,
-        title: isMcpMode ? "GitHub MCP Server" : "GitHub REST API",
-        sub: isMcpMode ? "Tools · Resources · Prompts" : "Custom OAuth + /repos URLs"
-      },
-      {
-        y: 114,
-        title: isMcpMode ? "Postgres DB MCP Server" : "Postgres Wire Protocol",
-        sub: isMcpMode ? "Schema resources + SQL tool" : "Custom SQL driver + auth"
-      },
-      {
-        y: 192,
-        title: isMcpMode ? "Slack / Drive MCP Server" : "Slack & Drive APIs",
-        sub: isMcpMode ? "Search & message tools" : "Different JSON & pagination"
-      }
+      { y: 36, title: isMcpMode ? "GitHub MCP Server" : "GitHub REST API", sub: isMcpMode ? "Tools · Resources · Prompts" : "Custom OAuth + /repos URLs" },
+      { y: 114, title: isMcpMode ? "Postgres DB MCP Server" : "Postgres Wire Protocol", sub: isMcpMode ? "Schema resources + SQL tool" : "Custom SQL driver + auth" },
+      { y: 192, title: isMcpMode ? "Slack / Drive MCP Server" : "Slack & Drive APIs", sub: isMcpMode ? "Search & message tools" : "Different JSON & pagination" }
     ];
 
     if (!isMcpMode) {
-      // M x N Spaghetti lines (9 crisscrossing custom wires!)
       leftApps.forEach(function (lApp) {
         rightServices.forEach(function (rSvc) {
-          svg.appendChild(
-            svgEl("line", {
-              x1: "250",
-              y1: String(lApp.y + 30),
-              x2: "610",
-              y2: String(rSvc.y + 30),
-              stroke: "var(--color-error)",
-              "stroke-width": "2",
-              "stroke-dasharray": "5 4",
-              opacity: "0.72"
-            })
-          );
+          svg.appendChild(svgEl("line", { x1: "250", y1: String(lApp.y + 30), x2: "610", y2: String(rSvc.y + 30), stroke: "var(--color-error)", "stroke-width": "2", "stroke-dasharray": "5 4", opacity: "0.72" }));
         });
       });
-
-      // Center warning badge over the spaghetti web
-      svg.appendChild(
-        svgEl("rect", {
-          x: "295",
-          y: "92",
-          width: "270",
-          height: "96",
-          rx: "12",
-          fill: "var(--color-error-container)",
-          stroke: "var(--color-error)",
-          "stroke-width": "2"
-        })
-      );
-      svg.appendChild(
-        svgText("M × N Custom API Glue Code", {
-          x: "430",
-          y: "120",
-          "text-anchor": "middle",
-          fill: "var(--color-on-error-container)",
-          "font-size": "14",
-          "font-weight": "700"
-        })
-      );
-      svg.appendChild(
-        svgText("3 AI Apps × 3 Tools = 9 custom connectors.", {
-          x: "430",
-          y: "144",
-          "text-anchor": "middle",
-          fill: "var(--color-on-error-container)",
-          "font-size": "12"
-        })
-      );
-      svg.appendChild(
-        svgText("You must hardcode every URL, header & format!", {
-          x: "430",
-          y: "166",
-          "text-anchor": "middle",
-          fill: "var(--color-on-error-container)",
-          "font-size": "12",
-          "font-weight": "600"
-        })
-      );
+      svg.appendChild(svgEl("rect", { x: "295", y: "92", width: "270", height: "96", rx: "12", fill: "var(--color-error-container)", stroke: "var(--color-error)", "stroke-width": "2" }));
+      svg.appendChild(svgText("M × N Custom API Glue Code", { x: "430", y: "120", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "14", "font-weight": "700" }));
+      svg.appendChild(svgText("3 AI Apps × 3 Tools = 9 custom connectors.", { x: "430", y: "144", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "12" }));
+      svg.appendChild(svgText("You must hardcode every URL, header & format!", { x: "430", y: "166", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "12", "font-weight": "600" }));
     } else {
-      // Clean Universal MCP Hub in the center
       leftApps.forEach(function (lApp) {
-        svg.appendChild(
-          svgEl("line", {
-            x1: "250",
-            y1: String(lApp.y + 30),
-            x2: "310",
-            y2: "140",
-            stroke: "var(--color-primary)",
-            "stroke-width": "3"
-          })
-        );
+        svg.appendChild(svgEl("line", { x1: "250", y1: String(lApp.y + 30), x2: "310", y2: "140", stroke: "var(--color-primary)", "stroke-width": "3" }));
       });
       rightServices.forEach(function (rSvc) {
-        svg.appendChild(
-          svgEl("line", {
-            x1: "550",
-            y1: "140",
-            x2: "610",
-            y2: String(rSvc.y + 30),
-            stroke: "var(--color-primary)",
-            "stroke-width": "3"
-          })
-        );
+        svg.appendChild(svgEl("line", { x1: "550", y1: "140", x2: "610", y2: String(rSvc.y + 30), stroke: "var(--color-primary)", "stroke-width": "3" }));
       });
-
-      svg.appendChild(
-        svgEl("rect", {
-          x: "310",
-          y: "66",
-          width: "240",
-          height: "148",
-          rx: "16",
-          fill: "var(--color-primary-container)",
-          stroke: "var(--color-primary)",
-          "stroke-width": "2.5"
-        })
-      );
-      svg.appendChild(
-        svgText("Model Context Protocol (MCP)", {
-          x: "430",
-          y: "96",
-          "text-anchor": "middle",
-          fill: "var(--color-on-primary-container)",
-          "font-size": "14",
-          "font-weight": "700"
-        })
-      );
-      svg.appendChild(
-        svgText("Universal 'USB-C Port' for AI", {
-          x: "430",
-          y: "118",
-          "text-anchor": "middle",
-          fill: "var(--color-on-primary-container)",
-          "font-size": "12",
-          "font-weight": "600"
-        })
-      );
-      svg.appendChild(
-        svgText("1. AI asks: 'What tools do you have?'", {
-          x: "430",
-          y: "144",
-          "text-anchor": "middle",
-          fill: "var(--color-on-primary-container)",
-          "font-size": "11.5"
-        })
-      );
-      svg.appendChild(
-        svgText("2. Server lists Tools, Resources & Prompts", {
-          x: "430",
-          y: "164",
-          "text-anchor": "middle",
-          fill: "var(--color-on-primary-container)",
-          "font-size": "11.5"
-        })
-      );
-      svg.appendChild(
-        svgText("3. Any AI app plugs into any MCP Server!", {
-          x: "430",
-          y: "186",
-          "text-anchor": "middle",
-          fill: "var(--color-on-primary-container)",
-          "font-size": "11.5",
-          "font-weight": "700"
-        })
-      );
+      svg.appendChild(svgEl("rect", { x: "310", y: "66", width: "240", height: "148", rx: "16", fill: "var(--color-primary-container)", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
+      svg.appendChild(svgText("Model Context Protocol (MCP)", { x: "430", y: "96", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "14", "font-weight": "700" }));
+      svg.appendChild(svgText("Universal 'USB-C Port' for AI", { x: "430", y: "118", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "12", "font-weight": "600" }));
+      svg.appendChild(svgText("1. AI asks: 'What tools do you have?'", { x: "430", y: "144", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5" }));
+      svg.appendChild(svgText("2. Server lists Tools, Resources & Prompts", { x: "430", y: "164", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5" }));
+      svg.appendChild(svgText("3. Any AI app plugs into any MCP Server!", { x: "430", y: "186", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5", "font-weight": "700" }));
     }
 
-    // Draw Left AI App Boxes
     leftApps.forEach(function (app) {
-      svg.appendChild(
-        svgEl("rect", {
-          x: "24",
-          y: String(app.y),
-          width: "226",
-          height: "60",
-          rx: "12",
-          fill: "var(--color-surface-container)",
-          stroke: isMcpMode ? "var(--color-primary)" : "var(--color-outline)",
-          "stroke-width": "2"
-        })
-      );
-      svg.appendChild(
-        svgText(app.title, {
-          x: "137",
-          y: String(app.y + 26),
-          "text-anchor": "middle",
-          fill: "var(--color-on-surface)",
-          "font-size": "13",
-          "font-weight": "700"
-        })
-      );
-      svg.appendChild(
-        svgText(app.sub, {
-          x: "137",
-          y: String(app.y + 45),
-          "text-anchor": "middle",
-          fill: "var(--color-on-surface-variant)",
-          "font-size": "11.5"
-        })
-      );
+      svg.appendChild(svgEl("rect", { x: "24", y: String(app.y), width: "226", height: "60", rx: "12", fill: "var(--color-surface-container)", stroke: isMcpMode ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": "2" }));
+      svg.appendChild(svgText(app.title, { x: "137", y: String(app.y + 26), "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
+      svg.appendChild(svgText(app.sub, { x: "137", y: String(app.y + 45), "text-anchor": "middle", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
     });
-
-    // Draw Right Service Boxes
     rightServices.forEach(function (svc) {
-      svg.appendChild(
-        svgEl("rect", {
-          x: "610",
-          y: String(svc.y),
-          width: "226",
-          height: "60",
-          rx: "12",
-          fill: "var(--color-surface-container)",
-          stroke: isMcpMode ? "var(--color-primary)" : "var(--color-error)",
-          "stroke-width": "2"
-        })
-      );
-      svg.appendChild(
-        svgText(svc.title, {
-          x: "723",
-          y: String(svc.y + 26),
-          "text-anchor": "middle",
-          fill: "var(--color-on-surface)",
-          "font-size": "13",
-          "font-weight": "700"
-        })
-      );
-      svg.appendChild(
-        svgText(svc.sub, {
-          x: "723",
-          y: String(svc.y + 45),
-          "text-anchor": "middle",
-          fill: "var(--color-on-surface-variant)",
-          "font-size": "11.5"
-        })
-      );
+      svg.appendChild(svgEl("rect", { x: "610", y: String(svc.y), width: "226", height: "60", rx: "12", fill: "var(--color-surface-container)", stroke: isMcpMode ? "var(--color-primary)" : "var(--color-error)", "stroke-width": "2" }));
+      svg.appendChild(svgText(svc.title, { x: "723", y: String(svc.y + 26), "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
+      svg.appendChild(svgText(svc.sub, { x: "723", y: String(svc.y + 45), "text-anchor": "middle", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
     });
-
     return svg;
   }
 
@@ -547,17 +338,7 @@
       class: "mcp-vs-api-svg",
       "aria-label": "Visual anatomy of an API endpoint URL, headers, body, and server function"
     });
-
-    svg.appendChild(
-      svgEl("rect", {
-        x: "4",
-        y: "4",
-        width: "852",
-        height: "182",
-        rx: "16",
-        fill: "var(--color-surface-container-lowest)"
-      })
-    );
+    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "852", height: "182", rx: "16", fill: "var(--color-surface-container-lowest)" }));
 
     var segments = [
       { id: "ep-method", x: 20, w: 96, top: "1. HTTP Verb", code: "PATCH", sub: "Action type" },
@@ -566,81 +347,17 @@
       { id: "ep-headers", x: 580, w: 130, top: "4. Headers", code: "Bearer <token>", sub: "Login ID badge" },
       { id: "ep-body", x: 720, w: 120, top: "5. JSON Body", code: "{status:'Done'}", sub: "Data package" }
     ];
-
     segments.forEach(function (seg) {
       var isAct = seg.id === activePartId;
-      svg.appendChild(
-        svgEl("rect", {
-          x: String(seg.x),
-          y: "22",
-          width: String(seg.w),
-          height: "78",
-          rx: "10",
-          fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)",
-          stroke: isAct ? "var(--color-primary)" : "var(--color-outline)",
-          "stroke-width": isAct ? "2.5" : "1.5"
-        })
-      );
-      svg.appendChild(
-        svgText(seg.top, {
-          x: String(seg.x + seg.w / 2),
-          y: "42",
-          "text-anchor": "middle",
-          fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)",
-          "font-size": "11",
-          "font-weight": "700"
-        })
-      );
-      svg.appendChild(
-        svgText(seg.code, {
-          x: String(seg.x + seg.w / 2),
-          y: "66",
-          "text-anchor": "middle",
-          fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)",
-          "font-size": "13.5",
-          "font-weight": "700",
-          "font-family": "monospace"
-        })
-      );
-      svg.appendChild(
-        svgText(seg.sub, {
-          x: String(seg.x + seg.w / 2),
-          y: "86",
-          "text-anchor": "middle",
-          fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)",
-          "font-size": "11"
-        })
-      );
+      svg.appendChild(svgEl("rect", { x: String(seg.x), y: "22", width: String(seg.w), height: "78", rx: "10", fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isAct ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isAct ? "2.5" : "1.5" }));
+      svg.appendChild(svgText(seg.top, { x: String(seg.x + seg.w / 2), y: "42", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-weight": "700" }));
+      svg.appendChild(svgText(seg.code, { x: String(seg.x + seg.w / 2), y: "66", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13.5", "font-weight": "700", "font-family": "monospace" }));
+      svg.appendChild(svgText(seg.sub, { x: String(seg.x + seg.w / 2), y: "86", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11" }));
     });
 
-    // Bottom Row: Server Endpoint Function -> Status Code Receipt
     var isStatusOrCors = activePartId === "ep-status" || activePartId === "ep-cors-ratelimit";
-    svg.appendChild(
-      svgEl("rect", {
-        x: "20",
-        y: "118",
-        width: "820",
-        height: "52",
-        rx: "10",
-        fill: isStatusOrCors ? "var(--color-primary-container)" : "var(--color-surface-container)",
-        stroke: isStatusOrCors ? "var(--color-primary)" : "var(--color-outline)",
-        "stroke-width": isStatusOrCors ? "2.5" : "1.5"
-      })
-    );
-    svg.appendChild(
-      svgText(
-        "Server Endpoint Function (@app.patch('/api/tasks/{id}'))   --->   6. Status Code Receipt (200 OK / 401 Auth / 429 Rate Limit / 500 Crash) + 7. CORS Check",
-        {
-          x: "430",
-          y: "149",
-          "text-anchor": "middle",
-          fill: isStatusOrCors ? "var(--color-on-primary-container)" : "var(--color-on-surface)",
-          "font-size": "12.5",
-          "font-weight": "700"
-        }
-      )
-    );
-
+    svg.appendChild(svgEl("rect", { x: "20", y: "118", width: "820", height: "52", rx: "10", fill: isStatusOrCors ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isStatusOrCors ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isStatusOrCors ? "2.5" : "1.5" }));
+    svg.appendChild(svgText("Server Endpoint Function (@app.patch('/api/tasks/{id}'))   --->   6. Status Code Receipt (200 OK / 401 Auth / 429 Rate Limit / 500 Crash) + 7. CORS Check", { x: "430", y: "149", "text-anchor": "middle", fill: isStatusOrCors ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "12.5", "font-weight": "700" }));
     return svg;
   }
 
@@ -837,12 +554,12 @@
       stageCard.appendChild(twoCol);
       host.appendChild(stageCard);
 
-      // The 3 Building Blocks inside every MCP Server (Tools, Resources, Prompts)
+      // The 3 Building Blocks inside every MCP Server (click any pill to open in Left Side Panel)
       var primCard = document.createElement("div");
       primCard.className = "nested-card";
       var primHeader = document.createElement("strong");
       primHeader.className = "diagram-node-title";
-      primHeader.textContent = "What sits inside an MCP Server? Click the 3 MCP building blocks (Tools, Resources & Prompts):";
+      primHeader.textContent = "What sits inside an MCP Server? Click the 3 MCP building blocks (opens details in left panel):";
       primCard.appendChild(primHeader);
 
       var primPills = document.createElement("div");
@@ -861,39 +578,133 @@
         b.addEventListener("click", function () {
           activePrimIdx = idx;
           render();
+          showMcpPrimitiveInSidePanel(MCP_PRIMITIVES[idx], true);
         });
         primPills.appendChild(b);
       });
       primCard.appendChild(primPills);
-
-      var curPr = MCP_PRIMITIVES[activePrimIdx];
-      var prDetail = document.createElement("div");
-      prDetail.className = "surface-card";
-      var prBadge = document.createElement("span");
-      prBadge.className = "badge " + curPr.badgeClass;
-      prBadge.textContent = curPr.badge;
-      var prH4 = document.createElement("h4");
-      prH4.textContent = curPr.title;
-      var prAnalogy = document.createElement("p");
-      prAnalogy.className = "resource-desc";
-      var stA = document.createElement("strong");
-      stA.textContent = "Everyday analogy: ";
-      prAnalogy.appendChild(stA);
-      prAnalogy.appendChild(document.createTextNode(curPr.analogy));
-      var prWhat = document.createElement("p");
-      prWhat.className = "resource-desc";
-      prWhat.textContent = curPr.whatItIs;
-      var prEx = document.createElement("div");
-      prEx.className = "vocab-example-box";
-      prEx.textContent = curPr.example;
-
-      prDetail.appendChild(prBadge);
-      prDetail.appendChild(prH4);
-      prDetail.appendChild(prAnalogy);
-      prDetail.appendChild(prWhat);
-      prDetail.appendChild(prEx);
-      primCard.appendChild(prDetail);
       host.appendChild(primCard);
+    }
+
+    function showMcpPrimitiveInSidePanel(curPr, isUserClick) {
+      if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+      window.PipelineAgent.showInspector(function (inspectorEl) {
+        inspectorEl.replaceChildren();
+        var top = document.createElement("div");
+        top.className = "resource-title-row";
+        var prBadge = document.createElement("span");
+        prBadge.className = "badge " + curPr.badgeClass;
+        prBadge.textContent = curPr.badge;
+        top.appendChild(prBadge);
+        inspectorEl.appendChild(top);
+        var prH4 = document.createElement("h4");
+        prH4.textContent = curPr.title;
+        inspectorEl.appendChild(prH4);
+        var prAnalogyBox = document.createElement("div");
+        prAnalogyBox.className = "nested-card";
+        var prAnalogy = document.createElement("p");
+        prAnalogy.className = "resource-desc";
+        prAnalogy.textContent = "Everyday analogy: " + curPr.analogy;
+        prAnalogyBox.appendChild(prAnalogy);
+        inspectorEl.appendChild(prAnalogyBox);
+        var prWhat = document.createElement("p");
+        prWhat.className = "resource-desc";
+        prWhat.textContent = curPr.whatItIs;
+        inspectorEl.appendChild(prWhat);
+        var prEx = document.createElement("div");
+        prEx.className = "vocab-example-box";
+        prEx.textContent = curPr.example;
+        inspectorEl.appendChild(prEx);
+      }, { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: curPr.title });
+    }
+
+    function showEndpointPartInSidePanel(curEp, isUserClick) {
+      if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+      window.PipelineAgent.showInspector(function (inspectorEl) {
+        inspectorEl.replaceChildren();
+        var top = document.createElement("div");
+        top.className = "resource-title-row";
+        var b1 = document.createElement("span");
+        b1.className = "badge " + curEp.badgeClass;
+        b1.textContent = "Endpoint Part " + curEp.partNum + " of 7";
+        var codeTag = document.createElement("code");
+        codeTag.className = "vocab-cmd-pill";
+        codeTag.textContent = curEp.codeSnippet;
+        top.appendChild(b1);
+        top.appendChild(codeTag);
+        inspectorEl.appendChild(top);
+        var h4 = document.createElement("h4");
+        h4.textContent = curEp.title;
+        inspectorEl.appendChild(h4);
+        var meanP = document.createElement("p");
+        meanP.className = "resource-desc";
+        meanP.style.whiteSpace = "pre-line";
+        meanP.textContent = curEp.plainMeaning;
+        inspectorEl.appendChild(meanP);
+
+          var whyBanner = document.createElement("div");
+          whyBanner.className = "arch-mode-banner good-mode";
+          var wIc = document.createElement("span");
+          wIc.className = "material-symbols-outlined safety-icon";
+          wIc.textContent = "lightbulb";
+          var wTxt = document.createElement("span");
+          wTxt.textContent = "Why this matters: " + curEp.whyCritical;
+          whyBanner.appendChild(wIc);
+          whyBanner.appendChild(wTxt);
+          inspectorEl.appendChild(whyBanner);
+
+          var codePre = document.createElement("div");
+          codePre.className = "vocab-example-box";
+          codePre.textContent = curEp.codeExample;
+          inspectorEl.appendChild(codePre);
+        },
+        { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: curEp.shortPill }
+      );
+    }
+
+    function showPatternInSidePanel(curPat, isUserClick) {
+      if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+      window.PipelineAgent.showInspector(
+        function (inspectorEl) {
+          inspectorEl.replaceChildren();
+          var top = document.createElement("div");
+          top.className = "resource-title-row";
+          var bdg = document.createElement("span");
+          bdg.className = "badge badge-info";
+          bdg.textContent = curPat.whoStarts;
+          top.appendChild(bdg);
+          inspectorEl.appendChild(top);
+
+          var h4 = document.createElement("h4");
+          h4.textContent = curPat.shortPill;
+          inspectorEl.appendChild(h4);
+
+          var pBestBox = document.createElement("div");
+          pBestBox.className = "nested-card";
+          var pBest = document.createElement("p");
+          pBest.className = "resource-desc";
+          pBest.textContent = "Best for: " + curPat.bestFor;
+          pBestBox.appendChild(pBest);
+          inspectorEl.appendChild(pBestBox);
+
+          var pHow = document.createElement("p");
+          pHow.className = "resource-desc";
+          pHow.textContent = "How it works: " + curPat.howItWorks;
+          inspectorEl.appendChild(pHow);
+
+          var pNot = document.createElement("div");
+          pNot.className = "arch-mode-banner good-mode";
+          var icNot = document.createElement("span");
+          icNot.className = "material-symbols-outlined safety-icon";
+          icNot.textContent = "info";
+          var txtNot = document.createElement("span");
+          txtNot.textContent = "Good to know: " + curPat.whenNotToUse;
+          pNot.appendChild(icNot);
+          pNot.appendChild(txtNot);
+          inspectorEl.appendChild(pNot);
+        },
+        { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: curPat.shortPill }
+      );
     }
 
     // -------------------------------------------------------------------------
@@ -908,7 +719,7 @@
       var leadP = document.createElement("p");
       leadP.className = "resource-desc";
       leadP.textContent =
-        "Plain-English definition: If an API is a restaurant kitchen, an 'Endpoint' is one specific service window URL on the server (like `/api/tasks/42`) connected to one specific backend function. Click any of the 7 parts below to highlight it on the diagram and see how it works:";
+        "Plain-English definition: If an API is a restaurant kitchen, an 'Endpoint' is one specific service window URL on the server (like `/api/tasks/42`) connected to one specific backend function. Click any of the 7 parts below to highlight it on the diagram and inspect it in the left panel:";
       xrayCard.appendChild(leadP);
 
       var epPills = document.createElement("div");
@@ -927,54 +738,12 @@
         b.addEventListener("click", function () {
           activeEndpointIdx = idx;
           render();
+          showEndpointPartInSidePanel(ENDPOINT_PARTS[idx], true);
         });
         epPills.appendChild(b);
       });
       xrayCard.appendChild(epPills);
-
       xrayCard.appendChild(createEndpointAnatomySvg(curEp.id));
-
-      var detailBox = document.createElement("div");
-      detailBox.className = "surface-card";
-      var top = document.createElement("div");
-      top.className = "resource-title-row";
-      var b1 = document.createElement("span");
-      b1.className = "badge " + curEp.badgeClass;
-      b1.textContent = "Endpoint Part " + curEp.partNum + " of 7";
-      var codeTag = document.createElement("code");
-      codeTag.className = "vocab-cmd-pill";
-      codeTag.textContent = curEp.codeSnippet;
-      top.appendChild(b1);
-      top.appendChild(codeTag);
-
-      var h4 = document.createElement("h4");
-      h4.textContent = curEp.title;
-
-      var meanP = document.createElement("p");
-      meanP.className = "resource-desc";
-      meanP.style.whiteSpace = "pre-line";
-      meanP.textContent = curEp.plainMeaning;
-
-      var whyBanner = document.createElement("div");
-      whyBanner.className = "arch-mode-banner good-mode";
-      var wIc = document.createElement("span");
-      wIc.className = "material-symbols-outlined safety-icon";
-      wIc.textContent = "lightbulb";
-      var wTxt = document.createElement("span");
-      wTxt.textContent = "Why this matters: " + curEp.whyCritical;
-      whyBanner.appendChild(wIc);
-      whyBanner.appendChild(wTxt);
-
-      var codePre = document.createElement("div");
-      codePre.className = "vocab-example-box";
-      codePre.textContent = curEp.codeExample;
-
-      detailBox.appendChild(top);
-      detailBox.appendChild(h4);
-      detailBox.appendChild(meanP);
-      detailBox.appendChild(whyBanner);
-      detailBox.appendChild(codePre);
-      xrayCard.appendChild(detailBox);
       host.appendChild(xrayCard);
     }
 
@@ -982,10 +751,13 @@
     // TAB 3: THE 5 WAYS SYSTEMS & AI TALK
     // -------------------------------------------------------------------------
     function renderFivePatternsTab(host) {
-      var curPat = FIVE_PATTERNS[activePatternIdx];
-
       var patCard = document.createElement("div");
       patCard.className = "nested-card";
+
+      var leadP = document.createElement("p");
+      leadP.className = "resource-desc";
+      leadP.textContent = "Click any of the 5 communication patterns below to see how it works and when to use it in the left panel:";
+      patCard.appendChild(leadP);
 
       var pCluster = document.createElement("div");
       pCluster.className = "diagram-pill-cluster";
@@ -1003,48 +775,11 @@
         b.addEventListener("click", function () {
           activePatternIdx = idx;
           render();
+          showPatternInSidePanel(FIVE_PATTERNS[idx], true);
         });
         pCluster.appendChild(b);
       });
       patCard.appendChild(pCluster);
-
-      var det = document.createElement("div");
-      det.className = "surface-card";
-      var bdg = document.createElement("span");
-      bdg.className = "badge badge-info";
-      bdg.textContent = curPat.whoStarts;
-      var h4 = document.createElement("h4");
-      h4.textContent = curPat.shortPill;
-      var pBest = document.createElement("p");
-      pBest.className = "resource-desc";
-      var sBest = document.createElement("strong");
-      sBest.textContent = "Best for: ";
-      pBest.appendChild(sBest);
-      pBest.appendChild(document.createTextNode(curPat.bestFor));
-
-      var pHow = document.createElement("p");
-      pHow.className = "resource-desc";
-      var sHow = document.createElement("strong");
-      sHow.textContent = "How it works: ";
-      pHow.appendChild(sHow);
-      pHow.appendChild(document.createTextNode(curPat.howItWorks));
-
-      var pNot = document.createElement("div");
-      pNot.className = "arch-mode-banner good-mode";
-      var icNot = document.createElement("span");
-      icNot.className = "material-symbols-outlined safety-icon";
-      icNot.textContent = "info";
-      var txtNot = document.createElement("span");
-      txtNot.textContent = "Good to know: " + curPat.whenNotToUse;
-      pNot.appendChild(icNot);
-      pNot.appendChild(txtNot);
-
-      det.appendChild(bdg);
-      det.appendChild(h4);
-      det.appendChild(pBest);
-      det.appendChild(pHow);
-      det.appendChild(pNot);
-      patCard.appendChild(det);
       host.appendChild(patCard);
     }
 

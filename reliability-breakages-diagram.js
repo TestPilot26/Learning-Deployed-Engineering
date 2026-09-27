@@ -203,10 +203,120 @@
     var stageHost = document.createElement("div");
     stageHost.className = "reliability-workshop-host";
 
-    function renderActive() {
-      // Keep the left inspector panel collapsed so the center view stays wide and uncluttered!
-      document.body.classList.add("inspector-panel-collapsed");
+    function showBreakageInSidePanel(item, isUserClick) {
+      if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
+      window.PipelineAgent.showInspector(
+        function (inspectorEl) {
+          inspectorEl.replaceChildren();
 
+          var topRow = document.createElement("div");
+          topRow.className = "resource-title-row";
+          var b = document.createElement("span");
+          b.className = "badge badge-danger";
+          b.textContent = item.tabLabel;
+          topRow.appendChild(b);
+          inspectorEl.appendChild(topRow);
+
+          var h4 = document.createElement("h4");
+          h4.textContent = item.headline;
+          inspectorEl.appendChild(h4);
+
+          var analogyBox = document.createElement("div");
+          analogyBox.className = "nested-card";
+          var analogyP = document.createElement("p");
+          analogyP.className = "resource-desc";
+          analogyP.textContent = "Everyday analogy: " + item.analogy;
+          analogyBox.appendChild(analogyP);
+          inspectorEl.appendChild(analogyBox);
+
+          // 1. What could break
+          var breakCard = document.createElement("div");
+          breakCard.className = "nested-card";
+          var bBadge = document.createElement("span");
+          bBadge.className = "badge badge-danger";
+          bBadge.textContent = "1. What could break";
+          breakCard.appendChild(bBadge);
+
+          var bList = document.createElement("ul");
+          bList.className = "bullet-list";
+          item.whatBreaksBullets.forEach(function (line) {
+            var li = document.createElement("li");
+            li.className = "bullet-item";
+            var ic = document.createElement("span");
+            ic.className = "material-symbols-outlined bullet-icon";
+            ic.textContent = "warning";
+            var sp = document.createElement("span");
+            sp.textContent = line;
+            li.appendChild(ic);
+            li.appendChild(sp);
+            bList.appendChild(li);
+          });
+          breakCard.appendChild(bList);
+          inspectorEl.appendChild(breakCard);
+
+          // 2. How to fix it
+          var fixCard = document.createElement("div");
+          fixCard.className = "nested-card";
+          var fBadge = document.createElement("span");
+          fBadge.className = "badge badge-success";
+          fBadge.textContent = "2. How to fix it";
+          fixCard.appendChild(fBadge);
+
+          var fList = document.createElement("ul");
+          fList.className = "bullet-list";
+          item.howToFixBullets.forEach(function (line) {
+            var li = document.createElement("li");
+            li.className = "bullet-item";
+            var ic = document.createElement("span");
+            ic.className = "material-symbols-outlined bullet-icon";
+            ic.textContent = "check_circle";
+            var sp = document.createElement("span");
+            sp.textContent = line;
+            li.appendChild(ic);
+            li.appendChild(sp);
+            fList.appendChild(li);
+          });
+          fixCard.appendChild(fList);
+          inspectorEl.appendChild(fixCard);
+
+          // 3. Plain-English translator
+          var jargonBox = document.createElement("div");
+          jargonBox.className = "nested-card";
+          var jTitle = document.createElement("strong");
+          jTitle.textContent = "Plain-English translator:";
+          jargonBox.appendChild(jTitle);
+
+          var jList = document.createElement("ul");
+          jList.className = "bullet-list";
+          item.jargonPills.forEach(function (jp) {
+            var li = document.createElement("li");
+            li.className = "bullet-item";
+            var ic = document.createElement("span");
+            ic.className = "material-symbols-outlined bullet-icon";
+            ic.textContent = "translate";
+            var sp = document.createElement("span");
+            var st = document.createElement("strong");
+            st.textContent = jp.word + " = ";
+            sp.appendChild(st);
+            sp.appendChild(document.createTextNode(jp.plain));
+            li.appendChild(ic);
+            li.appendChild(sp);
+            jList.appendChild(li);
+          });
+          jargonBox.appendChild(jList);
+          inspectorEl.appendChild(jargonBox);
+
+          // 4. 4-line code comparison
+          var badPre = document.createElement("div");
+          badPre.className = "vocab-example-box";
+          badPre.textContent = "# Fragile code (What breaks):\n" + item.badCode + "\n\n# Fixed code (With protection):\n" + item.goodCode;
+          inspectorEl.appendChild(badPre);
+        },
+        { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: item.tabLabel }
+      );
+    }
+
+    function renderActive(isUserClick) {
       pillsBar.replaceChildren();
       items.forEach(function (it, idx) {
         var btn = document.createElement("button");
@@ -221,7 +331,7 @@
         btn.appendChild(sp);
         btn.addEventListener("click", function () {
           activeIdx = idx;
-          renderActive();
+          renderActive(true);
         });
         pillsBar.appendChild(btn);
       });
@@ -229,7 +339,7 @@
       stageHost.replaceChildren();
       var item = items[activeIdx];
 
-      // 1. Headline + Everyday Analogy + Side-by-Side Visual Diagram
+      // Headline + Everyday Analogy + Side-by-Side Visual Diagram + Video/Guide Action Bar
       var visualBox = document.createElement("div");
       visualBox.className = "nested-card";
 
@@ -247,87 +357,8 @@
       visualBox.appendChild(analogyP);
 
       visualBox.appendChild(createSideBySideComparisonSvg(item));
-      stageHost.appendChild(visualBox);
 
-      // 2. Two Simple Cards Side by Side: [What could break] vs. [How to fix it + Video]
-      var twoCol = document.createElement("div");
-      twoCol.className = "detail-two-col";
-
-      // LEFT CARD: What could break + Plain-English Jargon Translator
-      var breakCard = document.createElement("div");
-      breakCard.className = "nested-card";
-      var bBadge = document.createElement("span");
-      bBadge.className = "badge badge-danger";
-      bBadge.textContent = "1. What could break";
-      breakCard.appendChild(bBadge);
-
-      var bList = document.createElement("ul");
-      bList.className = "bullet-list";
-      item.whatBreaksBullets.forEach(function (line) {
-        var li = document.createElement("li");
-        li.className = "bullet-item";
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined bullet-icon";
-        ic.textContent = "warning";
-        var sp = document.createElement("span");
-        sp.textContent = line;
-        li.appendChild(ic);
-        li.appendChild(sp);
-        bList.appendChild(li);
-      });
-      breakCard.appendChild(bList);
-
-      var jargonBox = document.createElement("div");
-      jargonBox.className = "surface-card";
-      var jTitle = document.createElement("strong");
-      jTitle.textContent = "Plain-English translator (if you hear engineers talk about this):";
-      jargonBox.appendChild(jTitle);
-
-      var jList = document.createElement("ul");
-      jList.className = "bullet-list";
-      item.jargonPills.forEach(function (jp) {
-        var li = document.createElement("li");
-        li.className = "bullet-item";
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined bullet-icon";
-        ic.textContent = "translate";
-        var sp = document.createElement("span");
-        var st = document.createElement("strong");
-        st.textContent = jp.word + " = ";
-        sp.appendChild(st);
-        sp.appendChild(document.createTextNode(jp.plain));
-        li.appendChild(ic);
-        li.appendChild(sp);
-        jList.appendChild(li);
-      });
-      jargonBox.appendChild(jList);
-      breakCard.appendChild(jargonBox);
-
-      // RIGHT CARD: How to fix it + Copy AI Prompt + Paired Video
-      var fixCard = document.createElement("div");
-      fixCard.className = "nested-card";
-      var fBadge = document.createElement("span");
-      fBadge.className = "badge badge-success";
-      fBadge.textContent = "2. How to fix it";
-      fixCard.appendChild(fBadge);
-
-      var fList = document.createElement("ul");
-      fList.className = "bullet-list";
-      item.howToFixBullets.forEach(function (line) {
-        var li = document.createElement("li");
-        li.className = "bullet-item";
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined bullet-icon";
-        ic.textContent = "check_circle";
-        var sp = document.createElement("span");
-        sp.textContent = line;
-        li.appendChild(ic);
-        li.appendChild(sp);
-        fList.appendChild(li);
-      });
-      fixCard.appendChild(fList);
-
-      // Action buttons: Watch Video + Read Guide + Copy Prompt + Toggle Code Example
+      // Action buttons: Watch Video + Read Guide + Copy Prompt + Open full breakdown in left panel
       var actionsCluster = document.createElement("div");
       actionsCluster.className = "diagram-pill-cluster";
 
@@ -381,62 +412,15 @@
       });
       actionsCluster.appendChild(copyBtn);
 
-      var codeToggleBtn = document.createElement("button");
-      codeToggleBtn.type = "button";
-      codeToggleBtn.className = "diagram-label-pill" + (showCodeComparison ? " active" : "");
-      var ctIc = document.createElement("span");
-      ctIc.className = "material-symbols-outlined diagram-pill-icon";
-      ctIc.textContent = "code";
-      var ctTxt = document.createElement("span");
-      ctTxt.textContent = showCodeComparison ? "Hide 4-line code example" : "See 4-line code example (Optional)";
-      codeToggleBtn.appendChild(ctIc);
-      codeToggleBtn.appendChild(ctTxt);
-      codeToggleBtn.addEventListener("click", function () {
-        showCodeComparison = !showCodeComparison;
-        renderActive();
-      });
-      actionsCluster.appendChild(codeToggleBtn);
+      visualBox.appendChild(actionsCluster);
+      stageHost.appendChild(visualBox);
 
-      fixCard.appendChild(actionsCluster);
-
-      twoCol.appendChild(breakCard);
-      twoCol.appendChild(fixCard);
-      stageHost.appendChild(twoCol);
-
-      // 3. Optional 4-Line Code Comparison (Only shown when clicked so the page stays super clean!)
-      if (showCodeComparison) {
-        var codeRow = document.createElement("div");
-        codeRow.className = "detail-two-col";
-
-        var badBox = document.createElement("div");
-        badBox.className = "nested-card";
-        var badB = document.createElement("span");
-        badB.className = "badge badge-danger";
-        badB.textContent = "Fragile code (What breaks)";
-        var badPre = document.createElement("div");
-        badPre.className = "vocab-example-box";
-        badPre.textContent = item.badCode;
-        badBox.appendChild(badB);
-        badBox.appendChild(badPre);
-
-        var goodBox = document.createElement("div");
-        goodBox.className = "nested-card";
-        var goodB = document.createElement("span");
-        goodB.className = "badge badge-success";
-        goodB.textContent = "Fixed code (With protection)";
-        var goodPre = document.createElement("div");
-        goodPre.className = "vocab-example-box";
-        goodPre.textContent = item.goodCode;
-        goodBox.appendChild(goodB);
-        goodBox.appendChild(goodPre);
-
-        codeRow.appendChild(badBox);
-        codeRow.appendChild(goodBox);
-        stageHost.appendChild(codeRow);
+      if (isUserClick) {
+        showBreakageInSidePanel(item, true);
       }
     }
 
-    renderActive();
+    renderActive(false);
     card.appendChild(pillsBar);
     card.appendChild(stageHost);
     container.appendChild(card);

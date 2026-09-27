@@ -209,20 +209,6 @@
     termScreen.appendChild(livePromptRow);
 
     termWindow.appendChild(termScreen);
-
-    // Live Key Feedback Box at the bottom of the terminal window
-    var feedbackBox = document.createElement("div");
-    feedbackBox.className = "term-key-feedback-box";
-    var fbBadge = document.createElement("span");
-    fbBadge.className = "badge badge-success";
-    fbBadge.textContent = "What your last key press did";
-    var fbText = document.createElement("p");
-    fbText.className = "resource-desc";
-    fbText.textContent = "Click any glowing key on the right (or press it on your physical keyboard while inside the terminal box) to see what it does live!";
-    feedbackBox.appendChild(fbBadge);
-    feedbackBox.appendChild(fbText);
-    termWindow.appendChild(feedbackBox);
-
     stageGrid.appendChild(termWindow);
 
     // RIGHT COLUMN: CLICK-TO-TEST KEYBOARD KEYS
@@ -236,7 +222,7 @@
     kbTitle.textContent = "Click any key below (or press it on your keyboard) to test it live";
     var kbBadge = document.createElement("span");
     kbBadge.className = "badge badge-secondary";
-    kbBadge.textContent = "6 essential keys";
+    kbBadge.textContent = "6 essential keys · details in left panel";
     kbHeader.appendChild(kbTitle);
     kbHeader.appendChild(kbBadge);
     kbPanel.appendChild(kbHeader);
@@ -323,8 +309,6 @@
           btn.classList.remove("popped");
         }
       });
-      fbBadge.textContent = badgeLabel;
-      fbText.textContent = explanationText;
 
       var kObj = null;
       INTERACTIVE_KEYS.forEach(function (k) {

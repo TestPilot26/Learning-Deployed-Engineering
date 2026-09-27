@@ -15,7 +15,7 @@
     return el;
   }
 
-  function populateHotspotInSidePanel(snap, hs, activeFlow, activeFlowStepIdx) {
+  function populateHotspotInSidePanel(snap, hs, activeFlow, activeFlowStepIdx, isUserClick) {
     if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
     window.PipelineAgent.showInspector(
       function (inspectorEl) {
@@ -43,7 +43,7 @@
         wIcon.className = "material-symbols-outlined safety-icon";
         wIcon.textContent = "touch_app";
         var wText = document.createElement("span");
-        wText.textContent = "When you use it: " + hs.whenYouUseIt;
+        wText.textContent = "When & how you use it: " + hs.whenYouUseIt;
         whenBox.appendChild(wIcon);
         whenBox.appendChild(wText);
 
@@ -55,7 +55,7 @@
         if (hs.tryCommand) {
           var cmdBox = document.createElement("div");
           cmdBox.className = "vocab-example-box pre-line-text";
-          cmdBox.textContent = hs.tryCommand;
+          cmdBox.textContent = "Shortcut / terminal equivalent:  " + hs.tryCommand;
           inspectorEl.appendChild(cmdBox);
         }
 
@@ -75,8 +75,8 @@
       },
       {
         itemTitle: hs.title,
-        autoOpen: false,
-        pulse: false
+        autoOpen: Boolean(isUserClick),
+        pulse: Boolean(isUserClick)
       }
     );
   }
@@ -203,6 +203,8 @@
             activeHotspotId = firstInGroup.hotspots[0].id;
           }
           render(false);
+          var newSnap = getActiveSnap();
+          populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
         });
         menuBar.appendChild(btn);
       });
@@ -256,65 +258,14 @@
           activeHotspotId = s.hotspots[0].id;
           activeFlowId = null;
           render(false);
+          var newSnap = getActiveSnap();
+          populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
         });
         snapTabsRow.appendChild(sBtn);
       });
       mount.appendChild(snapTabsRow);
 
-      // C. Illustrative Step-by-Step How-To Flows Bar
-      var flowsBox = document.createElement("div");
-      flowsBox.className = "nested-card ui-tour-flows-box";
-      var flowsHeader = document.createElement("div");
-      flowsHeader.className = "resource-title-row";
-      var flBadge = document.createElement("span");
-      flBadge.className = "badge badge-success";
-      flBadge.textContent = "Illustrative step-by-step flows — see how to open, clone, run, commit & secure files";
-      flowsHeader.appendChild(flBadge);
-
-      if (currentFlow) {
-        var exitFlowBtn = document.createElement("button");
-        exitFlowBtn.type = "button";
-        exitFlowBtn.className = "diagram-label-pill";
-        var efIc = document.createElement("span");
-        efIc.className = "material-symbols-outlined diagram-pill-icon";
-        efIc.textContent = "close";
-        var efTxt = document.createElement("span");
-        efTxt.textContent = "Exit guided flow";
-        exitFlowBtn.appendChild(efIc);
-        exitFlowBtn.appendChild(efTxt);
-        exitFlowBtn.addEventListener("click", function () {
-          activeFlowId = null;
-          render(false);
-        });
-        flowsHeader.appendChild(exitFlowBtn);
-      }
-      flowsBox.appendChild(flowsHeader);
-
-      var flowsPillsRow = document.createElement("div");
-      flowsPillsRow.className = "diagram-pill-cluster";
-      flows.forEach(function (fl) {
-        var fBtn = document.createElement("button");
-        fBtn.type = "button";
-        fBtn.className = "diagram-label-pill" + (activeFlowId === fl.id ? " active" : "");
-        var fIc = document.createElement("span");
-        fIc.className = "material-symbols-outlined diagram-pill-icon";
-        fIc.textContent = fl.icon;
-        var fTxt = document.createElement("span");
-        fTxt.textContent = fl.title;
-        var fTag = document.createElement("span");
-        fTag.className = "diagram-pill-tag";
-        fTag.textContent = fl.badge;
-        fBtn.appendChild(fIc);
-        fBtn.appendChild(fTxt);
-        fBtn.appendChild(fTag);
-        fBtn.addEventListener("click", function () {
-          applyFlowStep(fl, 0, true);
-        });
-        flowsPillsRow.appendChild(fBtn);
-      });
-      flowsBox.appendChild(flowsPillsRow);
-
-      // Active Flow Stepper Banner (when a flow is selected)
+      // Active Flow Compact Stepper Controls (when a flow is selected; full explanation lives only in Left Side Panel)
       if (currentFlow) {
         var st = currentFlow.steps[activeFlowStepIdx];
         var stepperCard = document.createElement("div");
@@ -330,7 +281,7 @@
         stBadge.textContent = st.stepTitle;
         var stSnapBadge = document.createElement("span");
         stSnapBadge.className = "badge badge-secondary";
-        stSnapBadge.textContent = "Viewing: " + snap.shortTitle + " (Pin #" + currentHs.num + ")";
+        stSnapBadge.textContent = "Viewing: " + snap.shortTitle + " (Pin #" + currentHs.num + " — details in left panel)";
         stepTitleGroup.appendChild(stBadge);
         stepTitleGroup.appendChild(stSnapBadge);
         stepTopRow.appendChild(stepTitleGroup);
@@ -357,22 +308,25 @@
           applyFlowStep(currentFlow, nextIdx, true);
         });
 
+        var exitFlowBtn = document.createElement("button");
+        exitFlowBtn.type = "button";
+        exitFlowBtn.className = "diagram-label-pill";
+        exitFlowBtn.textContent = "✕ Exit flow";
+        exitFlowBtn.addEventListener("click", function () {
+          activeFlowId = null;
+          render(false);
+        });
+
         stepNavBtns.appendChild(prevBtn);
         stepNavBtns.appendChild(nextBtn);
+        stepNavBtns.appendChild(exitFlowBtn);
         stepTopRow.appendChild(stepNavBtns);
 
-        var stInstP = document.createElement("p");
-        stInstP.className = "ui-tour-flow-instruction";
-        stInstP.textContent = st.instruction;
-
         stepperCard.appendChild(stepTopRow);
-        stepperCard.appendChild(stInstP);
-        flowsBox.appendChild(stepperCard);
+        mount.appendChild(stepperCard);
       }
 
-      mount.appendChild(flowsBox);
-
-      // D. Annotated Screenshot Canvas with Clickable Hotspot Buttons & SVG Flow Overlay
+      // C. Annotated Screenshot Canvas with Clickable Hotspot Buttons & SVG Flow Overlay
       var stageWrap = document.createElement("div");
       stageWrap.className = "ui-tour-stage-wrap";
 
@@ -462,7 +416,7 @@
 
       stageWrap.appendChild(imgContainer);
 
-      // E. Numbered Quick-Select Button Strip + Selected Button Detail Card Below Image
+      // D. Numbered Quick-Select Button Strip Below Image (opens details in Left Side Panel)
       var quickStrip = document.createElement("div");
       quickStrip.className = "diagram-pill-cluster";
       snap.hotspots.forEach(function (hs) {
@@ -483,59 +437,46 @@
         quickStrip.appendChild(qBtn);
       });
       stageWrap.appendChild(quickStrip);
-
-      // F. Live Selected Button Explanation Card
-      var detailCard = document.createElement("div");
-      detailCard.className = "surface-card ui-tour-detail-card";
-
-      var dTop = document.createElement("div");
-      dTop.className = "resource-title-row";
-      var dBadges = document.createElement("div");
-      dBadges.className = "badge-row";
-      var db1 = document.createElement("span");
-      db1.className = "badge badge-info";
-      db1.textContent = "Selected button · Pin #" + currentHs.num + " on " + snap.shortTitle;
-      var db2 = document.createElement("span");
-      db2.className = "badge badge-secondary";
-      db2.textContent = currentHs.category;
-      dBadges.appendChild(db1);
-      dBadges.appendChild(db2);
-      dTop.appendChild(dBadges);
-
-      var dTitle = document.createElement("h4");
-      dTitle.textContent = currentHs.title;
-
-      var dBody = document.createElement("p");
-      dBody.className = "resource-desc pre-line-text";
-      dBody.textContent = currentHs.whatItDoes;
-
-      var dWhen = document.createElement("div");
-      dWhen.className = "arch-mode-banner good-mode";
-      var dwIc = document.createElement("span");
-      dwIc.className = "material-symbols-outlined safety-icon";
-      dwIc.textContent = "check_circle";
-      var dwTxt = document.createElement("span");
-      dwTxt.textContent = "When & how you use it: " + currentHs.whenYouUseIt;
-      dWhen.appendChild(dwIc);
-      dWhen.appendChild(dwTxt);
-
-      detailCard.appendChild(dTop);
-      detailCard.appendChild(dTitle);
-      detailCard.appendChild(dBody);
-      detailCard.appendChild(dWhen);
-
-      if (currentHs.tryCommand) {
-        var dCmd = document.createElement("div");
-        dCmd.className = "vocab-example-box pre-line-text";
-        dCmd.textContent = "Shortcut / terminal equivalent:  " + currentHs.tryCommand;
-        detailCard.appendChild(dCmd);
-      }
-
-      stageWrap.appendChild(detailCard);
       mount.appendChild(stageWrap);
 
+      // E. Illustrative Step-by-Step How-To Flows Bar (placed cleanly below the screenshot)
+      var flowsBox = document.createElement("div");
+      flowsBox.className = "nested-card ui-tour-flows-box";
+      var flowsHeader = document.createElement("div");
+      flowsHeader.className = "resource-title-row";
+      var flBadge = document.createElement("span");
+      flBadge.className = "badge badge-success";
+      flBadge.textContent = "Illustrative step-by-step flows — click any flow to trace steps across screens";
+      flowsHeader.appendChild(flBadge);
+      flowsBox.appendChild(flowsHeader);
+
+      var flowsPillsRow = document.createElement("div");
+      flowsPillsRow.className = "diagram-pill-cluster";
+      flows.forEach(function (fl) {
+        var fBtn = document.createElement("button");
+        fBtn.type = "button";
+        fBtn.className = "diagram-label-pill" + (activeFlowId === fl.id ? " active" : "");
+        var fIc = document.createElement("span");
+        fIc.className = "material-symbols-outlined diagram-pill-icon";
+        fIc.textContent = fl.icon;
+        var fTxt = document.createElement("span");
+        fTxt.textContent = fl.title;
+        var fTag = document.createElement("span");
+        fTag.className = "diagram-pill-tag";
+        fTag.textContent = fl.badge;
+        fBtn.appendChild(fIc);
+        fBtn.appendChild(fTxt);
+        fBtn.appendChild(fTag);
+        fBtn.addEventListener("click", function () {
+          applyFlowStep(fl, 0, true);
+        });
+        flowsPillsRow.appendChild(fBtn);
+      });
+      flowsBox.appendChild(flowsPillsRow);
+      mount.appendChild(flowsBox);
+
       if (openSidePanel) {
-        populateHotspotInSidePanel(snap, currentHs, currentFlow, activeFlowStepIdx);
+        populateHotspotInSidePanel(snap, currentHs, currentFlow, activeFlowStepIdx, true);
       }
     }
 
