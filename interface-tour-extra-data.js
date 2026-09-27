@@ -24,11 +24,8 @@
       subtitle: "What happens after you push code to GitHub: Vercel builds your app, gives you a live public URL, stores your encrypted API keys, and streams server logs.",
       hotspots: [
         {
-          id: "vc-prod-domain",
-          num: "1",
-          shortLabel: "Live .vercel.app URL",
-          x: 34.0,
-          y: 29.5,
+          id: "vc-prod-domain", num: "1", shortLabel: "Live .vercel.app URL",
+          x: 42.8, y: 30.3, w: 32.5, h: 5.2,
           title: "Production Deployment card & public '.vercel.app' URL",
           category: "Cloud hosting · Your live public website",
           whatItDoes: "Shows the live production version of your app and its public HTTPS domain (e.g. 'https://tech-tree-app.vercel.app') that anyone in the world can open on their phone or laptop.",
@@ -36,11 +33,8 @@
           tryCommand: "git push origin main  ->  auto-updates this URL"
         },
         {
-          id: "vc-git-preview",
-          num: "2",
-          shortLabel: "Git commit & Preview URL",
-          x: 24.0,
-          y: 49.0,
+          id: "vc-git-preview", num: "2", shortLabel: "Git commit & Preview URL",
+          x: 31.6, y: 50.2, w: 54.8, h: 6.4,
           title: "Source Git Commit ('7ecde05') & Automatic Preview Branch URLs",
           category: "Cloud hosting · Test branches before going live",
           whatItDoes: "• Links directly to the exact GitHub commit ('7ecde05' on 'main') currently running in production.\n• Below it, every Pull Request or feature branch gets its own private 'Preview URL' so you can test changes on a real cloud server before merging to 'main'!",
@@ -48,11 +42,8 @@
           tryCommand: "git push -u origin feat/my-branch  ->  creates a Preview URL"
         },
         {
-          id: "vc-instant-rollback",
-          num: "3",
-          shortLabel: "↺ Instant Rollback",
-          x: 84.0,
-          y: 11.5,
+          id: "vc-instant-rollback", num: "3", shortLabel: "↺ Instant Rollback",
+          x: 91.5, y: 11.6, w: 13.0, h: 4.8,
           title: "'↺ Instant Rollback' button (1-click emergency recovery)",
           category: "Reliability · Revert a broken deploy in 1 second",
           whatItDoes: "If you push a bug to production, clicking 'Instant Rollback' immediately switches live traffic back to your previous working deployment without waiting for a new build.",
@@ -60,11 +51,8 @@
           tryCommand: "Vercel Dashboard -> Instant Rollback (or git revert HEAD)"
         },
         {
-          id: "vc-build-runtime-logs",
-          num: "4",
-          shortLabel: "Build & Runtime Logs (500)",
-          x: 26.0,
-          y: 77.0,
+          id: "vc-build-runtime-logs", num: "4", shortLabel: "Build & Runtime Logs (500)",
+          x: 31.6, y: 79.4, w: 56.8, h: 7.4,
           title: "Build Logs & Serverless Function Runtime Logs",
           category: "Observability · Read cloud crash tracebacks",
           whatItDoes: "• Build Logs: Shows 'npm run build' or Python library install errors if a deployment fails while building.\n• Runtime Logs: Streams live messages ('200 OK' vs. '500 ERROR') from your running backend endpoints (often called 'Serverless Functions' — small backend functions that wake up whenever a user clicks a button). Notice how the red log immediately tells you 'KeyError: STRIPE_SECRET_KEY missing'!",
@@ -72,11 +60,8 @@
           tryCommand: "Filter logs by 'Error (500)' to spot missing env keys or crashes"
         },
         {
-          id: "vc-env-variables",
-          num: "5",
-          shortLabel: "Environment Variables",
-          x: 74.0,
-          y: 31.0,
+          id: "vc-env-variables", num: "5", shortLabel: "Environment Variables",
+          x: 80.2, y: 32.0, w: 32.4, h: 14.0,
           title: "Settings ➔ Environment Variables (Your cloud '.env' vault)",
           category: "Security · Where secret API keys live in the cloud",
           whatItDoes: "Because your local '.env' file is ignored by '.gitignore' and never uploaded to GitHub, Vercel doesn't have your API keys until you paste them here! Values are encrypted (scrambled safely in storage) and handed directly to your running Python ('os.environ') or JavaScript ('process.env') code when the server runs.",
@@ -84,11 +69,8 @@
           tryCommand: "Settings -> Environment Variables -> Add Key -> Redeploy"
         },
         {
-          id: "vc-web-analytics",
-          num: "6",
-          shortLabel: "Web Analytics (Visitors)",
-          x: 74.0,
-          y: 74.0,
+          id: "vc-web-analytics", num: "6", shortLabel: "Web Analytics (Visitors)",
+          x: 80.2, y: 75.2, w: 32.4, h: 9.2,
           title: "Web Analytics (Private visitor & pageview counter)",
           category: "Analytics · See how many people visit your app",
           whatItDoes: "Shows unique visitors, total page views, and top routes over the last 7/30 days—visible only to you when logged into your Vercel dashboard, without needing cookie banners.",
@@ -112,11 +94,8 @@
       subtitle: "Your X-ray goggles inside Chrome (Right-click -> Inspect, or Cmd+Option+I): inspect HTML/CSS, read red JS errors, and watch every API call.",
       hotspots: [
         {
-          id: "dt-inspect-picker",
-          num: "1",
-          shortLabel: "Inspect Element (↖)",
-          x: 16.0,
-          y: 29.0,
+          id: "dt-inspect-picker", num: "1", shortLabel: "Inspect Element (↖)",
+          x: 21.3, y: 30.9, w: 38.8, h: 13.4,
           title: "Element Picker ('↖') & Blue Box-Model Highlight",
           category: "Frontend X-ray · Click any button on the page",
           whatItDoes: "Click the top-left '↖' cursor icon in DevTools (or right-click any button on a webpage and choose 'Inspect'). Hovering over the page highlights the element's exact pixel size ('188 × 38 px'), padding, and jumps straight to its '<button>' tag in the HTML tree.",
@@ -124,11 +103,8 @@
           tryCommand: "Shortcut: Cmd+Shift+C (Mac) or Ctrl+Shift+C (Windows)"
         },
         {
-          id: "dt-device-toolbar",
-          num: "2",
-          shortLabel: "Mobile Preview (📱)",
-          x: 47.0,
-          y: 14.5,
+          id: "dt-device-toolbar", num: "2", shortLabel: "Mobile Preview (📱)",
+          x: 47.0, y: 14.7, w: 6.2, h: 4.6,
           title: "Toggle Device Toolbar ('📱' phone/tablet simulator)",
           category: "Responsive design · Test iPhone & iPad layouts",
           whatItDoes: "Shrinks your browser viewport to simulate an iPhone, Pixel, or iPad screen right on your laptop so you can verify your app doesn't overflow horizontally on mobile.",
@@ -136,11 +112,8 @@
           tryCommand: "Shortcut: Cmd+Shift+M (Mac) toggles Mobile Device view"
         },
         {
-          id: "dt-elements-styles",
-          num: "3",
-          shortLabel: "Elements & Live CSS",
-          x: 62.0,
-          y: 29.5,
+          id: "dt-elements-styles", num: "3", shortLabel: "Elements & Live CSS",
+          x: 71.5, y: 29.7, w: 54.8, h: 21.2,
           title: "'Elements' HTML DOM Tree & 'Styles' Live CSS Editor",
           category: "Frontend X-ray · Experiment with CSS live",
           whatItDoes: "• Left ('Elements'): Shows the live HTML DOM tree (Document Object Model — the browser's live family tree of every heading, button, and box on the page).\n• Right ('Styles'): Lets you click any CSS property (like 'padding: 8px 16px' or 'var(--color-primary)') and type a new value to preview the change instantly!",
@@ -148,11 +121,8 @@
           tryCommand: "Right-click any element -> Inspect -> Edit Styles pane"
         },
         {
-          id: "dt-network-tab",
-          num: "4",
-          shortLabel: "Network (200 vs 500)",
-          x: 58.0,
-          y: 55.0,
+          id: "dt-network-tab", num: "4", shortLabel: "Network (200 vs 500)",
+          x: 71.5, y: 54.4, w: 53.8, h: 8.6,
           title: "'Network' tab (Inspect every API request, status code & latency)",
           category: "API debugging · Is it a frontend or backend bug?",
           whatItDoes: "Lists every file and API call your page makes:\n• Green '200 OK' ('/api/ask-guide', 380ms): Request succeeded! Click it to read the JSON response.\n• Red '500 Error' ('/api/save-note'): Your backend server crashed! Click the red row -> 'Response' tab to see the exact error payload.",
@@ -160,11 +130,8 @@
           tryCommand: "Network tab -> Click request row -> Preview / Response tab"
         },
         {
-          id: "dt-disable-cache",
-          num: "5",
-          shortLabel: "Disable cache & Hard Refresh",
-          x: 80.0,
-          y: 44.0,
+          id: "dt-disable-cache", num: "5", shortLabel: "Disable cache & Hard Refresh",
+          x: 88.8, y: 44.1, w: 18.0, h: 3.8,
           title: "'☑ Disable cache' checkbox & Hard Refresh (Cmd+Shift+R)",
           category: "Browser cache · Why didn't my code change show up?",
           whatItDoes: "Browsers aggressively cache old '.css' and '.js' files for speed. Checking '☑ Disable cache' keeps Chrome from serving stale files whenever DevTools is open!",
@@ -172,11 +139,8 @@
           tryCommand: "Cmd+Shift+R (Mac) / Ctrl+Shift+R (Windows)"
         },
         {
-          id: "dt-console-drawer",
-          num: "6",
-          shortLabel: "Console (JS Errors)",
-          x: 56.0,
-          y: 76.5,
+          id: "dt-console-drawer", num: "6", shortLabel: "Console (JS Errors)",
+          x: 61.0, y: 75.6, w: 32.0, h: 8.6,
           title: "'Console' tab (Red JavaScript errors & interactive JS prompt)",
           category: "JavaScript debugging · Exact file & line number",
           whatItDoes: "Prints every 'console.log()' message and highlights uncaught JavaScript crashes in red—including the exact file and line number (e.g. 'app.js:142') where the error happened! You can also type JS expressions at the '>' prompt.",
@@ -184,11 +148,8 @@
           tryCommand: "Shortcut: Cmd+Option+J (Mac) opens the Console directly"
         },
         {
-          id: "dt-application-storage",
-          num: "7",
-          shortLabel: "Application (LocalStorage)",
-          x: 82.0,
-          y: 79.0,
+          id: "dt-application-storage", num: "7", shortLabel: "Application (LocalStorage)",
+          x: 88.8, y: 78.4, w: 18.6, h: 9.0,
           title: "'Application' tab (Inspect LocalStorage, Cookies & Session tokens)",
           category: "Browser storage · Saved preferences & login cookies",
           whatItDoes: "Shows every key-value pair saved in your browser's 'localStorage' (a small notebook built into the browser that remembers non-sensitive settings like dark/light mode) and your login cookies ('HttpOnly ✓' — secure login passes that browser scripts cannot steal).",
@@ -212,11 +173,8 @@
       subtitle: "Where your app's permanent memory lives in the cloud: browse tables like a spreadsheet, run SQL queries, and copy your pooled DATABASE_URL.",
       hotspots: [
         {
-          id: "db-table-editor",
-          num: "1",
-          shortLabel: "Table Editor (Rows & PK)",
-          x: 38.0,
-          y: 24.0,
+          id: "db-table-editor", num: "1", shortLabel: "Table Editor (Rows & PK)",
+          x: 60.0, y: 26.6, w: 75.6, h: 20.0,
           title: "Table Editor ('public.users' spreadsheet view & Primary Keys)",
           category: "Database · View & edit persistent cloud data",
           whatItDoes: "Displays your PostgreSQL database tables just like a Google Sheet or Airtable! Each column has a strict data type—like 'PK' (Primary Key, the unique ID badge for each row, often a random 'uuid' ID string), 'text unique', or 'timestamptz' (timestamp with timezone)—and rows stay saved safely even when your web server restarts.",
@@ -224,11 +182,8 @@
           tryCommand: "Click '+ Insert row' to add test data visually"
         },
         {
-          id: "db-branches",
-          num: "2",
-          shortLabel: "Database Branches",
-          x: 51.0,
-          y: 5.5,
+          id: "db-branches", num: "2", shortLabel: "Database Branches",
+          x: 54.1, y: 4.1, w: 19.2, h: 4.4,
           title: "Database Branch selector ('main' vs. preview branches)",
           category: "Serverless Postgres · Git-style branches for data",
           whatItDoes: "Modern serverless databases like Neon let you create an instant isolated branch copy of your database so you can test schema migrations (adding or renaming columns) without risking real production user data.",
@@ -236,11 +191,8 @@
           tryCommand: "neon branches create --name preview-feature"
         },
         {
-          id: "db-rls-badge",
-          num: "3",
-          shortLabel: "RLS Policies (Security)",
-          x: 72.0,
-          y: 13.5,
+          id: "db-rls-badge", num: "3", shortLabel: "RLS Policies (Security)",
+          x: 73.3, y: 4.1, w: 16.4, h: 4.4,
           title: "Row Level Security ('RLS Policies: Enabled')",
           category: "Database security · Prevent users seeing others' rows",
           whatItDoes: "In Supabase and Postgres, Row Level Security (RLS) enforces rules inside the database itself (e.g. 'auth.uid() = user_id') so User A can never query or delete User B's rows.",
@@ -248,11 +200,8 @@
           tryCommand: "ALTER TABLE notes ENABLE ROW LEVEL SECURITY;"
         },
         {
-          id: "db-connect-url",
-          num: "4",
-          shortLabel: "Connect & DATABASE_URL",
-          x: 78.0,
-          y: 69.0,
+          id: "db-connect-url", num: "4", shortLabel: "Connect & DATABASE_URL",
+          x: 82.7, y: 75.6, w: 28.2, h: 20.6,
           title: "'🔌 Connect' modal & Pooled 'DATABASE_URL' connection string",
           category: "Essential action · Connect your code to the database",
           whatItDoes: "Clicking 'Connect' gives you the 'DATABASE_URL' connection string (an all-in-one address containing your username, password, database host, and '?sslmode=require' for encrypted traffic). Checking '☑ Connection Pooling' ('-pooler' — a shared switchboard for database connections) prevents cloud servers from running out of connections under heavy traffic.",
@@ -260,11 +209,8 @@
           tryCommand: "Paste into .env:  DATABASE_URL=\"postgresql://...\""
         },
         {
-          id: "db-sql-editor",
-          num: "5",
-          shortLabel: "SQL Editor & Indexes",
-          x: 34.0,
-          y: 61.0,
+          id: "db-sql-editor", num: "5", shortLabel: "SQL Editor & Indexes",
+          x: 43.2, y: 69.5, w: 42.4, h: 26.0,
           title: "SQL Editor ('▷ Run SQL' & 'CREATE INDEX')",
           category: "Database queries · Fast filtering & indexing",
           whatItDoes: "Lets you run raw SQL queries ('SELECT ... FROM users WHERE ...') and create indexes ('CREATE INDEX idx_users_email ON users(email)'). An index is like a book's index—it makes lookups take 3 milliseconds instead of scanning every row!",
@@ -272,11 +218,8 @@
           tryCommand: "CREATE INDEX idx_users_email ON users(email);"
         },
         {
-          id: "db-left-nav",
-          num: "6",
-          shortLabel: "Schema, Auth & Backups",
-          x: 9.5,
-          y: 36.0,
+          id: "db-left-nav", num: "6", shortLabel: "Schema, Auth & Backups",
+          x: 9.6, y: 26.0, w: 17.0, h: 32.0,
           title: "Left navigation (Table Editor, SQL, Auth Users & Point-in-Time Backups)",
           category: "Database navigation · All tables & automated backups",
           whatItDoes: "Switches between your table list ('users', 'flashcards', 'study_sessions'), built-in user Authentication management, Row Level Security rules, and automated Point-in-Time Recovery backups.",
@@ -300,11 +243,8 @@
       subtitle: "How to read a real Mac Terminal window: your folder prompt, Homebrew & uv virtual environments, a running localhost server, and a terminal AI agent.",
       hotspots: [
         {
-          id: "tm-title-bar",
-          num: "1",
-          shortLabel: "Window bar (my-app — -zsh)",
-          x: 40.0,
-          y: 5.0,
+          id: "tm-title-bar", num: "1", shortLabel: "Window bar (my-app — -zsh)",
+          x: 45.0, y: 3.6, w: 24.0, h: 4.6,
           title: "Terminal window header ('📁 my-app — -zsh — 120×36') & Split Tabs",
           category: "Terminal anatomy · Current folder & active shell",
           whatItDoes: "The top bar always tells you three things: (1) which folder you are currently standing inside ('my-app'), (2) which command-line shell is running ('-zsh', the default Mac shell), and (3) your open terminal tabs ('Tab 1: zsh & server', 'Tab 2: claude agent').",
@@ -312,11 +252,8 @@
           tryCommand: "Cmd+T opens a new terminal tab; pwd prints your full folder path"
         },
         {
-          id: "tm-brew-uv",
-          num: "2",
-          shortLabel: "brew install & uv",
-          x: 16.0,
-          y: 24.5,
+          id: "tm-brew-uv", num: "2", shortLabel: "brew install & uv",
+          x: 26.5, y: 24.8, w: 46.5, h: 8.4,
           title: "Installing developer tools with Homebrew ('brew install uv gh')",
           category: "Package managers · The App Store for your terminal",
           whatItDoes: "Running 'brew install uv gh' uses Homebrew to download and install official command-line tools ('uv' for fast Python environments, 'gh' for GitHub CLI) into Mac's official tool folder ('/opt/homebrew/') and registers them in your Terminal's PATH lookup list automatically.",
@@ -324,11 +261,8 @@
           tryCommand: "brew install uv gh node"
         },
         {
-          id: "tm-venv-prompt",
-          num: "3",
-          shortLabel: "(.venv) prompt prefix",
-          x: 16.0,
-          y: 39.0,
+          id: "tm-venv-prompt", num: "3", shortLabel: "(.venv) prompt prefix",
+          x: 26.5, y: 38.8, w: 47.8, h: 5.4,
           title: "The green '(.venv)' prefix in front of your prompt",
           category: "Python isolation · Your project's private bubble",
           whatItDoes: "After you run 'uv venv && source .venv/bin/activate', notice how '(.venv)' appears at the very start of your prompt! That confirms any Python packages you install ('fastapi', 'pytest') go cleanly into this project's '.venv' folder instead of polluting your Mac's system Python.",
@@ -336,11 +270,8 @@
           tryCommand: "uv venv && source .venv/bin/activate"
         },
         {
-          id: "tm-localhost-ctrlc",
-          num: "4",
-          shortLabel: "localhost:8000 & Ctrl+C",
-          x: 18.0,
-          y: 66.5,
+          id: "tm-localhost-ctrlc", num: "4", shortLabel: "localhost:8000 & Ctrl+C",
+          x: 26.5, y: 68.6, w: 47.8, h: 14.8,
           title: "Running local server ('http://127.0.0.1:8000') & 'Press CTRL+C to quit'",
           category: "Local server · Why the terminal stops showing a prompt",
           whatItDoes: "When you start a web server ('uvicorn server:app --reload' or 'npm run dev'), the terminal stays busy listening for browser requests and printing live access logs ('GET / 200 OK'). It is NOT frozen—it is actively serving your site!",
@@ -348,11 +279,8 @@
           tryCommand: "Press Ctrl + C (Control+C, even on a Mac!) to stop a server"
         },
         {
-          id: "tm-claude-diff",
-          num: "5",
-          shortLabel: "Claude / Gemini CLI diff",
-          x: 68.0,
-          y: 34.0,
+          id: "tm-claude-diff", num: "5", shortLabel: "Claude / Gemini CLI diff",
+          x: 75.5, y: 39.5, w: 43.0, h: 14.2,
           title: "Terminal AI Coding Agent ('claude' / 'gemini') & Red/Green Diff Preview",
           category: "AI coding agent · Autonomous multi-file edits",
           whatItDoes: "When you launch a terminal agent inside your project folder, it reads your 'CLAUDE.md' / 'GEMINI.md' rules, inspects your files, and shows you a red (-) and green (+) diff of the exact lines it wants to change before touching disk.",
@@ -360,11 +288,8 @@
           tryCommand: "claude   (launches interactive terminal agent in current folder)"
         },
         {
-          id: "tm-permission-gate",
-          num: "6",
-          shortLabel: "Agent Permission Gate ([1])",
-          x: 68.0,
-          y: 56.0,
+          id: "tm-permission-gate", num: "6", shortLabel: "Agent Permission Gate ([1])",
+          x: 75.5, y: 55.9, w: 43.0, h: 14.0,
           title: "Human-in-the-Loop Permission Prompt ('Allow agent to edit & run pytest?')",
           category: "Agent safety · Approve edits & automatic test verification",
           whatItDoes: "Before modifying files or running shell commands, the terminal agent pauses and asks for your approval ('[1] Yes', '[2] Yes, don't ask again for pytest', '[3] No / Esc'). Immediately after applying the edit, it runs 'pytest' to prove the change works!",

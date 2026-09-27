@@ -93,7 +93,6 @@
     var activeHotspotId = initialSnap.hotspots[0].id;
     var activeFlowId = null;
     var activeFlowStepIdx = 0;
-    var showLabelsOnImage = false;
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card ui-tour-shell";
@@ -111,11 +110,11 @@
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Explore where things are: Click any button on GitHub, VS Code, Vercel, Chrome DevTools, Cloud DB, or Terminal";
+    h3.textContent = "Explore where things are: Click any circled feature on GitHub, VS Code, Vercel, Chrome DevTools, Cloud DB, or Terminal";
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "Choose any developer tool below, click any numbered button directly on the interface snapshot to see what it does and when you use it, or click one of the 8 guided step-by-step flows to trace how tasks work across screens.";
+      "Choose any developer tool below and click any circled feature directly on the interface snapshot (or its numbered pill below the image) to read what it does in the Left Side Panel, or click one of the 8 guided step-by-step flows.";
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
     titleCol.appendChild(subP);
@@ -209,21 +208,6 @@
         menuBar.appendChild(btn);
       });
 
-      var toggleLabelsBtn = document.createElement("button");
-      toggleLabelsBtn.type = "button";
-      toggleLabelsBtn.className = "diagram-label-pill ui-tour-label-toggle";
-      var tlIcon = document.createElement("span");
-      tlIcon.className = "material-symbols-outlined diagram-pill-icon";
-      tlIcon.textContent = showLabelsOnImage ? "visibility" : "pin";
-      var tlTxt = document.createElement("span");
-      tlTxt.textContent = showLabelsOnImage ? "Pin style: Full labels (Click for compact numbers)" : "Pin style: Compact numbers (Click for full labels)";
-      toggleLabelsBtn.appendChild(tlIcon);
-      toggleLabelsBtn.appendChild(tlTxt);
-      toggleLabelsBtn.addEventListener("click", function () {
-        showLabelsOnImage = !showLabelsOnImage;
-        render(false);
-      });
-      menuBar.appendChild(toggleLabelsBtn);
       mount.appendChild(menuBar);
 
       // B. Snapshot View Sub-Tabs (All 10 interface views)
@@ -281,7 +265,7 @@
         stBadge.textContent = st.stepTitle;
         var stSnapBadge = document.createElement("span");
         stSnapBadge.className = "badge badge-secondary";
-        stSnapBadge.textContent = "Viewing: " + snap.shortTitle + " (Pin #" + currentHs.num + " — details in left panel)";
+        stSnapBadge.textContent = "Viewing: " + snap.shortTitle + " (Circle #" + currentHs.num + " — details in left panel)";
         stepTitleGroup.appendChild(stBadge);
         stepTitleGroup.appendChild(stSnapBadge);
         stepTopRow.appendChild(stepTitleGroup);
@@ -326,7 +310,7 @@
         mount.appendChild(stepperCard);
       }
 
-      // C. Annotated Screenshot Canvas with Clickable Hotspot Buttons & SVG Flow Overlay
+      // C. Annotated Screenshot Canvas with Transparent Clickable Highlight Circles & SVG Flow Overlay
       var stageWrap = document.createElement("div");
       stageWrap.className = "ui-tour-stage-wrap";
 
@@ -348,7 +332,7 @@
       imgEl.alt = snap.tabTitle;
       imgContainer.appendChild(imgEl);
 
-      // If a flow has consecutive steps on this same snapshot, draw an animated SVG arrow between those pins!
+      // If a flow has consecutive steps on this same snapshot, draw an animated SVG arrow between those circles!
       if (currentFlow) {
         var svgOverlay = svgEl("svg", {
           viewBox: "0 0 100 100",
@@ -380,31 +364,27 @@
         imgContainer.appendChild(svgOverlay);
       }
 
-      // Render Clickable Hotspot Buttons directly over the screenshot
+      // Render Transparent Clickable Highlight Circles/Rings around the real UI features on the screenshot
       snap.hotspots.forEach(function (hs) {
         var isSelected = hs.id === currentHs.id;
         var pinBtn = document.createElement("button");
         pinBtn.type = "button";
-        var showThisLabel = showLabelsOnImage || isSelected;
+        var isTallRegion = (hs.h || 5) > 8 || (hs.w || 10) > 22;
         pinBtn.className =
           "ui-tour-hotspot-pin" +
           (isSelected ? " active" : "") +
-          (showThisLabel ? " with-label" : " compact-pin");
+          (isTallRegion ? " region-ring" : " pill-ring");
         pinBtn.style.left = hs.x + "%";
         pinBtn.style.top = hs.y + "%";
-        pinBtn.setAttribute("aria-label", "Pin " + hs.num + ": " + hs.title);
+        pinBtn.style.width = (hs.w || 10) + "%";
+        pinBtn.style.height = (hs.h || 5.2) + "%";
+        pinBtn.title = "#" + hs.num + " · " + hs.shortLabel + " — Click to view explanation in left panel";
+        pinBtn.setAttribute("aria-label", "Circle " + hs.num + ": " + hs.title);
 
         var numBadge = document.createElement("span");
         numBadge.className = "ui-tour-pin-num";
         numBadge.textContent = hs.num;
         pinBtn.appendChild(numBadge);
-
-        if (showThisLabel) {
-          var lblSpan = document.createElement("span");
-          lblSpan.className = "ui-tour-pin-label";
-          lblSpan.textContent = hs.shortLabel;
-          pinBtn.appendChild(lblSpan);
-        }
 
         pinBtn.addEventListener("click", function () {
           activeHotspotId = hs.id;

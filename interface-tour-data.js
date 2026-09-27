@@ -19,11 +19,8 @@
       subtitle: "The main front door of a GitHub project: where your folders, files, commit history, and the green '<> Code' clone button live.",
       hotspots: [
         {
-          id: "gh-repo-code-tab",
-          num: "1",
-          shortLabel: "<> Code tab",
-          x: 7.0,
-          y: 6.5,
+          id: "gh-repo-code-tab", num: "1", shortLabel: "<> Code tab",
+          x: 3.5, y: 7.5, w: 5.8, h: 4.8,
           title: "<> Code tab (Project files home)",
           category: "GitHub navigation · File browser",
           whatItDoes: "Shows all the folders and plain-text code files inside this repository, plus the project's README.md instruction manual at the bottom.",
@@ -31,11 +28,8 @@
           tryCommand: "Browser view of your Git repository root"
         },
         {
-          id: "gh-repo-prs-tab",
-          num: "2",
-          shortLabel: "Pull requests",
-          x: 18.0,
-          y: 15.0,
+          id: "gh-repo-prs-tab", num: "2", shortLabel: "Pull requests",
+          x: 16.0, y: 7.5, w: 9.4, h: 4.8,
           title: "Pull requests tab (Review changes before merging)",
           category: "GitHub navigation · Code review",
           whatItDoes: "Lists every open Pull Request ('PR')—a waiting room where you or a teammate (or an AI agent like Devin/Claude) propose merging a feature branch into your official 'main' branch.",
@@ -43,11 +37,8 @@
           tryCommand: "Compare branch diff -> Click 'Merge pull request'"
         },
         {
-          id: "gh-repo-actions-tab",
-          num: "3",
-          shortLabel: "Agents & Actions",
-          x: 33.0,
-          y: 6.5,
+          id: "gh-repo-actions-tab", num: "3", shortLabel: "Agents & Actions",
+          x: 27.0, y: 7.5, w: 11.4, h: 4.8,
           title: "Agents & Actions tabs (Automated cloud robots)",
           category: "GitHub navigation · CI/CD automation",
           whatItDoes: "'Agents' lets cloud coding agents work on tasks; 'Actions' (GitHub Actions) automatically runs your test suite (like pytest) every time you push code so broken code gets caught immediately.",
@@ -55,11 +46,8 @@
           tryCommand: "Runs workflows defined in .github/workflows/"
         },
         {
-          id: "gh-repo-settings-tab",
-          num: "4",
-          shortLabel: "Settings",
-          x: 59.8,
-          y: 6.5,
+          id: "gh-repo-settings-tab", num: "4", shortLabel: "Settings",
+          x: 59.6, y: 7.5, w: 6.6, h: 4.8,
           title: "Settings tab (Repo privacy, branch protection & secrets)",
           category: "GitHub navigation · Configuration",
           whatItDoes: "Opens the control panel for this repository where you can rename the repo, protect your 'main' branch, turn on GitHub Pages hosting, or add encrypted API keys ('Secrets').",
@@ -67,11 +55,8 @@
           tryCommand: "Settings -> Branches / Pages / Secrets"
         },
         {
-          id: "gh-repo-fork-star",
-          num: "5",
-          shortLabel: "Fork & Star",
-          x: 78.5,
-          y: 13.5,
+          id: "gh-repo-fork-star", num: "5", shortLabel: "Fork & Star",
+          x: 76.5, y: 13.5, w: 20.8, h: 5.2,
           title: "Watch, Fork & Star buttons",
           category: "Open source · Copy or bookmark a repo",
           whatItDoes: "• Star: Bookmarks a useful open-source repo so you can find it again.\n• Fork: Makes a personal cloud copy of someone else's repository under YOUR GitHub account so you can edit and experiment freely without touching their original project.",
@@ -79,11 +64,8 @@
           tryCommand: "Click Fork -> git clone https://github.com/you/repo.git"
         },
         {
-          id: "gh-repo-branch-picker",
-          num: "6",
-          shortLabel: "main (Branches)",
-          x: 16.5,
-          y: 32.5,
+          id: "gh-repo-branch-picker", num: "6", shortLabel: "main (Branches)",
+          x: 19.8, y: 32.6, w: 14.2, h: 5.2,
           title: "Branch picker ('main') & '4 Branches' link",
           category: "Version control · Parallel timelines",
           whatItDoes: "Shows which timeline ('branch') you are currently viewing—usually 'main' (your official production code). Clicking the dropdown lets you switch to experimental feature branches.",
@@ -91,11 +73,8 @@
           tryCommand: "git switch -c feat/my-branch  (in terminal)"
         },
         {
-          id: "gh-repo-find-add-file",
-          num: "7",
-          shortLabel: "Go to file / Add file",
-          x: 43.0,
-          y: 26.5,
+          id: "gh-repo-find-add-file", num: "7", shortLabel: "Go to file / Add file",
+          x: 50.8, y: 32.6, w: 20.6, h: 5.2,
           title: "'Go to file [T]' search & 'Add file' button",
           category: "File actions · Quick jump or upload",
           whatItDoes: "• Go to file (or press 'T' on your keyboard): Instantly searches for any file across nested folders.\n• Add file: Lets you create a new text file or drag-and-drop upload files directly in your web browser.",
@@ -103,11 +82,8 @@
           tryCommand: "Press [T] on GitHub to fuzzy-search files"
         },
         {
-          id: "gh-repo-green-code-btn",
-          num: "8",
-          shortLabel: "<> Code (Clone / ZIP)",
-          x: 68.5,
-          y: 31.5,
+          id: "gh-repo-green-code-btn", num: "8", shortLabel: "<> Code (Clone / ZIP)",
+          x: 64.6, y: 32.6, w: 6.8, h: 5.2,
           title: "Green '<> Code' button (How you download/clone a repo!)",
           category: "Essential action · Copy repo URL or Download ZIP",
           whatItDoes: "Clicking this green button opens a dropdown with: (1) the HTTPS URL (the repository's web link that you copy for 'git clone'), (2) 'Open with GitHub Desktop / Codespaces', and (3) 'Download ZIP' (a one-time compressed folder download that strips out Git's connection to GitHub).",
@@ -115,11 +91,8 @@
           tryCommand: "git clone https://github.com/owner/repo.git"
         },
         {
-          id: "gh-repo-commits-history",
-          num: "9",
-          shortLabel: "28 Commits (History)",
-          x: 63.0,
-          y: 41.5,
+          id: "gh-repo-commits-history", num: "9", shortLabel: "28 Commits (History)",
+          x: 63.8, y: 38.6, w: 7.8, h: 4.8,
           title: "'28 Commits' time-machine history log",
           category: "Version control · Every saved checkpoint",
           whatItDoes: "Shows the total number of saved checkpoints ('commits') and the 7-character commit hash (like 'c74a0a4' — a unique receipt code generated for each save). Clicking it opens the full chronological history of every edit ever made.",
@@ -127,11 +100,8 @@
           tryCommand: "git log --oneline -n 10  (in terminal)"
         },
         {
-          id: "gh-repo-folders",
-          num: "10",
-          shortLabel: "Project folders (app, lib)",
-          x: 20.0,
-          y: 53.5,
+          id: "gh-repo-folders", num: "10", shortLabel: "Project folders (app, lib)",
+          x: 19.2, y: 56.5, w: 12.2, h: 19.0,
           title: "Application folders (app, components, lib, prisma)",
           category: "File tree · Where source code is organized",
           whatItDoes: "Blue folder icons hold your nested code files: e.g. 'app/' (pages & API routes), 'components/' (reusable UI buttons/cards), 'lib/' (helper logic), and 'prisma/' (database table schema).",
@@ -139,11 +109,8 @@
           tryCommand: "cd app && ls -la"
         },
         {
-          id: "gh-repo-special-files",
-          num: "11",
-          shortLabel: ".gitignore & README.md",
-          x: 20.0,
-          y: 79.5,
+          id: "gh-repo-special-files", num: "11", shortLabel: ".gitignore & README.md",
+          x: 19.5, y: 75.0, w: 12.8, h: 14.5,
           title: "Root config files (.gitignore, README.md, package-lock.json)",
           category: "File tree · Guardrails & instruction manual",
           whatItDoes: "• .gitignore: Lists secret files (like '.env') that Git must NEVER upload to GitHub.\n• README.md: The human instruction manual explaining how to install and run the project.\n• package-lock.json: Locks exact library versions so every computer installs identical packages.",
@@ -167,11 +134,8 @@
       subtitle: "What you see when you sign in to github.com: your top repositories, the '+' button to create a new repo, and the Copilot/Agent box.",
       hotspots: [
         {
-          id: "gh-home-left-nav",
-          num: "1",
-          shortLabel: "Issues, PRs & Repos",
-          x: 7.5,
-          y: 17.5,
+          id: "gh-home-left-nav", num: "1", shortLabel: "Issues, PRs & Repos",
+          x: 9.2, y: 16.5, w: 16.8, h: 17.0,
           title: "Left navigation drawer (Issues, Pull requests, Repositories)",
           category: "GitHub navigation · Global menu",
           whatItDoes: "Opened by clicking the 3-line 'hamburger' icon in the top-left corner. Lets you jump to all of your Repositories, open Pull Requests, or Issues across your entire account.",
@@ -179,11 +143,8 @@
           tryCommand: "Top-left ☰ icon -> All repositories"
         },
         {
-          id: "gh-home-codespaces-mcp",
-          num: "2",
-          shortLabel: "Codespaces & MCP registry",
-          x: 7.5,
-          y: 36.0,
+          id: "gh-home-codespaces-mcp", num: "2", shortLabel: "Codespaces & MCP registry",
+          x: 9.2, y: 37.0, w: 16.8, h: 18.0,
           title: "Codespaces, Copilot & MCP registry",
           category: "Cloud IDE & AI tools · Browser workspaces",
           whatItDoes: "• Codespaces: Opens a full VS Code editor and terminal inside your web browser tab—great when you are on a borrowed laptop.\n• MCP registry: A directory of Model Context Protocol ('MCP') connectors that let AI agents safely read databases, docs, and APIs.",
@@ -191,11 +152,8 @@
           tryCommand: "Click Codespaces -> New codespace"
         },
         {
-          id: "gh-home-top-repos",
-          num: "3",
-          shortLabel: "Your repositories list",
-          x: 8.0,
-          y: 59.0,
+          id: "gh-home-top-repos", num: "3", shortLabel: "Your repositories list",
+          x: 9.2, y: 60.5, w: 16.8, h: 22.0,
           title: "Top repositories quick-jump list",
           category: "Your projects · 1-click repo access",
           whatItDoes: "Shows your most recently used repositories (formatted as 'YourUsername/RepoName') with a search icon to filter them instantly.",
@@ -203,11 +161,8 @@
           tryCommand: "Click any repo -> Opens Snapshot 1"
         },
         {
-          id: "gh-home-copilot-box",
-          num: "4",
-          shortLabel: "Ask / Agent prompt box",
-          x: 47.0,
-          y: 21.0,
+          id: "gh-home-copilot-box", num: "4", shortLabel: "Ask / Agent prompt box",
+          x: 50.0, y: 21.8, w: 54.5, h: 14.0,
           title: "GitHub Copilot & Agent prompt box",
           category: "AI assistant · Ask or assign tasks across repos",
           whatItDoes: "Lets you ask questions about a repository ('Where is user login handled?') or switch from 'Ask' to 'Agent' mode to have GitHub's cloud coding agent draft a Pull Request for you.",
@@ -215,11 +170,8 @@
           tryCommand: "Select repo -> Ask or run Agent"
         },
         {
-          id: "gh-home-action-pills",
-          num: "5",
-          shortLabel: "Debug / Agent / Write code",
-          x: 49.0,
-          y: 32.5,
+          id: "gh-home-action-pills", num: "5", shortLabel: "Debug / Agent / Write code",
+          x: 50.0, y: 32.2, w: 39.0, h: 5.2,
           title: "Quick task pills (Debug, Agent, Create issue, Write code, Git, PRs)",
           category: "AI workflows · Guided templates",
           whatItDoes: "Pre-fills common developer tasks—like diagnosing a failing build ('Debug'), drafting a bug ticket ('Create issue'), or explaining a Git command ('Git').",
@@ -227,11 +179,8 @@
           tryCommand: "Click 'Write code' or 'Git' for guided prompts"
         },
         {
-          id: "gh-home-plus-new-repo",
-          num: "6",
-          shortLabel: "'+' Create new repo",
-          x: 85.0,
-          y: 3.1,
+          id: "gh-home-plus-new-repo", num: "6", shortLabel: "'+' Create new repo",
+          x: 85.0, y: 3.1, w: 3.8, h: 4.8,
           title: "Top-right '+' button (Create a brand-new repository!)",
           category: "Essential action · Start a new project",
           whatItDoes: "Clicking the '+' icon in the top-right bar opens a menu with 'New repository', 'Import repository', 'New codespace', and 'New gist'.",
@@ -255,11 +204,8 @@
       subtitle: "Inside a repository's Settings tab: where you rename a repo, protect your main branch, enable GitHub Pages, and store encrypted API keys.",
       hotspots: [
         {
-          id: "gh-set-rename",
-          num: "1",
-          shortLabel: "Repository name",
-          x: 42.0,
-          y: 22.8,
+          id: "gh-set-rename", num: "1", shortLabel: "Repository name",
+          x: 41.2, y: 22.8, w: 21.5, h: 5.8,
           title: "Repository name & 'Rename' button",
           category: "General settings · Project identity",
           whatItDoes: "Lets you change the name of your repository (and optionally mark it as a 'Template repository' so you can stamp out copies of it in 1 click).",
@@ -267,11 +213,8 @@
           tryCommand: "git remote -v  (checks your laptop's link)"
         },
         {
-          id: "gh-set-collaborators",
-          num: "2",
-          shortLabel: "Collaborators (Access)",
-          x: 18.5,
-          y: 22.0,
+          id: "gh-set-collaborators", num: "2", shortLabel: "Collaborators (Access)",
+          x: 18.0, y: 22.0, w: 11.5, h: 4.4,
           title: "Collaborators (Invite teammates to a Private repo)",
           category: "Access control · Who can read or push code",
           whatItDoes: "If your repository is Private, nobody else on earth can see it until you add their GitHub username under 'Collaborators'.",
@@ -279,11 +222,8 @@
           tryCommand: "Settings -> Collaborators -> Add people"
         },
         {
-          id: "gh-set-branches",
-          num: "3",
-          shortLabel: "Rulesets & Branches",
-          x: 18.5,
-          y: 35.5,
+          id: "gh-set-branches", num: "3", shortLabel: "Rulesets & Branches",
+          x: 18.0, y: 35.5, w: 11.5, h: 7.5,
           title: "Rulesets & Branches (Protect your 'main' branch)",
           category: "Safety guardrails · Branch protection",
           whatItDoes: "Lets you turn on 'Branch Protection' for your 'main' branch—requiring changes to go through a Pull Request and pass automated tests before merging, and blocking anyone (or any AI agent) from force-deleting history.",
@@ -291,11 +231,8 @@
           tryCommand: "Protect 'main' -> Require pull request before merging"
         },
         {
-          id: "gh-set-default-branch",
-          num: "4",
-          shortLabel: "Default branch (main)",
-          x: 39.5,
-          y: 46.2,
+          id: "gh-set-default-branch", num: "4", shortLabel: "Default branch (main)",
+          x: 39.6, y: 46.2, w: 18.0, h: 5.6,
           title: "Default branch ('main' vs. 'master')",
           category: "Version control · The official trunk",
           whatItDoes: "Shows which branch is considered the main trunk of your repository. Older tools sometimes named it 'master'; modern tools name it 'main'. Clicking the pencil icon renames it cleanly.",
@@ -303,11 +240,8 @@
           tryCommand: "git branch -M main  (renames local branch to main)"
         },
         {
-          id: "gh-set-webhooks",
-          num: "5",
-          shortLabel: "Actions & Webhooks",
-          x: 18.5,
-          y: 45.5,
+          id: "gh-set-webhooks", num: "5", shortLabel: "Actions & Webhooks",
+          x: 18.0, y: 45.8, w: 11.5, h: 7.5,
           title: "Actions & Webhooks (How Vercel & Render know you pushed)",
           category: "Automation · Event notifications",
           whatItDoes: "When you connect your GitHub repo to Vercel, Netlify, or Render, they install a 'Webhook' (an automatic notification doorbell) here so GitHub pings them the exact second you run 'git push'.",
@@ -315,11 +249,8 @@
           tryCommand: "git push origin main -> Fires Webhook -> Auto-deploys"
         },
         {
-          id: "gh-set-pages",
-          num: "6",
-          shortLabel: "Pages (Free static host)",
-          x: 18.5,
-          y: 63.5,
+          id: "gh-set-pages", num: "6", shortLabel: "Pages (Free static host)",
+          x: 18.0, y: 63.8, w: 11.5, h: 4.4,
           title: "Pages (GitHub Pages free static website hosting)",
           category: "Cloud hosting · Free website for HTML/CSS/JS",
           whatItDoes: "Turns any repository containing an 'index.html' file into a live public website (at 'username.github.io/repo-name') for $0 with zero external hosting account needed.",
@@ -327,11 +258,8 @@
           tryCommand: "Settings -> Pages -> Deploy from branch: main"
         },
         {
-          id: "gh-set-secrets",
-          num: "7",
-          shortLabel: "Secrets and variables",
-          x: 18.5,
-          y: 78.5,
+          id: "gh-set-secrets", num: "7", shortLabel: "Secrets and variables",
+          x: 20.0, y: 78.8, w: 15.0, h: 4.6,
           title: "Secrets and variables (Encrypted vault for API keys)",
           category: "Security · Where private keys live in the cloud",
           whatItDoes: "Stores encrypted environment variables (like 'GEMINI_API_KEY' or 'DATABASE_URL') so automated GitHub Actions tests and deployment workflows can use them without ever exposing the key in your code files.",
@@ -355,11 +283,8 @@
       subtitle: "Your local code workshop on your laptop: the left Explorer file tree, bottom integrated Terminal, and right-hand AI Agent chat.",
       hotspots: [
         {
-          id: "vsc-exp-activity-bar",
-          num: "1",
-          shortLabel: "Left Activity Bar icons",
-          x: 9.0,
-          y: 12.5,
+          id: "vsc-exp-activity-bar", num: "1", shortLabel: "Left Activity Bar icons",
+          x: 2.0, y: 22.5, w: 3.4, h: 35.0,
           title: "Far-left Activity Bar (Switch between Files, Search, Git & Extensions)",
           category: "IDE navigation · The 6 master icons",
           whatItDoes: "The vertical strip on the far left switches what appears in the left sidebar:\n• Top 2 files icon = Explorer (your project folder tree)\n• Magnifying glass = Search across all files (like grep)\n• Branch icon with '11' = Source Control (Git)\n• Play+bug icon = Run & Debug\n• 4-squares icon = Extensions\n• Beaker icon = Automated Tests (pytest)",
@@ -367,11 +292,8 @@
           tryCommand: "Cmd+Shift+E (Mac) or Ctrl+Shift+E (Win) opens Explorer"
         },
         {
-          id: "vsc-exp-file-tree",
-          num: "2",
-          shortLabel: "Explorer folder & file tree",
-          x: 13.0,
-          y: 36.0,
+          id: "vsc-exp-file-tree", num: "2", shortLabel: "Explorer folder & file tree",
+          x: 9.5, y: 42.0, w: 10.5, h: 23.0,
           title: "Explorer file tree (Your project folder on your laptop)",
           category: "Files & folders · Click any file to open it",
           whatItDoes: "Shows every subfolder ('Lesson 1', 'Tutorial') and plain-text code file ('calculator.py', 'test.py', 'Index.html', 'script.js', 'style.css') inside your open project folder.",
@@ -379,11 +301,8 @@
           tryCommand: "Notice the M (Modified) and U (Untracked new file) badges on the right!"
         },
         {
-          id: "vsc-exp-dotfiles",
-          num: "3",
-          shortLabel: ".gitignore & cache folders",
-          x: 13.0,
-          y: 23.5,
+          id: "vsc-exp-dotfiles", num: "3", shortLabel: ".gitignore & cache folders",
+          x: 9.5, y: 22.5, w: 10.5, h: 14.0,
           title: "Dotfiles (.gitignore) & auto-generated cache folders (__pycache__)",
           category: "Files & folders · Hidden system files",
           whatItDoes: "Files starting with a dot (like '.gitignore' or '.pytest_cache') are hidden in Mac Finder, but VS Code shows them clearly so you can edit '.gitignore' directly! '__pycache__' is auto-created by Python to speed up imports.",
@@ -391,11 +310,8 @@
           tryCommand: "ls -la  (shows hidden dot-files in the terminal)"
         },
         {
-          id: "vsc-exp-editor-tabs",
-          num: "4",
-          shortLabel: "Open file tabs",
-          x: 31.0,
-          y: 5.5,
+          id: "vsc-exp-editor-tabs", num: "4", shortLabel: "Open file tabs",
+          x: 32.5, y: 5.5, w: 33.0, h: 4.4,
           title: "Open editor tabs bar (hello.py, calculator.py, test.py)",
           category: "Code editor · Switch between open files",
           whatItDoes: "Works just like browser tabs: every file you open from the Explorer sits in a tab along the top. A dot next to a filename means you have unsaved edits!",
@@ -403,11 +319,8 @@
           tryCommand: "Cmd+S / Ctrl+S saves the current file"
         },
         {
-          id: "vsc-exp-terminal-tabs",
-          num: "5",
-          shortLabel: "Terminal / Problems / Ports",
-          x: 31.0,
-          y: 76.5,
+          id: "vsc-exp-terminal-tabs", num: "5", shortLabel: "Terminal / Problems / Ports",
+          x: 29.0, y: 78.8, w: 26.0, h: 4.2,
           title: "Bottom panel tabs (Problems, Output, Debug Console, Terminal, Ports)",
           category: "Built-in Terminal · Where you type commands",
           whatItDoes: "• Terminal: A real command-line shell already standing inside your project folder!\n• Problems: Lists syntax typos or linter warnings (automatic code spell-check alerts) in your code.\n• Ports: Lets you view local server ports (like localhost:8000, where ':8000' is the numbered door on your laptop that your local preview server listens on).",
@@ -415,11 +328,8 @@
           tryCommand: "Shortcut: Ctrl + `  (toggles the Terminal panel open/closed)"
         },
         {
-          id: "vsc-exp-terminal-prompt",
-          num: "6",
-          shortLabel: "Live terminal prompt ($)",
-          x: 27.0,
-          y: 88.0,
+          id: "vsc-exp-terminal-prompt", num: "6", shortLabel: "Live terminal prompt ($)",
+          x: 25.0, y: 82.5, w: 18.0, h: 4.2,
           title: "Live terminal prompt ('lcalcott-mac:Lesson 1 lcalcott$')",
           category: "Built-in Terminal · Run python, git & npm here",
           whatItDoes: "Notice how the prompt says 'Lesson 1'—because VS Code automatically opened the terminal inside your 'Lesson 1' folder! Click right next to the '$' cursor to type commands like 'python3 test.py', 'pytest', or 'git status'.",
@@ -427,11 +337,8 @@
           tryCommand: "python3 test.py   OR   pytest"
         },
         {
-          id: "vsc-exp-terminal-list",
-          num: "7",
-          shortLabel: "Multiple terminal tabs (+)",
-          x: 60.0,
-          y: 81.0,
+          id: "vsc-exp-terminal-list", num: "7", shortLabel: "Multiple terminal tabs (+)",
+          x: 64.2, y: 83.5, w: 12.5, h: 12.5,
           title: "Terminal session list ('bash', 'Python') & '+' button",
           category: "Built-in Terminal · Run a server & commands at the same time",
           whatItDoes: "Shows each open terminal tab on the right side of the terminal drawer. If one terminal is busy running a local server, click the '+' icon to open a second fresh terminal tab!",
@@ -439,11 +346,8 @@
           tryCommand: "Click '+' in the Terminal header to open a 2nd shell"
         },
         {
-          id: "vsc-exp-ai-chat",
-          num: "8",
-          shortLabel: "AI Chat & Agent panel",
-          x: 84.0,
-          y: 89.0,
+          id: "vsc-exp-ai-chat", num: "8", shortLabel: "AI Chat & Agent panel",
+          x: 85.5, y: 88.5, w: 26.0, h: 16.5,
           title: "Right-hand AI Chat / Agent panel ('+ test.py', 'Agent')",
           category: "AI coding assistant · Edit files with context",
           whatItDoes: "Lets you chat with an AI coding agent right inside VS Code/Cursor. Notice the '+ test.py' pill—that tells the AI which exact file to read! Switching the dropdown to 'Agent' lets it edit files and run terminal tests.",
@@ -451,11 +355,8 @@
           tryCommand: "Attach file with '+' -> Describe change -> Review diff"
         },
         {
-          id: "vsc-exp-status-bar",
-          num: "9",
-          shortLabel: "main* branch & Go Live",
-          x: 11.0,
-          y: 96.5,
+          id: "vsc-exp-status-bar", num: "9", shortLabel: "main* branch & Go Live",
+          x: 7.5, y: 98.5, w: 12.0, h: 3.0,
           title: "Bottom Status Bar ('main*' branch, Sync '0↓ 2↑' & 'Go Live')",
           category: "Status bar · Current branch & cloud sync counter",
           whatItDoes: "• Bottom-left 'main*': Shows you are on the 'main' branch ('*' means you have uncommitted local edits).\n• '0↓ 2↑': Means you have 0 commits to pull down from GitHub and 2 local commits waiting to be pushed UP to GitHub!",
@@ -479,11 +380,8 @@
       subtitle: "How you review changes, commit checkpoints, and read/run Python code visually inside VS Code without memorizing every Git flag.",
       hotspots: [
         {
-          id: "vsc-git-icon",
-          num: "1",
-          shortLabel: "Source Control (11)",
-          x: 8.5,
-          y: 12.5,
+          id: "vsc-git-icon", num: "1", shortLabel: "Source Control (11)",
+          x: 2.0, y: 15.2, w: 3.4, h: 5.5,
           title: "Source Control icon (Branch icon with blue badge '11')",
           category: "Visual Git · Your built-in time machine",
           whatItDoes: "The blue badge '11' tells you that 11 files in your folder have been modified, added, or deleted since your last Git commit checkpoint.",
@@ -491,11 +389,8 @@
           tryCommand: "Equivalent to running: git status"
         },
         {
-          id: "vsc-git-commit-btn",
-          num: "2",
-          shortLabel: "Commit message & ✓ Commit",
-          x: 19.5,
-          y: 22.5,
+          id: "vsc-git-commit-btn", num: "2", shortLabel: "Commit message & ✓ Commit",
+          x: 18.8, y: 19.0, w: 27.5, h: 7.8,
           title: "Commit message box & blue '✓ Commit' button",
           category: "Visual Git · Save a permanent checkpoint",
           whatItDoes: "Type a short plain-English note describing what you changed (e.g. 'Fix square function and add negative number tests') into the box above, then click the blue '✓ Commit' button to freeze a permanent snapshot.",
@@ -503,11 +398,8 @@
           tryCommand: "Equivalent to: git commit -m 'Your message'"
         },
         {
-          id: "vsc-git-changes-mdu",
-          num: "3",
-          shortLabel: "Changes (M, D, U) & '+' Stage",
-          x: 18.5,
-          y: 35.0,
+          id: "vsc-git-changes-mdu", num: "3", shortLabel: "Changes (M, D, U) & '+' Stage",
+          x: 18.8, y: 34.0, w: 27.5, h: 19.0,
           title: "Changes list: What 'M', 'D', 'U' and the '+' / '↶' icons mean",
           category: "Visual Git · Stage, diff, or undo any file",
           whatItDoes: "Every changed file shows a letter badge and hover buttons:\n• M (Modified): Existing file was edited.\n• D (Deleted): File was removed.\n• U (Untracked): Brand-new file not yet tracked by Git.\n• '+' icon: Stages the file ('git add' — puts a checkmark on this file so it goes into your next Commit checkpoint).\n• '↶' curved arrow: Discards/undoes your unsaved changes to that file!",
@@ -515,11 +407,8 @@
           tryCommand: "Click '+' to stage (git add) or '↶' to undo (git restore)"
         },
         {
-          id: "vsc-git-graph",
-          num: "4",
-          shortLabel: "Git Graph (main vs origin/main)",
-          x: 18.5,
-          y: 54.5,
+          id: "vsc-git-graph", num: "4", shortLabel: "Git Graph (main vs origin/main)",
+          x: 18.8, y: 54.0, w: 27.5, h: 12.5,
           title: "Source Control Graph ('main' vs. 'origin/main')",
           category: "Visual Git · Local vs. GitHub cloud timeline",
           whatItDoes: "Draws your commit history as dots on a vertical timeline!\n• Purple 'origin/main' badge: Where your GitHub cloud repository currently sits ('Initial Commit').\n• Blue 'main' badge: Two newer commits ('training 11 sept', 'training 2 11 sept') saved on your laptop that haven't been pushed up to GitHub yet!",
@@ -527,11 +416,8 @@
           tryCommand: "Equivalent to: git log --graph --oneline"
         },
         {
-          id: "vsc-git-python-code",
-          num: "5",
-          shortLabel: "Python code & unit tests",
-          x: 48.0,
-          y: 25.0,
+          id: "vsc-git-python-code", num: "5", shortLabel: "Python code & unit tests",
+          x: 49.5, y: 23.5, w: 27.0, h: 31.0,
           title: "Center Code Editor ('test.py': imports, functions & assert tests)",
           category: "Reading code · Python anatomy in action",
           whatItDoes: "Look at how clean a real Python file is:\n• Line 1: 'from calculator import square' brings in a function from another file.\n• Lines 4–9: 'def test_square():' uses 'assert' to test positive, negative, and zero inputs.\n• Line 16–17: Look closely at 'def square(n): return n + n'—that's a bug (2+2=4, but 3+3=6, not 9!), which 'assert square(3) == 9' will immediately catch!",
@@ -539,11 +425,8 @@
           tryCommand: "pytest test.py  (catches that square(3) returned 6 instead of 9!)"
         },
         {
-          id: "vsc-git-run-btn",
-          num: "6",
-          shortLabel: "▷ Run Python file button",
-          x: 64.2,
-          y: 5.5,
+          id: "vsc-git-run-btn", num: "6", shortLabel: "▷ Run Python file button",
+          x: 64.0, y: 5.5, w: 4.2, h: 4.2,
           title: "Top-right '▷' Run button & Split Editor icon",
           category: "Code editor · 1-click run in terminal",
           whatItDoes: "Clicking the triangle '▷' Play button in the top-right corner of the editor automatically runs 'python3 test.py' inside your bottom Terminal panel!",
@@ -567,11 +450,8 @@
       subtitle: "How you add language superpowers (Python, Pylance, Live Server, Docker) and Model Context Protocol (MCP) tool connectors to your editor.",
       hotspots: [
         {
-          id: "vsc-ext-icon",
-          num: "1",
-          shortLabel: "Extensions icon (4 squares)",
-          x: 9.5,
-          y: 31.0,
+          id: "vsc-ext-icon", num: "1", shortLabel: "Extensions icon (4 squares)",
+          x: 2.0, y: 29.5, w: 3.4, h: 5.5,
           title: "Extensions icon on the Activity Bar (4-squares puzzle icon)",
           category: "IDE plugins · Add language & tool support",
           whatItDoes: "Opens the Extensions panel where you can install free official add-ons for Python, TypeScript, Prettier, Docker, GitHub Pull Requests, and local web previewing.",
@@ -579,11 +459,8 @@
           tryCommand: "Shortcut: Cmd+Shift+X (Mac) or Ctrl+Shift+X (Windows)"
         },
         {
-          id: "vsc-ext-search",
-          num: "2",
-          shortLabel: "Search Extensions bar",
-          x: 18.5,
-          y: 8.8,
+          id: "vsc-ext-search", num: "2", shortLabel: "Search Extensions bar",
+          x: 18.4, y: 8.8, w: 28.0, h: 4.5,
           title: "Search Extensions in Marketplace",
           category: "IDE plugins · Find verified extensions",
           whatItDoes: "Type any language or tool name (like 'Python', 'Ruff', 'Prettier', 'Tailwind', or 'GitLens') to find and install it in one click. Always look for the blue verified checkmark badge (e.g. 'Microsoft' or 'GitHub').",
@@ -591,11 +468,8 @@
           tryCommand: "Search 'Python' or 'Live Server' -> Click Install"
         },
         {
-          id: "vsc-ext-python-pylance",
-          num: "3",
-          shortLabel: "Python & Pylance",
-          x: 19.5,
-          y: 21.5,
+          id: "vsc-ext-python-pylance", num: "3", shortLabel: "Python & Pylance",
+          x: 18.4, y: 23.0, w: 27.5, h: 8.5,
           title: "Python Environments & Pylance (Python autocomplete & type-checking)",
           category: "Essential Python tools · Smart autocomplete",
           whatItDoes: "• Python Environments: Automatically detects your Python version (e.g. Python 3.13.7) and virtual environments ('.venv').\n• Pylance: Gives you instant autocomplete, function hover explanations, and red squiggly underlines if you misspell a variable name.",
@@ -603,11 +477,8 @@
           tryCommand: "Hover over any Python function in the editor to read its docs"
         },
         {
-          id: "vsc-ext-live-server",
-          num: "4",
-          shortLabel: "Live Server (Go Live)",
-          x: 19.5,
-          y: 40.5,
+          id: "vsc-ext-live-server", num: "4", shortLabel: "Live Server (Go Live)",
+          x: 18.4, y: 38.2, w: 27.5, h: 7.5,
           title: "Live Server (Powers the 'Go Live' button in the bottom-right)",
           category: "Web development · Instant browser auto-reload",
           whatItDoes: "Adds the '(()) Go Live' button to the bottom-right corner of VS Code. Clicking 'Go Live' opens your 'index.html' file in Chrome on localhost and automatically refreshes the browser tab every time you press Cmd+S to save!",
@@ -615,11 +486,8 @@
           tryCommand: "Click '(()) Go Live' in bottom-right status bar"
         },
         {
-          id: "vsc-ext-docker-ghpr",
-          num: "5",
-          shortLabel: "Container Tools & GitHub PRs",
-          x: 18.5,
-          y: 63.0,
+          id: "vsc-ext-docker-ghpr", num: "5", shortLabel: "Container Tools & GitHub PRs",
+          x: 18.4, y: 63.0, w: 27.5, h: 14.0,
           title: "Container Tools (Docker) & GitHub Pull Requests",
           category: "Shipping & collaboration · Cloud tools inside your IDE",
           whatItDoes: "• Container Tools: Lets you build and inspect Docker containers visually.\n• GitHub Pull Requests: Lets you open, review, and merge GitHub Pull Requests right inside VS Code without switching to your browser.",
@@ -627,11 +495,8 @@
           tryCommand: "Review and create GitHub PRs directly from the sidebar"
         },
         {
-          id: "vsc-ext-mcp-servers",
-          num: "6",
-          shortLabel: "MCP Servers (AI tool plugs)",
-          x: 18.5,
-          y: 81.5,
+          id: "vsc-ext-mcp-servers", num: "6", shortLabel: "MCP Servers (AI tool plugs)",
+          x: 18.4, y: 83.0, w: 27.5, h: 22.0,
           title: "MCP Servers (Model Context Protocol connectors for AI agents)",
           category: "AI engineering · Connect your IDE agent to external tools",
           whatItDoes: "MCP (Model Context Protocol) is like a universal USB-C port for AI coding agents. Installing an MCP Server here lets your VS Code / Cursor AI agent securely query your Neon/Postgres database schema, read GitHub issues, or inspect browser pages while writing code.",

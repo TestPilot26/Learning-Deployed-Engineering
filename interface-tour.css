@@ -72,7 +72,7 @@
   position: relative;
   width: 100%;
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow: visible;
   background-color: var(--color-surface-container-lowest);
 }
 
@@ -82,6 +82,7 @@
   object-fit: contain;
   display: block;
   user-select: none;
+  border-radius: var(--radius-md);
 }
 
 .ui-tour-flow-svg {
@@ -94,68 +95,64 @@
 }
 
 .ui-tour-hotspot-pin {
+  appearance: none;
+  border: none;
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px 4px 4px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-on-surface);
-  outline: 2px solid var(--color-primary);
-  font-family: var(--font-family-display);
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  outline: 2.5px solid var(--color-primary);
+  outline-offset: 1px;
   cursor: pointer;
-  box-shadow: var(--hover-shadow);
-  transition: transform 150ms ease, background-color 150ms ease;
+  transition: transform 140ms ease, outline-width 140ms ease, outline-color 140ms ease;
 }
 
-.ui-tour-hotspot-pin.compact-pin {
-  padding: 4px;
+.ui-tour-hotspot-pin.pill-ring {
+  border-radius: var(--radius-full);
+}
+
+.ui-tour-hotspot-pin.region-ring {
+  border-radius: var(--radius-md);
 }
 
 .ui-tour-hotspot-pin:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary-container);
+  transform: translate(-50%, -50%) scale(1.03);
+  outline: 3.5px solid var(--color-primary);
   z-index: 6;
 }
 
 .ui-tour-hotspot-pin.active {
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
-  outline: 3px solid var(--color-primary-container);
-  transform: translate(-50%, -50%) scale(1.12);
+  outline: 3.5px solid var(--color-tertiary);
+  outline-offset: 2px;
   z-index: 7;
 }
 
 .ui-tour-pin-num {
+  position: absolute;
+  top: -11px;
+  left: -11px;
   width: 22px;
   height: 22px;
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   color: var(--color-on-primary);
+  outline: 2px solid var(--color-surface-container-lowest);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-family: var(--font-family-display);
+  font-size: 11px;
   font-weight: 700;
-  flex-shrink: 0;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .ui-tour-hotspot-pin.active .ui-tour-pin-num {
-  background-color: var(--color-surface-container-lowest);
-  color: var(--color-primary);
-}
-
-.ui-tour-pin-label {
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.2;
+  background-color: var(--color-tertiary);
+  color: var(--color-on-tertiary);
+  transform: scale(1.12);
 }
 
 .ui-tour-detail-card {
@@ -163,14 +160,12 @@
 }
 
 @media (max-width: 900px) {
-  .ui-tour-pin-label {
-    display: none;
-  }
-  .ui-tour-hotspot-pin {
-    padding: 4px;
-  }
-  .ui-tour-label-toggle {
-    margin-left: 0;
+  .ui-tour-pin-num {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -9px;
+    left: -9px;
   }
 }
 
