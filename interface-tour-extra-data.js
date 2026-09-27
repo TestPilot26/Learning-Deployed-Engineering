@@ -396,10 +396,24 @@
     }
   ];
 
+  // Rule: Never display synthetic/made-up SVG interface mockups.
+  // Only register snapshots whose imageSrc is a real screenshot (.png / .jpg / .webp).
+  var realSnapshotIds = {};
+  (window.InterfaceTourData.SNAPSHOTS || []).forEach(function (s) {
+    realSnapshotIds[s.id] = true;
+  });
   EXTRA_SNAPSHOTS.forEach(function (s) {
-    window.InterfaceTourData.SNAPSHOTS.push(s);
+    if (s.imageSrc && !/\.svg$/i.test(s.imageSrc)) {
+      window.InterfaceTourData.SNAPSHOTS.push(s);
+      realSnapshotIds[s.id] = true;
+    }
   });
   EXTRA_FLOWS.forEach(function (f) {
-    window.InterfaceTourData.FLOWS.push(f);
+    var allReal = (f.steps || []).every(function (st) {
+      return Boolean(realSnapshotIds[st.snapshotId]);
+    });
+    if (allReal) {
+      window.InterfaceTourData.FLOWS.push(f);
+    }
   });
 })();

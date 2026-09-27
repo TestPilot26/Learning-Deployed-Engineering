@@ -594,28 +594,28 @@
     },
     {
       id: "flow-create-new-repo",
-      title: "Flow 4: Create a brand-new repository on GitHub",
+      title: "Flow 4: Create a brand-new repository & add a README / .gitignore",
       badge: "On GitHub",
       icon: "add_box",
-      summary: "How to spin up a fresh cloud Git repository when starting a new project:",
+      summary: "How to start a new repository from the '+' menu and where to click 'Add file' or inspect your README.md and .gitignore:",
       steps: [
         {
           snapshotId: "github-home",
           hotspotId: "gh-home-plus-new-repo",
-          stepTitle: "Step 1 of 3 · Click the '+' button in the top-right corner of GitHub",
-          instruction: "From GitHub Home (or any GitHub page), click the '+' icon in the top-right bar (Pin #6) and select 'New repository'."
+          stepTitle: "Step 1 of 3 · Click the '+' button in the top-right corner of GitHub -> 'New repository'",
+          instruction: "From GitHub Home (or any GitHub page), click the '+' icon in the top-right bar (Pin #6) and select 'New repository' (which opens github.com/new where you name the repo, pick Private/Public, and toggle 'Add a README file')."
         },
         {
           snapshotId: "github-repo",
-          hotspotId: "gh-repo-special-files",
-          stepTitle: "Step 2 of 3 · Name your repo, pick Private or Public, and include a .gitignore & README",
-          instruction: "Give your repository a clean name (e.g. 'my-first-app'), choose 'Private' (only you can see it) or 'Public', and check 'Add a README file' and a Python/Node '.gitignore' template (Pin #11)."
+          hotspotId: "gh-repo-find-add-file",
+          stepTitle: "Step 2 of 3 · Inside an existing repo, click 'Add file' (Pin #7) to create or upload a README",
+          instruction: "If your repository is already created and you want to add a README.md, .gitignore, or any new file in the browser, click the 'Add file' button (Pin #7 -> 'Create new file' or 'Upload files'). Once saved, '.gitignore' and 'README.md' sit in the root file list (Pin #11)."
         },
         {
           snapshotId: "github-repo",
           hotspotId: "gh-repo-green-code-btn",
-          stepTitle: "Step 3 of 3 · Copy the HTTPS URL from the green '<> Code' button to clone it",
-          instruction: "Once created, click the green '<> Code' button (Pin #8) to copy your new repo's URL and clone it to VS Code on your laptop!"
+          stepTitle: "Step 3 of 3 · Click the green '<> Code' button (Pin #8) to copy the HTTPS URL & clone",
+          instruction: "Click the green '<> Code' button (Pin #8) to copy your repository's HTTPS URL and run 'git clone <url>' in your VS Code terminal!"
         }
       ]
     },
