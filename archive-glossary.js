@@ -344,140 +344,23 @@
       host.replaceChildren();
       var filtered = getFilteredItems();
 
-      var flashcardBox = document.createElement("div");
-      flashcardBox.className = "nested-card archive-flashcard-banner";
+      var menuPanel = document.createElement("div");
+      menuPanel.className = "archive-menu-panel";
 
-      var fcHeaderRow = document.createElement("div");
-      fcHeaderRow.className = "resource-title-row";
-
-      var fcTitleWrap = document.createElement("div");
-      var fcBadgeRow = document.createElement("div");
-      fcBadgeRow.className = "badge-row";
-      var fcBadge = document.createElement("span");
-      fcBadge.className = "badge badge-success";
-      fcBadge.textContent = "Instant flashcard export · " + filtered.length + " of " + masterList.length + " terms selected";
-      fcBadgeRow.appendChild(fcBadge);
-
-      var fcTitle = document.createElement("h3");
-      fcTitle.className = "vocab-section-heading";
-      fcTitle.textContent = "Turn this A–Z dictionary into flashcards in 1 click";
-      var fcDesc = document.createElement("p");
-      fcDesc.className = "resource-desc";
-      fcDesc.textContent = "Click 'Copy all for flashcards' below to copy every currently visible term and definition in universal Term [Tab] Definition format, then paste directly into Knowt, Quizlet, or Anki—or toggle 'Quiz mode' to practice flipping cards right here on the page:";
-      fcTitleWrap.appendChild(fcBadgeRow);
-      fcTitleWrap.appendChild(fcTitle);
-      fcTitleWrap.appendChild(fcDesc);
-      fcHeaderRow.appendChild(fcTitleWrap);
-      flashcardBox.appendChild(fcHeaderRow);
-
-      var actionsRow = document.createElement("div");
-      actionsRow.className = "diagram-pill-cluster";
-
-      var copyAllBtn = document.createElement("button");
-      copyAllBtn.type = "button";
-      copyAllBtn.className = "nav-btn nav-btn-primary";
-      var copyIcon = document.createElement("span");
-      copyIcon.className = "material-symbols-outlined btn-icon-sm";
-      copyIcon.textContent = "content_copy";
-      var copyLbl = document.createElement("span");
-      copyLbl.textContent = "Copy all " + filtered.length + " terms for flashcards (Tab-separated)";
-      copyAllBtn.appendChild(copyIcon);
-      copyAllBtn.appendChild(copyLbl);
-
-      copyAllBtn.addEventListener("click", function () {
-        var tsv = formatFlashcardTsv(filtered);
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(tsv).then(function () {
-            copyIcon.textContent = "check";
-            copyLbl.textContent = "Copied " + filtered.length + " flashcards! Paste into Knowt, Quizlet, or Anki";
-            setTimeout(function () {
-              copyIcon.textContent = "content_copy";
-              copyLbl.textContent = "Copy all " + filtered.length + " terms for flashcards (Tab-separated)";
-            }, 3200);
-          });
-        } else {
-          showRawExport = true;
-          render();
-        }
-      });
-      actionsRow.appendChild(copyAllBtn);
-
-      var quizBtn = document.createElement("button");
-      quizBtn.type = "button";
-      quizBtn.className = "nav-btn" + (quizFlipMode ? " active" : "");
-      var qIcon = document.createElement("span");
-      qIcon.className = "material-symbols-outlined btn-icon-sm";
-      qIcon.textContent = quizFlipMode ? "visibility" : "style";
-      var qLbl = document.createElement("span");
-      qLbl.textContent = quizFlipMode ? "Exit quiz mode (Show all definitions)" : "Quiz mode (Click cards to reveal definitions)";
-      quizBtn.appendChild(qIcon);
-      quizBtn.appendChild(qLbl);
-      quizBtn.addEventListener("click", function () {
-        quizFlipMode = !quizFlipMode;
-        render();
-      });
-      actionsRow.appendChild(quizBtn);
-
-      var rawBtn = document.createElement("button");
-      rawBtn.type = "button";
-      rawBtn.className = "nav-btn" + (showRawExport ? " active" : "");
-      var rIcon = document.createElement("span");
-      rIcon.className = "material-symbols-outlined btn-icon-sm";
-      rIcon.textContent = "subject";
-      var rLbl = document.createElement("span");
-      rLbl.textContent = showRawExport ? "Hide raw flashcard text" : "View raw copy-paste text";
-      rawBtn.appendChild(rIcon);
-      rawBtn.appendChild(rLbl);
-      rawBtn.addEventListener("click", function () {
-        showRawExport = !showRawExport;
-        render();
-      });
-      actionsRow.appendChild(rawBtn);
-
-      [
-        { label: "Open Knowt (100% free flashcard maker)", url: "https://knowt.com/" },
-        { label: "Open Quizlet (Create & import set)", url: "https://quizlet.com/create-set" },
-        { label: "Open Anki (Free spaced-repetition app)", url: "https://apps.ankiweb.net/" }
-      ].forEach(function (ext) {
-        var a = document.createElement("a");
-        a.className = "nav-btn";
-        a.href = ext.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        var s = document.createElement("span");
-        s.textContent = ext.label;
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined btn-icon-sm";
-        ic.textContent = "open_in_new";
-        a.appendChild(s);
-        a.appendChild(ic);
-        actionsRow.appendChild(a);
-      });
-
-      flashcardBox.appendChild(actionsRow);
-
-      if (showRawExport) {
-        var rawArea = document.createElement("textarea");
-        rawArea.className = "archive-raw-flashcard-textarea";
-        rawArea.readOnly = true;
-        rawArea.rows = 8;
-        rawArea.value = formatFlashcardTsv(filtered);
-        rawArea.setAttribute("aria-label", "Raw tab-separated flashcard text");
-        rawArea.addEventListener("click", function () {
-          rawArea.select();
-        });
-        flashcardBox.appendChild(rawArea);
-      }
-
-      host.appendChild(flashcardBox);
+      var topRow = document.createElement("div");
+      topRow.className = "archive-menu-top-row";
 
       var groupBar = document.createElement("div");
-      groupBar.className = "vocab-top-tabs-bar";
+      groupBar.className = "archive-category-pills";
+      var siteCount = masterList.filter(function (x) { return x.group === "site"; }).length;
+      var cmdCount = masterList.filter(function (x) { return x.group === "command"; }).length;
+      var conceptCount = masterList.filter(function (x) { return x.group === "concept"; }).length;
+
       [
-        { id: "all", label: "All terms A–Z (" + masterList.length + ")", icon: "sort_by_alpha" },
-        { id: "site", label: "Sites, apps & software (" + masterList.filter(function (x) { return x.group === "site"; }).length + ")", icon: "apps" },
-        { id: "command", label: "Terminal & Git commands (" + masterList.filter(function (x) { return x.group === "command"; }).length + ")", icon: "terminal" },
-        { id: "concept", label: "Coding, APIs & architecture (" + masterList.filter(function (x) { return x.group === "concept"; }).length + ")", icon: "account_tree" }
+        { id: "all", label: "All (" + masterList.length + ")", icon: "sort_by_alpha" },
+        { id: "site", label: "Sites & tools (" + siteCount + ")", icon: "apps" },
+        { id: "command", label: "Commands (" + cmdCount + ")", icon: "terminal" },
+        { id: "concept", label: "Concepts (" + conceptCount + ")", icon: "account_tree" }
       ].forEach(function (tab) {
         var btn = document.createElement("button");
         btn.type = "button";
@@ -495,14 +378,118 @@
         });
         groupBar.appendChild(btn);
       });
-      host.appendChild(groupBar);
+      topRow.appendChild(groupBar);
+
+      var fcToolbar = document.createElement("div");
+      fcToolbar.className = "archive-flashcard-toolbar";
+
+      var copyAllBtn = document.createElement("button");
+      copyAllBtn.type = "button";
+      copyAllBtn.className = "nav-btn nav-btn-primary archive-fc-btn";
+      copyAllBtn.title = "Copy visible terms in Tab-separated format for Knowt, Quizlet, or Anki";
+      var copyIcon = document.createElement("span");
+      copyIcon.className = "material-symbols-outlined btn-icon-sm";
+      copyIcon.textContent = "content_copy";
+      var copyLbl = document.createElement("span");
+      copyLbl.textContent = "Copy " + filtered.length + " flashcards";
+      copyAllBtn.appendChild(copyIcon);
+      copyAllBtn.appendChild(copyLbl);
+
+      copyAllBtn.addEventListener("click", function () {
+        var tsv = formatFlashcardTsv(filtered);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(tsv).then(function () {
+            copyIcon.textContent = "check";
+            copyLbl.textContent = "Copied " + filtered.length + " cards!";
+            setTimeout(function () {
+              copyIcon.textContent = "content_copy";
+              copyLbl.textContent = "Copy " + filtered.length + " flashcards";
+            }, 2800);
+          });
+        } else {
+          showRawExport = true;
+          render();
+        }
+      });
+      fcToolbar.appendChild(copyAllBtn);
+
+      var quizBtn = document.createElement("button");
+      quizBtn.type = "button";
+      quizBtn.className = "nav-btn archive-fc-btn" + (quizFlipMode ? " active" : "");
+      quizBtn.title = "Hide definitions and click cards to flip them";
+      var qIcon = document.createElement("span");
+      qIcon.className = "material-symbols-outlined btn-icon-sm";
+      qIcon.textContent = quizFlipMode ? "visibility" : "style";
+      var qLbl = document.createElement("span");
+      qLbl.textContent = quizFlipMode ? "Exit quiz" : "Quiz mode";
+      quizBtn.appendChild(qIcon);
+      quizBtn.appendChild(qLbl);
+      quizBtn.addEventListener("click", function () {
+        quizFlipMode = !quizFlipMode;
+        render();
+      });
+      fcToolbar.appendChild(quizBtn);
+
+      var rawBtn = document.createElement("button");
+      rawBtn.type = "button";
+      rawBtn.className = "nav-btn archive-fc-btn" + (showRawExport ? " active" : "");
+      rawBtn.title = "Show or hide raw tab-separated text for manual copy-paste";
+      var rIcon = document.createElement("span");
+      rIcon.className = "material-symbols-outlined btn-icon-sm";
+      rIcon.textContent = "subject";
+      var rLbl = document.createElement("span");
+      rLbl.textContent = showRawExport ? "Hide TSV" : "Raw TSV";
+      rawBtn.appendChild(rIcon);
+      rawBtn.appendChild(rLbl);
+      rawBtn.addEventListener("click", function () {
+        showRawExport = !showRawExport;
+        render();
+      });
+      fcToolbar.appendChild(rawBtn);
+
+      [
+        { label: "Knowt", url: "https://knowt.com/", title: "Open Knowt (free flashcard import)" },
+        { label: "Quizlet", url: "https://quizlet.com/create-set", title: "Open Quizlet set creator" },
+        { label: "Anki", url: "https://apps.ankiweb.net/", title: "Open Anki spaced-repetition app" }
+      ].forEach(function (ext) {
+        var a = document.createElement("a");
+        a.className = "diagram-label-pill archive-ext-link";
+        a.href = ext.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.title = ext.title;
+        var s = document.createElement("span");
+        s.textContent = ext.label;
+        var ic = document.createElement("span");
+        ic.className = "material-symbols-outlined diagram-pill-icon";
+        ic.textContent = "open_in_new";
+        a.appendChild(s);
+        a.appendChild(ic);
+        fcToolbar.appendChild(a);
+      });
+
+      topRow.appendChild(fcToolbar);
+      menuPanel.appendChild(topRow);
+
+      if (showRawExport) {
+        var rawArea = document.createElement("textarea");
+        rawArea.className = "archive-raw-flashcard-textarea";
+        rawArea.readOnly = true;
+        rawArea.rows = 7;
+        rawArea.value = formatFlashcardTsv(filtered);
+        rawArea.setAttribute("aria-label", "Raw tab-separated flashcard text");
+        rawArea.addEventListener("click", function () {
+          rawArea.select();
+        });
+        menuPanel.appendChild(rawArea);
+      }
 
       var azBar = document.createElement("div");
-      azBar.className = "vocab-compact-chip-row";
+      azBar.className = "archive-az-bar";
       ["ALL", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "Z"].forEach(function (ltr) {
         var chip = document.createElement("button");
         chip.type = "button";
-        chip.className = "vocab-compact-chip" + (activeLetter === ltr ? " active" : "");
+        chip.className = "archive-az-pill" + (activeLetter === ltr ? " active" : "");
         chip.textContent = ltr === "ALL" ? "All A–Z" : ltr;
         chip.addEventListener("click", function () {
           activeLetter = ltr;
@@ -510,7 +497,8 @@
         });
         azBar.appendChild(chip);
       });
-      host.appendChild(azBar);
+      menuPanel.appendChild(azBar);
+      host.appendChild(menuPanel);
 
       if (!filtered.length) {
         var emptyP = document.createElement("p");

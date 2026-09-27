@@ -173,3 +173,92 @@
     margin-left: 0;
   }
 }
+
+/* Streamlined Archive & A-Z Dictionary Menu Bar */
+.archive-menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.archive-menu-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.archive-category-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.archive-flashcard-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.archive-fc-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.archive-ext-link {
+  text-decoration: none;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+.archive-az-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.archive-az-pill {
+  appearance: none;
+  border: none;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-family-display);
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.archive-az-pill:hover {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+.archive-az-pill.active {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.vocab-example-box {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+}
+
