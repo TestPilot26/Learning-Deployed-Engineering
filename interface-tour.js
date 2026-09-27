@@ -183,31 +183,35 @@
         { id: "devtools", label: "Chrome DevTools", icon: "troubleshoot" },
         { id: "database", label: "Cloud Database", icon: "database" },
         { id: "terminal", label: "Mac Terminal", icon: "terminal" }
-      ].forEach(function (grp) {
-        var btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "vocab-top-tab-btn" + (activeGroup === grp.id ? " active" : "");
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined btn-icon-sm";
-        ic.textContent = grp.icon;
-        var sp = document.createElement("span");
-        sp.textContent = grp.label;
-        btn.appendChild(ic);
-        btn.appendChild(sp);
-        btn.addEventListener("click", function () {
-          activeGroup = grp.id;
-          activeFlowId = null;
-          var firstInGroup = snapshots.filter(function (s) { return s.group === grp.id; })[0];
-          if (firstInGroup) {
-            activeSnapId = firstInGroup.id;
-            activeHotspotId = firstInGroup.hotspots[0].id;
-          }
-          render(false);
-          var newSnap = getActiveSnap();
-          populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
+      ]
+        .filter(function (grp) {
+          return snapshots.some(function (s) { return s.group === grp.id; });
+        })
+        .forEach(function (grp) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "vocab-top-tab-btn" + (activeGroup === grp.id ? " active" : "");
+          var ic = document.createElement("span");
+          ic.className = "material-symbols-outlined btn-icon-sm";
+          ic.textContent = grp.icon;
+          var sp = document.createElement("span");
+          sp.textContent = grp.label;
+          btn.appendChild(ic);
+          btn.appendChild(sp);
+          btn.addEventListener("click", function () {
+            activeGroup = grp.id;
+            activeFlowId = null;
+            var firstInGroup = snapshots.filter(function (s) { return s.group === grp.id; })[0];
+            if (firstInGroup) {
+              activeSnapId = firstInGroup.id;
+              activeHotspotId = firstInGroup.hotspots[0].id;
+            }
+            render(false);
+            var newSnap = getActiveSnap();
+            populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
+          });
+          menuBar.appendChild(btn);
         });
-        menuBar.appendChild(btn);
-      });
 
       mount.appendChild(menuBar);
 
@@ -420,7 +424,7 @@
       var toggleAllFlowsBtn = document.createElement("button");
       toggleAllFlowsBtn.type = "button";
       toggleAllFlowsBtn.className = "diagram-label-pill";
-      toggleAllFlowsBtn.textContent = showAllFlows ? "Show only " + snap.groupLabel.split(" ")[0] + " flows" : "All 8 flows…";
+      toggleAllFlowsBtn.textContent = showAllFlows ? "Show only " + snap.groupLabel.split(" ")[0] + " flows" : "All " + flows.length + " flows…";
       toggleAllFlowsBtn.addEventListener("click", function () {
         showAllFlows = !showAllFlows;
         render(false);
