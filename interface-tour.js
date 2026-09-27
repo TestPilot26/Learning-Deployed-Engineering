@@ -75,8 +75,8 @@
       },
       {
         itemTitle: hs.title,
-        autoOpen: true,
-        pulse: true
+        autoOpen: false,
+        pulse: false
       }
     );
   }
@@ -93,7 +93,7 @@
     var activeHotspotId = initialSnap.hotspots[0].id;
     var activeFlowId = null;
     var activeFlowStepIdx = 0;
-    var showLabelsOnImage = true;
+    var showLabelsOnImage = false;
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card ui-tour-shell";
@@ -431,10 +431,11 @@
         var isSelected = hs.id === currentHs.id;
         var pinBtn = document.createElement("button");
         pinBtn.type = "button";
+        var showThisLabel = showLabelsOnImage || isSelected;
         pinBtn.className =
           "ui-tour-hotspot-pin" +
           (isSelected ? " active" : "") +
-          (showLabelsOnImage ? " with-label" : " compact-pin");
+          (showThisLabel ? " with-label" : " compact-pin");
         pinBtn.style.left = hs.x + "%";
         pinBtn.style.top = hs.y + "%";
         pinBtn.setAttribute("aria-label", "Pin " + hs.num + ": " + hs.title);
@@ -444,7 +445,7 @@
         numBadge.textContent = hs.num;
         pinBtn.appendChild(numBadge);
 
-        if (showLabelsOnImage) {
+        if (showThisLabel) {
           var lblSpan = document.createElement("span");
           lblSpan.className = "ui-tour-pin-label";
           lblSpan.textContent = hs.shortLabel;
