@@ -504,12 +504,13 @@
     stageCards.push(stage1.card);
     topRow.appendChild(stage1.card);
 
-    // ARROW 1: Request (API, JSON & Login Pass)
+    // ARROW 1: Two-way Request <-> Response (API, JSON & Login Pass)
     topRow.appendChild(
       art.createHorizontalStepArrow(
-        "Request",
-        "API & JSON",
-        buildCluster(["bridge-api", "lang-json", "bridge-auth"])
+        "Request ->",
+        "<- Response",
+        buildCluster(["bridge-api", "lang-json", "bridge-auth"]),
+        true
       )
     );
 
@@ -518,7 +519,7 @@
       stageKey: "stage-be",
       artSvg: art.createCloudServerArt("Cloud Server"),
       title: "2. Cloud server",
-      subtitle: "Back end · Processes request",
+      subtitle: "Back end · Central hub",
       onStageClick: function () {
         selectItem(APP_DIAGRAM_ITEMS["be-overview"]);
       },
@@ -533,19 +534,20 @@
     stageCards.push(stage2.card);
     topRow.appendChild(stage2.card);
 
-    // ARROW 2: Gets Data (SQL)
+    // ARROW 2: Two-way SQL Query <-> Returns rows
     topRow.appendChild(
       art.createHorizontalStepArrow(
-        "Gets data",
-        "SQL & ORMs",
-        buildCluster(["lang-sql"])
+        "SQL query ->",
+        "<- Saved rows",
+        buildCluster(["lang-sql"]),
+        true
       )
     );
 
     // STAGE 3: Database & Storage
     var stage3 = art.createLoopStageCard({
       stageKey: "stage-db",
-      artSvg: art.createDatabaseArt("011010"),
+      artSvg: art.createDatabaseArt("SQL rows"),
       title: "3. Database & storage",
       subtitle: "SQL, NoSQL, Vector & Files",
       onStageClick: function () {
@@ -564,18 +566,34 @@
     loopCanvas.appendChild(topRow);
 
     // =========================================================================
-    // BOTTOM ROW: [Left Curved Return] <---> [4. User & outside services] <--- [Right Curved Return]
+    // VERTICAL TWO-WAY BRIDGE: [2. Cloud server] <===> [4. Outside services & APIs]
+    // =========================================================================
+    loopCanvas.appendChild(
+      art.createVerticalStepArrow(
+        "2. Server calls API (.env key) ↓",
+        "↑ 4. Returns AI output & Webhooks"
+      )
+    );
+
+    // =========================================================================
+    // BOTTOM ROW: [4. Outside services & APIs] centered below 2. Cloud server
     // =========================================================================
     var bottomRow = document.createElement("div");
     bottomRow.className = "loop-bottom-row";
 
-    bottomRow.appendChild(art.createCurvedReturnWing("left", "Sends results"));
+    var leftRuleNote = document.createElement("div");
+    leftRuleNote.className = "nested-card";
+    var leftRuleP = document.createElement("p");
+    leftRuleP.className = "resource-desc";
+    leftRuleP.textContent = "Architecture rule 1: The Front End (1) never calls the Database (3) or paid AI APIs (4) directly—every request goes through the Cloud Server (2) first.";
+    leftRuleNote.appendChild(leftRuleP);
+    bottomRow.appendChild(leftRuleNote);
 
     var stage4 = art.createLoopStageCard({
       stageKey: "stage-user",
-      artSvg: art.createUserArt(),
-      title: "4. User & outside services",
-      subtitle: "AI GPUs, Stripe, DNS & CLI",
+      artSvg: art.createExternalServicesArt(),
+      title: "4. Outside services & APIs",
+      subtitle: "AI models, Stripe, .env & CLI",
       onStageClick: function () {
         selectItem(APP_DIAGRAM_ITEMS["ext-ai-stripe"]);
       },
@@ -590,7 +608,13 @@
     stageCards.push(stage4.card);
     bottomRow.appendChild(stage4.card);
 
-    bottomRow.appendChild(art.createCurvedReturnWing("right", "Returns data"));
+    var rightRuleNote = document.createElement("div");
+    rightRuleNote.className = "nested-card";
+    var rightRuleP = document.createElement("p");
+    rightRuleP.className = "resource-desc";
+    rightRuleP.textContent = "Architecture rule 2: Secret billing keys (.env) stay locked between the Cloud Server (2) and Outside Services (4), and Webhooks call the Cloud Server back.";
+    rightRuleNote.appendChild(rightRuleP);
+    bottomRow.appendChild(rightRuleNote);
 
     loopCanvas.appendChild(bottomRow);
     card.appendChild(loopCanvas);

@@ -515,7 +515,7 @@
       topStages: [
         {
           stageKey: "stage-py-basics",
-          artSvg: art.createDeviceArt(),
+          artSvg: art.createPythonFuncArt(),
           title: "1. Variables & functions",
           subtitle: "Inputs, if/else & def recipes",
           defaultId: "py-vars-types",
@@ -523,7 +523,7 @@
         },
         {
           stageKey: "stage-py-data",
-          artSvg: art.createDatabaseArt(),
+          artSvg: art.createDictToTableArt(),
           title: "2. Dicts, lists & tables",
           subtitle: "1 Dict = 1 Row; List of Dicts = Table",
           defaultId: "py-dict-row",
@@ -531,7 +531,7 @@
         },
         {
           stageKey: "stage-py-contracts",
-          artSvg: art.createCloudServerArt("Schemas & Logs"),
+          artSvg: art.createSchemaStackTraceArt(),
           title: "3. Schemas & stack traces",
           subtitle: "Strict shapes & bottom-up debugging",
           defaultId: "py-pydantic-schema",
@@ -542,11 +542,11 @@
         { topLabel: "Group into rows", bottomLabel: "Dicts & Lists", pillId: "py-pandas-df" },
         { topLabel: "Validate shape", bottomLabel: "Pydantic / Types", pillId: "py-pydantic-schema" }
       ],
-      returnLeftLabel: "Verify every change",
-      returnRightLabel: "Catch regressions",
+      returnLeftLabel: "Safe to edit & refactor",
+      returnRightLabel: "Run pytest & Evals",
       bottomStage: {
         stageKey: "stage-py-evals",
-        artSvg: art.createUserArt(),
+        artSvg: art.createTestEvalPassArt(),
         title: "4. Automated unit tests (pytest) & Golden AI Evals",
         subtitle: "Test 30–50 real examples (and check that 'Move to Doing' stays in Doing!) before shipping",
         defaultId: "py-unit-tests",
@@ -568,7 +568,7 @@
       topStages: [
         {
           stageKey: "stage-sys-request",
-          artSvg: art.createDeviceArt(),
+          artSvg: art.createUrlRouteClickArt(),
           title: "1. URL route & UI state",
           subtitle: "Button click -> /api/users",
           defaultId: "sys-url-to-func",
@@ -576,7 +576,7 @@
         },
         {
           stageKey: "stage-sys-agent",
-          artSvg: art.createCloudServerArt("Server & Agent"),
+          artSvg: art.createAgentMcpLoopArt(),
           title: "2. Backend & AI agent loop",
           subtitle: "Python function + MCP tools",
           defaultId: "sys-agent-loop",
@@ -584,7 +584,7 @@
         },
         {
           stageKey: "stage-sys-storage",
-          artSvg: art.createDatabaseArt(),
+          artSvg: art.createDbWebhookArt(),
           title: "3. Separate DB & webhooks",
           subtitle: "Keep private data out of Git!",
           defaultId: "sys-data-separation",
@@ -599,7 +599,7 @@
       returnRightLabel: "Stages preview card",
       bottomStage: {
         stageKey: "stage-sys-guardrail",
-        artSvg: art.createUserArt(),
+        artSvg: art.createHumanApprovalArt(),
         title: "4. Human-in-the-Loop ('Prepare -> Confirm') & observability",
         subtitle: "Stage a draft preview card for human approval before sending emails, deleting data, or charging money",
         defaultId: "sys-human-in-loop",

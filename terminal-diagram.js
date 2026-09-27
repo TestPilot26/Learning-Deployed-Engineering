@@ -80,22 +80,52 @@
     badgeRow.className = "badge-row";
     var badge = document.createElement("span");
     badge.className = "badge badge-success";
-    badge.textContent = "Live interactive terminal sandbox — press your real keyboard keys or click any key card!";
+    badge.textContent = "Interactive terminal & keyboard simulator — why your mouse doesn't work here (and which 6 keys replace it)";
     badgeRow.appendChild(badge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Test out the terminal keys yourself: Try Tab, ↑/↓ Arrows, Enter, Ctrl+C, and Ctrl+L live";
+    h3.textContent = "How the terminal & keyboard buttons work together (2-step live simulator)";
     var subP = document.createElement("p");
     subP.className = "text-muted";
-    subP.textContent = "Pick a guided mission below, type directly in the terminal box, and press your real laptop keys (or click the big key buttons on the right) to see what each key actually does.";
+    subP.textContent = "In a normal app you click folders and buttons with your mouse. In a terminal, your mouse cannot click folders or stop a frozen program—you use 6 physical keyboard keys instead. Use Step 1 and Step 2 below to see what each button illustrates:";
     titleGroup.appendChild(badgeRow);
     titleGroup.appendChild(h3);
     titleGroup.appendChild(subP);
     headerRow.appendChild(titleGroup);
     card.appendChild(headerRow);
 
-    // 1. Guided "Try It Yourself" Mission Bar
+    // 2-Step Visual Explainer Grid: What the Scenario Buttons vs. Key Buttons Do
+    var howtoGrid = document.createElement("div");
+    howtoGrid.className = "term-howto-steps-grid";
+
+    var step1Card = document.createElement("div");
+    step1Card.className = "term-howto-step-card";
+    var s1Badge = document.createElement("span");
+    s1Badge.className = "badge badge-info";
+    s1Badge.textContent = "Step 1 · The 5 scenario pills below (Set up a real-world situation)";
+    var s1Text = document.createElement("p");
+    s1Text.className = "resource-desc";
+    s1Text.textContent = "Clicking one of the 5 numbered pills loads a common situation into the black terminal screen (like a half-typed folder name 'cd comp', or a stuck local server holding your terminal hostage) and highlights the exact keyboard key that solves it.";
+    step1Card.appendChild(s1Badge);
+    step1Card.appendChild(s1Text);
+
+    var step2Card = document.createElement("div");
+    step2Card.className = "term-howto-step-card";
+    var s2Badge = document.createElement("span");
+    s2Badge.className = "badge badge-secondary";
+    s2Badge.textContent = "Step 2 · The 6 physical keyboard key cards (Simulate pressing the key)";
+    var s2Text = document.createElement("p");
+    s2Text.className = "resource-desc";
+    s2Text.textContent = "Below the terminal screen are 6 physical keyboard keys (Tab ⇥, Enter ↵, ↑ Up, ↓ Down, Ctrl+C, Ctrl+L). Click any key card—or press that real key on your laptop keyboard—to watch the terminal react live and read what your hands just did.";
+    step2Card.appendChild(s2Badge);
+    step2Card.appendChild(s2Text);
+
+    howtoGrid.appendChild(step1Card);
+    howtoGrid.appendChild(step2Card);
+    card.appendChild(howtoGrid);
+
+    // Step 1: Guided Scenario Bar
     var missionBar = document.createElement("div");
     missionBar.className = "diagram-pill-cluster";
     GUIDED_MISSIONS.forEach(function (m, idx) {
@@ -128,7 +158,7 @@
     missionBanner.appendChild(mbText);
     card.appendChild(missionBanner);
 
-    // 2. Main Side-by-Side Stage: [Left: Live Interactive Terminal] + [Right: Click-to-Test Keyboard Keys]
+    // 2. Main Stacked Stage: [Top: Full-Width Live Terminal] + [Bottom: 6 Physical Keyboard Key Cards]
     var stageGrid = document.createElement("div");
     stageGrid.className = "terminal-keyboard-stage";
 

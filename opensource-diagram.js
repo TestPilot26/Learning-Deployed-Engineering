@@ -507,7 +507,7 @@
 
     var stage1 = art.createLoopStageCard({
       stageKey: "os-stage-1",
-      artSvg: art.createDeviceArt(),
+      artSvg: art.createLicenseSearchArt(),
       title: "1. Discover & vet",
       subtitle: "Check license & health",
       onStageClick: function () {
@@ -518,11 +518,11 @@
     stageCards.push(stage1.card);
     topRow.appendChild(stage1.card);
 
-    topRow.appendChild(art.createHorizontalStepArrow("Download", "npm or git clone"));
+    topRow.appendChild(art.createHorizontalStepArrow("Download", "npm, uv or clone"));
 
     var stage2 = art.createLoopStageCard({
       stageKey: "os-stage-2",
-      artSvg: art.createCloudServerArt("Open Source"),
+      artSvg: art.createPackageInstallArt(),
       title: "2. Install & configure",
       subtitle: "Lock versions & .env",
       onStageClick: function () {
@@ -537,7 +537,7 @@
 
     var stage3 = art.createLoopStageCard({
       stageKey: "os-stage-3",
-      artSvg: art.createDatabaseArt("import"),
+      artSvg: art.createPuzzleSnapArt(),
       title: "3. Import & build",
       subtitle: "Snap into your code",
       onStageClick: function () {
@@ -557,7 +557,7 @@
 
     var stage4 = art.createLoopStageCard({
       stageKey: "os-stage-4",
-      artSvg: art.createUserArt(),
+      artSvg: art.createRocketShipArt(),
       title: "4. Customize & ship",
       subtitle: "Push & deploy live",
       onStageClick: function () {

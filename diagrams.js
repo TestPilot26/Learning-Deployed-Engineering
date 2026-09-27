@@ -138,7 +138,7 @@
 
     var stage1 = art.createLoopStageCard({
       stageKey: "stage-computer",
-      artSvg: art.createDeviceArt(),
+      artSvg: art.createLaptopEditorArt(),
       title: "1. Your computer",
       subtitle: "Edit & test privately",
       onStageClick: function () {
@@ -147,7 +147,7 @@
       pillsContainer: buildPillsCluster([
         { id: "ide-editor", label: "Code editors & IDEs" },
         { id: "plain-text", label: "Plain-text files" },
-        { id: "homebrew-runtime", label: "Package managers & runtimes" },
+        { id: "homebrew-runtime", label: "Tool installers & engines" },
         { id: "local-git", label: "Local Git" },
         { id: "env-secrets", label: "Secret .env" }
       ])
@@ -155,11 +155,11 @@
     stageCards.push(stage1.card);
     topRow.appendChild(stage1.card);
 
-    topRow.appendChild(art.createHorizontalStepArrow("git push", "Uploads repo"));
+    topRow.appendChild(art.createHorizontalStepArrow("git push", "Uploads commits"));
 
     var stage2 = art.createLoopStageCard({
       stageKey: "stage-cloud",
-      artSvg: art.createCloudServerArt("Cloud Git Repo"),
+      artSvg: art.createGitCloudRepoArt(),
       title: "2. Cloud code repository",
       subtitle: "Remote backup & review",
       onStageClick: function () {
@@ -176,7 +176,7 @@
 
     var stage3 = art.createLoopStageCard({
       stageKey: "stage-hosting",
-      artSvg: art.createDatabaseArt("https://"),
+      artSvg: art.createLiveWebHostArt(),
       title: "3. Cloud hosting",
       subtitle: "Web apps, AI demos & servers",
       onStageClick: function () {
@@ -191,22 +191,22 @@
 
     loopCanvas.appendChild(topRow);
 
-    // BOTTOM ROW: [Left Curved Return Wing] <---> [4. User & browser] <--- [Right Curved Return Wing]
+    // BOTTOM ROW: [Left Curved Return Wing] <--- [4. User & browser] <--- [Right Curved Return Wing]
     var bottomRow = document.createElement("div");
     bottomRow.className = "loop-bottom-row";
 
-    bottomRow.appendChild(art.createCurvedReturnWing("left", "Inspects & edits"));
+    bottomRow.appendChild(art.createCurvedReturnWing("left", "Edit next update"));
 
     var stage4 = art.createLoopStageCard({
       stageKey: "stage-user",
-      artSvg: art.createUserArt(),
-      title: "4. User & browser",
-      subtitle: "Opens site & inspects",
+      artSvg: art.createBrowserInspectArt(),
+      title: "4. User & browser DevTools",
+      subtitle: "Opens live site & inspects",
       onStageClick: function () {
         selectNode(nodeById["browser-devtools"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "browser-devtools", label: "Browser DevTools" }
+        { id: "browser-devtools", label: "Browser DevTools (Inspect)" }
       ])
     });
     stageCards.push(stage4.card);

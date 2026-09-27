@@ -445,8 +445,13 @@ function handleRouteChange() {
     }
     setTimeout(updatePathwayGeometry, 40);
   };
-  if (typeof document.startViewTransition === "function") document.startViewTransition(applyRoute);
-  else applyRoute();
+  if (typeof document.startViewTransition === "function") {
+    try {
+      var vt = document.startViewTransition(applyRoute);
+      if (vt && vt.ready && vt.ready.catch) vt.ready.catch(function () {});
+      if (vt && vt.finished && vt.finished.catch) vt.finished.catch(function () {});
+    } catch (e) { applyRoute(); }
+  } else applyRoute();
 }
 
 function navigateTo(hash) {

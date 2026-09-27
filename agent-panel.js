@@ -606,6 +606,7 @@
     var agentPanelEl = document.getElementById("agent-side-panel");
     var toggleAgentBtn = document.getElementById("btn-toggle-agent-panel");
     var collapseAgentBtn = document.getElementById("btn-collapse-agent-panel");
+    var floatingOpenGuideBtn = document.getElementById("btn-floating-open-guide");
 
     var inspectorPanelEl = document.getElementById("inspector-side-panel");
     var toggleInspectorBtn = document.getElementById("btn-toggle-inspector-panel");
@@ -681,6 +682,12 @@
     if (collapseAgentBtn) {
       collapseAgentBtn.addEventListener("click", function () {
         setAgentPanelCollapsed(true);
+      });
+    }
+
+    if (floatingOpenGuideBtn) {
+      floatingOpenGuideBtn.addEventListener("click", function () {
+        setAgentPanelCollapsed(false);
       });
     }
 

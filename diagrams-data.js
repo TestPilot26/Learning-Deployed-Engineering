@@ -34,9 +34,9 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "edit_square",
       badge: "Category · Code editors, IDEs & notebooks",
       badgeClass: "badge-info",
-      title: "Code editors, AI IDEs & notebooks (e.g. VS Code, Cursor, Windsurf, Claude Code, Replit, Google Colab)",
+      title: "Code editors, AI IDEs & notebooks (VS Code, Cursor, Claude Code, Replit, Colab)",
       summary: "Where you open your project folder to read, write, and direct AI to edit your code.",
-      whatItIs: "Category definition: A Code Editor (or IDE — Integrated Development Environment) is your plain-text workshop for reading and writing code, with a file list on the left, color-coded text in the middle, and a built-in terminal at the bottom.\n\nCommon examples you will recognize:\n• Desktop AI & code editors: VS Code, Cursor, Windsurf, Zed, PyCharm, Xcode.\n• Terminal & agentic coding tools: Claude Code, Gemini CLI, GitHub Copilot.\n• Browser sandboxes (zero install): Replit, StackBlitz, CodeSandbox, Firebase Studio, v0, Bolt, Lovable.\n• Interactive data & AI notebooks (run code cell-by-cell): Google Colab, Jupyter Notebooks.",
+      whatItIs: "Category definition: A Code Editor or IDE (Integrated Development Environment — an all-in-one coding workshop) combines three things in one window: your folder's file list on the left, color-highlighted plain text in the middle, and a built-in terminal at the bottom.\n\nEvery tool you will hear in this category, explained:\n• VS Code (Visual Studio Code): The free, industry-standard desktop code editor used by most engineers.\n• Cursor & Windsurf: Desktop code editors built on top of VS Code with AI agents wired directly into your whole project folder.\n• Claude Code & Gemini CLI: Terminal-based AI coding agents that read your folder, edit files, and run tests directly from your command line.\n• Browser AI builders & sandboxes (Replit, v0, Lovable, Bolt.new, StackBlitz): Websites where you can prompt and preview a working prototype right in your browser with zero setup.\n• Interactive notebooks (Google Colab & Jupyter Notebooks): Digital lab notebooks where you run Python code one small block ('cell') at a time—the #1 way data scientists and AI researchers test charts and machine learning models.",
       slipUp: "Easy slip-up: Opening a single loose file instead of opening the whole project folder ('File -> Open Folder'). Always open the whole folder so your editor and AI assistant can see how all your files fit together.",
       command: "Open VS Code or Cursor -> File -> Open Folder",
       videoTitle: "VS Code: Visual tour of a code editor window",
@@ -48,11 +48,11 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "description",
       badge: "Category · Plain-text source files",
       badgeClass: "badge-info",
-      title: "Plain-text source files (.html, .js, .py, .md, .json)",
-      summary: "Where your code instructions live on your device—good for keeping everything fast, readable, and inside a normal folder.",
-      whatItIs: "Category definition: Source code is not locked inside a proprietary format—every code file is simply a plain UTF-8 text file containing raw letters and symbols. We don't use Microsoft Word or Google Docs to write code because rich-text processors secretly inject invisible styling and convert straight quotes (\" \") into curved quotes that break code compilers.\n\nCommon file extensions you will recognize:\n• Web screens: .html (structure), .css (styling), .js / .ts / .tsx (JavaScript / TypeScript).\n• Backend, data & AI: .py (Python), .ipynb (Jupyter / Colab notebook), .sql (database queries).\n• Config & docs: .json / .yaml (structured data), .md (Markdown docs), .env (private keys).",
-      slipUp: "Easy slip-up: Double-clicking a .js or .py file in Finder/Explorer expecting an app window to pop open. Instead, open the project folder inside your code editor.",
-      command: "ls -la   # Shows all files (including hidden dotfiles) in your folder",
+      title: "Plain-text source files (.html, .css, .js, .py, .json, .md)",
+      summary: "Where your code instructions live on your device—raw text characters saved inside a normal folder.",
+      whatItIs: "Category definition: Source code is not locked inside a special format—every code file is simply a plain text file (saved in UTF-8, the universal standard for plain letters and symbols). We never use Microsoft Word or Google Docs to write code because word processors secretly inject invisible styling tags and turn straight quotes (\" \") into curly quotes (“ ”), which immediately crashes code engines.\n\nEvery file ending ('extension') you will see, explained:\n• .html (HyperText Markup Language): Places the structure—headings, paragraphs, and buttons—on a webpage.\n• .css (Cascading Style Sheets): Controls the paint—colors, fonts, spacing, and mobile layout.\n• .js & .ts (JavaScript & TypeScript): Makes the webpage interactive when you click buttons (TypeScript is JavaScript with an automatic spell-checker for data types).\n• .py (Python): The go-to language for AI models, data analysis, and backend servers.\n• .ipynb (Interactive Python Notebook): A notebook file opened in Google Colab or Jupyter.\n• .sql (Structured Query Language): Commands for asking a database table to save or find rows.\n• .json & .yaml: Clean text formats for storing structured settings or mailing data between apps.\n• .md (Markdown): Simple plain-text notes (using # for headings and * for bullets) used for README instructions and AI skill prompts.",
+      slipUp: "Easy slip-up: Double-clicking a .js or .py file in Mac Finder or Windows Explorer expecting an app window to pop open. Instead, open the project folder inside your code editor.",
+      command: "ls -la   # Lists every file (including hidden dot-files) in your folder",
       videoTitle: "MDN: How code files and folders work on your computer",
       videoUrl: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Dealing_with_files"
     },
@@ -60,13 +60,13 @@ window.PIPELINE_DIAGRAMS_DATA = {
       id: "homebrew-runtime",
       hub: "computer",
       icon: "downloading",
-      badge: "Category · Package managers & runtimes",
+      badge: "Category · Tool installers & engines",
       badgeClass: "badge-success",
-      title: "Package managers & language runtimes (e.g. Homebrew, winget, npm, pip/uv, Node.js, Python)",
-      summary: "Where your computer gets the engines to run code privately on your screen ('localhost') and install verified libraries.",
-      whatItIs: "Category definition: Plain text files are just recipes—you need a Language Runtime (the kitchen engine that actually executes code on your computer) and a Package Manager (an app-store-style installer for command-line tools and code libraries so you never hunt around random websites for installers).\n\nCommon examples by subcategory:\n• Language runtimes (run code on your computer): Python, Node.js / Bun / Deno (for JavaScript/TypeScript), Docker (runs isolated software containers).\n• System package managers (install developer tools on your laptop): Homebrew ('brew') on Mac/Linux, winget or Chocolatey on Windows, apt on Ubuntu Linux.\n• Project package managers (install open-source libraries into one project): npm / pnpm / yarn (for JavaScript), pip / uv / conda (for Python).",
-      slipUp: "Easy slip-up: Downloading random installers from search results that land in the wrong folder, causing the terminal to say 'command not found'. Using a package manager like Homebrew or winget wires everything up automatically.",
-      command: "brew install node python git   # System package manager example (Mac/Linux)",
+      title: "Tool installers & language engines (Homebrew, winget, Node.js, Python, npm, pip/uv, Docker)",
+      summary: "The kitchen engines that run code on your laptop and the 'App Store' commands that install them cleanly.",
+      whatItIs: "Category definition: Plain text files are just written recipes—your computer needs a Language Engine (called a 'Runtime') to actually cook the recipe and run your app on your screen ('localhost', a private preview address only your laptop can see). And instead of hunting around random websites for downloads, engineers use Package Managers (official terminal installers).\n\n1. Language Engines ('Runtimes' — what actually runs your code):\n• Python ('python3'): The engine that runs .py files—used for AI, data science, and backend servers.\n• Node.js ('node'): The engine that lets your computer run JavaScript and TypeScript (.js/.ts) outside a web browser so you can run local web servers. (Bun and Deno are newer, faster alternatives to Node.js.)\n• Docker: A tool that packs your code AND its exact engine inside a sealed, portable box (a 'Container') so your app runs identically on any laptop or cloud server.\n\n2. System Package Managers (Install engines onto your laptop):\n• Homebrew ('brew'): The standard command-line installer for Mac and Linux ('brew install node python git') that puts tools in the right folder automatically.\n• winget: The built-in command-line installer for Windows laptops.\n• apt: The built-in command-line installer used on Ubuntu/Debian Linux cloud servers.\n\n3. Project Package Managers (Install open-source libraries into one project folder):\n• npm (Node Package Manager — or faster alternatives pnpm and yarn): Downloads JavaScript building blocks (like Stripe or UI icons) into your project.\n• pip & uv: Download Python building blocks (like FastAPI, Pandas, or OpenAI) into your Python project ('uv' is the ultra-fast modern Python installer).",
+      slipUp: "Easy slip-up: Downloading random '.dmg' or '.exe' installers from search results that land in the wrong folder, causing the terminal to say 'command not found'. Using Homebrew (Mac) or winget (Windows) wires everything up automatically.",
+      command: "brew install node python git   # Installs Node.js, Python & Git cleanly on Mac",
       videoTitle: "Homebrew: The system package manager for Mac & Linux",
       videoUrl: "https://brew.sh/"
     },
@@ -76,9 +76,9 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "history",
       badge: "Category · Local version control",
       badgeClass: "badge-secondary",
-      title: "Local version control (Git on your computer)",
-      summary: "Where you save checkpoints on your device—good for rewinding instantly if an AI edit breaks your working project.",
-      whatItIs: "Category definition: Version Control Software tracks every change made to your project files over time inside a hidden '.git' folder on your laptop. Pressing Cmd+S (or Ctrl+S) overwrites your file immediately, so if an AI rewrites 5 files and breaks your app ten minutes later, normal 'Undo' won't save you. Git lets you take a labeled snapshot (a 'commit') whenever your project works so you can rewind to that exact moment anytime.\n\nCommon ways people use Git:\n• Terminal CLI: 'git add', 'git commit', 'git branch', 'git diff'.\n• Visual Git clients: Built-in Source Control tab in VS Code / Cursor, GitHub Desktop, GitKraken, Lazygit.",
+      title: "Local version control (Git, commits, branches & diffs on your laptop)",
+      summary: "Your local time machine—saves named checkpoints so you can rewind instantly if an AI edit breaks your app.",
+      whatItIs: "Category definition: Version Control Software tracks every change made to your project files over time inside a hidden '.git' folder on your computer. Pressing Cmd+S (or Ctrl+S) overwrites your file immediately—so if an AI agent rewrites 5 files and breaks your app ten minutes later, normal 'Undo' cannot save you. Git lets you take a permanent, labeled snapshot whenever your project works.\n\nKey Git words you will see, explained:\n• Git: The free version-control program running on your laptop (distinct from GitHub, which is the website where you back up Git projects online).\n• Repository ('Repo'): Any project folder that has Git tracking turned on.\n• Commit ('git commit'): A permanent, timestamped save checkpoint with a short note describing what worked.\n• Branch ('git branch'): A parallel sandbox timeline where you can test risky AI ideas without touching your working 'main' version.\n• Diff ('git diff'): A red-and-green highlight showing the exact lines of text added or deleted since your last commit.\n• Visual Git apps (GitHub Desktop, GitKraken, or the Source Control tab inside VS Code / Cursor): Let you click buttons to Commit, Branch, and view Diffs if you don't want to type terminal commands.",
       slipUp: "Easy slip-up: Letting an AI agent make a big second change before saving a Git commit checkpoint of the first working version.",
       command: "git add . && git commit -m \"Working homepage\"",
       videoTitle: "MIT Missing Semester: How Git version control works",
@@ -90,11 +90,11 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "lock",
       badge: "Category · Environment variables",
       badgeClass: "badge-neutral",
-      title: "Private environment variables (.env file & secrets managers)",
-      summary: "Where you store secret API keys on your laptop so passwords never get hardcoded into your code files.",
-      whatItIs: "Category definition: Environment Variables are external configuration settings and secret passwords stored outside your normal source code. Locally on your laptop, they live in a hidden file named '.env', and a rule file called '.gitignore' guarantees that '.env' is never uploaded to public Git repositories.\n\nWhere environment variables live in the real world:\n• On your laptop: A hidden '.env' or '.env.local' file in your project folder.\n• On cloud hosting platforms: The encrypted 'Environment Variables' or 'Secrets' settings box inside Vercel, Netlify, Render, Railway, Hugging Face Spaces, Google Cloud Secret Manager, or AWS.",
-      slipUp: "Easy slip-up: Pasting a secret API key directly inside a '.js' or '.py' file and uploading it to a public repo, where automated bots can scrape it in seconds.",
-      command: "GEMINI_API_KEY=\"AIza...\"   # Stored inside .env only (never committed)",
+      title: "Private environment variables (.env file, .gitignore & cloud secrets)",
+      summary: "Where secret API keys live outside your code so passwords never leak onto public GitHub.",
+      whatItIs: "Category definition: Environment Variables are private configuration settings and secret billing keys stored outside your normal code files so strangers can never read them.\n\nEvery term in this workflow, explained:\n• API Key / Secret Token: A private password (like 'OPENAI_API_KEY' or 'STRIPE_SECRET_KEY') that charges your credit card or accesses private data whenever used.\n• .env file (pronounced 'dot-E-N-V'): A hidden plain-text file sitting on your laptop that holds your secret keys (e.g., GEMINI_API_KEY=\"AIza...\") so your local server can read them.\n• .gitignore file: A simple checklist file in your folder that tells Git: 'Never upload my .env file or heavy temp folders to GitHub!'\n• .env.example: A safe template file you DO share on GitHub that lists the blank key names (GEMINI_API_KEY=\"\") with zero real passwords inside.\n• Cloud Environment Variables / Secrets Manager: The encrypted password vault inside your cloud host's dashboard (in Vercel, Render, Cloud Run, Hugging Face Spaces, or Colab Secrets) where you paste your real keys for the live site.",
+      slipUp: "Easy slip-up: Pasting a real API key directly inside a '.js' or '.py' file and uploading it to a public GitHub repo, where automated bots find and abuse it in seconds.",
+      command: "echo \".env\" >> .gitignore   # Guarantees Git never uploads your .env file",
       videoTitle: "Why secret keys belong in environment variables",
       videoUrl: "https://vercel.com/docs/projects/environment-variables"
     },
@@ -104,11 +104,11 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "cloud_upload",
       badge: "Category · Cloud code repository host",
       badgeClass: "badge-info",
-      title: "Cloud code repositories (e.g. GitHub, GitLab, Bitbucket, Hugging Face Hub)",
-      summary: "Where your Git project is stored remotely online—for cloud backup, team review, open source, and auto-deploying.",
-      whatItIs: "Category definition: While Git tracks save checkpoints locally on your laptop, a Cloud Git Repository Host is the website where you upload ('git push') a remote copy of your project folder. It backs up your code in the cloud, gives teammates a place to review Pull Requests, and triggers cloud deployment platforms whenever you push.\n\nCommon platforms in this category:\n• GitHub: The world's largest host for open-source projects, personal repos, and startup teams.\n• GitLab & Bitbucket: Widely used by enterprise engineering organizations for code hosting and CI/CD pipelines.\n• Hugging Face Hub: A specialized Git-based repository host built specifically for sharing AI models, datasets, and ML demos.",
-      slipUp: "Easy slip-up: Saving a file on your laptop (Cmd+S) or even running 'git commit' and wondering why it hasn't appeared on GitHub/GitLab yet—you must run 'git push' to upload your local commits to the cloud.",
-      command: "git push   # Uploads your saved Git commits from laptop to your cloud repo",
+      title: "Cloud code repositories (GitHub, GitLab, Bitbucket, Hugging Face Hub)",
+      summary: "Where your local Git project is backed up online—for team review, open-source sharing, and auto-deploying.",
+      whatItIs: "Category definition: While Git tracks save checkpoints on your laptop, a Cloud Code Repository Host is the website where you upload ('git push') a remote copy of your Git folder. It backs up your code in the cloud, lets teammates review changes via a Pull Request (PR), and notifies your cloud hosting platform whenever new code arrives.\n\nEvery platform you will recognize in this category, explained:\n• GitHub: The world's largest cloud host for Git repositories, open-source software, and team Pull Requests.\n• GitLab & Bitbucket: Popular enterprise alternatives to GitHub that also store Git repositories and run automated test pipelines (CI/CD — Continuous Integration / Continuous Deployment).\n• Hugging Face Hub: Often called 'the GitHub of AI'—a Git-based cloud repository built specifically for hosting open-weight AI models, training datasets, and live AI demo apps.",
+      slipUp: "Easy slip-up: Saving a file on your laptop (Cmd+S) or running 'git commit' and wondering why it hasn't shown up on GitHub yet—you must run 'git push' to upload your local commits to the cloud.",
+      command: "git push   # Uploads your saved Git commits from laptop to GitHub",
       videoTitle: "GitHub Docs: How local Git and cloud repositories connect",
       videoUrl: "https://docs.github.com/en/get-started/start-your-journey/about-github-and-git"
     },
@@ -118,10 +118,10 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "public",
       badge: "Category · Cloud hosting & deployment",
       badgeClass: "badge-success",
-      title: "Cloud hosting & deployment platforms (e.g. Vercel, Netlify, Render, Cloud Run, Hugging Face Spaces)",
-      summary: "Where your code or model is published to a live https:// link—and no, not everything needs to be a full web app!",
-      whatItIs: "Category definition: Your laptop can't stay awake 24/7 serving your project to the world. A Cloud Hosting Platform connects to your Git repository, automatically builds your latest code whenever you push, and serves it on a public 'https://' URL. Crucially, different projects fit different hosting categories—not everything you share needs to be a full web app!\n\nMajor hosting categories & recognizable examples:\n• Frontend & full-stack web apps: Vercel, Netlify, Cloudflare Pages, Firebase Hosting.\n• AI demos, ML models & interactive notebooks (no full web app needed!): Hugging Face Spaces (hosts Python Gradio & Streamlit demos in 20 lines of code), Google Colab, Replicate, Modal.\n• Always-on backend servers, Python APIs & Docker containers: Render, Railway, Fly.io, DigitalOcean.\n• Major cloud infrastructure ('Hyperscalers'): Google Cloud (Cloud Run, Vertex AI), AWS (EC2, S3, Lambda), Microsoft Azure.\n• Free static websites & documentation: GitHub Pages, Cloudflare Pages.",
-      slipUp: "Easy slip-up: When your project uses a secret API key from your local '.env' file, remember to also paste that key into your cloud host's 'Environment Variables / Secrets' settings box so the live version has it too.",
+      title: "Cloud hosting & deployment platforms (Vercel, Netlify, Render, Cloud Run, Hugging Face Spaces)",
+      summary: "Where your code or AI model is built and served on a live https:// link—matched to what you built.",
+      whatItIs: "Category definition: Your laptop cannot stay awake 24/7 serving your project to visitors around the world. A Cloud Hosting Platform connects to your cloud Git repository, automatically builds your code whenever you 'git push', and publishes it to a live 'https://' web address. Crucially, not everything needs to be a full web app—you pick the hosting category that matches what you built:\n\n1. Web App & Static Site Hosts (for websites, portfolios & React/Next.js apps):\n• Vercel, Netlify & Cloudflare Pages: Watch your GitHub repo and publish a live website (plus preview links for every branch) in ~20 seconds.\n• GitHub Pages: Free, simple hosting built right into GitHub for static HTML/CSS/JS websites and documentation.\n\n2. AI Demo Hubs, Notebooks & Serverless GPUs (when you do NOT need a full web app!):\n• Hugging Face Spaces: Turns a 20-line Python script (using Gradio or Streamlit, two libraries that create web UIs directly from Python) into a shareable AI demo page.\n• Modal & Replicate: Let you run heavy open-source AI models on cloud GPUs (Graphics Processing Units — specialized AI chips) and pay only by the second.\n\n3. Always-On Backend Server & Container Hosts (for Python FastAPI/Flask servers, bots & long jobs):\n• Render, Railway & Fly.io: Developer-friendly cloud hosts that run Python backend servers, Docker containers, and databases 24/7.\n• Major Cloud Providers ('Hyperscalers' — Google Cloud / GCP, Amazon Web Services / AWS, Microsoft Azure): Enterprise clouds offering services like Google Cloud Run (runs any container with 1 command) and AWS EC2/S3.",
+      slipUp: "Easy slip-up: When your project uses a secret API key from your local '.env' file, remember to also paste that key into your cloud host's 'Environment Variables / Secrets' settings box so the live site can use it too.",
       command: "git push -> Cloud host auto-builds -> Live https:// URL!",
       videoTitle: "How cloud platforms deploy automatically from Git",
       videoUrl: "https://vercel.com/docs/deployments/git"
@@ -132,10 +132,10 @@ window.PIPELINE_DIAGRAMS_DATA = {
       icon: "travel_explore",
       badge: "Category · Browser developer tools",
       badgeClass: "badge-secondary",
-      title: "Browser developer tools (e.g. Chrome DevTools, Safari Web Inspector, Firefox DevTools)",
-      summary: "Where you peek under the hood of any live webpage to inspect HTML/CSS, read error logs, and watch network requests.",
-      whatItIs: "Category definition: Every modern web browser (Chrome, Firefox, Safari, Edge, Arc, Brave) has built-in Developer Tools ('DevTools')—just right-click anywhere on a webpage and click 'Inspect'.\n\nThe 3 tabs every builder uses:\n• Elements / Inspector: Temporarily edit the live HTML and CSS on screen.\n• Console: Shows red JavaScript error messages if a button crashes.\n• Network: Shows every API request and JSON response travelling between the browser and the backend server.",
-      slipUp: "Easy slip-up: Guessing why a webpage looks blank instead of opening 'Right-click -> Inspect -> Console' to read the exact error line.",
+      title: "Browser developer tools (Chrome DevTools, Safari Web Inspector, Firefox DevTools)",
+      summary: "Built into every web browser—right-click and choose 'Inspect' to see live HTML, errors, and server messages.",
+      whatItIs: "Category definition: Every modern web browser (Google Chrome, Apple Safari, Mozilla Firefox, Microsoft Edge, Brave, Arc) has a built-in X-ray machine called Developer Tools ('DevTools'). You open it by right-clicking anywhere on any webpage and clicking 'Inspect'.\n\nThe 3 tabs inside Inspect that every builder uses, explained:\n• Elements (or Inspector): Shows the live HTML skeleton and CSS paint of the page—you can double-click any text or color here to test changes live on your screen.\n• Console: Prints red JavaScript error messages if a button crashes on the screen, and lets you test one-line JavaScript commands.\n• Network: Shows every single API message (HTTP Request and JSON Response) travelling between your browser and the backend server, along with its status code (like '200 OK' when it works or '500 Error' when the server crashes).",
+      slipUp: "Easy slip-up: Guessing why a webpage looks blank or a button does nothing instead of opening 'Right-click -> Inspect -> Console & Network' to read the exact error message.",
       command: "Right-click any webpage -> Inspect -> Console / Network",
       videoTitle: "Chrome DevTools: Beginner guide to inspecting web pages",
       videoUrl: "https://developer.chrome.com/docs/devtools/overview"
@@ -260,270 +260,5 @@ window.PIPELINE_DIAGRAMS_DATA = {
     }
   ]
 };
-
-// Shared Illustrated SVG Stage Artwork & Aligned Loop Arrows (Zero hardcoded hex; 100% GM3 tokens)
-(function () {
-  var SVG_NS = "http://www.w3.org/2000/svg";
-
-  function svgEl(tag, attrs) {
-    var el = document.createElementNS(SVG_NS, tag);
-    if (attrs) {
-      Object.keys(attrs).forEach(function (k) {
-        el.setAttribute(k, attrs[k]);
-      });
-    }
-    return el;
-  }
-
-  // Illustration 1: Smartphone + Laptop with Green Checkmark & Magnifying Glass
-  function createDeviceArt() {
-    var svg = svgEl("svg", { viewBox: "0 0 180 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
-    // Soft oval floor shadow + arc halo
-    svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
-    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "72", ry: "10", fill: "var(--color-surface-container-highest)" }));
-
-    // Laptop screen & base
-    svg.appendChild(svgEl("rect", { x: "68", y: "38", width: "76", height: "52", rx: "6", fill: "var(--color-on-surface)", stroke: "var(--color-on-surface)", "stroke-width": "2" }));
-    svg.appendChild(svgEl("rect", { x: "73", y: "43", width: "66", height: "42", rx: "3", fill: "var(--color-surface-container-lowest)" }));
-    // Green checkmark card inside laptop screen
-    svg.appendChild(svgEl("rect", { x: "86", y: "51", width: "42", height: "26", rx: "4", fill: "var(--color-tertiary-container)" }));
-    svg.appendChild(svgEl("path", { d: "M 99 64 L 105 70 L 117 57", fill: "none", stroke: "var(--color-on-tertiary-container)", "stroke-width": "3.5", "stroke-linecap": "round", "stroke-linejoin": "round" }));
-    // Laptop base keyboard lip
-    svg.appendChild(svgEl("path", { d: "M 58 90 L 154 90 L 148 98 L 64 98 Z", fill: "var(--color-on-surface-variant)" }));
-
-    // Smartphone on the left
-    svg.appendChild(svgEl("rect", { x: "28", y: "26", width: "42", height: "72", rx: "7", fill: "var(--color-on-surface)" }));
-    svg.appendChild(svgEl("rect", { x: "32", y: "34", width: "34", height: "54", rx: "3", fill: "var(--color-primary-container)" }));
-    svg.appendChild(svgEl("line", { x1: "44", y1: "30", x2: "54", y2: "30", stroke: "var(--color-surface-container-lowest)", "stroke-width": "2", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("rect", { x: "37", y: "42", width: "24", height: "14", rx: "2", fill: "var(--color-primary)" }));
-    svg.appendChild(svgEl("line", { x1: "37", y1: "64", x2: "58", y2: "64", stroke: "var(--color-on-primary-container)", "stroke-width": "3", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("line", { x1: "37", y1: "72", x2: "52", y2: "72", stroke: "var(--color-on-primary-container)", "stroke-width": "3", "stroke-linecap": "round" }));
-
-    // Magnifying glass overlapping phone & laptop
-    svg.appendChild(svgEl("line", { x1: "83", y1: "82", x2: "97", y2: "96", stroke: "var(--color-on-surface)", "stroke-width": "6", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("circle", { cx: "74", cy: "73", r: "13", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "4" }));
-    return svg;
-  }
-
-  // Illustration 2: Fluffy Cloud + 3 Server Racks with Status LEDs
-  function createCloudServerArt(cloudText) {
-    var svg = svgEl("svg", { viewBox: "0 0 190 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
-    svg.appendChild(svgEl("ellipse", { cx: "95", cy: "110", rx: "70", ry: "9", fill: "var(--color-surface-container-highest)" }));
-
-    // Fluffy Cloud at top
-    svg.appendChild(
-      svgEl("path", {
-        d: "M 52 56 C 36 56, 30 42, 42 33 C 44 19, 62 15, 73 23 C 82 9, 108 9, 117 23 C 130 17, 146 25, 144 38 C 156 42, 152 56, 136 56 Z",
-        fill: "var(--color-primary-container)",
-        stroke: "var(--color-primary)",
-        "stroke-width": "3",
-        "stroke-linejoin": "round"
-      })
-    );
-    var txt = svgEl("text", {
-      x: "95",
-      y: "43",
-      "text-anchor": "middle",
-      fill: "var(--color-on-primary-container)",
-      "font-family": "var(--font-family-display)",
-      "font-size": "13",
-      "font-weight": "700"
-    });
-    txt.textContent = cloudText || "Cloud Server";
-    svg.appendChild(txt);
-
-    // 3 vertical conduits connecting cloud to server racks
-    [62, 95, 128].forEach(function (cx) {
-      svg.appendChild(svgEl("line", { x1: String(cx), y1: "56", x2: String(cx), y2: "66", stroke: "var(--color-primary)", "stroke-width": "3" }));
-    });
-
-    // 3 Server Racks
-    [44, 77, 110].forEach(function (rx) {
-      svg.appendChild(svgEl("rect", { x: String(rx), y: "64", width: "36", height: "44", rx: "4", fill: "var(--color-on-surface-variant)" }));
-      [70, 82, 94].forEach(function (ry) {
-        svg.appendChild(svgEl("rect", { x: String(rx + 4), y: String(ry), width: "28", height: "8", rx: "2", fill: "var(--color-surface-container-lowest)" }));
-        svg.appendChild(svgEl("circle", { cx: String(rx + 9), cy: String(ry + 4), r: "2", fill: "var(--color-tertiary)" }));
-        svg.appendChild(svgEl("line", { x1: String(rx + 15), y1: String(ry + 4), x2: String(rx + 27), y2: String(ry + 4), stroke: "var(--color-outline)", "stroke-width": "2", "stroke-linecap": "round" }));
-      });
-    });
-    return svg;
-  }
-
-  // Illustration 3: 3-Tier Cylinder Database + Magnifying Glass with "011010" (or custom lens text)
-  function createDatabaseArt(lensText) {
-    var svg = svgEl("svg", { viewBox: "0 0 180 124", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
-    svg.appendChild(svgEl("path", { d: "M 18 92 A 74 58 0 0 1 162 92", fill: "none", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
-    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "106", rx: "70", ry: "10", fill: "var(--color-surface-container-highest)" }));
-
-    // 3-Tier Cylinder Body
-    svg.appendChild(svgEl("rect", { x: "38", y: "34", width: "76", height: "64", rx: "8", fill: "var(--color-surface-container-high)", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("ellipse", { cx: "76", cy: "34", rx: "38", ry: "10", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("path", { d: "M 38 55 A 38 9 0 0 0 114 55", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("path", { d: "M 38 76 A 38 9 0 0 0 114 76", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("path", { d: "M 38 98 A 38 9 0 0 0 114 98", fill: "none", stroke: "var(--color-on-surface-variant)", "stroke-width": "2.5" }));
-
-    // Magnifying glass handle + lens with binary "011010"
-    svg.appendChild(svgEl("line", { x1: "136", y1: "82", x2: "156", y2: "102", stroke: "var(--color-on-surface)", "stroke-width": "8", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("circle", { cx: "118", cy: "64", r: "26", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "4.5" }));
-    var binTxt = svgEl("text", {
-      x: "118",
-      y: "68",
-      "text-anchor": "middle",
-      fill: "var(--color-primary)",
-      "font-family": "monospace",
-      "font-size": "12",
-      "font-weight": "700"
-    });
-    binTxt.textContent = lensText || "011010";
-    svg.appendChild(binTxt);
-    return svg;
-  }
-
-  // Illustration 4: Person / User Avatar + Speech Bubble with Green Checkmark
-  function createUserArt() {
-    var svg = svgEl("svg", { viewBox: "0 0 180 116", width: "180", height: "112", class: "stage-art-svg", "aria-hidden": "true" });
-    svg.appendChild(svgEl("ellipse", { cx: "90", cy: "104", rx: "66", ry: "9", fill: "var(--color-surface-container-highest)" }));
-
-    // Person shoulders / shirt
-    svg.appendChild(svgEl("path", { d: "M 42 102 C 42 78, 94 78, 94 102 Z", fill: "var(--color-primary-container)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
-    // Person head
-    svg.appendChild(svgEl("circle", { cx: "68", cy: "54", r: "18", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-on-surface)", "stroke-width": "2.5" }));
-    // Hair arc
-    svg.appendChild(svgEl("path", { d: "M 50 52 C 50 34, 86 34, 86 52 C 78 44, 58 44, 50 52 Z", fill: "var(--color-on-surface)" }));
-
-    // Speech bubble on the right with green checkmark circle
-    svg.appendChild(
-      svgEl("path", {
-        d: "M 102 26 H 142 A 6 6 0 0 1 148 32 V 64 A 6 6 0 0 1 142 70 H 116 L 104 80 L 106 70 H 102 A 6 6 0 0 1 96 64 V 32 A 6 6 0 0 1 102 26 Z",
-        fill: "var(--color-surface-container-lowest)",
-        stroke: "var(--color-on-surface)",
-        "stroke-width": "2.5",
-        "stroke-linejoin": "round"
-      })
-    );
-    svg.appendChild(svgEl("circle", { cx: "122", cy: "48", r: "13", fill: "var(--color-tertiary-container)" }));
-    svg.appendChild(svgEl("path", { d: "M 116 48 L 120 53 L 129 43", fill: "none", stroke: "var(--color-on-tertiary-container)", "stroke-width": "3", "stroke-linecap": "round", "stroke-linejoin": "round" }));
-    return svg;
-  }
-
-  // Aligned Horizontal Arrow between Top-Row Stages (with continuous underlying pipeline track)
-  function createHorizontalStepArrow(topLabel, subLabel, extraEl) {
-    var wrap = document.createElement("div");
-    wrap.className = "loop-horiz-arrow-col";
-
-    var lbl = document.createElement("span");
-    lbl.className = "loop-arrow-caption";
-    lbl.textContent = topLabel;
-    wrap.appendChild(lbl);
-
-    var svg = svgEl("svg", { viewBox: "0 0 136 32", width: "136", height: "32", class: "loop-horiz-arrow-svg", "aria-hidden": "true" });
-    // Continuous soft background pipeline rail
-    svg.appendChild(svgEl("line", { x1: "-16", y1: "16", x2: "152", y2: "16", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
-    // Solid primary pipeline flow line + animated dashes
-    svg.appendChild(svgEl("line", { x1: "-12", y1: "16", x2: "118", y2: "16", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
-    svg.appendChild(svgEl("line", { x1: "-12", y1: "16", x2: "114", y2: "16", stroke: "var(--color-surface-container-lowest)", "stroke-width": "2", "stroke-dasharray": "5 7", class: "loop-anim-dash" }));
-    svg.appendChild(svgEl("polygon", { points: "114,7 132,16 114,25", fill: "var(--color-primary)" }));
-    wrap.appendChild(svg);
-
-    if (subLabel) {
-      var sub = document.createElement("span");
-      sub.className = "loop-arrow-subcaption";
-      sub.textContent = subLabel;
-      wrap.appendChild(sub);
-    }
-    if (extraEl) {
-      wrap.appendChild(extraEl);
-    }
-    return wrap;
-  }
-
-  // Curved Bottom Loop Arrow ("left" curves up-left to Stage 1; "right" curves down-left from Stage 3) with underlying pipeline rail
-  function createCurvedReturnWing(side, labelText) {
-    var wrap = document.createElement("div");
-    wrap.className = "loop-curved-wing";
-
-    var svg = svgEl("svg", { viewBox: "0 0 240 116", width: "240", height: "112", class: "loop-curved-svg", "aria-hidden": "true" });
-    if (side === "left") {
-      var leftPath = "M 54 14 C 54 74, 124 74, 232 74";
-      svg.appendChild(svgEl("path", { d: leftPath, fill: "none", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
-      svg.appendChild(svgEl("path", { d: leftPath, fill: "none", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
-      svg.appendChild(svgEl("polygon", { points: "45,20 54,2 63,20", fill: "var(--color-primary)" }));
-      svg.appendChild(svgEl("polygon", { points: "220,65 238,74 220,83", fill: "var(--color-primary)" }));
-      var tLeft = svgEl("text", { x: "144", y: "54", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
-      tLeft.textContent = labelText || "Sends results";
-      svg.appendChild(tLeft);
-    } else {
-      var rightPath = "M 186 6 C 186 74, 116 74, 18 74";
-      svg.appendChild(svgEl("path", { d: rightPath, fill: "none", stroke: "var(--color-primary-container)", "stroke-width": "10", "stroke-linecap": "round" }));
-      svg.appendChild(svgEl("path", { d: rightPath, fill: "none", stroke: "var(--color-primary)", "stroke-width": "4", "stroke-linecap": "round" }));
-      svg.appendChild(svgEl("polygon", { points: "24,65 6,74 24,83", fill: "var(--color-primary)" }));
-      var tRight = svgEl("text", { x: "96", y: "54", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-family": "var(--font-family-display)", "font-size": "13", "font-weight": "600" });
-      tRight.textContent = labelText || "Returns data";
-      svg.appendChild(tRight);
-    }
-    wrap.appendChild(svg);
-    return wrap;
-  }
-
-  // Reusable Clickable Illustrated Stage Card (Click illustration/title OR compact pills to open side panel)
-  function createLoopStageCard(opts) {
-    var stageCard = document.createElement("div");
-    stageCard.className = "loop-stage-card";
-    if (opts.stageKey) {
-      stageCard.setAttribute("data-stage-key", opts.stageKey);
-    }
-
-    var headerBtn = document.createElement("button");
-    headerBtn.type = "button";
-    headerBtn.className = "loop-stage-header-btn";
-    if (opts.primaryIdAttr && opts.primaryId) {
-      headerBtn.setAttribute(opts.primaryIdAttr, opts.primaryId);
-    }
-
-    var artWrap = document.createElement("div");
-    artWrap.className = "loop-stage-art-wrap";
-    if (opts.artSvg) {
-      artWrap.appendChild(opts.artSvg);
-    }
-    headerBtn.appendChild(artWrap);
-
-    var titleEl = document.createElement("strong");
-    titleEl.className = "loop-stage-title";
-    titleEl.textContent = opts.title || "";
-    headerBtn.appendChild(titleEl);
-
-    if (opts.subtitle) {
-      var subEl = document.createElement("span");
-      subEl.className = "loop-stage-subtitle";
-      subEl.textContent = opts.subtitle;
-      headerBtn.appendChild(subEl);
-    }
-
-    if (typeof opts.onStageClick === "function") {
-      headerBtn.addEventListener("click", opts.onStageClick);
-    }
-
-    stageCard.appendChild(headerBtn);
-
-    if (opts.pillsContainer) {
-      stageCard.appendChild(opts.pillsContainer);
-    }
-
-    return {
-      card: stageCard,
-      headerBtn: headerBtn
-    };
-  }
-
-  window.DiagramIllustrations = {
-    createDeviceArt: createDeviceArt,
-    createCloudServerArt: createCloudServerArt,
-    createDatabaseArt: createDatabaseArt,
-    createUserArt: createUserArt,
-    createHorizontalStepArrow: createHorizontalStepArrow,
-    createCurvedReturnWing: createCurvedReturnWing,
-    createLoopStageCard: createLoopStageCard
-  };
-})();
 
 
