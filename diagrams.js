@@ -604,10 +604,16 @@
       containerEl.style.display = "block";
       if (stop.diagramType === "tools-flow") {
         renderToolsFlowDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "github");
+        }
       } else if (stop.diagramType === "app-infrastructure") {
         renderAppInfrastructureDiagram(containerEl);
       } else if (stop.diagramType === "git-living") {
         renderGitLivingDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "github");
+        }
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
       } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
