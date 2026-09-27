@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 640" width="1024" height="640" font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif">
+  <rect width="1024" height="640" rx="12" fill="#09090b" stroke="#3f3f46" stroke-width="2"/>
+  <!-- Mac Terminal Title Bar -->
+  <rect width="1024" height="44" rx="12" fill="#18181b"/>
+  <circle cx="22" cy="22" r="6" fill="#ef4444"/>
+  <circle cx="42" cy="22" r="6" fill="#f59e0b"/>
+  <circle cx="62" cy="22" r="6" fill="#10b981"/>
+  <text x="360" y="27" fill="#e4e4e7" font-size="13" font-weight="600">📁 my-app — -zsh — 120×36</text>
+
+  <!-- Terminal Split Tabs -->
+  <rect x="730" y="8" width="136" height="28" rx="6" fill="#27272a" stroke="#52525b"/>
+  <text x="744" y="26" fill="#f4f4f5" font-size="11.5" font-weight="700">Tab 1: zsh &amp; server</text>
+  <rect x="874" y="8" width="134" height="28" rx="6" fill="#1e1b4b" stroke="#6366f1"/>
+  <text x="886" y="26" fill="#c7d2fe" font-size="11.5" font-weight="700">Tab 2: claude agent</text>
+
+  <!-- Left Pane: Shell Prompt, Homebrew, Virtualenv & Local Server -->
+  <rect x="16" y="58" width="510" height="564" rx="8" fill="#09090b" stroke="#27272a"/>
+
+  <!-- Block 1: Prompt & Navigation -->
+  <text x="30" y="88" fill="#34d399" font-size="12.5" font-weight="700" font-family="monospace">lcalcott@MacBook-Pro ~ %</text>
+  <text x="230" y="88" fill="#f4f4f5" font-size="12.5" font-family="monospace">cd Projects/my-app &amp;&amp; pwd</text>
+  <text x="30" y="108" fill="#a1a1aa" font-size="12" font-family="monospace">/Users/lcalcott/Projects/my-app</text>
+
+  <!-- Block 2: Homebrew & uv Virtual Environment -->
+  <text x="30" y="142" fill="#34d399" font-size="12.5" font-weight="700" font-family="monospace">lcalcott@MacBook-Pro my-app %</text>
+  <text x="266" y="142" fill="#f4f4f5" font-size="12.5" font-family="monospace">brew install uv gh</text>
+  <text x="30" y="162" fill="#a1a1aa" font-size="12" font-family="monospace">==&gt; Downloading &amp; pouring uv--0.6.4.arm64_sequoia.bottle.tar.gz</text>
+  <text x="30" y="180" fill="#34d399" font-size="12" font-family="monospace">🍺  /opt/homebrew/Cellar/uv/0.6.4: 12 files, 28.4MB</text>
+
+  <!-- Block 3: Activate (.venv) & Install Requirements -->
+  <text x="30" y="216" fill="#34d399" font-size="12.5" font-weight="700" font-family="monospace">lcalcott@MacBook-Pro my-app %</text>
+  <text x="266" y="216" fill="#f4f4f5" font-size="12.5" font-family="monospace">uv venv &amp;&amp; source .venv/bin/activate</text>
+  <rect x="26" y="232" width="488" height="32" rx="5" fill="#052e16" stroke="#10b981"/>
+  <text x="34" y="252" fill="#6ee7b7" font-size="12" font-weight="700" font-family="monospace">(.venv) lcalcott@MacBook-Pro my-app %</text>
+  <text x="318" y="252" fill="#ffffff" font-size="12" font-family="monospace">uv pip install -r requirements.txt</text>
+  <text x="30" y="284" fill="#a1a1aa" font-size="12" font-family="monospace">Resolved 14 packages in 180ms · Installed fastapi, uvicorn, pytest</text>
+
+  <!-- Block 4: Running pytest -->
+  <text x="30" y="318" fill="#6ee7b7" font-size="12.5" font-weight="700" font-family="monospace">(.venv) lcalcott@MacBook-Pro my-app %</text>
+  <text x="318" y="318" fill="#f4f4f5" font-size="12.5" font-family="monospace">pytest</text>
+  <text x="30" y="338" fill="#34d399" font-size="12" font-weight="700" font-family="monospace">====== 6 passed in 0.14s ======</text>
+
+  <!-- Block 5: Running Localhost Server & CTRL+C -->
+  <text x="30" y="376" fill="#6ee7b7" font-size="12.5" font-weight="700" font-family="monospace">(.venv) lcalcott@MacBook-Pro my-app %</text>
+  <text x="318" y="376" fill="#f4f4f5" font-size="12.5" font-family="monospace">uvicorn server:app --reload</text>
+  <rect x="26" y="392" width="488" height="94" rx="6" fill="#172554" stroke="#3b82f6"/>
+  <text x="38" y="414" fill="#93c5fd" font-size="12" font-family="monospace">INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)</text>
+  <text x="38" y="436" fill="#93c5fd" font-size="12" font-family="monospace">INFO:     Started reloader process [48210] using WatchFiles</text>
+  <text x="38" y="458" fill="#34d399" font-size="12" font-family="monospace">INFO:     127.0.0.1:53912 - "GET / HTTP/1.1" 200 OK</text>
+  <text x="38" y="476" fill="#fcd34d" font-size="11.5" font-weight="700" font-family="monospace">⚡ Server is holding this tab open! Press Ctrl+C to stop it.</text>
+
+  <!-- Right Pane: Terminal AI Coding Agent (Claude Code / Gemini CLI) -->
+  <rect x="538" y="58" width="470" height="564" rx="8" fill="#0f172a" stroke="#4f46e5"/>
+  <rect x="554" y="74" width="438" height="44" rx="6" fill="#1e1b4b" stroke="#6366f1"/>
+  <text x="568" y="94" fill="#e0e7ff" font-size="13" font-weight="700">✦ Claude Code / Gemini CLI — Terminal Coding Agent</text>
+  <text x="568" y="110" fill="#a5b4fc" font-size="11" font-family="monospace">cwd: /Users/lcalcott/Projects/my-app  ·  context: CLAUDE.md loaded</text>
+
+  <text x="554" y="146" fill="#f8fafc" font-size="12" font-weight="700" font-family="monospace">&gt; Add rate limiting and input validation to /api/ask-guide</text>
+
+  <text x="554" y="176" fill="#94a3b8" font-size="11.5" font-family="monospace">● Reading server.py (lines 1–120)...</text>
+  <text x="554" y="196" fill="#94a3b8" font-size="11.5" font-family="monospace">● Proposed diff in server.py:</text>
+
+  <rect x="554" y="208" width="438" height="90" rx="6" fill="#09090b" stroke="#334155"/>
+  <text x="566" y="228" fill="#f87171" font-size="11.5" font-family="monospace">- query = request.json["question"]</text>
+  <text x="566" y="248" fill="#4ade80" font-size="11.5" font-family="monospace">+ query = (request.json.get("question") or "").strip()[:500]</text>
+  <text x="566" y="268" fill="#4ade80" font-size="11.5" font-family="monospace">+ if not query: return {"error": "Empty question"}, 400</text>
+  <text x="566" y="286" fill="#4ade80" font-size="11.5" font-family="monospace">+ check_rate_limit(request.remote_addr, max_per_min=20)</text>
+
+  <!-- Agent Tool Permission Gate -->
+  <rect x="554" y="314" width="438" height="88" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="568" y="336" fill="#fcd34d" font-size="12" font-weight="700">Allow agent to edit server.py and run `pytest`?</text>
+  <text x="568" y="358" fill="#4ade80" font-size="12" font-weight="700" font-family="monospace">❯ [1] Yes, apply edit and run pytest</text>
+  <text x="568" y="376" fill="#cbd5e1" font-size="12" font-family="monospace">  [2] Yes, and don't ask again for pytest in this folder</text>
+  <text x="568" y="394" fill="#fca5a5" font-size="12" font-family="monospace">  [3] No, cancel and tell agent what to change (Esc)</text>
+
+  <text x="554" y="432" fill="#34d399" font-size="12" font-family="monospace">● Running `pytest test_server.py` ... ✓ 8 passed in 0.19s</text>
+  <text x="554" y="456" fill="#93c5fd" font-size="12" font-family="monospace">Tip: Type /compact to summarize context or /cost to check token spend.</text>
+</svg>

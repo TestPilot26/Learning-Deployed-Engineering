@@ -87,9 +87,10 @@
     var flows = window.InterfaceTourData.FLOWS || [];
     if (!snapshots.length) return;
 
-    var activeGroup = defaultGroup || "github"; // "github" | "vscode"
-    var activeSnapId = activeGroup === "vscode" ? "vscode-explorer" : "github-repo";
-    var activeHotspotId = activeGroup === "vscode" ? "vsc-exp-file-tree" : "gh-repo-green-code-btn";
+    var activeGroup = defaultGroup || "github";
+    var initialSnap = snapshots.filter(function (s) { return s.group === activeGroup; })[0] || snapshots[0];
+    var activeSnapId = initialSnap.id;
+    var activeHotspotId = initialSnap.hotspots[0].id;
     var activeFlowId = null;
     var activeFlowStepIdx = 0;
     var showLabelsOnImage = true;
@@ -105,16 +106,16 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Explore where things are — interactive interface snapshots & guided flows";
+    topBadge.textContent = "Explore where things are — 10 interactive interface snapshots & 8 guided flows";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Explore where things are: Click any button on GitHub or VS Code (or run a step-by-step flow)";
+    h3.textContent = "Explore where things are: Click any button on GitHub, VS Code, Vercel, Chrome DevTools, Cloud DB, or Terminal";
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "Switch between GitHub and VS Code below, click any numbered button directly on the interface snapshot to learn what it does, or click one of the 5 guided flows to see step-by-step how to clone a repo, open & run a file, or commit & push changes.";
+      "Choose any developer tool below, click any numbered button directly on the interface snapshot to see what it does and when you use it, or click one of the 8 guided step-by-step flows to trace how tasks work across screens.";
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
     titleCol.appendChild(subP);
@@ -176,8 +177,12 @@
       menuBar.appendChild(menuLabel);
 
       [
-        { id: "github", label: "GitHub (3 interface views)", icon: "cloud" },
-        { id: "vscode", label: "VS Code / Code editor (3 interface views)", icon: "terminal" }
+        { id: "github", label: "GitHub (3 views)", icon: "cloud" },
+        { id: "vscode", label: "VS Code / Cursor (3 views)", icon: "code_blocks" },
+        { id: "vercel", label: "Vercel & Cloud Deploy", icon: "rocket_launch" },
+        { id: "devtools", label: "Chrome DevTools (F12)", icon: "troubleshoot" },
+        { id: "database", label: "Cloud DB (Neon / Supabase)", icon: "database" },
+        { id: "terminal", label: "Mac Terminal & CLI Agent", icon: "terminal" }
       ].forEach(function (grp) {
         var btn = document.createElement("button");
         btn.type = "button";
@@ -219,7 +224,15 @@
       menuBar.appendChild(toggleLabelsBtn);
       mount.appendChild(menuBar);
 
-      // B. Snapshot View Sub-Tabs (Shows the 3 snapshots in the selected interface, plus quick switch to all 6)
+      // B. Snapshot View Sub-Tabs (All 10 interface views)
+      var groupIcons = {
+        github: "folder_copy",
+        vscode: "code_blocks",
+        vercel: "rocket_launch",
+        devtools: "troubleshoot",
+        database: "database",
+        terminal: "terminal"
+      };
       var snapTabsRow = document.createElement("div");
       snapTabsRow.className = "diagram-pill-cluster";
       snapshots.forEach(function (s) {
@@ -232,7 +245,7 @@
           (isCurrentGroup ? "" : " ui-tour-other-group-pill");
         var sIc = document.createElement("span");
         sIc.className = "material-symbols-outlined diagram-pill-icon";
-        sIc.textContent = s.group === "github" ? "folder_copy" : "code_blocks";
+        sIc.textContent = groupIcons[s.group] || "web";
         var sTxt = document.createElement("span");
         sTxt.textContent = s.tabTitle;
         sBtn.appendChild(sIc);
