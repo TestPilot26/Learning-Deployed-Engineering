@@ -364,41 +364,62 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-success",
       icon: "sync_alt",
       diagramType: "systems-agent-blueprint",
-      teaser: "Interactive diagram of MCP (Model Context Protocol) vs. Traditional APIs, the 7-part anatomy of an API Endpoint, REST vs. Webhooks vs. Streaming, and Human-in-the-Loop AI Agents.",
-      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop zooms in on the exact connectors that make those pieces talk to each other: (1) what an API Endpoint actually is (the HTTP verb, doorbell URL path '/api/tasks/42', query filters, headers, JSON body, and 3-digit status code receipt), (2) how MCP (Model Context Protocol) acts as a universal 'USB-C port' for AI agents compared to traditional custom APIs, and (3) when to use REST APIs, Webhooks, Streaming (SSE/WebSockets), and Human-in-the-Loop approval cards.",
+      teaser: "Interactive diagrams built around Aaron Jack's 'What is an API (in 5 minutes)' (the Restaurant/Waiter analogy & 7-part Endpoint X-Ray) and Tech With Tim's 'MCP Servers Explained & Built' (how tool calls work, Local stdio vs. Remote HTTP + OAuth 2.1, and building a Python MCP server).",
+      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop zooms in on how programs and AI agents actually talk to each other, built around two foundational walkthroughs: (1) What an API & Endpoint actually are (using Aaron Jack's Restaurant & Waiter analogy: Client at the table -> Menu of Endpoints -> API Waiter -> Server Kitchen, plus all 7 parts of a live Endpoint request), and (2) How MCP (Model Context Protocol) Servers work & how to build one in Python (using Tech With Tim's full walkthrough: why an AI model never runs your code itself, why MCP is the 'USB-C of AI tools', Local stdio vs. Remote HTTP + the OAuth 2.1 '401 Dance', and building 'v1_local.py' -> 'v3_auth.py' with FastMCP).",
       experiences: [
         {
-          lead: "1. Traditional API vs. MCP (Model Context Protocol) — What's the difference?",
-          body: "• Traditional API (Built for code-to-code): Every service (GitHub, Slack, Stripe) has its own custom endpoint URLs, headers, and JSON formats. Connecting 4 AI apps to 5 tools required writing 20 custom glue-code connectors (the 'M×N spaghetti problem').\n• MCP (Built for AI-to-tool): A universal 'USB-C port' where each tool provides 1 standard MCP Server exposing Tools (actions the AI can run), Resources (read-only files or database schemas the AI can read), and Prompts (reusable templates). Any AI Client (Claude, Cursor, Gemini) plugs in and discovers what tools exist automatically!"
+          lead: "1. What is an API & Endpoint? (The Restaurant & Waiter Analogy in 5 minutes):",
+          body: "In Aaron Jack's 5-minute explainer, imagine you are sitting at a restaurant table (the Client—your browser or phone app). You want data or an action (like live flight prices on Expedia, weather forecasts, or Stripe card payments), but you aren't allowed to walk into the restaurant's Kitchen (the external Server & Database). Instead, you read the Menu (the API Documentation listing allowed Endpoint URLs like 'GET /v1/weather?city=London') and hand your order to the Waiter (the API), who takes your HTTP Request + API Key to the kitchen and brings back a clean JSON dish ('{\"temp_c\": 18}') with a '200 OK' receipt."
         },
         {
-          lead: "2. What is an API 'Endpoint'? (The 7 parts of every API request & response):",
-          body: "An Endpoint is one specific doorbell address on a server mapped to one backend function—like 'PATCH /api/tasks/42?notify=true'. Every endpoint call has 7 parts: (1) HTTP Verb (the action word: GET to read, POST to create, PATCH to update, DELETE to remove), (2) Endpoint Path + ID ('/api/tasks/42'), (3) Query Params ('?limit=20' — optional filter settings after a '?' in the URL), (4) Headers ('Authorization: Bearer <token>' — invisible ID badges attached to the request), (5) JSON Request Body (the structured data package sent inside a POST/PATCH call), (6) 3-Digit Status Code Receipt (200 OK, 401 Not Logged In, 404 Not Found, 429 Rate Limited, 500 Server Crash), and (7) CORS & Rate Limit guardrails (rules controlling which websites and how many clicks per minute are allowed)."
+          lead: "2. How an AI Tool Call & MCP Server Actually Work (The 4-Step JSON Loop):",
+          body: "As Tech With Tim explains, a language model on its own is just 'text in -> model -> text out'—it can't read your files or query your database, and the AI model NEVER executes your Python function itself! Instead, every MCP tool call happens in 4 JSON steps: (1) The MCP Client (Claude Desktop or Cursor) asks your MCP Server 'tools/list' ('What tools do you have?'), (2) The model reads the tool names and Python docstrings and replies 'Call add_a_note with {\"text\": \"buy milk\"}', (3) YOUR MCP Server runs the Python function ('@mcp.tool() def add_a_note()'), and (4) The JSON result goes back to the model so it can write the answer."
         },
         {
-          lead: "3. REST API vs. Webhook vs. Streaming vs. MCP (Which one do I use?):",
-          body: "• REST API ('You ask -> Server answers once'): For 90% of normal button clicks and page loads.\n• Webhook ('Outside server texts your endpoint when an event finishes'): For Stripe payment confirmations or GitHub push notifications.\n• Streaming / SSE / WebSockets ('Open phone line' — Server-Sent Events or two-way WebSockets): For streaming AI words token-by-token or live chat.\n• MCP ('Universal AI toolbelt'): For letting AI agents safely browse and invoke tools across apps."
+          lead: "3. Local MCP ('stdio') vs. Remote MCP ('HTTP') — And why Remote needs the OAuth 2.1 '401 Dance':",
+          body: "• Local MCP ('stdio', v1_local.py): Claude or Cursor launches 'python v1_local.py' as a subprocess on your own laptop. Nobody outside your computer can touch it.\n• Remote MCP ('HTTP', v2_remote.py -> v3_auth.py): One line change ('mcp.run(transport=\"http\", port=8000)') turns your MCP server into a URL ('https://notes.example.com/mcp')—just like GitHub, Notion, or Stripe MCP servers. Because a single shared static API key can't tell 5 agents or different users apart, the MCP spec uses OAuth 2.1 ('the 401 dance'): your server replies '401 Go log in at the Auth Server', the user approves scopes ('notes:read', 'notes:write') on a consent screen, and every tool call carries a short-lived token with 'sub' (user ID for per-user data!) and 'scope'."
         },
         {
-          lead: "4. Human-in-the-Loop ('Prepare -> Confirm') & keeping private data out of Git:",
-          body: "Let AI agents use read-only MCP Resources freely, but for any write Tool that changes the outside world (sending an email, deleting a row, charging money), always stage a Preview Card so a human clicks 'Approve' first—and keep real user databases strictly separate from your Git code folder."
+          lead: "4. REST API vs. Webhook vs. Streaming vs. MCP & Human-in-the-Loop ('Prepare -> Confirm'):",
+          body: "Use a REST API ('You ask -> Waiter replies once') for normal button clicks, a Webhook ('Outside kitchen texts your endpoint when done') for Stripe payments or GitHub events, Streaming / SSE for live token-by-token AI text, and an MCP Server ('@mcp.tool()' in FastMCP) to expose tools once to every AI agent—always staging a Human-in-the-Loop Preview Card before write actions that send emails, delete records, or charge money."
         }
       ],
       activity: {
-        title: "Fun activity: Toggle MCP vs. API & inspect all 7 parts of an Endpoint",
+        title: "Fun activity: Walk through the API Waiter diagram & the 4-part MCP Server build",
         steps: [
-          "In Diagram 1 above, click between 'Before MCP: Traditional APIs (M×N spaghetti)' and 'With MCP: Universal USB-C Hub for AI (M+N)', then click the 3 MCP building blocks (Tools, Resources, Prompts).",
-          "Switch to Tab 2 ('What is an Endpoint?') and click through all 7 parts of a live API Endpoint call (HTTP Verb, Path, Query Params, Headers, Body, Status Codes, and CORS).",
-          "In Diagram 2 below, trace how a button click flows through a backend function, an MCP tool loop, and a Human-in-the-Loop approval gate."
+          "In Tab 1 ('1. What is an API & Endpoint?') above, click through all 4 stations of the Restaurant & Waiter diagram (Client -> Menu -> Waiter -> Kitchen) and all 7 parts of the Endpoint X-Ray below it.",
+          "Switch to Tab 2 ('2. MCP Servers Explained & Built') and step through all 4 chapters: (1) the 4-Step Tool Call JSON Loop, (2) Before MCP vs. USB-C Hub, (3) Local stdio vs. Remote HTTP & the OAuth 2.1 '401 Dance', and (4) the 3 Python files ('v1_local.py' -> 'v2_remote.py' -> 'v3_auth.py').",
+          "Watch both paired videos linked right inside the diagram headers (Aaron Jack's 5-minute API explainer and Tech With Tim's MCP Servers walkthrough)."
         ]
       },
       resources: [
         {
           type: "Video",
           badgeClass: "badge-info",
-          title: "Video: Model Context Protocol (MCP) vs. APIs Clearly Explained",
-          description: "Visual walkthrough of why Anthropic created MCP, the M×N integration problem, and how MCP Servers expose Tools, Resources, and Prompts.",
-          url: "https://www.youtube.com/results?search_query=model+context+protocol+mcp+vs+api+explained"
+          title: "What is an API (in 5 minutes) — Aaron Jack",
+          description: "The classic 5-minute visual explainer using the Restaurant & Waiter analogy, real-world APIs (Weather, Airlines, Google Maps, Stripe), Endpoints, and JSON.",
+          url: "https://www.youtube.com/watch?v=ByGJQzlzxQg"
+        },
+        {
+          type: "Video",
+          badgeClass: "badge-success",
+          title: "MCP Servers Explained & Built (Full Course) — Tech With Tim",
+          description: "Complete breakdown of how MCP works under the hood (tools/list & tools/call), Local stdio vs. Remote HTTP, the OAuth 2.1 '401 dance', and building a Python FastMCP server from scratch.",
+          url: "https://www.youtube.com/watch?v=He8tUwLzLnU"
+        },
+        {
+          type: "Tool",
+          badgeClass: "badge-info",
+          title: "GitHub Repo: techwithtim/descope-mcp-video (v1_local.py -> v2_remote.py -> v3_auth.py)",
+          description: "All 3 progressive versions of the Python FastMCP notes server from Tech With Tim's video, plus the interactive slide deck.",
+          url: "https://github.com/techwithtim/descope-mcp-video"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
+          title: "Model Context Protocol (MCP): Official Architecture & Specification",
+          description: "Official guide to MCP Hosts, Clients, Servers, OAuth 2.1 authorization, and the 3 core primitives (Tools, Resources, and Prompts).",
+          url: "https://modelcontextprotocol.io/introduction"
         },
         {
           type: "Video",
@@ -406,27 +427,6 @@ window.PIPELINE_DATA = {
           title: "Hello Interview: Core system design concepts & scaling dynamics",
           description: "Meta Staff Engineer breakdown of latency, throughput, caching, queues, and handling failure modes.",
           url: "https://www.youtube.com/watch?v=Ru54dxzCyD0"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-info",
-          title: "Model Context Protocol (MCP): Official Architecture & Specification",
-          description: "Official guide to MCP Hosts, Clients, Servers, and the 3 core primitives (Tools, Resources, and Prompts).",
-          url: "https://modelcontextprotocol.io/introduction"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-info",
-          title: "Google AI for Developers: Function Calling & Structured Outputs",
-          description: "Official guide to giving AI models structured JSON schemas and custom Python/JS tools they can call safely.",
-          url: "https://ai.google.dev/gemini-api/docs/function-calling"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-info",
-          title: "Designing Data-Intensive Applications (Martin Kleppmann)",
-          description: "The foundational guide to reliability, scalability, race conditions, and maintainability in modern software systems.",
-          url: "https://dataintensive.net/"
         },
         {
           type: "Explainer",
@@ -611,6 +611,18 @@ window.PIPELINE_DATA = {
       }
     ],
     library: [
+      {
+        title: "What is an API (in 5 minutes) — Aaron Jack",
+        category: "Video",
+        badgeClass: "badge-info",
+        takeaway: "The clearest 5-minute visual explainer of APIs using the Restaurant & Waiter analogy, Endpoints, JSON, and real-world services (Weather, Airlines, Google Maps, Stripe)."
+      },
+      {
+        title: "MCP Servers Explained & Built (Full Course) — Tech With Tim",
+        category: "Video",
+        badgeClass: "badge-success",
+        takeaway: "How AI tool calls work (tools/list & tools/call), Local stdio vs. Remote HTTP MCP servers, the OAuth 2.1 '401 dance', and building a Python FastMCP server in 15 lines."
+      },
       {
         title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
         category: "Video",
