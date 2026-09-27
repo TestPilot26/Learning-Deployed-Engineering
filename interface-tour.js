@@ -93,11 +93,12 @@
     var activeHotspotId = initialSnap.hotspots[0].id;
     var activeFlowId = null;
     var activeFlowStepIdx = 0;
+    var showAllFlows = false;
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card ui-tour-shell";
 
-    // --- 1. HEADER & "EXPLORE WHERE THINGS ARE" MENU BAR ---
+    // --- 1. HEADER ---
     var headerRow = document.createElement("div");
     headerRow.className = "search-bar-row diagram-header-row";
     var titleCol = document.createElement("div");
@@ -105,16 +106,16 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Explore where things are — 10 interactive interface snapshots & 8 guided flows";
+    topBadge.textContent = "Explore where things are — interactive interface guide";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "Explore where things are: Click any circled feature on GitHub, VS Code, Vercel, Chrome DevTools, Cloud DB, or Terminal";
+    h3.textContent = "Explore where things are: Click any circled feature on the interface";
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "Choose any developer tool below and click any circled feature directly on the interface snapshot (or its numbered pill below the image) to read what it does in the Left Side Panel, or click one of the 8 guided step-by-step flows.";
+      "Pick a tool below, then click any numbered circle directly on the screenshot to read what it does in the Left Side Panel—or step through a guided workflow.";
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
     titleCol.appendChild(subP);
@@ -166,7 +167,7 @@
       var currentHs = findHotspot(snap, activeHotspotId);
       var currentFlow = getActiveFlow();
 
-      // A. Primary "Explore where things are ->" Menu Bar
+      // A. Single Clean Top Tool Selector Bar ("Explore where things are ->")
       var menuBar = document.createElement("div");
       menuBar.className = "ui-tour-top-menu";
 
@@ -176,12 +177,12 @@
       menuBar.appendChild(menuLabel);
 
       [
-        { id: "github", label: "GitHub (3 views)", icon: "cloud" },
-        { id: "vscode", label: "VS Code / Cursor (3 views)", icon: "code_blocks" },
-        { id: "vercel", label: "Vercel & Cloud Deploy", icon: "rocket_launch" },
-        { id: "devtools", label: "Chrome DevTools (F12)", icon: "troubleshoot" },
-        { id: "database", label: "Cloud DB (Neon / Supabase)", icon: "database" },
-        { id: "terminal", label: "Mac Terminal & CLI Agent", icon: "terminal" }
+        { id: "github", label: "GitHub", icon: "cloud" },
+        { id: "vscode", label: "VS Code / Cursor", icon: "code_blocks" },
+        { id: "vercel", label: "Vercel", icon: "rocket_launch" },
+        { id: "devtools", label: "Chrome DevTools", icon: "troubleshoot" },
+        { id: "database", label: "Cloud Database", icon: "database" },
+        { id: "terminal", label: "Mac Terminal", icon: "terminal" }
       ].forEach(function (grp) {
         var btn = document.createElement("button");
         btn.type = "button";
@@ -210,46 +211,7 @@
 
       mount.appendChild(menuBar);
 
-      // B. Snapshot View Sub-Tabs (All 10 interface views)
-      var groupIcons = {
-        github: "folder_copy",
-        vscode: "code_blocks",
-        vercel: "rocket_launch",
-        devtools: "troubleshoot",
-        database: "database",
-        terminal: "terminal"
-      };
-      var snapTabsRow = document.createElement("div");
-      snapTabsRow.className = "diagram-pill-cluster";
-      snapshots.forEach(function (s) {
-        var isCurrentGroup = s.group === activeGroup;
-        var sBtn = document.createElement("button");
-        sBtn.type = "button";
-        sBtn.className =
-          "diagram-label-pill" +
-          (s.id === activeSnapId ? " active" : "") +
-          (isCurrentGroup ? "" : " ui-tour-other-group-pill");
-        var sIc = document.createElement("span");
-        sIc.className = "material-symbols-outlined diagram-pill-icon";
-        sIc.textContent = groupIcons[s.group] || "web";
-        var sTxt = document.createElement("span");
-        sTxt.textContent = s.tabTitle;
-        sBtn.appendChild(sIc);
-        sBtn.appendChild(sTxt);
-        sBtn.addEventListener("click", function () {
-          activeGroup = s.group;
-          activeSnapId = s.id;
-          activeHotspotId = s.hotspots[0].id;
-          activeFlowId = null;
-          render(false);
-          var newSnap = getActiveSnap();
-          populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
-        });
-        snapTabsRow.appendChild(sBtn);
-      });
-      mount.appendChild(snapTabsRow);
-
-      // Active Flow Compact Stepper Controls (when a flow is selected; full explanation lives only in Left Side Panel)
+      // Active Flow Compact Stepper Controls (when a flow is active)
       if (currentFlow) {
         var st = currentFlow.steps[activeFlowStepIdx];
         var stepperCard = document.createElement("div");
@@ -310,7 +272,7 @@
         mount.appendChild(stepperCard);
       }
 
-      // C. Annotated Screenshot Canvas with Transparent Clickable Highlight Circles & SVG Flow Overlay
+      // B. Annotated Screenshot Canvas (with inline screen switcher ONLY if this tool has >1 screen)
       var stageWrap = document.createElement("div");
       stageWrap.className = "ui-tour-stage-wrap";
 
@@ -318,8 +280,31 @@
       stageCaptionRow.className = "resource-title-row";
       var scTitle = document.createElement("strong");
       scTitle.className = "diagram-node-title";
-      scTitle.textContent = snap.tabTitle + " — " + snap.subtitle;
+      scTitle.textContent = snap.shortTitle + " — " + snap.subtitle;
       stageCaptionRow.appendChild(scTitle);
+
+      var groupSnaps = snapshots.filter(function (s) { return s.group === activeGroup; });
+      if (groupSnaps.length > 1) {
+        var subViewCluster = document.createElement("div");
+        subViewCluster.className = "diagram-pill-cluster";
+        groupSnaps.forEach(function (s, idx) {
+          var svBtn = document.createElement("button");
+          svBtn.type = "button";
+          svBtn.className = "diagram-label-pill" + (s.id === activeSnapId ? " active" : "");
+          svBtn.textContent = "Screen " + (idx + 1) + ": " + s.shortTitle.replace(/^(GitHub|VS Code)\s+/i, "");
+          svBtn.addEventListener("click", function () {
+            activeSnapId = s.id;
+            activeHotspotId = s.hotspots[0].id;
+            activeFlowId = null;
+            render(false);
+            var newSnap = getActiveSnap();
+            populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
+          });
+          subViewCluster.appendChild(svBtn);
+        });
+        stageCaptionRow.appendChild(subViewCluster);
+      }
+
       stageWrap.appendChild(stageCaptionRow);
 
       var imgContainer = document.createElement("div");
@@ -396,43 +381,26 @@
 
       stageWrap.appendChild(imgContainer);
 
-      // D. Numbered Quick-Select Button Strip Below Image (opens details in Left Side Panel)
-      var quickStrip = document.createElement("div");
-      quickStrip.className = "diagram-pill-cluster";
-      snap.hotspots.forEach(function (hs) {
-        var qBtn = document.createElement("button");
-        qBtn.type = "button";
-        qBtn.className = "diagram-label-pill" + (hs.id === currentHs.id ? " active" : "");
-        var qNum = document.createElement("span");
-        qNum.className = "badge badge-info";
-        qNum.textContent = "#" + hs.num;
-        var qTxt = document.createElement("span");
-        qTxt.textContent = hs.shortLabel;
-        qBtn.appendChild(qNum);
-        qBtn.appendChild(qTxt);
-        qBtn.addEventListener("click", function () {
-          activeHotspotId = hs.id;
-          render(true);
-        });
-        quickStrip.appendChild(qBtn);
-      });
-      stageWrap.appendChild(quickStrip);
-      mount.appendChild(stageWrap);
+      // C. Compact Relevant Guided Flows Strip (filtered to the active tool so there is no huge wall of buttons)
+      var relevantFlows = showAllFlows
+        ? flows
+        : flows.filter(function (fl) {
+            return fl.steps.some(function (st) {
+              var stepSnap = snapshots.filter(function (s) { return s.id === st.snapshotId; })[0];
+              return stepSnap && stepSnap.group === activeGroup;
+            });
+          });
+      if (!relevantFlows.length) relevantFlows = flows.slice(0, 2);
 
-      // E. Illustrative Step-by-Step How-To Flows Bar (placed cleanly below the screenshot)
-      var flowsBox = document.createElement("div");
-      flowsBox.className = "nested-card ui-tour-flows-box";
-      var flowsHeader = document.createElement("div");
-      flowsHeader.className = "resource-title-row";
-      var flBadge = document.createElement("span");
-      flBadge.className = "badge badge-success";
-      flBadge.textContent = "Illustrative step-by-step flows — click any flow to trace steps across screens";
-      flowsHeader.appendChild(flBadge);
-      flowsBox.appendChild(flowsHeader);
+      var flowsRow = document.createElement("div");
+      flowsRow.className = "diagram-pill-cluster";
 
-      var flowsPillsRow = document.createElement("div");
-      flowsPillsRow.className = "diagram-pill-cluster";
-      flows.forEach(function (fl) {
+      var flLabel = document.createElement("span");
+      flLabel.className = "badge badge-success";
+      flLabel.textContent = "Step-by-step flows:";
+      flowsRow.appendChild(flLabel);
+
+      relevantFlows.forEach(function (fl) {
         var fBtn = document.createElement("button");
         fBtn.type = "button";
         fBtn.className = "diagram-label-pill" + (activeFlowId === fl.id ? " active" : "");
@@ -440,20 +408,27 @@
         fIc.className = "material-symbols-outlined diagram-pill-icon";
         fIc.textContent = fl.icon;
         var fTxt = document.createElement("span");
-        fTxt.textContent = fl.title;
-        var fTag = document.createElement("span");
-        fTag.className = "diagram-pill-tag";
-        fTag.textContent = fl.badge;
+        fTxt.textContent = fl.title.replace(/^Flow\s+\d+:\s*/i, "");
         fBtn.appendChild(fIc);
         fBtn.appendChild(fTxt);
-        fBtn.appendChild(fTag);
         fBtn.addEventListener("click", function () {
           applyFlowStep(fl, 0, true);
         });
-        flowsPillsRow.appendChild(fBtn);
+        flowsRow.appendChild(fBtn);
       });
-      flowsBox.appendChild(flowsPillsRow);
-      mount.appendChild(flowsBox);
+
+      var toggleAllFlowsBtn = document.createElement("button");
+      toggleAllFlowsBtn.type = "button";
+      toggleAllFlowsBtn.className = "diagram-label-pill";
+      toggleAllFlowsBtn.textContent = showAllFlows ? "Show only " + snap.groupLabel.split(" ")[0] + " flows" : "All 8 flows…";
+      toggleAllFlowsBtn.addEventListener("click", function () {
+        showAllFlows = !showAllFlows;
+        render(false);
+      });
+      flowsRow.appendChild(toggleAllFlowsBtn);
+
+      stageWrap.appendChild(flowsRow);
+      mount.appendChild(stageWrap);
 
       if (openSidePanel) {
         populateHotspotInSidePanel(snap, currentHs, currentFlow, activeFlowStepIdx, true);

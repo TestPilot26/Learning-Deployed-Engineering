@@ -609,19 +609,10 @@
         }
       } else if (stop.diagramType === "app-infrastructure") {
         renderAppInfrastructureDiagram(containerEl);
-        if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "database");
-        }
       } else if (stop.diagramType === "git-living") {
         renderGitLivingDiagram(containerEl);
-        if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "vercel");
-        }
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
-        if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "terminal");
-        }
       } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
         window.renderPythonCodeDiagram(containerEl);
       } else if (stop.diagramType === "systems-agent-blueprint" && typeof window.renderSystemsAgentDiagram === "function") {
