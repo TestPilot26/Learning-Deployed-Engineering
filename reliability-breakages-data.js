@@ -271,6 +271,60 @@
       videoUrl: "https://www.youtube.com/watch?v=Kuur0L7E9rQ",
       guideTitle: "Read guide: Anthropic's Test-Driven Agent Debugging Loop",
       guideUrl: "https://www.anthropic.com/engineering/claude-code-best-practices"
+    },
+    {
+      id: "break-6-wallet-keys",
+      num: "6",
+      tabLabel: "6. Surprise $2,000 AI bill or leaked key in Git",
+      icon: "credit_score",
+      headline: "Problem 6: Bots or an infinite loop run up a $2,000 overnight AI bill—or a leaked key stays in Git history",
+      analogy:
+        "Like leaving your company credit card taped to a public coffeeshop table—and thinking that taking the card back tomorrow erases the photos people already snapped of it.",
+      whatBreaksBullets: [
+        "On screen: You share your live link online, and a bot (or an accidental infinite loop in your code) calls your AI endpoint 50,000 times overnight.",
+        "Why deleting a leaked key in a new Git commit fails: Git is a time machine—if you accidentally commit an API key once, deleting the line in a second commit leaves the key visible in Commit #1 forever (where bots scrape it in seconds)."
+      ],
+      howToFixBullets: [
+        "1. Set a hard monthly spend limit ($10–$25) in your AI/cloud billing dashboard and add a Rate Limiter (e.g. max 10 requests/minute per IP).",
+        "2. If you ever commit a secret key to Git, immediately Revoke / Rotate (delete and regenerate) the key in the provider dashboard and turn on GitHub Push Protection.",
+        "3. Never point your laptop (`localhost`) at your live Production database—use a separate Dev/Preview database for testing so a local test script never wipes real users' data."
+      ],
+      visualBefore: {
+        title: "WITHOUT PROTECTION (What breaks)",
+        step1: "1. Bot or infinite loop hits /api/ask 50,000x",
+        step2: "2. No rate limit, spend cap, or max_steps",
+        step3: "3. Wakes up to a $2,000 overnight AI bill!",
+        artType: "wallet-drain"
+      },
+      visualAfter: {
+        title: "WITH THE FIX (How it works)",
+        step1: "1. Per-IP Rate Limit (10/min) + max_steps=5",
+        step2: "2. Hard $20 billing cap + GitHub Push Protection",
+        step3: "3. Bots get blocked (429) & wallet stays safe",
+        artType: "wallet-shield"
+      },
+      badCode:
+        "# ❌ No rate limit & infinite agent loop risk:\n" +
+        "@app.post('/api/ask')\n" +
+        "def ask(q: str):\n" +
+        "    while not done: call_paid_ai(q)",
+      goodCode:
+        "# ✅ Rate-limited (10/min) + hard step ceiling:\n" +
+        "@app.post('/api/ask')\n" +
+        "@rate_limit('10/minute')\n" +
+        "def ask(q: str):\n" +
+        "    return run_agent(q, max_steps=5, timeout=10)",
+      jargonPills: [
+        { word: "Denial-of-Wallet", plain: "When bots or infinite loops spam a paid AI endpoint and drain your budget" },
+        { word: "Key Rotation (Revoke)", plain: "Deleting a leaked API key in the provider dashboard and generating a fresh one" },
+        { word: "Dev vs. Prod Database", plain: "Using a fake-data sandbox DB on your laptop so tests never wipe real user data" }
+      ],
+      aiPrompt:
+        "Add per-IP rate limiting (e.g. 10 requests/min), a strict max_steps=5 ceiling on any agent loop, and verify no secret keys or production database URLs are hardcoded.",
+      videoTitle: "Watch 6-min video: Protecting AI Apps from Runaway Bills & Leaked Keys",
+      videoUrl: "https://www.youtube.com/results?search_query=api+rate+limiting+and+leaked+api+keys+github+explained",
+      guideTitle: "Read guide: GitHub Secret Scanning & Push Protection",
+      guideUrl: "https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning"
     }
   ];
 
@@ -278,7 +332,7 @@
     SIMPLE_BREAKAGES: SIMPLE_BREAKAGES,
     BREAKAGE_SCENARIOS: SIMPLE_BREAKAGES.map(function (item) {
       return {
-        categoryBadge: "Step 5 · What Could Break & Fix",
+        categoryBadge: "Step 7 · Reliability & Code Safety",
         howToFixTitle: item.howToFixBullets[0],
         jargonDecoder: item.jargonPills.map(function (jp) {
           return { term: jp.word, meaning: jp.plain };

@@ -617,6 +617,8 @@
         window.renderPythonCodeDiagram(containerEl);
       } else if (stop.diagramType === "systems-agent-blueprint" && typeof window.renderSystemsAgentDiagram === "function") {
         window.renderSystemsAgentDiagram(containerEl);
+      } else if (stop.diagramType === "reliability-breakages" && typeof window.renderReliabilityBreakagesSection === "function") {
+        window.renderReliabilityBreakagesSection(containerEl);
       } else if (stop.diagramType === "opensource-shipping" && typeof window.renderOpenSourceShippingDiagram === "function") {
         window.renderOpenSourceShippingDiagram(containerEl);
       }

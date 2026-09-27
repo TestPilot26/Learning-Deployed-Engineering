@@ -500,9 +500,6 @@
   }
 
   function renderPythonCodeDiagram(container) {
-    if (typeof window.renderReliabilityBreakagesSection === "function") {
-      window.renderReliabilityBreakagesSection(container);
-    }
     var art = window.DiagramIllustrations;
     if (!art) return;
     buildInteractiveLoopCard(container, {

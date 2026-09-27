@@ -159,79 +159,83 @@ window.PIPELINE_DATA = {
       ]
     },
     {
-      id: "git-and-shipping",
-      title: "Version control, Git & cloud deployment",
-      stage: "Step 3 · Safety Net",
+      id: "reading-code-python",
+      title: "How to read code & Python essentials",
+      stage: "Step 3 · Reading Code & Python",
       tone: "tone-primary",
       badgeClass: "badge-info",
-      icon: "commit",
-      diagramType: "git-living",
-      teaser: "How to save checkpoints (commits), test risky AI changes on a separate scratchpad (branches), check what changed (diffs), and auto-deploy to cloud hosts (like Vercel, Netlify, Render, or Hugging Face).",
-      explainer: "Everyone who builds with AI hits this moment early on: your project is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we learn Version Control (Git) right away. Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your code works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to a cloud code repository (like GitHub or GitLab) that automatically deploys to your live hosting platform (like Vercel, Netlify, Render, Cloud Run, or Hugging Face Spaces).",
+      icon: "code_blocks",
+      diagramType: "python-code-blueprint",
+      teaser: "How to read inside a code file without memorizing syntax textbooks: the 6 Python building blocks (Variables, Dicts, Lists & DataFrames, Functions, Schemas, Stack Traces, and Unit Tests / AI Evals).",
+      explainer: "Right after learning what coding languages exist in Step 2, the next step is learning how to look inside a code file without feeling overwhelmed. In 2026, you don't need to spend six months memorizing syntax from a textbook before building—you need to know how to read and trace what AI-written code is doing. Almost every Python script or backend server is built from just 6 core building blocks: Variables & types, Functions ('def' -> 'return'), Dictionaries ('{key: value}' = 1 single row), Lists ('[...]' = a collection of rows that forms a Pandas DataFrame table), Strict Schemas ('Pydantic'), and reading crash receipts ('Stack Traces' from the very bottom line up).",
       experiences: [
         {
-          lead: "Why are there so many steps? (Save vs. Commit vs. Push vs. PR vs. Squash & Merge):",
-          body: "Each step has a distinct job: Cmd+S saves a file on your laptop's hard drive; 'git commit' seals a permanent local checkpoint; 'git push' uploads your branch to a cloud repo (like GitHub or GitLab); a 'Pull Request (PR)' opens a visual review page with a test preview link; and 'Squash & Merge' neatly combines your 5 messy work-in-progress ('WIP') checkpoints into one clean update on your official 'main' branch."
+          lead: "1. Variables, types & functions ('def' -> 'return'):",
+          body: "A Variable is simply a labeled box in memory (like 'user_name = \"Lucy\"'). Every value has a type: 'str' (text in quotes), 'int'/'float' (numbers), 'bool' ('True'/'False' switch), or 'None' (empty). A Function ('def calculate_total(price):') is a reusable named recipe that takes inputs inside parentheses '()', runs indented steps, and hands back an answer with 'return'."
         },
         {
-          lead: "Branching vs. Cloning vs. Copying a folder:",
-          body: "Never duplicate folders on your desktop like 'project-v2-final-FINAL'. A Git branch lets you try a big AI experiment in a safe parallel timeline—and either merge it back in if it works, or throw it away in one second if it breaks."
+          lead: "2. How Dictionaries, Lists & Pandas DataFrames fit together (1 Row -> Whole Table):",
+          body: "One Python Dictionary ('{\"id\": 1, \"task\": \"Ship app\", \"status\": \"Doing\"}') is one single labeled row of data (identical in shape to a JSON object). When you put multiple Dictionaries inside a Python List ('[ {...}, {...} ]'), you get a List of Dictionaries—which is a multi-row table! In data science and Google Colab notebooks, 'pandas.DataFrame(my_list)' turns that list of dictionaries into a supercharged spreadsheet you can filter or group in one line."
         },
         {
-          lead: "What 'HEAD' means in Git (and how Continuous Deployment works after Merge):",
-          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Once you check 'git diff' and merge your PR into 'main', Continuous Deployment (CI/CD — automated cloud testing and publishing) platforms—like Vercel or Netlify for websites, Render or Cloud Run for backend servers, or Hugging Face Spaces for AI demos—automatically build and publish your updated code."
+          lead: "3. How to 'trace' a file & read a Stack Trace from the bottom line up:",
+          body: "To 'trace' a file means pretending you are the computer and following the code step-by-step from the button click or input down to the final 'return'. When Python crashes and prints a long 'Traceback' error receipt, skip straight to the VERY LAST line—it tells you the exact error type ('KeyError' = missing dictionary key, 'TypeError' = wrong data type) and the exact file and line number that broke."
+        },
+        {
+          lead: "4. Pre-flight verification: Linters ('Ruff'), Unit Tests ('pytest') & Golden AI Evals:",
+          body: "How do experienced engineers trust code written by AI? They use a 3-layer safety net: (1) a Linter & Type Checker ('Ruff' in Python, 'ESLint'/'TypeScript' in JS) that acts like instant spell-check for variable names and types, (2) Automated Unit Tests ('pytest') that test functions automatically in milliseconds, and (3) Golden AI Evals (a small spreadsheet of 20–50 test prompts and expected answers) so tweaking a prompt to fix one case doesn't break ten others."
         }
       ],
       activity: {
-        title: "Fun activity: Drive the living Git & deployment timeline",
+        title: "Fun activity: Trace the 6 Python building blocks",
         steps: [
-          "Click each step on the Living Git & Cloud Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Auto-Deploy Live) to see how code moves safely from your laptop to the internet.",
-          "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
-          "Create a new branch with git checkout -b test-experiment (where 'checkout -b' creates and switches to a new branch named 'test-experiment'), make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
+          "Click through all 4 stages in the Interactive Python & Code Literacy Blueprint above ('1. Variables & functions', '2. Dicts, lists & tables', '3. Schemas & stack traces', and '4. Automated unit tests & Golden AI Evals') to read each building block in the Left Side Panel.",
+          "Compare 'Dictionary {key: val}' (1 row), 'List [row1, row2]' (ordered rows), and 'Pandas DataFrame' (spreadsheet table) in Stage 2 to see how data structures build on each other.",
+          "Click 'Stack traces & try/except' in Stage 3 to practice reading a Python Traceback from the bottom line up."
         ]
       },
       resources: [
         {
-          type: "Tool",
-          badgeClass: "badge-success",
-          title: "Learn Git Branching (Interactive visual sandbox)",
-          description: "The best hands-on browser game for seeing commits, branches, checkouts, and merges animate step by step.",
-          url: "https://learngitbranching.js.org/"
+          type: "Video",
+          badgeClass: "badge-info",
+          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
+          description: "Why 'building first' with AI and mastering code reading, stack-trace debugging, and architecture beats memorizing syntax textbooks.",
+          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
         },
         {
           type: "Course",
           badgeClass: "badge-info",
-          title: "MIT Missing Semester: Version Control (Git)",
-          description: "Explains Git from the ground up as a graph of snapshots so commands stop feeling like magic spells.",
-          url: "https://missing.csail.mit.edu/2020/version-control/"
+          title: "Harvard CS50’s Introduction to Programming with Python (CS50P)",
+          description: "Clear, zero-jargon walkthrough of functions, variables, conditionals, loops, exceptions, unit tests (pytest), and file I/O.",
+          url: "https://cs50.harvard.edu/python/"
         },
         {
           type: "Explainer",
-          badgeClass: "badge-info",
-          title: "GitHub Docs: About branches, Pull Requests, and clones",
-          description: "Official visual guide to how branches isolate work and how Pull Requests let you review diffs before merging.",
-          url: "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches"
+          badgeClass: "badge-success",
+          title: "Anthropic Engineering: Claude Code Best Practices (Test-Driven Loops)",
+          description: "How to have coding agents run linters and write a failing pytest reproduction test first before editing code.",
+          url: "https://www.anthropic.com/engineering/claude-code-best-practices"
         },
         {
-          type: "Explainer",
+          type: "Tool",
           badgeClass: "badge-secondary",
-          title: "GitClear AI code quality & churn report",
-          description: "Industry study showing why frequent commits, branches, and code reviews matter when coding with AI.",
-          url: "https://www.gitclear.com/"
+          title: "Google Colab: Interactive Python & Pandas Notebook in Your Browser",
+          description: "Practice creating Python Dictionaries, Lists, and Pandas DataFrames cell-by-cell in your browser with zero setup.",
+          url: "https://colab.research.google.com/"
         }
       ]
     },
     {
       id: "cli-and-terminal",
       title: "Command line interface & the terminal",
-      stage: "Step 4 · Efficiency",
+      stage: "Step 4 · Command Line & Efficiency",
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "terminal",
       diagramType: "terminal-interactive",
       hasTerminalVocab: true,
       teaser: "What the terminal actually is, how to watch what your AI agent is doing in real time, what 'grep' and folder paths mean, and a live keyboard sandbox.",
-      explainer: "The terminal (or Command Line Interface) is simply a text-based way to talk directly to your computer—typing short one-line instructions instead of clicking through folders with your mouse. Learning a few terminal basics helps in two big ways: first, you can track what your AI coding tool is actually doing as it works (seeing which folders it opens, how it searches your files with 'grep', and which commands it runs); second, you can move around your computer, start local test servers, and read error messages in seconds.",
+      explainer: "Now that you know what plain-text files and Python code look like, how do you navigate folders and run your code? The terminal (or Command Line Interface) is simply a text-based way to talk directly to your computer—typing short one-line instructions instead of clicking through folders with your mouse. Learning a few terminal basics helps in two big ways: first, you can track what your AI coding tool is actually doing as it works (seeing which folders it opens, how it searches your files with 'grep', and which commands it runs); second, you can move around your computer, start local test servers, and read error messages in seconds.",
       experiences: [
         {
           lead: "What 'grep' is (and why AI agents run it constantly):",
@@ -290,97 +294,65 @@ window.PIPELINE_DATA = {
       ]
     },
     {
-      id: "reading-code-stability",
-      title: "Reading code, Python essentials & long-term stability",
-      stage: "Step 5 · Python Literacy & Reliability",
-      tone: "tone-secondary",
-      badgeClass: "badge-secondary",
-      icon: "troubleshoot",
-      diagramType: "python-code-blueprint",
-      teaser: "Grouped by 'What could break & how to fix it': 5 plain-English illustrated scenarios with paired videos, why apps work on your laptop then break with real users, and the 6 Python building blocks.",
-      explainer: "When you build a prototype with AI, it almost always works on the first try on your laptop—because you are 1 person clicking politely with zero internet delay. The real skill in 2026 isn't memorizing code syntax from a textbook; it's knowing **what could break** when real people use your app and **how to fix it** in plain steps. Above, we've grouped the 5 most common breakages into side-by-side Before/After visual cards (with zero jargon and paired videos), followed by the 6 core Python building blocks.",
+      id: "git-and-shipping",
+      title: "Version control, Git & cloud deployment",
+      stage: "Step 5 · Version Control & Safety Net",
+      tone: "tone-primary",
+      badgeClass: "badge-info",
+      icon: "commit",
+      diagramType: "git-living",
+      teaser: "How to save checkpoints (commits), test risky AI changes on a separate scratchpad (branches), check what changed (diffs), and auto-deploy to cloud hosts (like Vercel, Netlify, Render, or Hugging Face).",
+      explainer: "Once you are editing code files and running terminal commands, you hit a classic moment: your project is working nicely, you ask the AI for 'one more small change,' it edits ten files at once, and suddenly the whole screen is broken—and normal Undo (Cmd+Z) can't fix it. That is why we use Version Control (Git). Git is a time machine for your project folder: it lets you save named checkpoints (commits) whenever your code works, test big ideas on a safe side-track (a branch) without touching your working version, review the exact lines that changed (diff), and push your finished work to a cloud code repository (like GitHub or GitLab) that automatically deploys to your live hosting platform.",
       experiences: [
         {
-          lead: "1. What could break with AI & outside services -> How to fix it:",
-          body: "• What breaks: The 'Generate' button spins forever when an outside AI service slows down, or crashes when the AI replies with chatty sentences instead of structured data.\n• How to fix it: Add a 10-second stopwatch ('timeout=10' so your server stops waiting after 10 seconds), force the AI to fill out a strict checklist form ('Pydantic / JSON Schema' — a rule that requires exact fields like {title, score}), and wrap the call in a 'try / except' safety net (Python's way of saying 'try this, and if it fails, show a friendly backup message instead of crashing')."
+          lead: "Why are there so many steps? (Save vs. Commit vs. Push vs. PR vs. Squash & Merge):",
+          body: "Each step has a distinct job: Cmd+S saves a file on your laptop's hard drive; 'git commit' seals a permanent local checkpoint; 'git push' uploads your branch to a cloud repo (like GitHub or GitLab); a 'Pull Request (PR)' opens a visual review page with a test preview link; and 'Squash & Merge' neatly combines your 5 messy work-in-progress ('WIP') checkpoints into one clean update on your official 'main' branch."
         },
         {
-          lead: "2. What could break when 100 people visit at once or double-click -> How to fix it:",
-          body: "• What breaks: Asking the database 100 separate questions inside a loop freezes the server ('503 Service Unavailable' — the server is overloaded), and tapping 'Pay' twice on slow Wi-Fi creates duplicate orders.\n• How to fix it: Load 20 items at a time ('LIMIT 20' in SQL), turn on your database's Connection Pooler (a shared switchboard so hundreds of visitors can share 20 database connections), disable buttons on the first click, and attach a one-time receipt ID ('idempotency key' so duplicate clicks are ignored)."
+          lead: "Branching vs. Cloning vs. Copying a folder:",
+          body: "Never duplicate folders on your desktop like 'project-v2-final-FINAL'. A Git branch lets you try a big AI experiment in a safe parallel timeline—and either merge it back in if it works, or throw it away in one second if it breaks."
         },
         {
-          lead: "3. What could break with security & silent bugs -> How to fix it:",
-          body: "• What breaks: Changing '?id=104' to '?id=105' in the browser address bar exposes someone else's private data if the server doesn't check who is logged in; or code hides crashes with 'except: pass' (which tells Python to ignore the error and do nothing) while lying 'Saved!' on screen.\n• How to fix it: Always verify the logged-in user on the server, never hide errors with 'pass', and connect a free crash-alert tool (like Sentry) + automated test checks ('pytest', Python's 1-command test runner) so bugs get caught immediately."
-        },
-        {
-          lead: "4. The only 6 Python building blocks you need to read code with confidence:",
-          body: "Skip memorizing syntax drills: learn to spot Variables (labeled boxes that hold a value), Dictionaries {'key': 'value'} (one structured record, like one row of a table), Lists [...] (an ordered collection of rows, which powers a Pandas DataFrame spreadsheet table), Functions ('def' -> 'return', a reusable named recipe), Strict Forms (Pydantic validation), and reading error receipts ('Stack Traces' — the multi-line crash report where the VERY LAST line tells you what broke)."
+          lead: "What 'HEAD' means in Git (and how Continuous Deployment works after Merge):",
+          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Once you check 'git diff' and merge your PR into 'main', Continuous Deployment (CI/CD — automated cloud testing and publishing) platforms—like Vercel or Netlify for websites, Render or Cloud Run for backend servers, or Hugging Face Spaces for AI demos—automatically build and publish your updated code."
         }
       ],
       activity: {
-        title: "Fun activity: Compare 'Before (Breaks)' vs. 'After (Fixed)'",
+        title: "Fun activity: Drive the living Git & deployment timeline",
         steps: [
-          "In Card 1 above, click through the 5 'What could break' tabs (AI & APIs, 100 Users at Once, Double-Click Bugs, Privacy & Auth, and Silent Failures) to see the red 'Before' and green 'After' flow side by side.",
-          "Click 'Copy prompt for AI' on any scenario and paste it into Cursor, Claude Code, or Gemini to harden your own project.",
-          "In Card 2 below, click through the 6 Python building blocks to see how a single Dictionary row turns into a List and a Pandas DataFrame table."
+          "Click each step on the Living Git & Cloud Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Auto-Deploy Live) to see how code moves safely from your laptop to the internet.",
+          "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
+          "Create a new branch with git checkout -b test-experiment (where 'checkout -b' creates and switches to a new branch named 'test-experiment'), make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
         ]
       },
       resources: [
         {
+          type: "Tool",
+          badgeClass: "badge-success",
+          title: "Learn Git Branching (Interactive visual sandbox)",
+          description: "The best hands-on browser game for seeing commits, branches, checkouts, and merges animate step by step.",
+          url: "https://learngitbranching.js.org/"
+        },
+        {
+          type: "Course",
+          badgeClass: "badge-info",
+          title: "MIT Missing Semester: Version Control (Git)",
+          description: "Explains Git from the ground up as a graph of snapshots so commands stop feeling like magic spells.",
+          url: "https://missing.csail.mit.edu/2020/version-control/"
+        },
+        {
           type: "Explainer",
           badgeClass: "badge-info",
-          title: "Anthropic Engineering: Building Effective Agents",
-          description: "Erik Schluntz & Barry Zhang's landmark guide on why simple, composable workflows and deterministic evaluator-optimizer loops beat complex black-box agents.",
-          url: "https://www.anthropic.com/research/building-effective-agents"
+          title: "GitHub Docs: About branches, Pull Requests, and clones",
+          description: "Official visual guide to how branches isolate work and how Pull Requests let you review diffs before merging.",
+          url: "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches"
         },
         {
           type: "Explainer",
           badgeClass: "badge-secondary",
-          title: "Cognition (Devin): Don't Build Multi-Agents (Principles of Context Engineering)",
-          description: "Why multi-agent systems break when sub-agents lose shared context traces—and how to keep agent state and verification rock-solid.",
-          url: "https://cognition.ai/blog/dont-build-multi-agents"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-success",
-          title: "Anthropic Engineering: Claude Code Best Practices (Test-Driven Agent Loops)",
-          description: "How to have coding agents write a failing reproduction test first, verify fixes automatically, and keep context windows clean.",
-          url: "https://www.anthropic.com/engineering/claude-code-best-practices"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-info",
-          title: "OpenAI: A Practical Guide to Building Agents & Guardrails (PDF)",
-          description: "Engineering blueprint for tool risk tiers, structured output schemas, layered guardrails, and human-in-the-loop escalation.",
-          url: "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-secondary",
-          title: "Google DeepMind: Spec-Driven Code Repair & Frontier Safety Research",
-          description: "Research on iterative test-anchored code generation (generating edge-case tests before trusting code) and evaluating agent reliability.",
-          url: "https://deepmind.google/research/"
-        },
-        {
-          type: "Video",
-          badgeClass: "badge-info",
-          title: "Python in 2026: Honest Truth About Learning It Now (Tech With Tim)",
-          description: "Why 'building first' with AI and mastering code reading, stack-trace debugging, and architecture beats memorizing syntax textbooks.",
-          url: "https://www.youtube.com/watch?v=Kuur0L7E9rQ"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-danger",
-          title: "Do Users Write More Insecure Code with AI Assistants? (Stanford ACM CCS)",
-          description: "Perry et al.'s empirical study showing why reviewing AI-generated code for auth bypasses, SQL injection, and leaked keys is critical.",
-          url: "https://dl.acm.org/doi/10.1145/3576915.3623157"
-        },
-        {
-          type: "Explainer",
-          badgeClass: "badge-success",
-          title: "Google DORA State of DevOps & OWASP Top 10 Security Risks",
-          description: "Why small, tested commits with automated rollback and observability outperform giant unverified code drops.",
-          url: "https://dora.dev/"
+          title: "GitClear AI code quality & churn report",
+          description: "Industry study showing why frequent commits, branches, and code reviews matter when coding with AI.",
+          url: "https://www.gitclear.com/"
         }
       ]
     },
@@ -393,7 +365,7 @@ window.PIPELINE_DATA = {
       icon: "sync_alt",
       diagramType: "systems-agent-blueprint",
       teaser: "Interactive diagram of MCP (Model Context Protocol) vs. Traditional APIs, the 7-part anatomy of an API Endpoint, REST vs. Webhooks vs. Streaming, and Human-in-the-Loop AI Agents.",
-      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop zooms in on the exact connectors that make those pieces talk to each other: (1) what an **API Endpoint** actually is (the HTTP verb, doorbell URL path `/api/tasks/42`, query filters, headers, JSON body, and 3-digit status code receipt), (2) how **MCP (Model Context Protocol)** acts as a universal 'USB-C port' for AI agents compared to traditional custom APIs, and (3) when to use **REST APIs**, **Webhooks**, **Streaming (SSE/WebSockets)**, and **Human-in-the-Loop approval cards**.",
+      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop zooms in on the exact connectors that make those pieces talk to each other: (1) what an API Endpoint actually is (the HTTP verb, doorbell URL path '/api/tasks/42', query filters, headers, JSON body, and 3-digit status code receipt), (2) how MCP (Model Context Protocol) acts as a universal 'USB-C port' for AI agents compared to traditional custom APIs, and (3) when to use REST APIs, Webhooks, Streaming (SSE/WebSockets), and Human-in-the-Loop approval cards.",
       experiences: [
         {
           lead: "1. Traditional API vs. MCP (Model Context Protocol) — What's the difference?",
@@ -466,15 +438,96 @@ window.PIPELINE_DATA = {
       ]
     },
     {
+      id: "reading-code-stability",
+      title: "What could break in production, code safety & how to fix it",
+      stage: "Step 7 · Reliability & Code Safety",
+      tone: "tone-secondary",
+      badgeClass: "badge-secondary",
+      icon: "troubleshoot",
+      diagramType: "reliability-breakages",
+      teaser: "Grouped by 'What could break & how to fix it': 6 plain-English illustrated scenarios with paired videos covering AI timeouts, 50+ simultaneous users, double-clicks, URL privacy leaks, silent failures, and runaway AI bills / leaked Git keys.",
+      explainer: "Now that you understand Python (Step 3), Git (Step 5), and API Endpoints & AI Agents (Step 6), you have all the pieces to understand what happens when real people—and internet bots—use your deployed app. On your laptop, prototypes feel invincible because you are 1 person clicking politely. Above, we've grouped the 6 most common production breakages & code-safety risks into side-by-side Before/After visual diagrams, with plain-English explanations in the Left Side Panel and a paired video for each.",
+      experiences: [
+        {
+          lead: "1. What could break with AI & outside services -> How to fix it:",
+          body: "• What breaks: The 'Generate' button spins forever when an outside AI service slows down, or crashes when the AI replies with chatty sentences instead of structured data.\n• How to fix it: Add a 10-second stopwatch ('timeout=10' so your server stops waiting after 10 seconds), force the AI to fill out a strict checklist form ('Pydantic / JSON Schema' — a rule that requires exact fields like {title, score}), and wrap the call in a 'try / except' safety net."
+        },
+        {
+          lead: "2. What could break when 50+ people visit at once or double-click -> How to fix it:",
+          body: "• What breaks: Asking the database 100 separate questions inside a loop freezes the server ('503 Service Unavailable'), and tapping 'Pay' twice on slow Wi-Fi creates duplicate orders.\n• How to fix it: Load 20 items at a time ('LIMIT 20' in SQL), turn on your database's Connection Pooler (a shared switchboard so hundreds of visitors share 20 database connections), disable buttons on the first click, and attach a one-time receipt ID ('idempotency key' so duplicate clicks are ignored)."
+        },
+        {
+          lead: "3. What could break with data privacy, silent crashes & runaway AI bills -> How to fix it:",
+          body: "• What breaks: Changing '?id=104' to '?id=105' in the URL bar exposes someone else's private data ('IDOR'); code hides crashes with 'except: pass' while lying 'Saved!'; or bots spam your AI endpoint overnight and run up a $2,000 bill ('Denial-of-Wallet').\n• How to fix it: Always verify the logged-in owner on the server, never hide errors with 'pass', set a hard monthly spend cap ($10–$25) + per-IP Rate Limiting (10 requests/min), and remember: if you ever commit a secret API key to Git, deleting the line in a new commit does NOT erase it from Git history—you must immediately Revoke/Rotate the key in the provider dashboard!"
+        },
+        {
+          lead: "4. The 4-step debugging checklist & separating Dev vs. Prod databases:",
+          body: "When something breaks, don't just tell AI 'it's broken, fix it'—take 30 seconds to pinpoint the layer: (1) check Browser Inspect -> Console for red UI errors, (2) check Inspect -> Network for red status codes (401/403/404/429/500 or CORS), (3) read the bottom line of the server terminal stack trace, and (4) check 'git diff'. Finally, never point your laptop ('localhost') at your live Production database—use a separate Dev/Preview database so local tests never wipe real user data."
+        }
+      ],
+      activity: {
+        title: "Fun activity: Compare 'Before (Breaks)' vs. 'After (Fixed)' across all 6 scenarios",
+        steps: [
+          "Click through all 6 'What could break' tabs above (1. AI Hangs, 2. 50+ Users Freeze DB, 3. Double-Click Duplicates, 4. URL Privacy Leaks, 5. Silent 'Saved!' Lies, and 6. Surprise $2,000 AI Bills & Leaked Git Keys) to inspect the red 'Before' vs. green 'After' diagram and Left Side Panel breakdown.",
+          "Click 'Copy instruction for your AI editor' on any scenario and paste it into Cursor, Claude Code, or Gemini to audit your own project.",
+          "Open your AI provider dashboard (Google AI Studio, OpenAI, or Anthropic) and verify you have a monthly spend limit or billing alert set before sharing a public URL."
+        ]
+      },
+      resources: [
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
+          title: "Anthropic Engineering: Building Effective Agents",
+          description: "Erik Schluntz & Barry Zhang's landmark guide on why simple, composable workflows and deterministic evaluator-optimizer loops beat complex black-box agents.",
+          url: "https://www.anthropic.com/research/building-effective-agents"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-secondary",
+          title: "Cognition (Devin): Don't Build Multi-Agents (Principles of Context Engineering)",
+          description: "Why multi-agent systems break when sub-agents lose shared context traces—and how to keep agent state and verification rock-solid.",
+          url: "https://cognition.ai/blog/dont-build-multi-agents"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-info",
+          title: "OpenAI: A Practical Guide to Building Agents & Guardrails (PDF)",
+          description: "Engineering blueprint for tool risk tiers, structured output schemas, layered guardrails, and human-in-the-loop escalation.",
+          url: "https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-danger",
+          title: "Do Users Write More Insecure Code with AI Assistants? (Stanford ACM CCS)",
+          description: "Perry et al.'s empirical study showing why reviewing AI-generated code for auth bypasses, SQL injection, and leaked keys is critical.",
+          url: "https://dl.acm.org/doi/10.1145/3576915.3623157"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-success",
+          title: "GitHub Docs: Secret Scanning & Push Protection",
+          description: "How to automatically block accidental git pushes containing API keys—and how to rotate a leaked secret.",
+          url: "https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning"
+        },
+        {
+          type: "Explainer",
+          badgeClass: "badge-secondary",
+          title: "Google DORA State of DevOps & OWASP Top 10 Security Risks",
+          description: "Why small, tested commits with automated rollback and observability outperform giant unverified code drops.",
+          url: "https://dora.dev/"
+        }
+      ]
+    },
+    {
       id: "system-architecture",
       title: "System architecture, open source & shipping to the world",
-      stage: "Step 7 · Architecture, Open Source & Shipping",
+      stage: "Step 8 · Architecture, Open Source & Shipping",
       tone: "tone-primary",
       badgeClass: "badge-info",
       icon: "account_tree",
       diagramType: "opensource-shipping",
-      teaser: "How to download and build on top of open-source code, all the ways to host and share what you build (web apps, Hugging Face AI demos, Colab notebooks, servers, or packages), and key watch-outs.",
-      explainer: "When you build something useful, you don't get extra points for inventing login screens, databases, or UI buttons from scratch—and not everything you ship even needs to be a full web app! Experienced engineers start by snapping together free, community-tested open-source building blocks, and then pick the lightest-weight way to share their work: a Frontend/Web App Host (like Vercel, Netlify, or Cloudflare Pages), an AI Demo & Model Hub (like Hugging Face Spaces, Google Colab, or Replicate), an Always-On Backend/Container Server (like Render, Railway, or Google Cloud Run), or an Installable Code Package (on PyPI or npm). This final stop maps every major tool category -> real-world examples, and walks through the 6 watch-outs to check before sharing a public link.",
+      teaser: "How to download and build on top of open-source code, all the ways to host and share what you build (web apps, Hugging Face AI demos, Colab notebooks, servers, or packages), and how to guide AI agents with CLAUDE.md / AGENTS.md.",
+      explainer: "When you build something useful, you don't get extra points for inventing login screens, databases, or UI buttons from scratch—and not everything you ship even needs to be a full web app! Experienced engineers start by snapping together free, community-tested open-source building blocks, and then pick the lightest-weight way to share their work: a Frontend/Web App Host (like Vercel, Netlify, or Cloudflare Pages), an AI Demo & Model Hub (like Hugging Face Spaces, Google Colab, or Replicate), an Always-On Backend/Container Server (like Render, Railway, or Google Cloud Run), or an Installable Code Package (on PyPI or npm). This final stop maps every major tool category -> real-world examples, shows how to write an 'AGENTS.md' / 'CLAUDE.md' rulebook for your repo, and walks through the pre-launch checklist.",
       experiences: [
         {
           lead: "Not everything you ship needs to be a full web app (Pick the right hosting category):",
@@ -485,12 +538,12 @@ window.PIPELINE_DATA = {
           body: "You can either install a single open-source library into your existing project ('npm install' or 'pip install' for UI buttons, data validation, or AI SDKs — Software Development Kits, official helper libraries for calling an AI service) OR copy a complete working starter repository on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
         },
         {
-          lead: "Recognizing the builder's stack by category first (then example tools):",
-          body: "Whenever you hear a tool name, place it in its category: UI Components (e.g. shadcn/ui, Radix, Tailwind CSS), Managed Cloud Databases (e.g. Supabase, Neon, Firebase, MongoDB, Pinecone), User Authentication (e.g. Auth.js, Better Auth, Clerk), AI APIs & Model Hubs (e.g. Google AI Studio, OpenAI, Anthropic, Hugging Face, Ollama), and Payments/Email (e.g. Stripe, Resend)."
+          lead: "Give your repo an 'AGENTS.md' / 'CLAUDE.md' instruction file (So AI remembers your rules):",
+          body: "To stop AI coding agents from making the same mistakes repeatedly, add a short plain-text 'AGENTS.md' or 'CLAUDE.md' file at the root of your project folder. List your project's folder structure, how to run tests ('pytest'), file-size limits, and security rules (like 'never hardcode API keys or touch the production database')—every modern AI coding tool reads this file automatically before editing your code."
         },
         {
           lead: "Four watch-outs before you install or go live:",
-          body: "1) Check the repo's LICENSE file (permissive licenses like MIT and Apache 2.0 let you use the code freely in private or commercial apps; 'copyleft' licenses like AGPL/GPL require you to share your own source code). 2) Verify any package an AI suggests actually exists on npm or PyPI before installing it (to avoid 'slopsquatting' — when scammers register fake package names that AI models commonly hallucinate). 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
+          body: "1) Check the repo's LICENSE file (permissive licenses like MIT and Apache 2.0 let you use the code freely in private or commercial apps; 'copyleft' licenses like AGPL/GPL require you to share your own source code). 2) Verify any package an AI suggests actually exists on npm or PyPI before installing it (to avoid 'slopsquatting' — when scammers register fake package names that AI models commonly hallucinate) and enable GitHub Dependabot for security alerts. 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
         }
       ],
       activity: {
@@ -498,7 +551,7 @@ window.PIPELINE_DATA = {
         steps: [
           "Click through the 3 interactive diagrams above: (1) Open-Source Workflow, (2) Category-First Hosting & Builder's Stack Map, and (3) Critical Watch-Outs Shield.",
           "Compare the 4 hosting categories in Diagram 2 (Web App Hosts vs. AI & Notebook Hubs like Hugging Face/Colab vs. Backend Container Hosts vs. Static/Package Registries) to see which fits your next project.",
-          "Before sharing any live link publicly, set a hard monthly spend limit in your AI/cloud billing settings so a traffic spike can never cause a surprise bill."
+          "Create a short CLAUDE.md or AGENTS.md file in your project root listing your stack, test command, and safety rules so your AI coding agent follows them automatically."
         ]
       },
       resources: [

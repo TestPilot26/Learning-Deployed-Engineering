@@ -187,11 +187,17 @@
       "Terminal 'head' vs Git 'HEAD'?",
       "What is a parent directory (..)?"
     ],
-    "reading-code-stability": [
+    "reading-code-python": [
       "What does it mean to 'trace' a file?",
       "How much Python do I need in 2026?",
       "How do Dicts, Lists & DataFrames fit together?",
       "How do I read a Python stack trace?"
+    ],
+    "reading-code-stability": [
+      "Why do 50+ users freeze a database (N+1 bug)?",
+      "What if I accidentally commit an API key to Git?",
+      "How do I stop a $2,000 overnight AI bill?",
+      "What is the 4-step debugging checklist?"
     ],
     "system-dynamics": [
       "What is Human-in-the-Loop ('Prepare -> Confirm')?",
@@ -202,8 +208,8 @@
     "system-architecture": [
       "Ways to host (Web apps vs Hugging Face vs Servers)?",
       "How do I download & build on open source?",
-      "MIT vs AGPL open-source licenses?",
-      "6 watch-outs when shipping to production?"
+      "What is an AGENTS.md / CLAUDE.md file?",
+      "MIT vs AGPL open-source licenses?"
     ]
   };
 

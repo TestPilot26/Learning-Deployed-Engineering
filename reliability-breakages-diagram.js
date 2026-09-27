@@ -178,17 +178,17 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Part 1 of 2 on this page · What could break & how to fix it (Plain-English visual guide)";
+    topBadge.textContent = "Interactive reliability & code safety guide — click any tab to inspect in the side panel";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "5 common ways AI-built apps break when real people use them—and how to fix each one";
+    h3.textContent = "6 common ways AI-built apps break when real people use them—and how to fix each one";
 
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "When you test an app by yourself on your laptop, almost everything seems to work. Click any of the 5 everyday situations below to see a side-by-side diagram of what goes wrong, the 3-step fix, and a short video walkthrough.";
+      "When you test an app by yourself on your laptop, almost everything seems to work. Click any of the 6 real-world situations below to see a side-by-side diagram of what goes wrong, the 3-step fix in the Left Side Panel, and a short video walkthrough.";
 
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
@@ -415,9 +415,7 @@
       visualBox.appendChild(actionsCluster);
       stageHost.appendChild(visualBox);
 
-      if (isUserClick) {
-        showBreakageInSidePanel(item, true);
-      }
+      showBreakageInSidePanel(item, Boolean(isUserClick));
     }
 
     renderActive(false);
