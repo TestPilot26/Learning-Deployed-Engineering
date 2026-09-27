@@ -286,6 +286,24 @@
       });
     }
 
+    // Automatically include all plain-English Jargon Decoder terms from Step 5 Reliability Scenarios
+    if (window.ReliabilityBreakagesData && Array.isArray(window.ReliabilityBreakagesData.BREAKAGE_SCENARIOS)) {
+      window.ReliabilityBreakagesData.BREAKAGE_SCENARIOS.forEach(function (sc) {
+        (sc.jargonDecoder || []).forEach(function (jd) {
+          var key = (jd.term || "").toLowerCase();
+          if (!key || seen[key]) return;
+          seen[key] = true;
+          all.push({
+            term: jd.term,
+            group: "concept",
+            category: "What Could Break & Fix · " + sc.categoryBadge,
+            definition: jd.meaning,
+            example: "Fix: " + sc.howToFixTitle
+          });
+        });
+      });
+    }
+
     all.sort(function (a, b) {
       var cleanA = a.term.replace(/^[^a-zA-Z0-9]+/, "").toLowerCase();
       var cleanB = b.term.replace(/^[^a-zA-Z0-9]+/, "").toLowerCase();

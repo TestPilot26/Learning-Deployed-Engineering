@@ -297,32 +297,32 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-secondary",
       icon: "troubleshoot",
       diagramType: "python-code-blueprint",
-      teaser: "Bad vs. good code side by side, what breakages actually look like when scaling from 1 to 5,000+ users, how to build automated breakage-tracking agents (Anthropic, Cognition, DeepMind & OpenAI), and the 6 Python essentials.",
-      explainer: "A prototype that works once on your laptop ('the first-go illusion') will often crack the moment 50 concurrent users click at once, an external AI API times out, or an input field is empty. Stanford's ACM CCS study (Perry et al.) proved that developers using AI assistants wrote less secure code while feeling more confident it was safe. You don't need to memorize syntax textbooks in 2026—instead, you need to know what fragile vs. production-grade code looks like side by side, what breakages look like on screen and in terminal logs as you scale users, how modern teams (Anthropic, Cognition, Google DeepMind, OpenAI) build automated agents that track and verify fixes, and the 6 core Python building blocks.",
+      teaser: "Grouped by 'What could break' and 'How to fix it': 6 illustrated demos with paired videos, why apps work on your laptop then break with 50+ users, automated 'smoke alarm' agents, and the 6 Python building blocks.",
+      explainer: "When you build a prototype with AI, it almost always works on the first try on your laptop—because you are 1 person typing polite inputs with zero internet delay. The real skill in 2026 isn't memorizing code syntax from a textbook; it's knowing **what could break** when real people use your app and **how to fix it** in plain steps. Above, we've grouped the 6 most common breakages into interactive illustrated demos (each with a plain-English jargon decoder, a copyable prompt for your AI editor, and a paired video walkthrough), followed by the 6 core Python building blocks.",
       experiences: [
         {
-          lead: "What happens when you scale from 1 user (localhost) -> 50 users -> 5,000+ users:",
-          body: "On your laptop (1 user), 0ms network delay and clean test inputs hide every bug. At 50 concurrent users, missing fields ('None' / KeyError), double-clicks (race conditions), and global variable leaks appear. At 5,000+ users or viral traffic, opening a new database connection per request crashes Postgres ('503 Too Many Connections'), 'SELECT *' without 'LIMIT 20' runs the server out of RAM, and unthrottled AI endpoints rack up thousands of dollars in bot traffic."
+          lead: "1. What could break with AI & outside APIs -> How to fix it:",
+          body: "• What breaks: The 'Generate' button spins forever when an AI service slows down, or crashes when the AI replies with chatty sentences instead of structured data.\n• How to fix it: Add a 10-second stopwatch ('timeout=10'), force the AI to fill out a strict checklist form ('Pydantic / JSON Schema'), and add a 'try / except' backup plan."
         },
         {
-          lead: "Spotting bad (fragile vibe-coded) code vs. good (production-grade) code:",
-          body: "Whenever you skim AI-generated code, check 5 things: (1) Are external API/LLM calls wrapped in a timeout (e.g. 10s), 'try/except', and a strict Pydantic/JSON Schema? (2) Does it swallow errors silently with 'except: pass'? (3) Does it run database queries inside a 'for' loop (the N+1 bug) or forget 'LIMIT 20'? (4) Does it check the logged-in server session ('session_user.id') rather than trusting a 'user_id' URL parameter? (5) Does it use atomic SQL updates + Idempotency Keys so double-clicks never double-charge?"
+          lead: "2. What could break when 100 people visit at once or double-click -> How to fix it:",
+          body: "• What breaks: Asking the database 100 separate questions inside a loop freezes the server ('503 error'), and tapping 'Submit' twice on slow Wi-Fi creates duplicate items or double charges.\n• How to fix it: Load 20 items at a time ('LIMIT 20'), turn on your database's shared Connection Pooler, lock buttons on the first click, and attach a one-time receipt ID ('idempotency key')."
         },
         {
-          lead: "How to build agents that track, reproduce & fix breakages automatically (Anthropic, Cognition, DeepMind & OpenAI):",
-          body: "Modern engineering teams don't wait for users to report crashes. They wire up a 4-stage loop: (1) Telemetry & Probers (Sentry/PostHog captures every crash stack trace + a Playwright cron job tests the live URL every 10 minutes), (2) Context-Rich Triage (Cognition's rule: feed the agent the exact bottom of the stack trace + 'git log -p -n 3' so it sees what changed), (3) Test-First Reproduction (Anthropic & DeepMind's rule: the agent writes a failing 'pytest' unit test that reproduces the bug FIRST, then edits code until the test passes), and (4) Human-Gated Draft PR (never auto-pushing to 'main' without review)."
+          lead: "3. What could break with security & silent bugs -> How to fix it:",
+          body: "• What breaks: Changing '?id=104' to '?id=105' in the address bar exposes someone else's data if the server doesn't check who is logged in; or code hides crashes with 'except: pass' while lying 'Saved!' on screen.\n• How to fix it: Always verify the logged-in user on the server, never hide errors with 'pass', and connect a free 'Smoke Alarm' (like Sentry) + automated test checks ('pytest') so bugs get caught and fixed immediately."
         },
         {
-          lead: "How much Python you actually need in 2026 (Dicts, Lists -> DataFrames, Schemas & Stack Traces):",
-          body: "Build real projects first with AI as your tutor and focus on reading 6 building blocks: Variables/Types, Dictionaries {'key': 'val'} (1 row) inside Lists [...] (a whole Table / Pandas DataFrame in Colab!), if/else & loops, Functions (def -> return), Pydantic Schemas, and reading Stack Traces from the VERY BOTTOM line up."
+          lead: "4. The only 6 Python building blocks you need to read code with confidence:",
+          body: "Skip memorizing syntax drills: learn to spot Variables (labeled boxes), Dictionaries {'key': 'value'} (one row of data), Lists [...] (a whole table or Pandas DataFrame), Functions ('def' -> 'return'), Strict Forms (Pydantic schemas), and reading error receipts ('Stack Traces') from the VERY LAST line up."
         }
       ],
       activity: {
-        title: "Fun activity: Stress-test bad vs. good code & trace the 6 Python blocks",
+        title: "Fun activity: Flip between 'What could break' & 'How to fix it'",
         steps: [
-          "In Diagram 1 above, click through all 3 Traffic Scale Tiers (1 user -> 50 users -> 5,000+ users) and all 6 Bad vs. Good Code Breakpoints to see what each crash looks like on screen and in the logs.",
-          "Search your own AI-generated project for silent failures ('except:' followed by 'pass' or empty 'catch {}') and missing 'timeout=' parameters on API calls.",
-          "In Diagram 2 above, click through the 6 Python Literacy blocks (Variables, Dicts/Lists/DataFrames, Pydantic Schemas, Stack Traces, and Golden Evals)."
+          "In Diagram 1 above, click through the 6 'What could break' scenarios and toggle between '1. See what could break (Fragile)' and '2. See how to fix it (Reliable)' to watch the visual diagram change.",
+          "Click 'Copy prompt' on any scenario and paste it into Cursor, Claude Code, or Gemini to automatically harden your own project.",
+          "In Diagram 2 above, click through the 6 Python building blocks to see how a single Dictionary row turns into a List and a Pandas DataFrame table."
         ]
       },
       resources: [

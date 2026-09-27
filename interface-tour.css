@@ -262,3 +262,14 @@
   max-width: 100%;
 }
 
+.reliability-workshop-host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-two-col > * {
+  min-width: 0;
+}
+
+
