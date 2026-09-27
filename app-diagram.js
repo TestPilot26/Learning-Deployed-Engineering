@@ -699,6 +699,9 @@
 
     updateAppInspector(false);
     container.appendChild(card);
+    if (typeof window.renderMcpAndEndpointsWorkshop === "function") {
+      window.renderMcpAndEndpointsWorkshop(container);
+    }
   }
 
   window.renderAppInfraDiagram = renderAppInfraDiagram;

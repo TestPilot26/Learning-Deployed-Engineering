@@ -556,6 +556,9 @@
   }
 
   function renderSystemsAgentDiagram(container) {
+    if (typeof window.renderMcpAndEndpointsWorkshop === "function") {
+      window.renderMcpAndEndpointsWorkshop(container);
+    }
     var art = window.DiagramIllustrations;
     if (!art) return;
     buildInteractiveLoopCard(container, {

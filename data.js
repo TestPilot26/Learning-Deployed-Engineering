@@ -386,41 +386,48 @@ window.PIPELINE_DATA = {
     },
     {
       id: "system-dynamics",
-      title: "System dynamics, AI agents & how pieces fit together",
-      stage: "Step 6 · Systems & AI Agents",
+      title: "MCP vs. API, endpoints, AI agents & how pieces fit together",
+      stage: "Step 6 · MCP, Endpoints & AI Agents",
       tone: "tone-tertiary",
       badgeClass: "badge-success",
       icon: "sync_alt",
       diagramType: "systems-agent-blueprint",
-      teaser: "How URLs map to backend Python functions, Polling vs. Webhooks, AI Agent tool-calling (MCP), Human-in-the-Loop approval cards, and keeping sensitive data separate from code.",
-      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop is about how data and AI agents actually move across those pieces in real life: how a browser URL triggers a specific Python function on the server, how apps handle slow 30-second tasks without freezing, how AI agents use tools (and why they should stage a 'Confirm' card before taking real-world actions), and why you always keep sensitive user data separate from your code repository.",
+      teaser: "Interactive diagram of MCP (Model Context Protocol) vs. Traditional APIs, the 7-part anatomy of an API Endpoint, REST vs. Webhooks vs. Streaming, and Human-in-the-Loop AI Agents.",
+      explainer: "In Step 2, we looked at the static map of an app's pieces. This stop zooms in on the exact connectors that make those pieces talk to each other: (1) what an **API Endpoint** actually is (the HTTP verb, doorbell URL path `/api/tasks/42`, query filters, headers, JSON body, and 3-digit status code receipt), (2) how **MCP (Model Context Protocol)** acts as a universal 'USB-C port' for AI agents compared to traditional custom APIs, and (3) when to use **REST APIs**, **Webhooks**, **Streaming (SSE/WebSockets)**, and **Human-in-the-Loop approval cards**.",
       experiences: [
         {
-          lead: "How a website URL maps to a backend function & database:",
-          body: "When your browser calls a URL like '/api/users/42', the API acts as a switchboard that triggers a Python function on your server—like 'get_user(42)'—which looks up user #42 in the Database and hands back a clean JSON response."
+          lead: "1. Traditional API vs. MCP (Model Context Protocol) — What's the difference?",
+          body: "• Traditional API (Built for code-to-code): Every service (GitHub, Slack, Stripe) has its own custom endpoint URLs, headers, and JSON formats. Connecting 4 AI apps to 5 tools required writing 20 custom glue-code connectors (the 'M×N spaghetti problem').\n• MCP (Built for AI-to-tool): A universal 'USB-C port' where each tool provides 1 standard MCP Server exposing Tools (actions), Resources (read-only files/schemas), and Prompts (templates). Any AI Client (Claude, Cursor, Gemini) plugs in and discovers what tools exist automatically!"
         },
         {
-          lead: "AI Agents, Tool Calling (MCP) & Human-in-the-Loop ('Prepare -> Confirm'):",
-          body: "An AI Agent is simply an AI model given a loop and a menu of tools it can call (like searching a database or drafting an email). Crucial rule from Anthropic and OpenAI: for any action that changes the outside world (sending an email, deleting a row, charging money), have the agent stage a Preview Card first so a human clicks 'Approve' before it runs!"
+          lead: "2. What is an API 'Endpoint'? (The 7 parts of every API request & response):",
+          body: "An Endpoint is one specific doorbell address on a server mapped to one backend function—like 'PATCH /api/tasks/42?notify=true'. Every endpoint call has 7 parts: (1) HTTP Verb (GET/POST/PATCH/DELETE), (2) Endpoint Path + ID ('/api/tasks/42'), (3) Query Params ('?limit=20'), (4) Headers ('Authorization: Bearer <token>'), (5) JSON Request Body, (6) 3-Digit Status Code Receipt (200 OK, 401 Auth, 404 Not Found, 429 Rate Limit, 500 Crash), and (7) CORS & Rate Limit guardrails."
         },
         {
-          lead: "Keep your code repo separate from sensitive user data:",
-          body: "Never store real user spreadsheets, private CSVs, or customer records inside your Git code folder (where anyone with repo access can see them). Keep only code in GitHub, and store real data in a proper Database (PostgreSQL / Neon / Supabase / Firestore) or secure cloud storage."
+          lead: "3. REST API vs. Webhook vs. Streaming vs. MCP (Which one do I use?):",
+          body: "• REST API ('You ask -> Server answers'): For 90% of normal button clicks and page loads.\n• Webhook ('Outside server texts your endpoint when done'): For Stripe payments or background jobs.\n• Streaming / SSE / WebSockets ('Open phone line'): For streaming AI words token-by-token or live chat.\n• MCP ('Universal AI toolbelt'): For letting AI agents safely browse and invoke tools across apps."
         },
         {
-          lead: "Polling vs. Webhooks & Double-Click Protection (Idempotency):",
-          body: "For slow jobs, either check status on a timer (Polling) or let the server ping you when done (Webhook). And always disable submit buttons while loading + attach a unique receipt ID (Idempotency) so double-clicks never create duplicate records."
+          lead: "4. Human-in-the-Loop ('Prepare -> Confirm') & keeping private data out of Git:",
+          body: "Let AI agents use read-only MCP Resources freely, but for any write Tool that changes the outside world (sending an email, deleting a row, charging money), always stage a Preview Card so a human clicks 'Approve' first—and keep real user databases strictly separate from your Git code folder."
         }
       ],
       activity: {
-        title: "Fun activity: Walk through the live System & AI Agent flow",
+        title: "Fun activity: Toggle MCP vs. API & inspect all 7 parts of an Endpoint",
         steps: [
-          "Click through all 6 stages in the Interactive System Dynamics & AI Agent Diagram above to see how URLs, Databases, Webhooks, and Human-in-the-Loop Agent approvals work.",
-          "Check your own project folder to verify that zero private user CSVs or sensitive datasets are mixed into your Git repository.",
-          "If your app uses AI to take actions (like updating tasks or sending messages), design a 'Prepare -> Confirm' preview card before the action executes."
+          "In Diagram 1 above, click between 'Before MCP: Traditional APIs (M×N spaghetti)' and 'With MCP: Universal USB-C Hub for AI (M+N)', then click the 3 MCP building blocks (Tools, Resources, Prompts).",
+          "Switch to Tab 2 ('What is an Endpoint?') and click through all 7 parts of a live API Endpoint call (HTTP Verb, Path, Query Params, Headers, Body, Status Codes, and CORS).",
+          "In Diagram 2 below, trace how a button click flows through a backend function, an MCP tool loop, and a Human-in-the-Loop approval gate."
         ]
       },
       resources: [
+        {
+          type: "Video",
+          badgeClass: "badge-info",
+          title: "Video: Model Context Protocol (MCP) vs. APIs Clearly Explained",
+          description: "Visual walkthrough of why Anthropic created MCP, the M×N integration problem, and how MCP Servers expose Tools, Resources, and Prompts.",
+          url: "https://www.youtube.com/results?search_query=model+context+protocol+mcp+vs+api+explained"
+        },
         {
           type: "Video",
           badgeClass: "badge-secondary",
@@ -431,9 +438,9 @@ window.PIPELINE_DATA = {
         {
           type: "Explainer",
           badgeClass: "badge-info",
-          title: "Model Context Protocol (MCP): Open Standard for Connecting AI Agents to Tools",
-          description: "How MCP acts as a universal USB-C connector between AI models (Claude, Gemini, Cursor) and external databases or APIs.",
-          url: "https://modelcontextprotocol.io/"
+          title: "Model Context Protocol (MCP): Official Architecture & Specification",
+          description: "Official guide to MCP Hosts, Clients, Servers, and the 3 core primitives (Tools, Resources, and Prompts).",
+          url: "https://modelcontextprotocol.io/introduction"
         },
         {
           type: "Explainer",

@@ -304,6 +304,51 @@
       });
     }
 
+    // Automatically include all MCP Primitives, Endpoint Anatomy Parts & Connectivity Patterns
+    if (window.McpAndEndpointsData) {
+      all.push({
+        term: "API Endpoint",
+        group: "concept",
+        category: "APIs & Connectivity · Core Concept",
+        definition:
+          "One specific doorbell URL + HTTP verb on a backend server (like PATCH /api/tasks/42) mapped to one backend function that reads or updates a specific resource.",
+        example: "GET /api/tasks?limit=20  |  POST /api/tasks"
+      });
+      all.push({
+        term: "M×N Integration Problem (Why MCP was invented)",
+        group: "concept",
+        category: "AI Agents · MCP vs. API",
+        definition:
+          "Without MCP, connecting M different AI apps to N different tools requires M×N custom API connectors. MCP turns this into M+N by giving every AI client and tool server one universal USB-C protocol.",
+        example: "MCP Client <-- JSON-RPC --> MCP Server"
+      });
+      (window.McpAndEndpointsData.MCP_PRIMITIVES || []).forEach(function (pr) {
+        var key = ("mcp " + pr.title).toLowerCase();
+        if (seen[key]) return;
+        seen[key] = true;
+        all.push({
+          term: "MCP " + pr.title.replace(/^\d+\.\s*/, ""),
+          group: "concept",
+          category: "AI Agents · MCP Building Block",
+          definition: pr.whatItIs + " (Analogy: " + pr.analogy + ")",
+          example: pr.example
+        });
+      });
+      (window.McpAndEndpointsData.ENDPOINT_PARTS || []).forEach(function (ep) {
+        var cleanTitle = ep.title.replace(/^\d+\.\s*/, "");
+        var key = cleanTitle.toLowerCase();
+        if (seen[key]) return;
+        seen[key] = true;
+        all.push({
+          term: cleanTitle,
+          group: "concept",
+          category: "API Endpoint Anatomy · Part " + ep.partNum,
+          definition: ep.plainMeaning.replace(/\n/g, " ") + " — Why it matters: " + ep.whyCritical,
+          example: ep.codeSnippet
+        });
+      });
+    }
+
     all.sort(function (a, b) {
       var cleanA = a.term.replace(/^[^a-zA-Z0-9]+/, "").toLowerCase();
       var cleanB = b.term.replace(/^[^a-zA-Z0-9]+/, "").toLowerCase();

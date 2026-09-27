@@ -272,4 +272,12 @@
   min-width: 0;
 }
 
+.mcp-vs-api-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px 0;
+}
+
+
 
