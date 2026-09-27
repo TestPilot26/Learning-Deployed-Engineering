@@ -19,28 +19,28 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "home_repair_service",
       diagramType: "tools-flow",
-      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to cloud code hosts (like GitHub) and deployment platforms (like Vercel, Render, or Hugging Face).",
-      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and websites actually do, and which category each one belongs to. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see the five core categories of tools—a Code Editor / IDE (like VS Code or Cursor, where you edit files), a Package Manager & Runtime (like Homebrew, Node.js, or Python, which run code on your laptop), Local Version Control (Git, your local save history), a Cloud Code Repository (like GitHub or GitLab, your online backup), and a Cloud Hosting Platform (like Vercel for websites, Render for backend servers, or Hugging Face Spaces for AI demos)—every tool name you hear suddenly clicks into place.",
+      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to cloud code repositories (online project backups like GitHub) and cloud hosting platforms (services that put your project on a live web link, like Vercel, Render, or Hugging Face).",
+      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and websites actually do, and which category each one belongs to. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see the five core categories of tools—a Code Editor / IDE (Integrated Development Environment, an all-in-one coding workshop app like VS Code or Cursor where you edit files), a Package Manager & Runtime (official installer commands like Homebrew and language engines like Node.js or Python that actually run code on your laptop), Local Version Control (Git, a time-machine program on your laptop that saves named checkpoints of your folder), a Cloud Code Repository (like GitHub or GitLab, a website that stores an online backup of your project), and a Cloud Hosting Platform (a service that runs your project on an always-on cloud computer at a public https:// web address—like Vercel for websites, Render for backend servers, or Hugging Face Spaces for AI demos)—every tool name you hear suddenly clicks into place.",
       experiences: [
         {
           lead: "Category 1 — Code editors & notebooks vs. Word or Google Docs:",
-          body: "A .js, .py, or .html file is just a plain text file with zero hidden formatting. Word and Google Docs inject curly quotes and invisible styles that break code. Instead, engineers use a Code Editor / IDE (e.g. VS Code, Cursor, Windsurf, Claude Code, or browser-based Replit) for building projects, or Interactive Notebooks (e.g. Google Colab, Jupyter) for running Python data and AI experiments step by step."
+          body: "A code file—like .html (webpage structure), .css (visual styling), .js (JavaScript interactivity), or .py (Python code)—is just a plain text file with zero hidden formatting. Word and Google Docs secretly inject invisible styling tags and turn straight quotes (\" \") into curly quotes (“ ”), which immediately crashes code. Instead, engineers use a Code Editor / IDE (an all-in-one coding workshop like VS Code, Cursor, Windsurf, terminal-based Claude Code, or browser-based Replit) for building projects, or Interactive Notebooks (like Google Colab or Jupyter—digital lab notebooks where you run Python code one small block at a time) for data and AI experiments."
         },
         {
-          lead: "Category 2 — Package managers & runtimes (Why engineers don't hunt for random installer downloads):",
-          body: "To run code on your laptop, you need a Language Runtime (like Python or Node.js). Instead of hunting websites for random '.dmg' or '.exe' installers that land in the wrong folder ('command not found'), engineers use a System Package Manager—like Homebrew ('brew') on Mac/Linux or 'winget' on Windows—and Project Package Managers ('npm' for JavaScript, 'pip' or 'uv' for Python) to install tools cleanly."
+          lead: "Category 2 — Package managers & runtimes (What '.dmg' / '.exe' installers and 'command not found' mean):",
+          body: "Plain-text code files cannot run by themselves—your laptop needs a Language Runtime (the engine program that reads and executes a language, like Python for .py files or Node.js for .js files). When you download ordinary apps from a website, you usually click a '.dmg' file (an Apple Mac disk-image installer) or an '.exe' file (a Windows program installer). But if you install coding engines that way, the website installer often drops the program into a folder your Terminal doesn't know to check—so when you type 'python' in the Terminal, your computer replies 'command not found' because that folder isn't on the Terminal's folder lookup list (called your PATH). Instead, engineers use a System Package Manager—an official 'App Store' command inside your Terminal like Homebrew ('brew') on Mac/Linux or 'winget' on Windows—which downloads the tool AND registers its folder in your PATH automatically. Then, inside an individual project, you use a Project Package Manager ('npm' for JavaScript, or 'pip' and 'uv' for Python) to install reusable code libraries."
         },
         {
           lead: "Category 3 — Cloud code repositories & hosting platforms (And no, not everything needs to be a web app!):",
-          body: "Pressing Cmd+S only saves to your laptop. 'Pushing' uploads your folder to a Cloud Git Repository (e.g. GitHub, GitLab, Bitbucket). From there, a Cloud Hosting Platform can publish your work to a live https:// link—whether it's a full website (e.g. Vercel, Netlify, Cloudflare Pages), an always-on backend server (e.g. Render, Railway, Google Cloud Run, AWS), a lightweight AI demo or model (e.g. Hugging Face Spaces, Google Colab, Replicate), or a static doc site (e.g. GitHub Pages)."
+          body: "Pressing Cmd+S (Mac) or Ctrl+S (Windows) only saves a file to your laptop's hard drive. 'Pushing' (running 'git push') uploads your saved Git checkpoints to a Cloud Git Repository (an online code vault like GitHub, GitLab, or Bitbucket). From there, a Cloud Hosting Platform can publish your work to a live https:// web link—whether it's a website (e.g. Vercel, Netlify, Cloudflare Pages), an always-on backend server that handles data and API keys (e.g. Render, Railway, Google Cloud Run, AWS), a lightweight AI demo or model (e.g. Hugging Face Spaces, Google Colab, Replicate), or a simple static documentation site that needs no server at all (e.g. GitHub Pages)."
         }
       ],
       activity: {
         title: "Fun activity: Trace a file from laptop to live URL",
         steps: [
           "Click through each stage in the interactive diagram above to see the category name first—and which real-world tools (VS Code, Homebrew, Git, GitHub, Vercel, Render, Hugging Face) fit into each slot.",
-          "Open a code editor (like VS Code or Cursor), create a file named index.html, and find it in Mac Finder or Windows Explorer to see that it is just a normal text file in a normal folder.",
-          "Open your editor's built-in terminal (Ctrl+` or Cmd+`) and run git --version, node -v, or python3 --version to check which runtimes are installed on your laptop."
+          "Open a code editor (like VS Code or Cursor), create a file named index.html (the standard filename browsers look for as the front page of a website), and find it in Mac Finder or Windows Explorer to see that it is just a normal text file in a normal folder.",
+          "Open your editor's built-in Terminal by pressing Ctrl+` or Cmd+` (the ` key is the backtick key in the top-left of your keyboard above Tab) and type git --version, node -v, or python3 --version (where --version or -v asks each program to print its installed version number) to check which engines are installed on your laptop."
         ]
       },
       resources: [
@@ -101,11 +101,11 @@ window.PIPELINE_DATA = {
       experiences: [
         {
           lead: "Why one project uses several different coding languages:",
-          body: "Each layer of software has its own native language: web browsers only understand HTML, CSS, and JavaScript/TypeScript to draw screens (often using UI frameworks like React, Next.js, or Vue); Back End servers often use Python (with FastAPI or Flask—great for AI and data) or Node.js; and relational Databases use SQL (e.g. PostgreSQL, SQLite) to organize tables of information."
+          body: "Each layer of software has its own native language: web browsers only understand HTML (page structure), CSS (colors, fonts, and layout), and JavaScript/TypeScript (interactive button logic, often built with screen toolkits called UI frameworks like React, Next.js, or Vue); Back End servers often use Python (with server frameworks like FastAPI or Flask—great for AI and data) or Node.js; and relational Databases (which store data in linked spreadsheet-like tables) use SQL (Structured Query Language, e.g. PostgreSQL or SQLite) to save and look up rows."
         },
         {
           lead: "Not everything needs to be a full-stack web app:",
-          body: "Before building a complex React + Database web app, ask what shape actually fits your goal: a Python notebook (Google Colab / Jupyter) is often best for data analysis; an interactive Python demo (Gradio or Streamlit on Hugging Face Spaces) is fastest for sharing an AI model; and a simple static site (GitHub Pages or Cloudflare Pages) is plenty for a portfolio or guide."
+          body: "Before building a full-stack web app (an app with both a custom browser Front End and a Back End server + database), ask what shape actually fits your goal: a Python notebook (Google Colab / Jupyter) is often best for data analysis; an interactive Python demo (using Gradio or Streamlit—two Python libraries that build a web screen automatically from a short Python script—hosted on Hugging Face Spaces) is fastest for sharing an AI model; and a simple static site (pre-built HTML/CSS/JS pages on GitHub Pages or Cloudflare Pages that need no backend server) is plenty for a portfolio or guide."
         },
         {
           lead: "Why a working demo can still be fragile:",
@@ -171,7 +171,7 @@ window.PIPELINE_DATA = {
       experiences: [
         {
           lead: "Why are there so many steps? (Save vs. Commit vs. Push vs. PR vs. Squash & Merge):",
-          body: "Each step has a distinct job: Cmd+S saves to your laptop scratchpad; 'git commit' seals a local checkpoint; 'git push' uploads your branch to a cloud repo (like GitHub or GitLab); a 'Pull Request (PR)' opens a review page with a preview link; and 'Squash & Merge' neatly combines your 5 messy 'WIP / fix typo' checkpoints into one clean update on main."
+          body: "Each step has a distinct job: Cmd+S saves a file on your laptop's hard drive; 'git commit' seals a permanent local checkpoint; 'git push' uploads your branch to a cloud repo (like GitHub or GitLab); a 'Pull Request (PR)' opens a visual review page with a test preview link; and 'Squash & Merge' neatly combines your 5 messy work-in-progress ('WIP') checkpoints into one clean update on your official 'main' branch."
         },
         {
           lead: "Branching vs. Cloning vs. Copying a folder:",
@@ -179,7 +179,7 @@ window.PIPELINE_DATA = {
         },
         {
           lead: "What 'HEAD' means in Git (and how Continuous Deployment works after Merge):",
-          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Once you check 'git diff' and merge your PR into 'main', Continuous Deployment (CI/CD) platforms—like Vercel or Netlify for websites, Render or Cloud Run for backend servers, or Hugging Face Spaces for AI demos—automatically build and publish your updated code."
+          body: "In Git, 'HEAD' (in all-caps) simply means 'You Are Here'—the exact commit snapshot your folder is currently standing on. Once you check 'git diff' and merge your PR into 'main', Continuous Deployment (CI/CD — automated cloud testing and publishing) platforms—like Vercel or Netlify for websites, Render or Cloud Run for backend servers, or Hugging Face Spaces for AI demos—automatically build and publish your updated code."
         }
       ],
       activity: {
@@ -187,7 +187,7 @@ window.PIPELINE_DATA = {
         steps: [
           "Click each step on the Living Git & Cloud Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Auto-Deploy Live) to see how code moves safely from your laptop to the internet.",
           "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
-          "Create a branch with git checkout -b test-experiment, make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
+          "Create a new branch with git checkout -b test-experiment (where 'checkout -b' creates and switches to a new branch named 'test-experiment'), make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
         ]
       },
       resources: [
@@ -235,19 +235,19 @@ window.PIPELINE_DATA = {
       experiences: [
         {
           lead: "What 'grep' is (and why AI agents run it constantly):",
-          body: "'grep' is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"Button\" .' searches inside every file and subfolder (-r) in a split second and prints the exact filename and line number (-n) where that word appears."
+          body: "'grep' is simply Cmd+F / Ctrl+F for your terminal. Instead of opening 50 files by hand, running 'grep -rn \"Button\" .' searches inside every file and subfolder (-r = recursive) in a split second and prints the exact filename and line number (-n = line number) where that word appears."
         },
         {
           lead: "Why 'mkdir' comes first and 'touch' comes second (and ls vs. ls -la):",
-          body: "'mkdir my-app' builds the empty folder box first (use 'mkdir -p a/b/c' to create nested parent folders all at once); then 'touch index.html' creates the empty file sheet inside it. When listing files, plain 'ls' hides secret dotfiles—always use 'ls -la' so hidden files like '.env' and '.git' show up."
+          body: "'mkdir my-app' ('make directory') builds the empty folder box first (use 'mkdir -p a/b/c' to create nested parent folders all at once); then 'touch index.html' creates the empty file sheet inside it. When listing files, plain 'ls' ('list') hides secret dotfiles (files starting with a dot '.')—always use 'ls -la' ('list all in long detail') so hidden files like '.env' and '.git' show up."
         },
         {
           lead: "Why 'head' means two different things (Terminal 'head' vs. Git 'HEAD'):",
-          body: "In the terminal, lowercase 'head -n 20 app.py' prints the top 20 lines of a file so a huge file doesn't flood your screen (its opposite is 'tail'). In Git, uppercase 'HEAD' is the 'You Are Here' pin pointing to your latest commit snapshot."
+          body: "In the terminal, lowercase 'head -n 20 app.py' prints the top 20 lines of a file so a huge file doesn't flood your screen (its opposite is 'tail', which prints the bottom lines). In Git, uppercase 'HEAD' is the 'You Are Here' pin pointing to your latest commit snapshot."
         },
         {
           lead: "When to use Absolute Paths (/ or ~) vs. Relative Paths (. or ..):",
-          body: "An Absolute Path ('cd ~/workspace/my-app') starts from your home or root folder, so it works no matter where you are standing. A Relative Path ('cd src/components' or 'cd ..') starts from the room you are standing in right now ('pwd')—if you're in the wrong folder, a relative path will say 'No such file or directory'."
+          body: "An Absolute Path ('cd ~/workspace/my-app', where '~' means your computer's home folder) starts from the top of your folder tree, so it works no matter where you are standing. A Relative Path ('cd src/components' or 'cd ..' to step up one parent folder) starts from the room you are standing in right now (checkable by typing 'pwd' — 'Print Working Directory'). If you're in the wrong folder, a relative path will say 'No such file or directory'."
         }
       ],
       activity: {
@@ -297,32 +297,32 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-secondary",
       icon: "troubleshoot",
       diagramType: "python-code-blueprint",
-      teaser: "Grouped by 'What could break' and 'How to fix it': 6 illustrated demos with paired videos, why apps work on your laptop then break with 50+ users, automated 'smoke alarm' agents, and the 6 Python building blocks.",
-      explainer: "When you build a prototype with AI, it almost always works on the first try on your laptop—because you are 1 person typing polite inputs with zero internet delay. The real skill in 2026 isn't memorizing code syntax from a textbook; it's knowing **what could break** when real people use your app and **how to fix it** in plain steps. Above, we've grouped the 6 most common breakages into interactive illustrated demos (each with a plain-English jargon decoder, a copyable prompt for your AI editor, and a paired video walkthrough), followed by the 6 core Python building blocks.",
+      teaser: "Grouped by 'What could break & how to fix it': 5 plain-English illustrated scenarios with paired videos, why apps work on your laptop then break with real users, and the 6 Python building blocks.",
+      explainer: "When you build a prototype with AI, it almost always works on the first try on your laptop—because you are 1 person clicking politely with zero internet delay. The real skill in 2026 isn't memorizing code syntax from a textbook; it's knowing **what could break** when real people use your app and **how to fix it** in plain steps. Above, we've grouped the 5 most common breakages into side-by-side Before/After visual cards (with zero jargon and paired videos), followed by the 6 core Python building blocks.",
       experiences: [
         {
-          lead: "1. What could break with AI & outside APIs -> How to fix it:",
-          body: "• What breaks: The 'Generate' button spins forever when an AI service slows down, or crashes when the AI replies with chatty sentences instead of structured data.\n• How to fix it: Add a 10-second stopwatch ('timeout=10'), force the AI to fill out a strict checklist form ('Pydantic / JSON Schema'), and add a 'try / except' backup plan."
+          lead: "1. What could break with AI & outside services -> How to fix it:",
+          body: "• What breaks: The 'Generate' button spins forever when an outside AI service slows down, or crashes when the AI replies with chatty sentences instead of structured data.\n• How to fix it: Add a 10-second stopwatch ('timeout=10' so your server stops waiting after 10 seconds), force the AI to fill out a strict checklist form ('Pydantic / JSON Schema' — a rule that requires exact fields like {title, score}), and wrap the call in a 'try / except' safety net (Python's way of saying 'try this, and if it fails, show a friendly backup message instead of crashing')."
         },
         {
           lead: "2. What could break when 100 people visit at once or double-click -> How to fix it:",
-          body: "• What breaks: Asking the database 100 separate questions inside a loop freezes the server ('503 error'), and tapping 'Submit' twice on slow Wi-Fi creates duplicate items or double charges.\n• How to fix it: Load 20 items at a time ('LIMIT 20'), turn on your database's shared Connection Pooler, lock buttons on the first click, and attach a one-time receipt ID ('idempotency key')."
+          body: "• What breaks: Asking the database 100 separate questions inside a loop freezes the server ('503 Service Unavailable' — the server is overloaded), and tapping 'Pay' twice on slow Wi-Fi creates duplicate orders.\n• How to fix it: Load 20 items at a time ('LIMIT 20' in SQL), turn on your database's Connection Pooler (a shared switchboard so hundreds of visitors can share 20 database connections), disable buttons on the first click, and attach a one-time receipt ID ('idempotency key' so duplicate clicks are ignored)."
         },
         {
           lead: "3. What could break with security & silent bugs -> How to fix it:",
-          body: "• What breaks: Changing '?id=104' to '?id=105' in the address bar exposes someone else's data if the server doesn't check who is logged in; or code hides crashes with 'except: pass' while lying 'Saved!' on screen.\n• How to fix it: Always verify the logged-in user on the server, never hide errors with 'pass', and connect a free 'Smoke Alarm' (like Sentry) + automated test checks ('pytest') so bugs get caught and fixed immediately."
+          body: "• What breaks: Changing '?id=104' to '?id=105' in the browser address bar exposes someone else's private data if the server doesn't check who is logged in; or code hides crashes with 'except: pass' (which tells Python to ignore the error and do nothing) while lying 'Saved!' on screen.\n• How to fix it: Always verify the logged-in user on the server, never hide errors with 'pass', and connect a free crash-alert tool (like Sentry) + automated test checks ('pytest', Python's 1-command test runner) so bugs get caught immediately."
         },
         {
           lead: "4. The only 6 Python building blocks you need to read code with confidence:",
-          body: "Skip memorizing syntax drills: learn to spot Variables (labeled boxes), Dictionaries {'key': 'value'} (one row of data), Lists [...] (a whole table or Pandas DataFrame), Functions ('def' -> 'return'), Strict Forms (Pydantic schemas), and reading error receipts ('Stack Traces') from the VERY LAST line up."
+          body: "Skip memorizing syntax drills: learn to spot Variables (labeled boxes that hold a value), Dictionaries {'key': 'value'} (one structured record, like one row of a table), Lists [...] (an ordered collection of rows, which powers a Pandas DataFrame spreadsheet table), Functions ('def' -> 'return', a reusable named recipe), Strict Forms (Pydantic validation), and reading error receipts ('Stack Traces' — the multi-line crash report where the VERY LAST line tells you what broke)."
         }
       ],
       activity: {
-        title: "Fun activity: Flip between 'What could break' & 'How to fix it'",
+        title: "Fun activity: Compare 'Before (Breaks)' vs. 'After (Fixed)'",
         steps: [
-          "In Diagram 1 above, click through the 6 'What could break' scenarios and toggle between '1. See what could break (Fragile)' and '2. See how to fix it (Reliable)' to watch the visual diagram change.",
-          "Click 'Copy prompt' on any scenario and paste it into Cursor, Claude Code, or Gemini to automatically harden your own project.",
-          "In Diagram 2 above, click through the 6 Python building blocks to see how a single Dictionary row turns into a List and a Pandas DataFrame table."
+          "In Card 1 above, click through the 5 'What could break' tabs (AI & APIs, 100 Users at Once, Double-Click Bugs, Privacy & Auth, and Silent Failures) to see the red 'Before' and green 'After' flow side by side.",
+          "Click 'Copy prompt for AI' on any scenario and paste it into Cursor, Claude Code, or Gemini to harden your own project.",
+          "In Card 2 below, click through the 6 Python building blocks to see how a single Dictionary row turns into a List and a Pandas DataFrame table."
         ]
       },
       resources: [
@@ -397,15 +397,15 @@ window.PIPELINE_DATA = {
       experiences: [
         {
           lead: "1. Traditional API vs. MCP (Model Context Protocol) — What's the difference?",
-          body: "• Traditional API (Built for code-to-code): Every service (GitHub, Slack, Stripe) has its own custom endpoint URLs, headers, and JSON formats. Connecting 4 AI apps to 5 tools required writing 20 custom glue-code connectors (the 'M×N spaghetti problem').\n• MCP (Built for AI-to-tool): A universal 'USB-C port' where each tool provides 1 standard MCP Server exposing Tools (actions), Resources (read-only files/schemas), and Prompts (templates). Any AI Client (Claude, Cursor, Gemini) plugs in and discovers what tools exist automatically!"
+          body: "• Traditional API (Built for code-to-code): Every service (GitHub, Slack, Stripe) has its own custom endpoint URLs, headers, and JSON formats. Connecting 4 AI apps to 5 tools required writing 20 custom glue-code connectors (the 'M×N spaghetti problem').\n• MCP (Built for AI-to-tool): A universal 'USB-C port' where each tool provides 1 standard MCP Server exposing Tools (actions the AI can run), Resources (read-only files or database schemas the AI can read), and Prompts (reusable templates). Any AI Client (Claude, Cursor, Gemini) plugs in and discovers what tools exist automatically!"
         },
         {
           lead: "2. What is an API 'Endpoint'? (The 7 parts of every API request & response):",
-          body: "An Endpoint is one specific doorbell address on a server mapped to one backend function—like 'PATCH /api/tasks/42?notify=true'. Every endpoint call has 7 parts: (1) HTTP Verb (GET/POST/PATCH/DELETE), (2) Endpoint Path + ID ('/api/tasks/42'), (3) Query Params ('?limit=20'), (4) Headers ('Authorization: Bearer <token>'), (5) JSON Request Body, (6) 3-Digit Status Code Receipt (200 OK, 401 Auth, 404 Not Found, 429 Rate Limit, 500 Crash), and (7) CORS & Rate Limit guardrails."
+          body: "An Endpoint is one specific doorbell address on a server mapped to one backend function—like 'PATCH /api/tasks/42?notify=true'. Every endpoint call has 7 parts: (1) HTTP Verb (the action word: GET to read, POST to create, PATCH to update, DELETE to remove), (2) Endpoint Path + ID ('/api/tasks/42'), (3) Query Params ('?limit=20' — optional filter settings after a '?' in the URL), (4) Headers ('Authorization: Bearer <token>' — invisible ID badges attached to the request), (5) JSON Request Body (the structured data package sent inside a POST/PATCH call), (6) 3-Digit Status Code Receipt (200 OK, 401 Not Logged In, 404 Not Found, 429 Rate Limited, 500 Server Crash), and (7) CORS & Rate Limit guardrails (rules controlling which websites and how many clicks per minute are allowed)."
         },
         {
           lead: "3. REST API vs. Webhook vs. Streaming vs. MCP (Which one do I use?):",
-          body: "• REST API ('You ask -> Server answers'): For 90% of normal button clicks and page loads.\n• Webhook ('Outside server texts your endpoint when done'): For Stripe payments or background jobs.\n• Streaming / SSE / WebSockets ('Open phone line'): For streaming AI words token-by-token or live chat.\n• MCP ('Universal AI toolbelt'): For letting AI agents safely browse and invoke tools across apps."
+          body: "• REST API ('You ask -> Server answers once'): For 90% of normal button clicks and page loads.\n• Webhook ('Outside server texts your endpoint when an event finishes'): For Stripe payment confirmations or GitHub push notifications.\n• Streaming / SSE / WebSockets ('Open phone line' — Server-Sent Events or two-way WebSockets): For streaming AI words token-by-token or live chat.\n• MCP ('Universal AI toolbelt'): For letting AI agents safely browse and invoke tools across apps."
         },
         {
           lead: "4. Human-in-the-Loop ('Prepare -> Confirm') & keeping private data out of Git:",
@@ -478,11 +478,11 @@ window.PIPELINE_DATA = {
       experiences: [
         {
           lead: "Not everything you ship needs to be a full web app (Pick the right hosting category):",
-          body: "• Sharing an AI demo, model, or dataset? Host a 20-line Python Gradio/Streamlit app on Hugging Face Spaces, or share an interactive notebook on Google Colab / Jupyter.\n• Sharing a website or full-stack web app? Use a web app host (e.g. Vercel, Netlify, Cloudflare Pages).\n• Running a long Python API, Docker container, or background worker? Use a backend server host (e.g. Render, Railway, Fly.io, Google Cloud Run, AWS).\n• Sharing reusable code for other builders? Publish a package to PyPI (Python) or npm (JavaScript), or a free static site on GitHub Pages."
+          body: "• Sharing an AI demo, model, or dataset? Host a 20-line Python Gradio/Streamlit app on Hugging Face Spaces, or share an interactive notebook on Google Colab / Jupyter.\n• Sharing a website or full-stack web app? Use a web app host (e.g. Vercel, Netlify, Cloudflare Pages).\n• Running a long Python API, Docker container, or background worker? Use a backend server host (e.g. Render, Railway, Fly.io, Google Cloud Run, AWS).\n• Sharing reusable code for other builders? Publish an installable code package to PyPI (the Python Package Index) or npm (the JavaScript Package Registry), or host a free static site on GitHub Pages."
         },
         {
           lead: "Two ways to build on open source (Single Libraries vs. Full Starter Templates):",
-          body: "You can either install a single open-source library into your existing project ('npm install' or 'pip install' for UI components, validation, or AI SDKs) OR copy a complete working starter repository on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
+          body: "You can either install a single open-source library into your existing project ('npm install' or 'pip install' for UI buttons, data validation, or AI SDKs — Software Development Kits, official helper libraries for calling an AI service) OR copy a complete working starter repository on GitHub ('Fork' or 'Use this template') so login, database tables, and styling are already wired up."
         },
         {
           lead: "Recognizing the builder's stack by category first (then example tools):",
@@ -490,7 +490,7 @@ window.PIPELINE_DATA = {
         },
         {
           lead: "Four watch-outs before you install or go live:",
-          body: "1) Check the LICENSE file (MIT and Apache 2.0 are safe for business; AGPL/GPL require sharing your source code). 2) Verify any package AI suggests is real on npm/PyPI before installing (avoid 'slopsquatting'). 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
+          body: "1) Check the repo's LICENSE file (permissive licenses like MIT and Apache 2.0 let you use the code freely in private or commercial apps; 'copyleft' licenses like AGPL/GPL require you to share your own source code). 2) Verify any package an AI suggests actually exists on npm or PyPI before installing it (to avoid 'slopsquatting' — when scammers register fake package names that AI models commonly hallucinate). 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
         }
       ],
       activity: {

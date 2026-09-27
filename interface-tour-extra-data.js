@@ -67,7 +67,7 @@
           y: 77.0,
           title: "Build Logs & Serverless Function Runtime Logs",
           category: "Observability · Read cloud crash tracebacks",
-          whatItDoes: "• Build Logs: Shows 'npm run build' or Python dependency install errors if a deployment fails to build.\n• Runtime Logs: Streams live HTTP requests ('200 OK' vs. '500 ERROR') from your backend API routes—notice how the red log immediately tells you 'KeyError: STRIPE_SECRET_KEY missing'!",
+          whatItDoes: "• Build Logs: Shows 'npm run build' or Python library install errors if a deployment fails while building.\n• Runtime Logs: Streams live messages ('200 OK' vs. '500 ERROR') from your running backend endpoints (often called 'Serverless Functions' — small backend functions that wake up whenever a user clicks a button). Notice how the red log immediately tells you 'KeyError: STRIPE_SECRET_KEY missing'!",
           whenYouUseIt: "Whenever your live site shows '500 Internal Server Error' or a button fails in production, open Runtime Logs here to read the exact error line.",
           tryCommand: "Filter logs by 'Error (500)' to spot missing env keys or crashes"
         },
@@ -79,7 +79,7 @@
           y: 31.0,
           title: "Settings ➔ Environment Variables (Your cloud '.env' vault)",
           category: "Security · Where secret API keys live in the cloud",
-          whatItDoes: "Because your local '.env' file is ignored by '.gitignore' and never uploaded to GitHub, Vercel doesn't have your API keys until you paste them here! Values are encrypted at rest and injected into 'os.environ' / 'process.env' at runtime.",
+          whatItDoes: "Because your local '.env' file is ignored by '.gitignore' and never uploaded to GitHub, Vercel doesn't have your API keys until you paste them here! Values are encrypted (scrambled safely in storage) and handed directly to your running Python ('os.environ') or JavaScript ('process.env') code when the server runs.",
           whenYouUseIt: "Whenever you add a new key (like 'GEMINI_API_KEY' or 'DATABASE_URL') to your local '.env' file, paste the key and value here too, then click 'Redeploy'.",
           tryCommand: "Settings -> Environment Variables -> Add Key -> Redeploy"
         },
@@ -143,7 +143,7 @@
           y: 29.5,
           title: "'Elements' HTML DOM Tree & 'Styles' Live CSS Editor",
           category: "Frontend X-ray · Experiment with CSS live",
-          whatItDoes: "• Left ('Elements'): Shows the live HTML DOM tree—even elements created dynamically by JavaScript.\n• Right ('Styles'): Lets you click any CSS property (like 'padding: 8px 16px' or 'var(--color-primary)') and type a new value to preview the change instantly!",
+          whatItDoes: "• Left ('Elements'): Shows the live HTML DOM tree (Document Object Model — the browser's live family tree of every heading, button, and box on the page).\n• Right ('Styles'): Lets you click any CSS property (like 'padding: 8px 16px' or 'var(--color-primary)') and type a new value to preview the change instantly!",
           whenYouUseIt: "Note: Edits in DevTools Styles are temporary! Once you find the spacing or color that looks right, copy that change into your real '.css' file in VS Code.",
           tryCommand: "Right-click any element -> Inspect -> Edit Styles pane"
         },
@@ -191,7 +191,7 @@
           y: 79.0,
           title: "'Application' tab (Inspect LocalStorage, Cookies & Session tokens)",
           category: "Browser storage · Saved preferences & login cookies",
-          whatItDoes: "Shows every key-value pair saved in your browser's 'localStorage' (like dark/light mode or checklist progress) and your login cookies ('HttpOnly ✓').",
+          whatItDoes: "Shows every key-value pair saved in your browser's 'localStorage' (a small notebook built into the browser that remembers non-sensitive settings like dark/light mode) and your login cookies ('HttpOnly ✓' — secure login passes that browser scripts cannot steal).",
           whenYouUseIt: "Use this tab to inspect or clear saved local state when testing a fresh user experience.",
           tryCommand: "Application -> Local Storage -> Right-click -> Clear"
         }
@@ -219,7 +219,7 @@
           y: 24.0,
           title: "Table Editor ('public.users' spreadsheet view & Primary Keys)",
           category: "Database · View & edit persistent cloud data",
-          whatItDoes: "Displays your PostgreSQL database tables just like a Google Sheet or Airtable! Each column has a strict data type ('uuid PK' Primary Key, 'text unique', 'timestamptz'), and rows persist safely even when your web server restarts.",
+          whatItDoes: "Displays your PostgreSQL database tables just like a Google Sheet or Airtable! Each column has a strict data type—like 'PK' (Primary Key, the unique ID badge for each row, often a random 'uuid' ID string), 'text unique', or 'timestamptz' (timestamp with timezone)—and rows stay saved safely even when your web server restarts.",
           whenYouUseIt: "Open Table Editor after submitting a form in your app to verify that the new row was actually saved to the database.",
           tryCommand: "Click '+ Insert row' to add test data visually"
         },
@@ -231,7 +231,7 @@
           y: 5.5,
           title: "Database Branch selector ('main' vs. preview branches)",
           category: "Serverless Postgres · Git-style branches for data",
-          whatItDoes: "Modern serverless databases like Neon let you create an instant copy-on-write branch of your database so you can test schema migrations (adding/renaming columns) without risking real production user data.",
+          whatItDoes: "Modern serverless databases like Neon let you create an instant isolated branch copy of your database so you can test schema migrations (adding or renaming columns) without risking real production user data.",
           whenYouUseIt: "Create a test branch before running a major 'ALTER TABLE' migration or letting an AI agent modify your database schema.",
           tryCommand: "neon branches create --name preview-feature"
         },
@@ -255,7 +255,7 @@
           y: 69.0,
           title: "'🔌 Connect' modal & Pooled 'DATABASE_URL' connection string",
           category: "Essential action · Connect your code to the database",
-          whatItDoes: "Clicking 'Connect' gives you the 'DATABASE_URL' URI containing your username, password, host, and '?sslmode=require'. Checking '☑ Connection Pooling' ('-pooler') prevents serverless functions from exhausting database connections under heavy traffic.",
+          whatItDoes: "Clicking 'Connect' gives you the 'DATABASE_URL' connection string (an all-in-one address containing your username, password, database host, and '?sslmode=require' for encrypted traffic). Checking '☑ Connection Pooling' ('-pooler' — a shared switchboard for database connections) prevents cloud servers from running out of connections under heavy traffic.",
           whenYouUseIt: "Copy this 'DATABASE_URL' string and paste it into TWO places: (1) your local '.env' file in VS Code, and (2) Vercel -> Settings -> Environment Variables.",
           tryCommand: "Paste into .env:  DATABASE_URL=\"postgresql://...\""
         },
@@ -319,7 +319,7 @@
           y: 24.5,
           title: "Installing developer tools with Homebrew ('brew install uv gh')",
           category: "Package managers · The App Store for your terminal",
-          whatItDoes: "Running 'brew install uv gh' uses Homebrew to download and install official command-line tools ('uv' for fast Python environments, 'gh' for GitHub CLI) into '/opt/homebrew/' automatically.",
+          whatItDoes: "Running 'brew install uv gh' uses Homebrew to download and install official command-line tools ('uv' for fast Python environments, 'gh' for GitHub CLI) into Mac's official tool folder ('/opt/homebrew/') and registers them in your Terminal's PATH lookup list automatically.",
           whenYouUseIt: "Use 'brew install <tool>' for system-wide developer tools, and 'uv pip install' (or 'npm install') for project-specific libraries.",
           tryCommand: "brew install uv gh node"
         },

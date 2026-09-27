@@ -110,8 +110,8 @@
           y: 31.5,
           title: "Green '<> Code' button (How you download/clone a repo!)",
           category: "Essential action · Copy repo URL or Download ZIP",
-          whatItDoes: "Clicking this green button opens a dropdown with: (1) the HTTPS URL link to copy for 'git clone', (2) 'Open with GitHub Desktop / Codespaces', and (3) 'Download ZIP'.",
-          whenYouUseIt: "Whenever you want to bring a project from GitHub onto your laptop, click this green '<> Code' button, copy the HTTPS link, and run 'git clone <link>' in your VS Code terminal!",
+          whatItDoes: "Clicking this green button opens a dropdown with: (1) the HTTPS URL (the repository's web link that you copy for 'git clone'), (2) 'Open with GitHub Desktop / Codespaces', and (3) 'Download ZIP' (a one-time compressed folder download that strips out Git's connection to GitHub).",
+          whenYouUseIt: "Whenever you want to bring a project from GitHub onto your laptop and keep it connected to GitHub, click this green '<> Code' button, copy the HTTPS web link, and run 'git clone <link>' in your VS Code terminal!",
           tryCommand: "git clone https://github.com/owner/repo.git"
         },
         {
@@ -122,7 +122,7 @@
           y: 41.5,
           title: "'28 Commits' time-machine history log",
           category: "Version control · Every saved checkpoint",
-          whatItDoes: "Shows the total number of saved checkpoints ('commits') and the 7-character ID hash (like 'c74a0a4') of the most recent change. Clicking it opens the full chronological history of every edit ever made.",
+          whatItDoes: "Shows the total number of saved checkpoints ('commits') and the 7-character commit hash (like 'c74a0a4' — a unique receipt code generated for each save). Clicking it opens the full chronological history of every edit ever made.",
           whenYouUseIt: "Click here when something breaks to see what changed in the most recent commit and who (or which AI agent) changed it.",
           tryCommand: "git log --oneline -n 10  (in terminal)"
         },
@@ -310,7 +310,7 @@
           y: 45.5,
           title: "Actions & Webhooks (How Vercel & Render know you pushed)",
           category: "Automation · Event notifications",
-          whatItDoes: "When you connect your GitHub repo to Vercel, Netlify, or Render, they install a 'Webhook' here so GitHub automatically pings them the exact second you run 'git push'.",
+          whatItDoes: "When you connect your GitHub repo to Vercel, Netlify, or Render, they install a 'Webhook' (an automatic notification doorbell) here so GitHub pings them the exact second you run 'git push'.",
           whenYouUseIt: "You rarely edit Webhooks manually, but checking here confirms which cloud hosts are listening to your repository.",
           tryCommand: "git push origin main -> Fires Webhook -> Auto-deploys"
         },
@@ -410,7 +410,7 @@
           y: 76.5,
           title: "Bottom panel tabs (Problems, Output, Debug Console, Terminal, Ports)",
           category: "Built-in Terminal · Where you type commands",
-          whatItDoes: "• Terminal: A real command-line shell already standing inside your project folder!\n• Problems: Lists syntax errors or linter warnings in your code.\n• Ports: Lets you forward or view local server ports (like localhost:8000).",
+          whatItDoes: "• Terminal: A real command-line shell already standing inside your project folder!\n• Problems: Lists syntax typos or linter warnings (automatic code spell-check alerts) in your code.\n• Ports: Lets you view local server ports (like localhost:8000, where ':8000' is the numbered door on your laptop that your local preview server listens on).",
           whenYouUseIt: "If the bottom Terminal panel is hidden, press Ctrl + ` (the backtick key above Tab) or click View -> Terminal in the top menu to pop it open!",
           tryCommand: "Shortcut: Ctrl + `  (toggles the Terminal panel open/closed)"
         },
@@ -510,7 +510,7 @@
           y: 35.0,
           title: "Changes list: What 'M', 'D', 'U' and the '+' / '↶' icons mean",
           category: "Visual Git · Stage, diff, or undo any file",
-          whatItDoes: "Every changed file shows a letter badge and hover buttons:\n• M (Modified): Existing file was edited.\n• D (Deleted): File was removed.\n• U (Untracked): Brand-new file not yet tracked by Git.\n• '+' icon: Stages the file ('git add').\n• '↶' curved arrow: Discards/undoes your unsaved changes to that file!",
+          whatItDoes: "Every changed file shows a letter badge and hover buttons:\n• M (Modified): Existing file was edited.\n• D (Deleted): File was removed.\n• U (Untracked): Brand-new file not yet tracked by Git.\n• '+' icon: Stages the file ('git add' — puts a checkmark on this file so it goes into your next Commit checkpoint).\n• '↶' curved arrow: Discards/undoes your unsaved changes to that file!",
           whenYouUseIt: "Click any filename in this list to open a side-by-side red/green 'git diff' showing the exact lines that changed!",
           tryCommand: "Click '+' to stage (git add) or '↶' to undo (git restore)"
         },
