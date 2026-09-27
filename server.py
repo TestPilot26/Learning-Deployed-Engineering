@@ -79,9 +79,9 @@ class PipelineRequestHandler(http.server.SimpleHTTPRequestHandler):
         load_dotenv_if_present()
         api_key = (os.environ.get("GEMINI_API_KEY") or "").strip()
         if not api_key:
-            self._send_json(503, {
+            self._send_json(200, {
                 "configured": False,
-                "error": "Server GEMINI_API_KEY is not set in .env or environment variables."
+                "answer": None
             })
             return
 

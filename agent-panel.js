@@ -1,262 +1,127 @@
-// Deployed Eng Pipeline — Persistent Side-Panel AI Companion Agent
-// Always-available side panel that answers questions about the site AND general
-// software engineering / terminal / Git / architecture questions.
-// Works out-of-the-box via a comprehensive built-in knowledge engine + optional
-// live Gemini API key (stored only in browser localStorage).
+// Deployed Eng Pipeline — Persistent Side-Panel Pipeline Navigator
+// Helps learners navigate the 8 pipeline stops, 320+ A-Z dictionary terms, and
+// common debugging/architecture workflows, while clearly stating when an open-ended
+// question requires a full AI coding agent (or an optional live Gemini key).
 // Adheres strictly to BillSkill GM3 standards & SecureCoder (zero innerHTML).
 
 (function () {
   var currentContextStopId = null;
   var currentContextLabel = "Full pipeline";
 
-  var GENERAL_KNOWLEDGE_BASE = [
-    {
-      keywords: ["text file", "plain text", "word doc", "google doc", "utf-8", "extension", ".js", ".py", ".html", "curly quotes"],
-      title: "Plain text files vs. rich documents",
-      stopId: "downloading-the-tools",
-      answer: "Code files (.html, .js, .py, .json, .md) are plain UTF-8 text files containing raw characters only. Word and Google Docs inject invisible formatting tags and convert straight quotes (\" \") into curly quotes, which breaks code compilers. A code editor like VS Code or Cursor edits pure plain text while adding visual syntax highlighting."
-    },
-    {
-      keywords: ["homebrew", "brew", "package manager", "installer", "dmg", "path", "command not found", "winget", "npm", "pip", "uv"],
-      title: "Package managers & language runtimes (e.g. Homebrew, winget, npm, pip/uv)",
-      stopId: "downloading-the-tools",
-      answer: "• Language runtimes (run code on your computer): Python, Node.js / Bun / Deno (JavaScript/TypeScript), Docker (containers).\n• System package managers (install developer tools on your computer so you never hunt for random installers): Homebrew ('brew') on Mac/Linux, 'winget' on Windows, 'apt' on Linux.\n• Project package managers (install open-source libraries into one project): 'npm' / 'pnpm' (JavaScript) and 'pip' / 'uv' / 'conda' (Python)."
-    },
-    {
-      keywords: ["ide", "code editor", "vs code", "cursor", "windsurf", "claude code", "replit", "colab", "jupyter", "developer environment", "localhost"],
-      title: "Code editors, AI IDEs, browser sandboxes & notebooks",
-      stopId: "downloading-the-tools",
-      answer: "• Desktop Code Editors / IDEs (e.g. VS Code, Cursor, Windsurf, Zed, PyCharm): Combine a file explorer, a plain-text editor, and a built-in terminal.\n• Terminal coding agents: Claude Code, Gemini CLI.\n• Browser sandboxes (zero install): Replit, StackBlitz, CodeSandbox, v0, Bolt, Lovable.\n• Interactive notebooks (run Python cell-by-cell for data & AI): Google Colab, Jupyter Notebooks.\nWhen you run a dev server locally, it serves your project on 'localhost'—a private address only your laptop can see."
-    },
-    {
-      keywords: ["vercel", "deploy", "save on vercel", "hosting", "live url", "production", "netlify", "render", "railway", "cloud run", "hugging face", "spaces", "aws", "ways to host", "do they all need to be apps"],
-      title: "Ways to host & share your work (No, not everything needs to be a full web app!)",
-      stopId: "system-architecture",
-      answer: "Different projects belong on different hosting categories—and not everything needs to be a full web app:\n1. Frontend & full-stack web apps (React, Next.js, HTML/JS): Vercel, Netlify, Cloudflare Pages, Firebase Hosting.\n2. AI demos, ML models, datasets & notebooks (no web app required!): Hugging Face Spaces (turns a 20-line Python Gradio/Streamlit script into a live demo), Hugging Face Hub (models & datasets), Google Colab / Jupyter (interactive notebooks), Replicate, Modal.\n3. Always-on backend servers & Docker containers (Python FastAPI/Flask, long jobs): Render, Railway, Fly.io, DigitalOcean, and the Big 3 cloud providers (Google Cloud Run, AWS, Microsoft Azure).\n4. Free static sites & code packages: GitHub Pages (static docs/blogs), PyPI ('pip install' Python packages), npm ('npm install' JS packages)."
-    },
-    {
-      keywords: ["language", "languages", "python", "javascript", "typescript", "sql", "html", "css", "go", "rust", "which language"],
-      title: "Coding languages: Which one does what (pros & cons)",
-      stopId: "basic-terminology",
-      answer: "• HTML & CSS: Structure and visual styling inside the browser.\n• JavaScript / TypeScript: The only language browsers execute natively; also runs on servers via Node.js. TypeScript adds type safety to catch bugs early.\n• Python: The #1 language for AI/ML, data science (Pandas, Colab), rapid AI demos (Gradio, Streamlit), and clean backend APIs (FastAPI, Flask).\n• SQL: Declarative language for querying relational databases (PostgreSQL, SQLite).\n• Bash / Shell: Terminal commands and automation glue.\n• Go / Rust / C++: Compiled languages for high-speed cloud infrastructure."
-    },
-    {
-      keywords: ["database", "postgres", "postgresql", "supabase", "neon", "sqlite", "mongodb", "firebase", "firestore", "pinecone", "vector", "sql vs nosql", "redis", "cache"],
-      title: "Database categories & cloud hosts (SQL, NoSQL, Vector, Cache)",
-      stopId: "basic-terminology",
-      answer: "Always group databases by category first:\n• Relational / SQL databases (structured tables — best default for 90% of apps): PostgreSQL ('Postgres'), SQLite, MySQL. Popular cloud hosts: Supabase, Neon, Cloud SQL, AWS RDS.\n• Document / NoSQL databases (JSON documents & real-time sync): Firebase / Cloud Firestore, MongoDB, Convex, DynamoDB.\n• Vector databases (AI embeddings & RAG search): pgvector (inside Postgres/Supabase), Pinecone, Weaviate, Chroma.\n• In-memory caches (1ms speed & rate-limiting): Redis, Upstash."
-    },
-    {
-      keywords: ["good architecture", "bad architecture", "fragile", "vibe-coded", "spaghetti", "mistake", "slip up"],
-      title: "Good architecture vs. fragile vibe-coded architecture",
-      stopId: "basic-terminology",
-      answer: "Fragile vibe-coded apps typically fail in 4 ways: (1) putting secret API keys inside frontend browser code, (2) letting the browser mutate database tables without server-side authentication checks, (3) running slow 30-second AI calls synchronously so the page hangs, and (4) skipping idempotency so clicking 'Submit' twice double-charges or duplicates data. Good architecture separates Client UI, Auth/API Server, and Database/Queue boundaries."
-    },
-    {
-      keywords: ["git", "commit", "branch", "pull request", "pr", "merge", "diff"],
-      title: "Git essentials: Commit, Branch, Diff, Pull Request (PR) & Merge",
-      stopId: "git-and-shipping",
-      answer: "• git diff: Shows exact green (+) and red (-) line changes before you save.\n• git commit: Saves a permanent timestamped checkpoint on your laptop.\n• git branch: Creates a parallel timeline so you can test risky AI edits without touching 'main'.\n• Pull Request (PR): A review page on your cloud Git host (GitHub/GitLab) comparing your branch against 'main' with a live preview link.\n• git merge: Joins your verified branch back into 'main' and triggers cloud deployment."
-    },
-    {
-      keywords: ["grep", "what is grep", "grep -rn", "search files", "regular expression print", "ctrl+f", "cmd+f"],
-      title: "What is 'grep' (and why do AI agents run 'grep -rn' constantly)?",
-      stopId: "cli-and-terminal",
-      answer: "'grep' is your terminal's 'Ctrl+F' / 'Cmd+F' across files and folders! Its name comes from an old 1970s Unix editor command: g/re/p (Global Regular Expression Print — meaning: globally search for a text pattern and print every matching line).\n• grep \"TODO\" notes.txt — searches inside one file.\n• grep -rn \"fetchUser\" src/ — searches recursively (-r) through every subfolder in src/ and prints the exact filename and line number (-n) where 'fetchUser' appears.\n• grep -i \"error\" server.log — searches case-insensitively (-i)."
-    },
-    {
-      keywords: ["parent directory", "parent folder", "directory", "subfolder", "child directory", "working directory", "..", "cd ..", "mkdir -p"],
-      title: "What is a 'Parent Directory' (..), 'Current Directory' (.), and 'Directory vs. Folder'?",
-      stopId: "cli-and-terminal",
-      answer: "• Directory = Folder: 'Directory' is 100% the exact same thing as a Folder!\n• The Folder Family Tree: Folders nest inside each other like a family tree (e.g. /Users/lucy/workspace/my-app/src).\n• Current Working Directory (.): The exact folder your terminal is standing inside right now (check with 'pwd').\n• Parent Directory (..): The outer folder ONE level above you that holds your current folder. If you are inside 'my-app/src', then 'my-app' is the parent directory, and typing 'cd ..' steps up into it.\n• Child Directory (Subfolder): A folder sitting inside your current folder (typing 'cd src' steps down into it)."
-    },
-    {
-      keywords: ["trace", "trace a file", "tracing", "walk through", "read code", "happy path"],
-      title: "What does it mean to 'trace' a file or trace code?",
-      stopId: "reading-code-stability",
-      answer: "To 'trace' a file means pretending you are the computer and following the code step-by-step with your eyes from the moment a user clicks a button to the final result:\n1. Start where the user clicks or types input.\n2. Follow what function gets called next and what data is passed in.\n3. Ask at each step: 'What if the internet drops right here, or this value is empty (null)? Does the code show a helpful message, or does it crash silently?'"
-    },
-    {
-      keywords: ["clone", "fork", "copy", "duplicate", "branch vs clone", "git clone"],
-      title: "Clone vs. Branch vs. Fork vs. Copy-Pasting a folder",
-      stopId: "git-and-shipping",
-      answer: "• git clone: Downloads a repository from a cloud Git host (GitHub, GitLab, Hugging Face) onto your laptop for the first time with its full history intact.\n• git branch: Creates a parallel safe timeline inside the folder you already have.\n• Fork: Copies someone else's cloud repository into your own account (used for open-source contributions).\n• Copy-pasting a folder: Breaks version tracking and leads to 'project-final-v3' chaos—use a branch instead!"
-    },
-    {
-      keywords: ["undo", "revert", "reset", "ai broke", "restore", "checkout"],
-      title: "How to undo an AI mistake in Git",
-      stopId: "git-and-shipping",
-      answer: "If an AI edit broke your working code and you haven't committed it yet, run 'git diff' to inspect what changed, or run 'git checkout -- <filename>' (or 'git restore .') to instantly rewind your files to your last clean commit. If you already committed it, 'git revert HEAD' safely undoes that commit."
-    },
-    {
-      keywords: ["env", ".env", "environment variable", "api key", "secret", "gitignore"],
-      title: "Environment variables (.env) & keeping secrets safe",
-      stopId: "basic-terminology",
-      answer: "Never paste API keys directly into .js or .py code files. Store secrets in a local '.env' file on your laptop, add '.env' to your '.gitignore' file so Git never uploads it to public repos, and paste those keys into your cloud host's encrypted Environment Variables / Secrets settings (in Vercel, Render, Cloud Run, Hugging Face Spaces, or Colab Secrets)."
-    },
-    {
-      keywords: ["api", "rest", "json", "http", "get", "post", "status code", "404", "500", "429", "cors"],
-      title: "APIs, HTTP methods, status codes & CORS",
-      stopId: "basic-terminology",
-      answer: "An API is the contract between your frontend UI and backend server. The browser sends an HTTP request (GET to read data, POST to create/mutate data) carrying a JSON payload. Status codes tell you what happened: 200 (OK), 400 (Bad input), 401/403 (Unauthorized), 404 (Not found), 429 (Rate limited), 500 (Server crash). CORS is a browser security rule that blocks unknown websites from calling your private API."
-    },
-    {
-      keywords: ["webhook", "polling", "idempotent", "idempotency", "queue", "async", "synchronous"],
-      title: "System dynamics: Webhooks vs. Polling & Idempotency",
-      stopId: "system-dynamics",
-      answer: "• Polling vs. Webhooks: Polling is your app asking a server 'are you done yet?' every 2 seconds. A Webhook is the server calling your URL back the instant the job finishes.\n• Idempotency: Designing an API request (using a unique idempotency key) so that if a user clicks twice or a network retry fires, the action only executes once."
-    },
-    {
-      keywords: ["study", "research", "stanford", "dora", "metr", "gitclear", "berkeley", "nature", "pendo", "y combinator"],
-      title: "Empirical research backing the Deployed Eng Pipeline",
-      stopId: "reading-code-stability",
-      answer: "Key studies cited across this site:\n• Y Combinator W25: 25% of startups had 95% AI-generated codebases.\n• Google DORA: Every 25% bump in AI adoption correlated with a 7.2% drop in stability without guardrails.\n• GitClear (211M lines): 2-week code churn doubled from 3.3% to 7.1%.\n• Stanford ACM CCS (Perry et al.): Developers using AI wrote less secure code while feeling more confident.\n• UC Berkeley ('Why Johnny Can't Prompt'): Domain vocabulary is the control surface.\n• METR (2025): Blind AI debugging loops slowed developers down by 19%."
-    },
-    {
-      keywords: ["open source", "npm install", "pip install", "package", "library", "template", "shadcn", "node_modules"],
-      title: "How to download, use & build on top of open source",
-      stopId: "system-architecture",
-      answer: "There are 2 ways to build on open source:\n1. Library track (Brick by brick): Run 'npm install <pkg>' (JS) or 'pip install <pkg>' (Python) to snap a specific tool (like Lucide icons, Zod validation, or Stripe) into your existing project.\n2. Full repo track (Whole house frame): Click 'Use this template' or 'Fork' on GitHub, then run 'git clone <url>', 'npm install', and 'cp .env.example .env' to boot a complete working starter app on your laptop in 2 minutes."
-    },
-    {
-      keywords: ["license", "mit", "apache", "gpl", "agpl", "bsd", "copyleft", "legal"],
-      title: "Open-source licenses: MIT & Apache 2.0 vs. AGPL & GPL",
-      stopId: "system-architecture",
-      answer: "• Permissive (Safe for commercial & private apps): MIT, Apache-2.0, BSD, ISC. You can build and ship freely as long as you keep the original copyright notice.\n• Viral Copyleft (Proceed with caution): GPL-3.0 and AGPL-3.0. If you build on an AGPL library and host it over a web server, you can be legally required to open-source your entire application!\n• No LICENSE file: Means 'All Rights Reserved' by default copyright law—do not use."
-    },
-    {
-      keywords: ["watch out", "watch-out", "caution", "slopsquatting", "bill", "rate limit", "upstash", "leak"],
-      title: "6 critical watch-outs when building and shipping",
-      stopId: "system-architecture",
-      answer: "1. License traps: Stick to MIT/Apache-2.0; avoid AGPL/GPL for closed products.\n2. AI 'slopsquatting': Verify AI-suggested package names actually exist on npm/PyPI before installing.\n3. Leaking .env keys: Never put real keys in '.env.example' or commit '.env' to public GitHub.\n4. Runaway cloud bills: Set a hard $10–$25 monthly spend cap and add Upstash rate-limiting before sharing a public URL.\n5. Zombie repos: Avoid libraries unmaintained for 3+ years.\n6. Client trust: Always check auth and prices on the backend server, never just in browser JS."
-    },
-    {
-      keywords: ["how much python", "python in 2026", "dataframe", "pandas", "dictionary", "list of dictionaries", "pydantic", "protobuf", "stack trace", "evals", "golden eval"],
-      title: "How much Python you actually need in 2026 (Dicts, DataFrames, Schemas & Evals)",
-      stopId: "reading-code-stability",
-      answer: "In 2026, don't spend 6 months memorizing Python syntax textbooks—build real projects first with AI as your tutor and focus on reading & debugging 6 building blocks:\n1. Variables & Types (str, int, bool, None).\n2. Dictionaries & Lists -> Tables: One Dictionary {'name': 'Lucy', 'status': 'Doing'} is 1 row; a List of Dictionaries [{...}, {...}] is a whole Table (a Pandas DataFrame in Python/Colab!).\n3. Control flow & Functions (if/else, for-loops, def get_user(id) -> return).\n4. Strict Schemas (Pydantic / JSON Schema / Protobufs) so AI returns predictable fields.\n5. Stack traces: Read crash logs from the very bottom line up (KeyError, TypeError).\n6. Tests & Golden Evals: Test 30–50 real cases (and verify 'move to Doing' stays in Doing!) before shipping."
-    },
-    {
-      keywords: ["head", "git head", "squash", "mkdir vs touch", "mkdir first", "why so many steps"],
-      title: "Terminal 'head' vs. Git 'HEAD', 'mkdir' then 'touch', and 'Squash & Merge'",
-      stopId: "cli-and-terminal",
-      answer: "• Lowercase 'head -n 20 file.txt' (Terminal): Prints the top 20 lines of a file (opposite of 'tail').\n• Uppercase 'HEAD' (Git): Your 'You Are Here' pin pointing to the latest commit snapshot your folder is standing on.\n• 'mkdir' vs 'touch': Always run 'mkdir my-folder' FIRST to build the empty folder box, then 'touch my-folder/file.txt' SECOND to create the empty file inside it!\n• 'Squash & Merge': Combines 5 messy 'WIP / fix typo' commits on your branch into 1 clean commit when merging a Pull Request into main."
-    },
-    {
-      keywords: ["agent", "mcp", "model context protocol", "human in the loop", "prepare confirm", "sensitive data", "separate data"],
-      title: "AI Agents, MCP, Human-in-the-Loop ('Prepare -> Confirm') & Data Separation",
-      stopId: "system-dynamics",
-      answer: "• URL -> Backend Function: Calling '/api/users/42' triggers 'def get_user(42)' on your server, which queries the Database.\n• AI Agents & MCP: An agent runs in a Reason + Act loop calling tools connected via MCP (Model Context Protocol—the universal USB-C plug for tools).\n• Human-in-the-Loop ('Prepare -> Confirm'): Let AI read and summarize freely, but for any action that changes the world (sending emails, deleting data, charging money), stage a Preview Card first and wait for a human 'Approve' click.\n• Code vs. Sensitive Data: Never store private user CSVs or customer records inside your Git code repo—keep code in GitHub and sensitive data in an access-controlled Database or Cloud Storage bucket."
-    },
-    {
-      keywords: ["hide api key", "open web", "low cost", "low-cost", "how does the helper work", "how does this helper work", "serverless proxy", "ask-guide", "flash-lite", "expose api key", "hide the api key"],
-      title: "How to run an AI helper on the open web: Hide the API key & keep cost near $0",
-      stopId: "basic-terminology",
-      answer: "Never put a Google Gemini API key in browser JavaScript (anyone can press F12 -> Network and steal it). Instead, use this 4-layer architecture (built into this repo at '/api/ask-guide'):\n1. Serverless Backend Proxy ('/api/ask-guide'): Browser sends POST /api/ask-guide -> your Vercel/Cloud Run server reads 'GEMINI_API_KEY' from encrypted Environment Variables -> calls Gemini -> returns only the text.\n2. Tier-0 Dictionary Match ($0.00, 0ms): Check the 220+ A–Z Glossary terms in JS first so common definitions never call the LLM.\n3. Use 'gemini-2.5-flash-lite' + Token Caps: Free tier gives ~1,000 req/day for $0; paid tier is $0.10/1M input tokens (~$0.00008 per answer = 10,000 questions for ~$0.85). Cap input to 300 chars and maxOutputTokens to 260.\n4. Server Cache + Per-IP Rate Limit: Cache answers in server memory so repeated questions cost $0, and cap each IP at 15 questions per 10 minutes."
-    }
-  ];
-
-  var STOP_STARTER_PROMPTS = {
-    "default": [
-      "What does it mean to 'trace' a file?",
-      "How do I hide an API key & keep AI costs near $0?",
-      "What is Neon vs Supabase vs Firebase?",
-      "How much Python do I need in 2026?"
-    ],
-    "downloading-the-tools": [
-      "What are the main cloud hosting categories?",
-      "What is a plain text file vs Word doc?",
-      "Why use package managers (Homebrew, npm, pip)?",
-      "Code editors vs notebooks (Colab / Jupyter)?"
-    ],
-    "basic-terminology": [
-      "How do I hide an API key & keep AI costs near $0?",
-      "Database categories (Neon/Supabase vs Firebase vs Pinecone)?",
-      "Python vs TypeScript vs SQL?",
-      "Good vs fragile vibe-coded architecture?"
-    ],
-    "git-and-shipping": [
-      "What is 'Squash & Merge' vs Commit?",
-      "How does cloud auto-deploy work on merge?",
-      "What does 'HEAD' mean in Git?",
-      "How do I undo an AI mistake in Git?"
-    ],
-    "cli-and-terminal": [
-      "What is grep (and grep -rn)?",
-      "Why is mkdir first and touch second?",
-      "Terminal 'head' vs Git 'HEAD'?",
-      "What is a parent directory (..)?"
-    ],
-    "reading-code-python": [
-      "What does it mean to 'trace' a file?",
-      "How much Python do I need in 2026?",
-      "How do Dicts, Lists & DataFrames fit together?",
-      "How do I read a Python stack trace?"
-    ],
-    "reading-code-stability": [
-      "Why do 50+ users freeze a database (N+1 bug)?",
-      "What if I accidentally commit an API key to Git?",
-      "How do I stop a $2,000 overnight AI bill?",
-      "What is the 4-step debugging checklist?"
-    ],
-    "system-dynamics": [
-      "What is Human-in-the-Loop ('Prepare -> Confirm')?",
-      "Why keep code repos separate from private data?",
-      "Webhooks vs polling explained?",
-      "What is idempotency?"
-    ],
-    "system-architecture": [
-      "Ways to host (Web apps vs Hugging Face vs Servers)?",
-      "How do I download & build on open source?",
-      "What is an AGENTS.md / CLAUDE.md file?",
-      "MIT vs AGPL open-source licenses?"
-    ]
-  };
-
   var STOP_WORDS = {
-    "what": 1, "whats": 1, "does": 1, "do": 1, "did": 1, "mean": 1, "means": 1,
-    "meaning": 1, "is": 1, "are": 1, "was": 1, "were": 1, "the": 1, "to": 1,
-    "a": 1, "an": 1, "in": 1, "on": 1, "of": 1, "for": 1, "how": 1, "you": 1,
-    "your": 1, "can": 1, "could": 1, "explain": 1, "tell": 1, "me": 1, "about": 1,
-    "why": 1, "when": 1, "where": 1, "who": 1, "it": 1, "its": 1, "this": 1,
-    "that": 1, "these": 1, "those": 1, "by": 1, "with": 1, "from": 1, "and": 1,
-    "or": 1, "vs": 1, "versus": 1, "use": 1, "used": 1, "using": 1, "work": 1,
-    "works": 1, "thing": 1, "things": 1, "like": 1, "example": 1, "examples": 1,
-    "difference": 1, "between": 1, "file": 1, "files": 1, "code": 1, "app": 1
+    "i": 1, "im": 1, "ive": 1, "id": 1, "my": 1, "mine": 1, "me": 1, "we": 1,
+    "our": 1, "us": 1, "you": 1, "your": 1, "yours": 1, "he": 1, "she": 1,
+    "they": 1, "them": 1, "their": 1, "it": 1, "its": 1, "what": 1, "whats": 1,
+    "which": 1, "who": 1, "whom": 1, "whose": 1, "why": 1, "when": 1, "where": 1,
+    "how": 1, "hows": 1, "is": 1, "isn": 1, "isnt": 1, "are": 1, "aren": 1,
+    "arent": 1, "was": 1, "wasnt": 1, "were": 1, "werent": 1, "be": 1, "been": 1,
+    "being": 1, "do": 1, "does": 1, "doesnt": 1, "did": 1, "didnt": 1, "done": 1,
+    "doing": 1, "have": 1, "has": 1, "had": 1, "having": 1, "can": 1, "cant": 1,
+    "cannot": 1, "could": 1, "couldnt": 1, "should": 1, "shouldnt": 1, "would": 1,
+    "wouldnt": 1, "will": 1, "wont": 1, "shall": 1, "may": 1, "might": 1, "must": 1,
+    "get": 1, "gets": 1, "got": 1, "getting": 1, "make": 1, "makes": 1, "made": 1,
+    "making": 1, "go": 1, "goes": 1, "going": 1, "went": 1, "gone": 1, "take": 1,
+    "takes": 1, "took": 1, "put": 1, "puts": 1, "see": 1, "look": 1, "looking": 1,
+    "find": 1, "finding": 1, "show": 1, "tell": 1, "explain": 1, "give": 1,
+    "help": 1, "please": 1, "thanks": 1, "thank": 1, "need": 1, "needs": 1,
+    "want": 1, "wants": 1, "know": 1, "think": 1, "mean": 1, "means": 1,
+    "meaning": 1, "use": 1, "used": 1, "using": 1, "work": 1, "works": 1,
+    "working": 1, "way": 1, "ways": 1, "thing": 1, "things": 1, "stuff": 1,
+    "something": 1, "anything": 1, "everything": 1, "nothing": 1, "someone": 1,
+    "anyone": 1, "some": 1, "any": 1, "all": 1, "both": 1, "each": 1, "other": 1,
+    "another": 1, "more": 1, "most": 1, "much": 1, "many": 1, "few": 1, "less": 1,
+    "least": 1, "own": 1, "same": 1, "so": 1, "than": 1, "too": 1, "very": 1,
+    "just": 1, "now": 1, "then": 1, "here": 1, "there": 1, "up": 1, "down": 1,
+    "out": 1, "off": 1, "over": 1, "under": 1, "again": 1, "also": 1, "only": 1,
+    "even": 1, "still": 1, "already": 1, "always": 1, "never": 1, "really": 1,
+    "actually": 1, "maybe": 1, "right": 1, "wrong": 1, "good": 1, "better": 1,
+    "best": 1, "bad": 1, "worse": 1, "worst": 1, "new": 1, "old": 1, "big": 1,
+    "small": 1, "long": 1, "short": 1, "high": 1, "low": 1, "first": 1, "last": 1,
+    "next": 1, "about": 1, "above": 1, "after": 1, "against": 1, "around": 1,
+    "as": 1, "at": 1, "before": 1, "behind": 1, "below": 1, "between": 1,
+    "but": 1, "by": 1, "during": 1, "for": 1, "from": 1, "in": 1, "inside": 1,
+    "into": 1, "like": 1, "near": 1, "of": 1, "on": 1, "onto": 1, "outside": 1,
+    "through": 1, "to": 1, "toward": 1, "under": 1, "until": 1, "with": 1,
+    "within": 1, "without": 1, "the": 1, "a": 1, "an": 1, "and": 1, "or": 1,
+    "if": 1, "unless": 1, "while": 1, "because": 1, "vs": 1, "versus": 1,
+    "difference": 1, "example": 1, "examples": 1, "file": 1, "files": 1,
+    "code": 1, "coding": 1, "app": 1, "apps": 1, "project": 1, "projects": 1,
+    "website": 1, "site": 1, "page": 1, "open": 1, "window": 1, "bar": 1,
+    "click": 1, "button": 1, "step": 1, "steps": 1, "fix": 1, "broken": 1,
+    "write": 1, "create": 1, "build": 1, "building": 1, "learn": 1, "learning": 1
   };
+
+  function getKnowledgeBase() {
+    return (window.PIPELINE_GUIDE_KNOWLEDGE && window.PIPELINE_GUIDE_KNOWLEDGE.knowledgeBase) || [];
+  }
+
+  function getStarterPrompts() {
+    return (window.PIPELINE_GUIDE_KNOWLEDGE && window.PIPELINE_GUIDE_KNOWLEDGE.starterPrompts) || { "default": [] };
+  }
 
   function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
   function hasKeywordMatch(text, kw) {
-    var cleanKw = kw.toLowerCase().trim();
+    var cleanKw = (kw || "").toLowerCase().trim();
     if (!cleanKw) return false;
     if (cleanKw.indexOf(" ") !== -1 || /[^a-z0-9]/.test(cleanKw)) {
-      return text.indexOf(cleanKw) !== -1;
+      var padText = " " + text + " ";
+      var idx = padText.indexOf(cleanKw);
+      if (idx === -1) return false;
+      var before = padText.charAt(idx - 1);
+      var after = padText.charAt(idx + cleanKw.length);
+      var okBefore = !/[a-z0-9]/.test(before);
+      var okAfter = !/[a-z0-9]/.test(after);
+      return okBefore && okAfter;
     }
-    var re = new RegExp("\\b" + escapeRegExp(cleanKw) + "(?:s|es|ing|ed)?\\b", "i");
+    var re = new RegExp("(^|[^a-z0-9-])" + escapeRegExp(cleanKw) + "(?:s|es|ing|ed)?($|[^a-z0-9-])", "i");
     return re.test(text);
   }
 
   function mapGlossaryGroupToStop(item) {
     var cat = (item.category || "").toLowerCase();
     var term = (item.term || "").toLowerCase();
+    if (cat.indexOf("interface guide") !== -1) return "downloading-the-tools";
     if (item.group === "command" || cat.indexOf("terminal") !== -1 || cat.indexOf("cli") !== -1) {
       if (term.indexOf("git ") === 0 || cat.indexOf("git") !== -1) return "git-and-shipping";
       return "cli-and-terminal";
     }
     if (cat.indexOf("git") !== -1 || cat.indexOf("version control") !== -1) return "git-and-shipping";
-    if (cat.indexOf("python") !== -1 || cat.indexOf("testing") !== -1 || cat.indexOf("debugging") !== -1 || cat.indexOf("reading code") !== -1) {
+    if (cat.indexOf("what could break") !== -1 || cat.indexOf("code safety") !== -1 || cat.indexOf("billing safety") !== -1 || cat.indexOf("debugging") !== -1) {
       return "reading-code-stability";
     }
-    if (cat.indexOf("dynamics") !== -1 || cat.indexOf("realtime") !== -1 || cat.indexOf("queue") !== -1 || cat.indexOf("webhook") !== -1 || cat.indexOf("agent") !== -1) {
+    if (cat.indexOf("python") !== -1 || cat.indexOf("testing") !== -1 || cat.indexOf("reading code") !== -1) {
+      return "reading-code-python";
+    }
+    if (cat.indexOf("dynamics") !== -1 || cat.indexOf("endpoint") !== -1 || cat.indexOf("mcp") !== -1 || cat.indexOf("webhook") !== -1 || cat.indexOf("agent") !== -1) {
       return "system-dynamics";
     }
     if (cat.indexOf("license") !== -1 || cat.indexOf("open-source") !== -1 || cat.indexOf("hosting") !== -1) {
       return "system-architecture";
     }
     return "basic-terminology";
+  }
+
+  function findBestMatchingStop(tokens) {
+    if (!window.PIPELINE_DATA || !window.PIPELINE_DATA.stops || !tokens.length) return null;
+    var bestStop = null;
+    var bestScore = 0;
+    window.PIPELINE_DATA.stops.forEach(function (stop) {
+      var s = 0;
+      var titleLower = (stop.title + " " + (stop.subtitle || "")).toLowerCase();
+      var expLower = (stop.explainer || "").toLowerCase();
+      tokens.forEach(function (tok) {
+        if (hasKeywordMatch(titleLower, tok)) s += 12;
+        else if (hasKeywordMatch(expLower, tok)) s += 4;
+      });
+      if (s > bestScore) {
+        bestScore = s;
+        bestStop = stop;
+      }
+    });
+    return bestScore >= 12 ? bestStop : null;
   }
 
   function searchLocalAnswer(rawQuestion) {
@@ -268,14 +133,15 @@
       return w.length >= 2 && !STOP_WORDS[w];
     });
 
-    // 1. Score against Curated Q&A (GENERAL_KNOWLEDGE_BASE) using word-boundary aware matching
+    // 1. Score against Curated Q&A (GENERAL_KNOWLEDGE_BASE)
     var bestKb = null;
     var bestKbScore = 0;
-    GENERAL_KNOWLEDGE_BASE.forEach(function (entry) {
+    var kbList = getKnowledgeBase();
+    kbList.forEach(function (entry) {
       var score = 0;
       entry.keywords.forEach(function (kw) {
         if (hasKeywordMatch(normalizedQ, kw) || hasKeywordMatch(q, kw)) {
-          score += kw.length + (kw.indexOf(" ") !== -1 ? 14 : 6);
+          score += kw.length + (kw.indexOf(" ") !== -1 ? 18 : 8);
         }
       });
       if (score > bestKbScore) {
@@ -284,28 +150,50 @@
       }
     });
 
-    // 2. Score against the 220+ A-Z Master Dictionary (window.getMasterGlossaryItems)
+    // 2. Score against the 320+ A-Z Master Dictionary using strict headword / multi-token rules
     var bestGlossary = null;
     var bestGlossaryScore = 0;
     if (typeof window.getMasterGlossaryItems === "function") {
       var glossaryItems = window.getMasterGlossaryItems();
       glossaryItems.forEach(function (item) {
+        var isInterfacePin = (item.category || "").indexOf("Interface Guide") === 0;
+        // Strip parenthetical examples like "(my-app — -zsh)" so example filenames never false-match
+        var cleanTerm = (item.term || "").toLowerCase().replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim();
+        var primaryHead = cleanTerm.split(/[—·:]/)[0].trim();
+
         var s = 0;
-        var termLower = item.term.toLowerCase();
-        // Extract primary headword before parentheses or em-dash, e.g. "Neon", "Trace a file", "pwd"
-        var primaryHead = termLower.split(/[—(]/)[0].trim();
-        if (primaryHead && primaryHead.length >= 2 && hasKeywordMatch(normalizedQ, primaryHead)) {
-          s += 45 + primaryHead.length;
+        var matchedHeadword = false;
+
+        if (!isInterfacePin && primaryHead && primaryHead.length >= 2 && !STOP_WORDS[primaryHead]) {
+          if (hasKeywordMatch(normalizedQ, primaryHead) || hasKeywordMatch(q, primaryHead)) {
+            s += 52 + primaryHead.length;
+            matchedHeadword = true;
+          } else if (/[,/&]/.test(primaryHead)) {
+            var subParts = primaryHead.split(/[,/&]/);
+            for (var p = 0; p < subParts.length; p++) {
+              var sub = subParts[p].trim();
+              if (sub.length >= 3 && !STOP_WORDS[sub] && (hasKeywordMatch(normalizedQ, sub) || hasKeywordMatch(q, sub))) {
+                s += 48 + sub.length;
+                matchedHeadword = true;
+                break;
+              }
+            }
+          }
         }
+
+        var matchedTitleTokens = 0;
         tokens.forEach(function (tok) {
-          if (hasKeywordMatch(termLower, tok)) {
-            s += 18;
-          } else if (hasKeywordMatch(item.category.toLowerCase(), tok)) {
-            s += 6;
-          } else if (hasKeywordMatch(item.definition.toLowerCase(), tok)) {
-            s += 3;
+          if (hasKeywordMatch(cleanTerm, tok)) {
+            matchedTitleTokens++;
+            s += 16;
           }
         });
+
+        // Strict eligibility gate: Must either match the term's primary headword OR match >= 2 distinct non-stopword title tokens
+        if (!matchedHeadword && matchedTitleTokens < 2) {
+          s = 0;
+        }
+
         if (s > bestGlossaryScore) {
           bestGlossaryScore = s;
           bestGlossary = item;
@@ -313,9 +201,8 @@
       });
     }
 
-    // If a specific A-Z glossary term was directly asked about (e.g. "what is Neon?", "what is Drizzle?", "what is Modal?")
-    // and didn't hit a multi-word Q&A guide phrase, return the exact glossary entry!
-    if (bestGlossary && bestGlossaryScore >= 45 && bestKbScore < 22) {
+    // Direct glossary headword match (e.g. "what is Neon?", "what is Drizzle?", "what is Modal?")
+    if (bestGlossary && bestGlossaryScore >= 48 && bestKbScore < 14) {
       var gStopId = mapGlossaryGroupToStop(bestGlossary);
       var gStop = findStopById(gStopId);
       return {
@@ -327,7 +214,8 @@
       };
     }
 
-    if (bestKb && bestKbScore >= 8) {
+    // Curated Q&A match
+    if (bestKb && bestKbScore >= 10) {
       var matchedStop = findStopById(bestKb.stopId);
       return {
         matched: true,
@@ -338,7 +226,8 @@
       };
     }
 
-    if (bestGlossary && bestGlossaryScore >= 18) {
+    // Multi-token glossary title match (>= 2 distinct domain tokens in title)
+    if (bestGlossary && bestGlossaryScore >= 32) {
       var gStopId2 = mapGlossaryGroupToStop(bestGlossary);
       var gStop2 = findStopById(gStopId2);
       return {
@@ -350,30 +239,18 @@
       };
     }
 
-    // 3. Check exact word-boundary matches in Terminal Vocab
-    if (window.TERMINAL_VOCAB_DATA && window.TERMINAL_VOCAB_DATA.items) {
-      for (var i = 0; i < window.TERMINAL_VOCAB_DATA.items.length; i++) {
-        var v = window.TERMINAL_VOCAB_DATA.items[i];
-        var cmdFirst = v.command.toLowerCase().split(" ")[0];
-        if (cmdFirst.length >= 2 && hasKeywordMatch(normalizedQ, cmdFirst)) {
-          return {
-            matched: true,
-            title: v.command + " (" + v.name + ")",
-            body: v.description + "\n\nExample usage: " + v.example,
-            stopId: "cli-and-terminal",
-            stopTitle: "Step 4 · Command line interface & the terminal"
-          };
-        }
-      }
-    }
-
-    // 4. Honest fallback when no specific term matches offline (never dump an unrelated Stop intro!)
+    // 3. Honest "Navigator, not a full AI agent" fallback when a question is outside built-in coverage
+    var suggestedStop = findBestMatchingStop(tokens) || findStopById(currentContextStopId || "reading-code-stability");
     return {
       matched: false,
-      title: "Open-ended question: \"" + rawQuestion.trim() + "\"",
-      body: "That specific question didn't match a pre-built card in the 220+ term offline dictionary.\n\n• To get live AI answers for any custom question: Set 'GEMINI_API_KEY' on the server ('/api/ask-guide' uses 'gemini-2.5-flash-lite' at ~$0.00008 per question while keeping the key 100% hidden from browsers), or click the Key icon above to save a personal Gemini key in your browser.\n• Or browse the 'A–Z dictionary & flashcards' button in the top bar to search all 220+ sites, commands, and concepts.",
-      stopId: currentContextStopId || "basic-terminology",
-      stopTitle: "Explore terminology & app architecture"
+      title: "I'm a pipeline navigator, not a full AI agent",
+      body:
+        "I don't have a specific answer for \"" + rawQuestion.trim() + "\" in my built-in guide.\n\n" +
+        "I'm a lightweight navigator built to help you find concepts, tools, and stops across this site—not a full AI coding agent (like Claude, ChatGPT, Gemini, or Cursor), so I can't answer every open-ended question or inspect your own code the way an agent can.\n\n" +
+        "• Try asking about a step, tool, or troubleshooting workflow on this site (for example: 'My code is broken, how do I fix it?', 'API vs MCP', 'grep', 'git branch', or 'Supabase vs Neon').\n" +
+        "• Or open the Archive in the top bar to search all 320+ sites, commands, and flashcards.",
+      stopId: suggestedStop ? suggestedStop.id : "reading-code-stability",
+      stopTitle: suggestedStop ? suggestedStop.title : "Step 5 · Code stability & what could break"
     };
   }
 
@@ -433,7 +310,6 @@
     var browserApiKey = "";
     try { browserApiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
 
-    // Path A: Try the server-side hidden-key proxy (/api/ask-guide) first unless user explicitly set a browser key
     if (!browserApiKey) {
       fetch("/api/ask-guide", {
         method: "POST",
@@ -459,7 +335,6 @@
       return;
     }
 
-    // Path B: User provided their own personal key in browser localStorage
     var sysPrompt =
       "You are the Pipeline Guide for 'The vibes -> deployed Eng journey — By Lucy', helping builders master deployed software engineering. " +
       "Current section: " + currentContextLabel + ". " +
@@ -495,9 +370,6 @@
     var browserApiKey = "";
     try { browserApiKey = (localStorage.getItem("PIPELINE_GEMINI_API_KEY") || "").trim(); } catch (e) {}
 
-    // Instant $0 Layer: If our curated Q&A or 220+ A-Z Dictionary has a high-confidence match
-    // and no custom browser key overrides it, return the verified answer immediately in 0ms for $0!
-    // Otherwise (or for any open-ended question), query /api/ask-guide (or browser key) and fall back cleanly.
     if (localReply && localReply.matched && !browserApiKey) {
       appendAgentMessage("assistant", localReply.title, localReply.body, localReply.stopId, localReply.stopTitle);
       return;
@@ -531,7 +403,8 @@
     if (!chipsContainer) return;
     chipsContainer.replaceChildren();
 
-    var prompts = STOP_STARTER_PROMPTS[currentContextStopId] || STOP_STARTER_PROMPTS["default"];
+    var promptMap = getStarterPrompts();
+    var prompts = promptMap[currentContextStopId] || promptMap["default"] || [];
     prompts.forEach(function (promptText) {
       var chip = document.createElement("button");
       chip.type = "button";
@@ -674,7 +547,6 @@
     }
     setInspectorPanelCollapsedFn = setInspectorPanelCollapsed;
 
-    // Start with the Guide panel open on the right, and Selected Item panel collapsed on the left
     setAgentPanelCollapsed(false);
     setInspectorPanelCollapsed(true);
     renderDefaultInspectorPlaceholder();
@@ -726,8 +598,8 @@
         keyDrawerEl.style.display = "none";
         appendAgentMessage(
           "assistant",
-          val ? "Live Gemini API key saved locally" : "Switched to built-in pipeline knowledge",
-          val ? "Your key is stored only in your browser's localStorage. Ask any open-ended coding or architecture question!" : "Using the built-in offline knowledge engine covering all stops, terminal vocab, languages, and Git workflows.",
+          val ? "Live Gemini API key saved locally" : "Switched to built-in pipeline navigator",
+          val ? "Your key is stored only in your browser's localStorage. Ask any open-ended coding or architecture question!" : "Using the built-in pipeline navigator covering all 8 stops, troubleshooting checklists, and 320+ dictionary terms.",
           null,
           null
         );
@@ -748,8 +620,8 @@
     renderStarterChips();
     appendAgentMessage(
       "assistant",
-      "Ask anything as you go",
-      "Ask about any stop on this site, terminal commands (e.g. grep, pwd), coding languages (Python vs TypeScript vs SQL), Git (branch vs clone vs PR), or how your laptop connects to GitHub and Vercel.",
+      "Pipeline navigator (not a full AI agent)",
+      "I'm a navigator built to help you explore this pipeline and its 320+ dictionary terms—not a full AI coding agent, so I can't answer every open-ended question an agent can. Ask me how to fix broken code, API vs. MCP, Git & Vercel, terminal commands (grep, pwd), databases, or coding languages!",
       null,
       null
     );
@@ -763,7 +635,6 @@
       var badgeEl = document.getElementById("agent-context-badge");
       if (badgeEl) badgeEl.textContent = currentContextLabel;
       renderStarterChips();
-      // Keep the Selected Item panel collapsed when entering a new stop/view until the user clicks on something
       if (setInspectorPanelCollapsedFn) {
         setInspectorPanelCollapsedFn(window.location.search.indexOf("inspect=1") === -1);
       }
