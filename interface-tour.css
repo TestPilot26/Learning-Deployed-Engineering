@@ -406,3 +406,56 @@
     justify-content: flex-start;
   }
 }
+
+/* ============================================================================
+   INTERACTIVE MCP (BRAIN-IN-GEAR) vs. API (PUZZLE PIECES) & HUB EXPLORER
+   ============================================================================ */
+.mcp-visual-explorer-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mcp-hover-status-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  background-color: var(--color-surface-container-lowest);
+}
+
+.mcp-hover-status-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  line-height: 1.4;
+}
+
+.mcp-interactive-svg-host {
+  width: 100%;
+}
+
+.mcp-interactive-node {
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.mcp-interactive-node:hover {
+  opacity: 0.94;
+}
+
+@keyframes mcpPulseRing {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.mcp-pulse-ring {
+  animation: mcpPulseRing 1.6s ease-in-out infinite;
+}
+

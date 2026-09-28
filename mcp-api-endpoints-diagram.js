@@ -79,68 +79,28 @@
   }
 
   // ============================================================================
-  // SVG 1A: AARON JACK'S API RESTAURANT / WAITER ANALOGY & CONTRACT
+  // SVG 1A: ILLUSTRATED API WAITER & PUZZLE CONNECTOR (DELEGATES TO McpPuzzleDiagrams)
   // ============================================================================
   function createApiWaiterSvg(activeStepId, onSelectStepId) {
-    var svg = svgEl("svg", {
-      viewBox: "0 0 880 265",
-      class: "mcp-vs-api-svg",
-      "aria-label": "Interactive API Restaurant and Waiter diagram based on Aaron Jack's 5-minute API explainer"
-    });
-    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "872", height: "257", rx: "16", fill: "var(--color-surface-container-lowest)" }));
-    svg.appendChild(svgText("Application Programming Interface (API) = The Messenger & Contract Between Two Programs", {
-      x: "440", y: "28", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "13.5", "font-weight": "700"
-    }));
-
-    svg.appendChild(svgEl("line", { x1: "202", y1: "112", x2: "228", y2: "112", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("line", { x1: "414", y1: "96", x2: "456", y2: "96", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgText("Order", { x: "435", y: "88", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "10", "font-weight": "700" }));
-    svg.appendChild(svgEl("line", { x1: "644", y1: "96", x2: "678", y2: "96", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgEl("line", { x1: "678", y1: "136", x2: "414", y2: "136", stroke: "var(--color-tertiary)", "stroke-width": "2.5", "stroke-dasharray": "5 3" }));
-    svg.appendChild(svgText("JSON Response (200 OK)", { x: "546", y: "152", "text-anchor": "middle", fill: "var(--color-tertiary)", "font-size": "10", "font-weight": "700" }));
-
-    var boxes = [
-      { id: "api-step-client", x: 18, w: 184, topTag: "1. YOU AT THE TABLE", title: "The Client (Your App)", sub1: "Browser / iOS / Android", sub2: "Expedia · Weather App", sub3: "Cannot enter kitchen!" },
-      { id: "api-step-menu", x: 228, w: 186, topTag: "2. THE MENU (CONTRACT)", title: "API Docs & Endpoints", sub1: "GET /v1/weather?city=...", sub2: "POST /v1/charges", sub3: "Rules of what you can ask" },
-      { id: "api-step-waiter", x: 456, w: 188, topTag: "3. THE WAITER", title: "The API Messenger", sub1: "Takes HTTP Request + Key", sub2: "Brings back JSON tray", sub3: "{\"temp_c\": 18, \"ok\": true}" },
-      { id: "api-step-kitchen", x: 678, w: 184, topTag: "4. THE KITCHEN", title: "External Server & DB", sub1: "Airlines · Weather DB", sub2: "Stripe · Google Maps", sub3: "Guards private data & code" }
-    ];
-
-    boxes.forEach(function (bx) {
-      var isAct = bx.id === activeStepId;
-      var g = svgEl("g", { style: "cursor:pointer" });
-      g.appendChild(svgEl("rect", {
-        x: String(bx.x), y: "44", width: String(bx.w), height: "136", rx: "12",
-        fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)",
-        stroke: isAct ? "var(--color-primary)" : "var(--color-outline)",
-        "stroke-width": isAct ? "2.5" : "1.5"
-      }));
-      var cx = String(bx.x + bx.w / 2);
-      g.appendChild(svgText(bx.topTag, { x: cx, y: "66", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-primary)", "font-size": "10.5", "font-weight": "700" }));
-      g.appendChild(svgText(bx.title, { x: cx, y: "88", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
-      g.appendChild(svgText(bx.sub1, { x: cx, y: "112", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-family": "monospace" }));
-      g.appendChild(svgText(bx.sub2, { x: cx, y: "132", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11.5" }));
-      g.appendChild(svgText(bx.sub3, { x: cx, y: "154", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "11", "font-weight": "600" }));
-      g.addEventListener("click", function () { onSelectStepId(bx.id); });
-      svg.appendChild(g);
-    });
-
-    svg.appendChild(svgEl("rect", { x: "18", y: "194", width: "844", height: "54", rx: "10", fill: "var(--color-surface-container)" }));
-    svg.appendChild(svgText("Video examples:  Expedia → Airline APIs (flights)   ·   Uber → Google Maps API (roads)   ·   Checkout → Stripe / PayPal API   ·   Practice → PokeAPI", {
-      x: "440", y: "217", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "11.5", "font-weight": "700"
-    }));
-    svg.appendChild(svgText("Click any of the 4 stations above (or pills above) to inspect how it works in the Left Side Panel", {
-      x: "440", y: "236", "text-anchor": "middle", fill: "var(--color-on-surface-variant)", "font-size": "11"
-    }));
-    return svg;
+    if (window.McpPuzzleDiagrams && typeof window.McpPuzzleDiagrams.createIllustratedApiWaiterSvg === "function") {
+      return window.McpPuzzleDiagrams.createIllustratedApiWaiterSvg(activeStepId, onSelectStepId);
+    }
+    return svgEl("svg", { viewBox: "0 0 880 265", class: "mcp-vs-api-svg" });
   }
 
   // ============================================================================
-  // SVG 1B: VISUAL ANATOMY OF AN API ENDPOINT CALL (7 CLICKABLE PARTS)
+  // SVG 1B: VISUAL ANATOMY OF AN API ENDPOINT CALL (7 HOVER + CLICK PARTS & ANIMATED WIRE)
   // ============================================================================
   function createEndpointAnatomySvg(activePartId, onSelectPartId) {
-    var svg = svgEl("svg", { viewBox: "0 0 860 190", class: "mcp-vs-api-svg", "aria-label": "Visual anatomy of an API endpoint URL, headers, body, and server function" });
-    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "852", height: "182", rx: "16", fill: "var(--color-surface-container-lowest)" }));
+    var svg = svgEl("svg", { viewBox: "0 0 860 206", class: "mcp-vs-api-svg", "aria-label": "Visual anatomy of an API endpoint URL, headers, body, and server function" });
+    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "852", height: "198", rx: "16", fill: "var(--color-surface-container-lowest)" }));
+
+    // Continuous animated wire behind the 5 request pieces
+    var wirePath = "M 30 68 L 830 68";
+    svg.appendChild(svgEl("path", { d: wirePath, fill: "none", stroke: "var(--color-primary)", "stroke-width": "2.5", "stroke-dasharray": "5 3" }));
+    var wDot = svgEl("circle", { r: "5", fill: "var(--color-primary)" });
+    wDot.appendChild(svgEl("animateMotion", { dur: "2.2s", repeatCount: "indefinite", path: wirePath }));
+    svg.appendChild(wDot);
 
     var segments = [
       { id: "ep-method", x: 18, w: 100, top: "1. HTTP Verb", code: "PATCH", sub: "Action type" },
@@ -151,12 +111,15 @@
     ];
     segments.forEach(function (seg) {
       var isAct = seg.id === activePartId;
-      var g = svgEl("g", { style: "cursor:pointer" });
-      g.appendChild(svgEl("rect", { x: String(seg.x), y: "22", width: String(seg.w), height: "78", rx: "10", fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isAct ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isAct ? "2.5" : "1.5" }));
-      g.appendChild(svgText(seg.top, { x: String(seg.x + seg.w / 2), y: "42", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-weight": "700" }));
-      g.appendChild(svgText(seg.code, { x: String(seg.x + seg.w / 2), y: "66", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13", "font-weight": "700", "font-family": "monospace" }));
-      g.appendChild(svgText(seg.sub, { x: String(seg.x + seg.w / 2), y: "86", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11" }));
-      g.addEventListener("click", function () { onSelectPartId(seg.id); });
+      var g = svgEl("g", { class: "mcp-interactive-node" });
+      g.appendChild(svgEl("rect", { x: String(seg.x), y: "24", width: String(seg.w), height: "82", rx: "12", fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isAct ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isAct ? "2.8" : "1.5" }));
+      g.appendChild(svgText(seg.top, { x: String(seg.x + seg.w / 2), y: "44", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-weight": "700" }));
+      g.appendChild(svgText(seg.code, { x: String(seg.x + seg.w / 2), y: "68", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13", "font-weight": "700", "font-family": "monospace" }));
+      g.appendChild(svgText(seg.sub, { x: String(seg.x + seg.w / 2), y: "88", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11" }));
+      g.addEventListener("mouseenter", function () {
+        if (activePartId !== seg.id) onSelectPartId(seg.id, false);
+      });
+      g.addEventListener("click", function () { onSelectPartId(seg.id, true); });
       svg.appendChild(g);
     });
 
@@ -165,51 +128,69 @@
       { id: "ep-cors-ratelimit", x: 516, w: 326, label: "7. CORS & Rate Limit Guardrails (Origins & speed cap)" }
     ].forEach(function (bot) {
       var isAct = activePartId === bot.id;
-      var g = svgEl("g", { style: "cursor:pointer" });
-      g.appendChild(svgEl("rect", { x: String(bot.x), y: "116", width: String(bot.w), height: "54", rx: "10", fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isAct ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isAct ? "2.5" : "1.5" }));
-      g.appendChild(svgText(bot.label, { x: String(bot.x + bot.w / 2), y: "148", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "11", "font-weight": "700" }));
-      g.addEventListener("click", function () { onSelectPartId(bot.id); });
+      var g = svgEl("g", { class: "mcp-interactive-node" });
+      g.appendChild(svgEl("rect", { x: String(bot.x), y: "124", width: String(bot.w), height: "58", rx: "12", fill: isAct ? "var(--color-primary-container)" : "var(--color-surface-container)", stroke: isAct ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": isAct ? "2.8" : "1.5" }));
+      g.appendChild(svgText(bot.label, { x: String(bot.x + bot.w / 2), y: "158", "text-anchor": "middle", fill: isAct ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "11", "font-weight": "700" }));
+      g.addEventListener("mouseenter", function () {
+        if (activePartId !== bot.id) onSelectPartId(bot.id, false);
+      });
+      g.addEventListener("click", function () { onSelectPartId(bot.id, true); });
       svg.appendChild(g);
     });
     return svg;
   }
 
   // ============================================================================
-  // SVG 2A: TECH WITH TIM SLIDES 2, 3 & 6 — THE 4-STEP MCP TOOL CALL LOOP
+  // SVG 2A: TECH WITH TIM SLIDES 2, 3 & 6 — THE 4-STEP MCP TOOL CALL LOOP (ANIMATED)
   // ============================================================================
-  function createMcpToolLoopSvg(activeStepIdx) {
-    var svg = svgEl("svg", { viewBox: "0 0 880 250", class: "mcp-vs-api-svg", "aria-label": "Tech With Tim 4-step MCP tool call diagram" });
-    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "872", height: "242", rx: "16", fill: "var(--color-surface-container-lowest)" }));
+  function createMcpToolLoopSvg(activeStepIdx, onSelectStepIdx) {
+    var svg = svgEl("svg", { viewBox: "0 0 880 254", class: "mcp-vs-api-svg", "aria-label": "Tech With Tim 4-step MCP tool call diagram" });
+    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "872", height: "246", rx: "16", fill: "var(--color-surface-container-lowest)" }));
     svg.appendChild(svgText("Key Mental Model (0:15): The AI Model NEVER runs your function itself — it asks the MCP Client to call your MCP Server!", {
       x: "440", y: "28", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "12.5", "font-weight": "700"
     }));
 
     var actors = [
-      { x: 24, w: 230, title: "AI Language Model", sub1: "Text in -> [ Model ] -> Text out", sub2: "Reads tool names & docstrings", sub3: "Replies: 'Call add_a_note'", activeOn: [1, 3] },
-      { x: 325, w: 230, title: "MCP Client (Host App)", sub1: "Claude Desktop · Cursor · VS Code", sub2: "1. Sends {\"method\": \"tools/list\"}", sub3: "2. Sends {\"method\": \"tools/call\"}", activeOn: [0, 1, 3] },
-      { x: 626, w: 230, title: "Your MCP Server (Python)", sub1: "v1_local.py / v3_auth.py", sub2: "@mcp.tool() def add_a_note()", sub3: "Runs code & queries SQLite DB", activeOn: [0, 2, 3] }
+      { x: 24, w: 230, stepIdx: 1, title: "AI Language Model", sub1: "Text in -> [ Model ] -> Text out", sub2: "Reads tool names & docstrings", sub3: "Replies: 'Call add_a_note'", activeOn: [1, 3] },
+      { x: 325, w: 230, stepIdx: 0, title: "MCP Client (Host App)", sub1: "Claude Desktop · Cursor · VS Code", sub2: "1. Sends {\"method\": \"tools/list\"}", sub3: "2. Sends {\"method\": \"tools/call\"}", activeOn: [0, 1, 3] },
+      { x: 626, w: 230, stepIdx: 2, title: "Your MCP Server (Python)", sub1: "v1_local.py / v3_auth.py", sub2: "@mcp.tool() def add_a_note()", sub3: "Runs code & queries SQLite DB", activeOn: [0, 2, 3] }
     ];
     actors.forEach(function (ac) {
       var isHi = ac.activeOn.indexOf(activeStepIdx) !== -1;
-      svg.appendChild(svgEl("rect", {
+      var g = svgEl("g", { class: "mcp-interactive-node" });
+      g.appendChild(svgEl("rect", {
         x: String(ac.x), y: "48", width: String(ac.w), height: "116", rx: "12",
         fill: isHi ? "var(--color-primary-container)" : "var(--color-surface-container)",
         stroke: isHi ? "var(--color-primary)" : "var(--color-outline)",
-        "stroke-width": isHi ? "2.5" : "1.5"
+        "stroke-width": isHi ? "2.8" : "1.5"
       }));
       var cx = String(ac.x + ac.w / 2);
-      svg.appendChild(svgText(ac.title, { x: cx, y: "72", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
-      svg.appendChild(svgText(ac.sub1, { x: cx, y: "96", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-family": "monospace" }));
-      svg.appendChild(svgText(ac.sub2, { x: cx, y: "118", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11" }));
-      svg.appendChild(svgText(ac.sub3, { x: cx, y: "140", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "11", "font-weight": "600" }));
+      g.appendChild(svgText(ac.title, { x: cx, y: "72", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
+      g.appendChild(svgText(ac.sub1, { x: cx, y: "96", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11", "font-family": "monospace" }));
+      g.appendChild(svgText(ac.sub2, { x: cx, y: "118", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)", "font-size": "11" }));
+      g.appendChild(svgText(ac.sub3, { x: cx, y: "140", "text-anchor": "middle", fill: isHi ? "var(--color-on-primary-container)" : "var(--color-on-surface)", "font-size": "11", "font-weight": "600" }));
+      if (typeof onSelectStepIdx === "function") {
+        g.addEventListener("mouseenter", function () { onSelectStepIdx(ac.stepIdx, false); });
+        g.addEventListener("click", function () { onSelectStepIdx(ac.stepIdx, true); });
+      }
+      svg.appendChild(g);
     });
 
-    svg.appendChild(svgEl("line", { x1: "254", y1: "92", x2: "325", y2: "92", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgText("JSON choice", { x: "289", y: "84", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "10", "font-weight": "700" }));
-    svg.appendChild(svgEl("line", { x1: "555", y1: "86", x2: "626", y2: "86", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-    svg.appendChild(svgText("tools/list & call", { x: "590", y: "78", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "10", "font-weight": "700" }));
-    svg.appendChild(svgEl("line", { x1: "626", y1: "126", x2: "555", y2: "126", stroke: "var(--color-tertiary)", "stroke-width": "2.5", "stroke-dasharray": "5 3" }));
-    svg.appendChild(svgText("JSON result", { x: "590", y: "142", "text-anchor": "middle", fill: "var(--color-tertiary)", "font-size": "10", "font-weight": "700" }));
+    var p1 = "M 254 92 L 325 92";
+    var p2 = "M 555 86 L 626 86";
+    var p3 = "M 626 126 L 254 126";
+
+    svg.appendChild(svgEl("path", { d: p1, fill: "none", stroke: "var(--color-primary)", "stroke-width": "2.8" }));
+    svg.appendChild(svgText("JSON choice", { x: "289", y: "82", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "10", "font-weight": "700" }));
+    svg.appendChild(svgEl("path", { d: p2, fill: "none", stroke: "var(--color-primary)", "stroke-width": "2.8" }));
+    svg.appendChild(svgText("tools/list & call", { x: "590", y: "76", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "10", "font-weight": "700" }));
+    svg.appendChild(svgEl("path", { d: p3, fill: "none", stroke: "var(--color-tertiary)", "stroke-width": "2.8", "stroke-dasharray": "5 3" }));
+    svg.appendChild(svgText("JSON result", { x: "590", y: "144", "text-anchor": "middle", fill: "var(--color-tertiary)", "font-size": "10", "font-weight": "700" }));
+
+    var activeMotionPath = activeStepIdx === 0 || activeStepIdx === 2 ? p2 : activeStepIdx === 1 ? p1 : p3;
+    var dot = svgEl("circle", { r: "5.5", fill: activeStepIdx === 3 ? "var(--color-tertiary)" : "var(--color-primary)" });
+    dot.appendChild(svgEl("animateMotion", { dur: "1.4s", repeatCount: "indefinite", path: activeMotionPath }));
+    svg.appendChild(dot);
 
     var stepBanners = [
       "Step 1: Client sends {\"method\": \"tools/list\"}  →  Server returns tool names, docstrings & parameter types.",
@@ -217,66 +198,10 @@
       "Step 3: Your Python MCP Server executes add_a_note(text='buy milk') in SQLite (the AI model never touches your DB!).",
       "Step 4: Server returns {\"id\": 1, \"text\": \"buy milk\"} to Client  →  Model reads result and replies to the user."
     ];
-    svg.appendChild(svgEl("rect", { x: "24", y: "180", width: "832", height: "52", rx: "10", fill: "var(--color-surface-container)" }));
+    svg.appendChild(svgEl("rect", { x: "24", y: "182", width: "832", height: "52", rx: "10", fill: "var(--color-surface-container)" }));
     svg.appendChild(svgText(stepBanners[activeStepIdx] || stepBanners[0], {
-      x: "440", y: "211", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "11.5", "font-weight": "700"
+      x: "440", y: "213", "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "11.5", "font-weight": "700"
     }));
-    return svg;
-  }
-
-  // ============================================================================
-  // SVG 2B: TECH WITH TIM SLIDES 4 & 5 — BEFORE MCP (M×N) VS. WITH MCP (USB-C)
-  // ============================================================================
-  function createMcpVsApiSvg(isMcpMode) {
-    var svg = svgEl("svg", { viewBox: "0 0 860 270", class: "mcp-vs-api-svg", "aria-label": "Diagram comparing custom API plumbing with MCP universal USB-C hub" });
-    svg.appendChild(svgEl("rect", { x: "4", y: "4", width: "852", height: "262", rx: "16", fill: "var(--color-surface-container-lowest)" }));
-
-    var leftApps = [
-      { y: 32, title: "Claude Desktop", sub: isMcpMode ? "Speaks standard MCP" : "Custom GitHub/Notes code" },
-      { y: 106, title: "Cursor / VS Code", sub: isMcpMode ? "Speaks standard MCP" : "Rebuilt from scratch" },
-      { y: 180, title: "ChatGPT / Custom Agent", sub: isMcpMode ? "Speaks standard MCP" : "Rebuilt from scratch" }
-    ];
-    var rightServices = [
-      { y: 32, title: isMcpMode ? "Notes MCP Server (FastMCP)" : "Custom Notes Plumbing", sub: isMcpMode ? "list / add / delete_a_note()" : "Different wrapper per app" },
-      { y: 106, title: isMcpMode ? "GitHub MCP Server" : "Custom GitHub Plumbing", sub: isMcpMode ? "list_repos() · create_issue()" : "Different wrapper per app" },
-      { y: 180, title: isMcpMode ? "Postgres / Stripe MCP" : "Custom DB / Stripe Code", sub: isMcpMode ? "Standard Tools & Resources" : "Different wrapper per app" }
-    ];
-
-    if (!isMcpMode) {
-      leftApps.forEach(function (lApp) {
-        rightServices.forEach(function (rSvc) {
-          svg.appendChild(svgEl("line", { x1: "250", y1: String(lApp.y + 28), x2: "610", y2: String(rSvc.y + 28), stroke: "var(--color-error)", "stroke-width": "2", "stroke-dasharray": "5 4", opacity: "0.72" }));
-        });
-      });
-      svg.appendChild(svgEl("rect", { x: "290", y: "84", width: "280", height: "98", rx: "12", fill: "var(--color-error-container)", stroke: "var(--color-error)", "stroke-width": "2" }));
-      svg.appendChild(svgText("Slide 4: Before MCP (M × N Plumbing)", { x: "430", y: "112", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "13", "font-weight": "700" }));
-      svg.appendChild(svgText("Every app rebuilt the exact same tool", { x: "430", y: "136", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "11.5" }));
-      svg.appendChild(svgText("plumbing for every model (4 plugs × 4 apps)!", { x: "430", y: "156", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "11.5", "font-weight": "600" }));
-    } else {
-      leftApps.forEach(function (lApp) {
-        svg.appendChild(svgEl("line", { x1: "250", y1: String(lApp.y + 28), x2: "305", y2: "135", stroke: "var(--color-primary)", "stroke-width": "3" }));
-      });
-      rightServices.forEach(function (rSvc) {
-        svg.appendChild(svgEl("line", { x1: "555", y1: "135", x2: "610", y2: String(rSvc.y + 28), stroke: "var(--color-primary)", "stroke-width": "3" }));
-      });
-      svg.appendChild(svgEl("rect", { x: "305", y: "62", width: "250", height: "146", rx: "16", fill: "var(--color-primary-container)", stroke: "var(--color-primary)", "stroke-width": "2.5" }));
-      svg.appendChild(svgText("Slide 5: Model Context Protocol", { x: "430", y: "90", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "13", "font-weight": "700" }));
-      svg.appendChild(svgText("'The USB-C of AI Tools' (One Plug)", { x: "430", y: "112", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5", "font-weight": "600" }));
-      svg.appendChild(svgText("Write your tools ONCE as an MCP Server.", { x: "430", y: "138", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5" }));
-      svg.appendChild(svgText("Claude, Cursor, VS Code & ChatGPT", { x: "430", y: "158", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5" }));
-      svg.appendChild(svgText("all plug in via tools/list & tools/call!", { x: "430", y: "180", "text-anchor": "middle", fill: "var(--color-on-primary-container)", "font-size": "11.5", "font-weight": "700" }));
-    }
-
-    leftApps.forEach(function (app) {
-      svg.appendChild(svgEl("rect", { x: "24", y: String(app.y), width: "226", height: "56", rx: "12", fill: "var(--color-surface-container)", stroke: isMcpMode ? "var(--color-primary)" : "var(--color-outline)", "stroke-width": "2" }));
-      svg.appendChild(svgText(app.title, { x: "137", y: String(app.y + 24), "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
-      svg.appendChild(svgText(app.sub, { x: "137", y: String(app.y + 43), "text-anchor": "middle", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
-    });
-    rightServices.forEach(function (svc) {
-      svg.appendChild(svgEl("rect", { x: "610", y: String(svc.y), width: "226", height: "56", rx: "12", fill: "var(--color-surface-container)", stroke: isMcpMode ? "var(--color-primary)" : "var(--color-error)", "stroke-width": "2" }));
-      svg.appendChild(svgText(svc.title, { x: "723", y: String(svc.y + 24), "text-anchor": "middle", fill: "var(--color-on-surface)", "font-size": "13", "font-weight": "700" }));
-      svg.appendChild(svgText(svc.sub, { x: "723", y: String(svc.y + 43), "text-anchor": "middle", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
-    });
     return svg;
   }
 
@@ -500,6 +425,36 @@
     var activeBuildVerIdx = 0;
     var activePatternIdx = 4;
 
+    // Top Visual Hero: MCP (Brain in Gear) vs API (3 Interlocking Puzzle Pieces) + Before vs After MCP Hub
+    if (window.McpPuzzleDiagrams && window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer) {
+      var visualHeroCard = document.createElement("div");
+      visualHeroCard.className = "nested-card";
+      var heroTitleRow = document.createElement("div");
+      heroTitleRow.className = "resource-title-row";
+      var heroStrong = document.createElement("strong");
+      heroStrong.className = "diagram-node-title";
+      heroStrong.textContent = "Visual Overview · MCP vs. API (Puzzle Pieces & Brain-in-Gear) + Before MCP vs. After MCP (Hover to light up paths, click to inspect):";
+      heroTitleRow.appendChild(heroStrong);
+      heroTitleRow.appendChild(createVideoLinkRow([
+        { label: "Watch: API Puzzle Analogy (5m)", url: d.API_VIDEO_URL, icon: "extension" },
+        { label: "Watch: MCP Explained & Built", url: d.MCP_VIDEO_URL, icon: "hub" }
+      ]));
+      visualHeroCard.appendChild(heroTitleRow);
+
+      visualHeroCard.appendChild(window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer(function (info) {
+        showInspectorCard({
+          panelTitle: info.badge,
+          badgeText: info.badge,
+          badgeClass: info.badgeClass,
+          title: info.title,
+          calloutText: info.analogy,
+          bodyText: info.body,
+          codeText: info.code
+        }, true);
+      }));
+      card.appendChild(visualHeroCard);
+    }
+
     var tabsBar = document.createElement("div");
     tabsBar.className = "vocab-top-tabs-bar";
     var workshopHost = document.createElement("div");
@@ -526,9 +481,9 @@
     function render() {
       tabsBar.replaceChildren();
       [
-        { id: "api-explainer", label: "1. What is an API & Endpoint? (Waiter analogy + 7-part X-ray)", icon: "restaurant" },
-        { id: "mcp-course", label: "2. MCP Servers Explained & Built (Tool loop · Local vs. Remote · Python build)", icon: "usb" },
-        { id: "five-patterns", label: "3. REST API vs. Webhook vs. Streaming vs. MCP (When to use which)", icon: "compare_arrows" }
+        { id: "api-explainer", label: "1. Deep Dive: API Waiter Analogy + 7-Part Endpoint X-Ray", icon: "restaurant" },
+        { id: "mcp-course", label: "2. Deep Dive: MCP Tool Loop · Local vs. Remote · Python Build", icon: "usb" },
+        { id: "five-patterns", label: "3. Compare: REST API vs. Webhook vs. Streaming vs. MCP", icon: "compare_arrows" }
       ].forEach(function (t) {
         var btn = document.createElement("button");
         btn.type = "button";
@@ -573,7 +528,7 @@
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "Part A · What is an API? The Restaurant & Waiter Analogy (click any station to inspect in Left Side Panel):";
+      titleStrong.textContent = "Part A · What is an API? The Puzzle-Piece & Restaurant Waiter Analogy (hover to light up, click to inspect):";
       topRow.appendChild(titleStrong);
       topRow.appendChild(createVideoLinkRow([{ label: "Watch: What is an API (in 5 minutes) — Aaron Jack", url: d.API_VIDEO_URL, icon: "play_circle" }]));
       waiterCard.appendChild(topRow);
@@ -585,10 +540,10 @@
       }));
 
       var curWaiter = waiterSteps[activeWaiterIdx] || waiterSteps[0];
-      waiterCard.appendChild(createApiWaiterSvg(curWaiter.id, function (stepId) {
+      waiterCard.appendChild(createApiWaiterSvg(curWaiter.id, function (stepId, isClick) {
         waiterSteps.forEach(function (s, i) { if (s.id === stepId) activeWaiterIdx = i; });
         render();
-        showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx], true);
+        showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx], Boolean(isClick));
       }));
       host.appendChild(waiterCard);
 
@@ -596,7 +551,7 @@
       xrayCard.className = "nested-card";
       var xrayTitle = document.createElement("strong");
       xrayTitle.className = "diagram-node-title";
-      xrayTitle.textContent = "Part B · Inside the Waiter's Order Pad: Click all 7 parts of a live API Endpoint call (opens in Left Side Panel):";
+      xrayTitle.textContent = "Part B · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
       xrayCard.appendChild(xrayTitle);
 
       xrayCard.appendChild(createPillCluster(endpointParts, activeEndpointIdx, function (ep) { return ep.shortPill; }, function (ep) { return ep.icon; }, function (ep, idx) {
@@ -606,10 +561,10 @@
       }));
 
       var curEp = endpointParts[activeEndpointIdx] || endpointParts[0];
-      xrayCard.appendChild(createEndpointAnatomySvg(curEp.id, function (partId) {
+      xrayCard.appendChild(createEndpointAnatomySvg(curEp.id, function (partId, isClick) {
         endpointParts.forEach(function (p, i) { if (p.id === partId) activeEndpointIdx = i; });
         render();
-        showEndpointPartInSidePanel(endpointParts[activeEndpointIdx], true);
+        showEndpointPartInSidePanel(endpointParts[activeEndpointIdx], Boolean(isClick));
       }));
       host.appendChild(xrayCard);
     }
@@ -621,7 +576,7 @@
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "Explore the 4 chapters of Tech With Tim's MCP walkthrough (click any chapter or step to inspect in Left Side Panel):";
+      titleStrong.textContent = "Explore the 4 chapters of Tech With Tim's MCP walkthrough (hover or click any step to inspect):";
       topRow.appendChild(titleStrong);
       topRow.appendChild(createVideoLinkRow([
         { label: "Watch: MCP Servers Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
@@ -647,7 +602,11 @@
           render();
           syncMcpStageToSidePanel(true);
         }));
-        courseCard.appendChild(createMcpToolLoopSvg(activeLoopStepIdx));
+        courseCard.appendChild(createMcpToolLoopSvg(activeLoopStepIdx, function (idx, isClick) {
+          activeLoopStepIdx = idx;
+          render();
+          syncMcpStageToSidePanel(Boolean(isClick));
+        }));
       } else if (activeMcpStageIdx === 1) {
         var modes = [
           { mode: false, label: "Slide 4 · Before MCP: Custom Plumbing (M×N)", icon: "cable" },
