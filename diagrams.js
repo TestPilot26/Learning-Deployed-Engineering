@@ -587,9 +587,39 @@
     inspectorEl.appendChild(cmdBox);
   }
 
+  // Step 4: the static #terminal-vocab-section is moved into an optional
+  // "Learn some terminal vocab basics" banner. Remember where it lives so it can be
+  // put back before the diagram container is cleared on the next render.
+  var vocabHome = null;
+  function restoreVocabSection() {
+    var v = document.getElementById("terminal-vocab-section");
+    if (!v || !vocabHome || v.parentNode === vocabHome.parent) return;
+    var next = vocabHome.next && vocabHome.next.parentNode === vocabHome.parent ? vocabHome.next : null;
+    vocabHome.parent.insertBefore(v, next);
+  }
+  function mountTerminalVocabDeepDive(containerEl) {
+    if (typeof window.createDeepDiveBanner !== "function") return;
+    var dd = window.createDeepDiveBanner({
+      icon: "menu_book",
+      title: "Learn some terminal vocab basics",
+      hint: "Optional — how to read a folder path piece by piece, plus a searchable dictionary of terminal words, commands, and shortcuts.",
+      chips: ["Reading a path (/, ~, .., .)", "Folders vs. files", "Navigating & managing files", "grep & command flags", "Keyboard shortcuts", "Pipes, && & redirects"],
+      openLabel: "Open vocab basics",
+      closeLabel: "Hide vocab basics"
+    });
+    containerEl.appendChild(dd.el);
+    if (typeof window.renderTerminalPathAnatomy === "function") window.renderTerminalPathAnatomy(dd.host);
+    var v = document.getElementById("terminal-vocab-section");
+    if (v) {
+      if (!vocabHome) vocabHome = { parent: v.parentNode, next: v.nextSibling };
+      dd.host.appendChild(v);
+    }
+  }
+
   window.PipelineDiagrams = {
     renderForStop: function (stop, containerEl) {
       if (!containerEl) return;
+      restoreVocabSection();
       containerEl.replaceChildren();
       if (!stop || !stop.diagramType) {
         containerEl.style.display = "none";
@@ -639,7 +669,7 @@
           });
         }
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
-        window.renderTerminalInteractiveDiagram(containerEl);
+        window.renderTerminalInteractiveDiagram(containerEl, { skipPathAnatomy: true });
         if (typeof window.renderInterfaceExplorer === "function") {
           window.renderInterfaceExplorer(containerEl, "terminal", {
             mode: "flows",
@@ -649,6 +679,7 @@
             subtitle: "Step through a real Mac Terminal window and VS Code's built-in Terminal panel to see how the prompt ('~ %'), 'pwd', 'ls', and 'cd' work in practice."
           });
         }
+        mountTerminalVocabDeepDive(containerEl);
       } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
         window.renderPythonCodeDiagram(containerEl);
         if (typeof window.renderInterfaceExplorer === "function") {

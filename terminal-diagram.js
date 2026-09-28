@@ -47,7 +47,7 @@
 
   var activeServerTimer = null;
 
-  function renderTerminalInteractiveDiagram(container) {
+  function renderTerminalInteractiveDiagram(container, options) {
     if (activeServerTimer) {
       clearInterval(activeServerTimer);
       activeServerTimer = null;
@@ -655,7 +655,7 @@
       "# Click any key on the right OR type below and press Tab, ↑, ↓, Enter, Ctrl+C, or Ctrl+L."
     ]);
     loadMission(0);
-    renderPathAnatomyCard(container);
+    if (!(options && options.skipPathAnatomy)) renderPathAnatomyCard(container);
     container.appendChild(card);
   }
 
@@ -778,4 +778,5 @@
   }
 
   window.renderTerminalInteractiveDiagram = renderTerminalInteractiveDiagram;
+  window.renderTerminalPathAnatomy = renderPathAnatomyCard;
 })();
