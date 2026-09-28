@@ -154,8 +154,8 @@
           id: "dl-antigravity",
           iconId: "antigravity",
           name: "Antigravity (by Google)",
-          tag: "Recommended · Agent-first IDE",
-          tagClass: "badge-success",
+          tag: "Agent-first IDE",
+          tagClass: "badge-info",
           url: "https://antigravity.google/",
           actionLabel: "Get Antigravity",
           oneLiner: "Google's agentic coding IDE (built on VS Code) where Gemini agents plan tasks, edit multi-file codebases, run terminal commands, and verify live web previews alongside you.",
@@ -167,8 +167,8 @@
           id: "dl-vscode",
           iconId: "vscode",
           name: "VS Code (Visual Studio Code)",
-          tag: "Recommended starter · Universal free IDE",
-          tagClass: "badge-success",
+          tag: "Universal free IDE",
+          tagClass: "badge-info",
           url: "https://code.visualstudio.com/Download",
           actionLabel: "Download VS Code",
           oneLiner: "The free, universal code editor with a file tree, plain-text editor, and built-in terminal; pairs with any CLI or extension agent.",
@@ -241,13 +241,13 @@
           id: "dl-gemini-cli",
           iconId: "gemini",
           name: "Gemini CLI & Google AI Studio",
-          tag: "Recommended · Open-source terminal agent + free API keys",
-          tagClass: "badge-success",
+          tag: "Open-source terminal agent + free API keys",
+          tagClass: "badge-info",
           url: "https://github.com/google-gemini/gemini-cli",
           actionLabel: "Get Gemini CLI",
           oneLiner: "Google's open-source terminal coding agent with a 1M-token context window, MCP tool support, and free GEMINI_API_KEY setup via Google AI Studio.",
           whatItIs: "Gemini CLI brings Gemini directly into your terminal (or VS Code / Antigravity terminal panel) so it can read your entire codebase, run shell commands, connect to MCP servers, and edit files. Pair it with Google AI Studio (https://aistudio.google.com/) to generate a free GEMINI_API_KEY in two clicks.",
-          whenToPick: "Pick Gemini CLI & Google AI Studio first when you want a free, open-source terminal coding agent with a massive 1-million-token context window and an instant API key for your apps.",
+          whenToPick: "Pick Gemini CLI & Google AI Studio when you want a free, open-source terminal coding agent with a 1-million-token context window and an instant API key for your apps.",
           setupCommand: "npm install -g @google/gemini-cli\ncd my-project && gemini"
         },
         {
@@ -300,7 +300,7 @@
       options: [
         {
           id: "dl-homebrew", iconId: "homebrew", name: "Homebrew (Mac/Linux) / Winget (Windows)",
-          tag: "Install 1st · System package manager", tagClass: "badge-success", url: "https://brew.sh/", actionLabel: "Get Homebrew",
+          tag: "System package manager", tagClass: "badge-info", url: "https://brew.sh/", actionLabel: "Get Homebrew",
           oneLiner: "The official terminal installer that sets up Python, Node, and Git in 1 command—and wires up your PATH so you never get 'command not found'.",
           whatItIs: "When you click '.dmg' or '.exe' installers from random websites, they often drop coding tools into folders your Terminal doesn't check. Homebrew ('brew' on Mac/Linux) and 'winget' (built into Windows 11) install developer engines cleanly and register them in your PATH automatically.",
           whenToPick: "Install Homebrew first on any Mac before installing Python, Node.js, or Git.",
@@ -341,7 +341,7 @@
       options: [
         {
           id: "dl-github", iconId: "github", name: "GitHub",
-          tag: "Recommended default · Cloud Git", tagClass: "badge-success", url: "https://github.com/signup", actionLabel: "Sign up for GitHub",
+          tag: "Cloud Git repository", tagClass: "badge-info", url: "https://github.com/signup", actionLabel: "Sign up for GitHub",
           oneLiner: "The industry standard cloud home for Git repositories, Pull Requests, open-source code, and 1-click auto-deploy to Vercel or Render.",
           whatItIs: "GitHub is where over 100 million developers store their Git repositories in the cloud. When you run 'git push', your laptop uploads your commits to GitHub—and cloud hosts like Vercel or Render watch your GitHub repo to publish updates automatically.",
           whenToPick: "Create a free GitHub account first—almost every open-source template, AI tool, and cloud host connects directly to GitHub.",
@@ -374,7 +374,7 @@
       options: [
         {
           id: "dl-firebase", iconId: "firebase", name: "Firebase / Firestore (by Google)",
-          tag: "Recommended · Realtime JSON DB + Auth", tagClass: "badge-success", url: "https://firebase.google.com/", actionLabel: "Open Firebase",
+          tag: "Realtime JSON DB + Auth", tagClass: "badge-info", url: "https://firebase.google.com/", actionLabel: "Open Firebase",
           oneLiner: "Google's app backend bundling Firestore (flexible JSON documents), Google/email user sign-in (Auth), and live real-time sync.",
           whatItIs: "Firebase bundles Firestore (a NoSQL document database where data is stored as nested JSON documents) with Firebase Authentication and web/mobile SDKs that push live updates to connected browsers automatically.",
           whenToPick: "Pick Firebase when you want Google Auth sign-in and a real-time JSON database that syncs across browsers out of the box.",
@@ -382,7 +382,7 @@
         },
         {
           id: "dl-supabase", iconId: "supabase", name: "Supabase",
-          tag: "Recommended SQL · Postgres + Login", tagClass: "badge-success", url: "https://supabase.com/", actionLabel: "Sign up for Supabase",
+          tag: "Postgres SQL + Login", tagClass: "badge-info", url: "https://supabase.com/", actionLabel: "Sign up for Supabase",
           oneLiner: "Open-source PostgreSQL (SQL spreadsheet-table database) bundled with ready-made User Login (Auth) and file storage in one dashboard.",
           whatItIs: "Supabase gives you a full PostgreSQL database (with a spreadsheet-style table editor in your browser) PLUS built-in user authentication (Google/GitHub/email login) and image/file storage buckets.",
           whenToPick: "Pick Supabase when you want both a relational SQL database and ready-made user login in one dashboard.",
@@ -415,7 +415,7 @@
       options: [
         {
           id: "dl-cloud-run", iconId: "cloudrun", name: "Google Cloud Run",
-          tag: "Recommended · Serverless Python/Node/Containers", tagClass: "badge-success", url: "https://cloud.google.com/run", actionLabel: "Explore Cloud Run",
+          tag: "Serverless Python/Node/Containers", tagClass: "badge-info", url: "https://cloud.google.com/run", actionLabel: "Explore Cloud Run",
           oneLiner: "Google's serverless platform that deploys any backend (Python FastAPI, Node, MCP servers), scales to $0 when idle, and handles production traffic.",
           whatItIs: "Google Cloud Run takes a source folder or container (Python, Node.js, Go), gives it a live https:// URL in one command, scales down to zero when nobody is visiting, and scales up automatically under load.",
           whenToPick: "Pick Google Cloud Run when deploying Python FastAPI backends, AI agents, remote HTTP MCP servers, or full-stack web apps.",
@@ -423,7 +423,7 @@
         },
         {
           id: "dl-vercel", iconId: "vercel", name: "Vercel",
-          tag: "Recommended for static & Next.js web apps", tagClass: "badge-success", url: "https://vercel.com/signup", actionLabel: "Sign up for Vercel",
+          tag: "Static & Next.js web apps", tagClass: "badge-info", url: "https://vercel.com/signup", actionLabel: "Sign up for Vercel",
           oneLiner: "Connects to GitHub in 1 click to host frontend & full-stack web apps (HTML/JS, React, Next.js) and creates a live preview URL for every PR.",
           whatItIs: "Vercel connects directly to your GitHub account. Whenever you push a commit to 'main', Vercel builds and updates your live production URL in ~30 seconds—and whenever you open a Pull Request, it comments a private Preview URL.",
           whenToPick: "Pick Vercel for websites, interactive explainers, and React/Next.js web apps.",
