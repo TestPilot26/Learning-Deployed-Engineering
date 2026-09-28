@@ -491,36 +491,18 @@
       options.afterHero(afterHeroMount);
     }
 
-    // Collapsible "Building MCPs deep dive" — optional detail for learners who want more
-    var deepDiveToggle = document.createElement("button");
-    deepDiveToggle.type = "button";
-    deepDiveToggle.className = "nav-btn nav-btn-primary section-spacer";
-    deepDiveToggle.setAttribute("aria-expanded", "false");
-    var ddIcon = document.createElement("span");
-    ddIcon.className = "material-symbols-outlined";
-    ddIcon.textContent = "expand_more";
-    var ddLabel = document.createElement("span");
-    ddLabel.textContent = "Building MCPs deep dive";
-    deepDiveToggle.appendChild(ddLabel);
-    deepDiveToggle.appendChild(ddIcon);
-
-    var deepDiveHint = document.createElement("p");
-    deepDiveHint.className = "text-muted";
-    deepDiveHint.textContent = "Optional: the API waiter walkthrough, the 7 parts of an endpoint, the 4-step JSON tool loop, local vs. remote MCP & OAuth, building a Python MCP server, and all 5 communication patterns.";
-
-    var deepDiveHost = document.createElement("div");
-    deepDiveHost.style.display = "none";
-    deepDiveToggle.addEventListener("click", function () {
-      var open = deepDiveHost.style.display === "none";
-      deepDiveHost.style.display = open ? "" : "none";
-      deepDiveToggle.setAttribute("aria-expanded", open ? "true" : "false");
-      ddIcon.textContent = open ? "expand_less" : "expand_more";
-      if (open && waiterSteps[0]) showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx] || waiterSteps[0], false);
+    // Optional deep dive, shown as a tonal call-out so learners notice it
+    var dd = window.createDeepDiveBanner({
+      title: "Want to go deeper? Understanding & building MCPs",
+      hint: "Optional deep dive — open it when you're ready to see how MCP works under the hood and build your own server.",
+      chips: ["API waiter walkthrough", "7 parts of an endpoint", "4-step JSON tool loop", "Local vs. remote MCP & OAuth", "Build a Python MCP server", "5 communication patterns"],
+      openLabel: "Open deep dive",
+      onOpen: function () {
+        if (waiterSteps[0]) showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx] || waiterSteps[0], false);
+      }
     });
-
-    workshopHost.appendChild(deepDiveToggle);
-    workshopHost.appendChild(deepDiveHint);
-    workshopHost.appendChild(deepDiveHost);
+    var deepDiveHost = dd.host;
+    workshopHost.appendChild(dd.el);
     deepDiveHost.appendChild(waiterMount);
     deepDiveHost.appendChild(xrayMount);
     deepDiveHost.appendChild(mcpLoopMount);
