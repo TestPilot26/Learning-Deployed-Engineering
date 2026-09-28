@@ -504,49 +504,55 @@
     },
     {
       id: "flow-connect-cloud-database",
-      title: "Flow 7: Create a cloud Postgres database in Neon & connect it",
-      badge: "3 steps · Neon ➔ Vercel",
+      title: "Flow 7: Set up a cloud Postgres database in Neon & connect DATABASE_URL",
+      badge: "4 steps · Neon ➔ App",
       icon: "database",
-      summary: "How to spin up a serverless PostgreSQL database in Neon and wire its connection string into your app:",
+      summary: "How to spin up a serverless PostgreSQL database in Neon, inspect tables, and wire its connection string into your app:",
       steps: [
         {
           snapshotId: "database-studio",
           hotspotId: "db-new-project-btn",
-          stepTitle: "Step 1 of 3 · Click '+ New project' in Neon to create a Postgres database",
-          instruction: "In the Neon dashboard, click '+ New project' (Pin #3) to spin up a serverless PostgreSQL database."
+          stepTitle: "Step 1 of 4 · Click '+ New project' in Neon to create a Postgres database",
+          instruction: "Sign in to Neon (or Supabase) and click '+ New project' (Pin #3) in the top-right corner to spin up a serverless PostgreSQL database in 2 seconds."
         },
         {
           snapshotId: "database-studio",
           hotspotId: "db-project-row",
-          stepTitle: "Step 2 of 3 · Open your project ('Project1') or use the Vercel integration",
-          instruction: "Click your project row ('Project1', Pin #4) to open the SQL Editor and copy your 'DATABASE_URL' (or connect your coding agent via Pin #5)."
+          stepTitle: "Step 2 of 4 · Open your project ('Project1') to view SQL Tables & copy DATABASE_URL",
+          instruction: "Click your project row ('Project1', Pin #4) to open the Table Editor, SQL Editor, and copy your 'DATABASE_URL' connection string."
+        },
+        {
+          snapshotId: "database-studio",
+          hotspotId: "db-psql-connect",
+          stepTitle: "Step 3 of 4 · (Optional) Test from your Terminal or link via Integrations",
+          instruction: "You can test SQL directly from your terminal using '$ psql -h pg.neon.tech' (Pin #6) or auto-sync your database to Vercel via 'Integrations' in the left sidebar (Pin #1)."
         },
         {
           snapshotId: "vercel-env",
           hotspotId: "vc-env-main-box",
-          stepTitle: "Step 3 of 3 · Save 'DATABASE_URL' in your local .env and Vercel Environment Variables",
-          instruction: "Paste 'DATABASE_URL' into your local '.env' file on your laptop and into Vercel's Environment Variables vault (Pin #4)!"
+          stepTitle: "Step 4 of 4 · Save 'DATABASE_URL' in your local .env and Cloud Environment Variables",
+          instruction: "Paste 'DATABASE_URL=\"postgresql://...\"' into your local '.env' file on your laptop (ignored by Git) and into your cloud host's Environment Variables vault (Pin #4)!"
         }
       ]
     },
     {
       id: "flow-debug-chrome-devtools",
-      title: "Flow 8: Inspect CSS & debug red Console errors in Chrome DevTools",
+      title: "Flow 8: Inspect the Front End (HTML, CSS & Console errors) in Chrome DevTools",
       badge: "4 steps · DevTools ➔ VS Code",
       icon: "troubleshoot",
-      summary: "What to click when a webpage layout looks wrong or a button click throws an error:",
+      summary: "How to x-ray any webpage's Front End (HTML & CSS) and read red JavaScript or API errors in Chrome DevTools:",
       steps: [
         {
           snapshotId: "chrome-devtools",
           hotspotId: "dt-inspect-picker",
           stepTitle: "Step 1 of 4 · Right-click the page -> 'Inspect' & click the '↖' Element Picker",
-          instruction: "Open Chrome DevTools (Cmd+Option+I or F12), click the '↖' Element Picker (Pin #1), and click any element on the page to jump to its HTML tag (Pin #4)."
+          instruction: "Open Chrome DevTools (Cmd+Option+I or F12), click the '↖' Element Picker (Pin #1), and click any button or card on the page to jump to its HTML tag (Pin #4)."
         },
         {
           snapshotId: "chrome-devtools",
           hotspotId: "dt-styles-pane",
           stepTitle: "Step 2 of 4 · Inspect & live-edit CSS rules in the 'Styles' pane",
-          instruction: "Check the 'Styles' pane (Pin #5) to see which CSS rules apply (and which file:line they live on) and test spacing or flex changes live."
+          instruction: "Check the 'Styles' pane (Pin #5) to see which CSS rules apply (and which file:line they live on) and test spacing or color changes live in your browser."
         },
         {
           snapshotId: "chrome-devtools",
@@ -559,6 +565,72 @@
           hotspotId: "vsc-git-python-code",
           stepTitle: "Step 4 of 4 · Fix the file in VS Code, save (Cmd+S), and hard-refresh (Cmd+Shift+R)",
           instruction: "Jump back to the file in VS Code (Pin #5), save your fix, and press Cmd+Shift+R in Chrome to verify the error is gone!"
+        }
+      ]
+    },
+    {
+      id: "flow-terminal-navigation",
+      title: "Flow 9: Navigate folders (pwd ➔ ls ➔ cd) & fix 'not a git repository' in Terminal",
+      badge: "5 steps · Mac & VS Code Terminal",
+      icon: "terminal",
+      summary: "How to check where you are standing, list files, step into your project folder, and run commands in Mac Terminal & VS Code:",
+      steps: [
+        {
+          snapshotId: "terminal-cli",
+          hotspotId: "tm-pwd-command",
+          stepTitle: "Step 1 of 5 · Run 'pwd' to check which folder your Terminal is standing in",
+          instruction: "Look at the prompt ('lucy@macbook ~ %') and run 'pwd' (Pin #1). It prints '/Users/lucy', confirming you are currently standing in your personal Home folder ('~')."
+        },
+        {
+          snapshotId: "terminal-cli",
+          hotspotId: "tm-ls-command",
+          stepTitle: "Step 2 of 5 · Run 'ls' (or 'ls -la') to list the folders around you",
+          instruction: "Run 'ls' (Pin #2) to list every folder sitting inside your current directory ('Desktop', 'Documents', 'my-first-app') so you never have to guess folder names."
+        },
+        {
+          snapshotId: "terminal-cli",
+          hotspotId: "tm-git-not-a-repo",
+          stepTitle: "Step 3 of 5 · Spot why 'git status' said 'fatal: not a git repository'",
+          instruction: "Look at Pin #3: running 'git status' inside '~' fails because your Home folder isn't a Git project! You simply need to step into your project folder first with 'cd'."
+        },
+        {
+          snapshotId: "terminal-cli",
+          hotspotId: "tm-cd-git-status",
+          stepTitle: "Step 4 of 5 · Run 'cd my-first-app && git status' to step inside your project",
+          instruction: "Run 'cd my-first-app && git status' (Pin #4). Notice how the prompt changes to 'my-first-app %' (Pin #5) and Git now replies 'On branch main'!"
+        },
+        {
+          snapshotId: "vscode-explorer",
+          hotspotId: "vsc-exp-terminal-prompt",
+          stepTitle: "Step 5 of 5 · Or use VS Code's built-in Terminal (Ctrl + `), already inside your project!",
+          instruction: "Inside VS Code, press Ctrl + ` to open the bottom Terminal panel (Pin #5 / Pin #6)—it automatically opens inside your project folder so you can run 'python3 test.py' or 'pytest' immediately!"
+        }
+      ]
+    },
+    {
+      id: "flow-connect-mcp-agent",
+      title: "Flow 10: Connect MCP Servers & database tools to your AI coding agent",
+      badge: "3 steps · MCP in VS Code & Neon",
+      icon: "usb",
+      summary: "Where to find and connect Model Context Protocol (MCP) tool servers inside VS Code / Cursor and Neon Postgres:",
+      steps: [
+        {
+          snapshotId: "vscode-extensions",
+          hotspotId: "vsc-ext-mcp-servers",
+          stepTitle: "Step 1 of 3 · Open Extensions & MCP Servers in VS Code / Cursor",
+          instruction: "Click the 4-squares Extensions icon on the left Activity Bar (Pin #1) and look at the 'MCP SERVERS' section (Pin #6) to install or configure MCP tool connectors (like GitHub, Postgres/Neon, or Playwright)."
+        },
+        {
+          snapshotId: "database-studio",
+          hotspotId: "db-agent-skills",
+          stepTitle: "Step 2 of 3 · Click 'Onboard your agent' in Neon Postgres to connect database MCP",
+          instruction: "In your Neon Cloud Postgres dashboard, use the 'Onboard your agent' card (Pin #5) to connect Neon's MCP server so your coding agent can inspect your real SQL table schemas instead of guessing column names."
+        },
+        {
+          snapshotId: "vscode-explorer",
+          hotspotId: "vsc-exp-ai-chat",
+          stepTitle: "Step 3 of 3 · Prompt your IDE Agent with file context (+ test.py) & MCP tools",
+          instruction: "In the right-hand AI Agent panel (Pin #8), attach your target file ('+ test.py'), switch the mode dropdown to 'Agent', and ask it to build or test—it can now call your connected MCP servers and run terminal checks!"
         }
       ]
     }

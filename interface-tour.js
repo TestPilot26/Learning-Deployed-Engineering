@@ -87,7 +87,18 @@
     var showFlows = opts.showFlows !== false;
     var isFlowsMode = opts.mode === "flows";
     var snapshots = window.InterfaceTourData.SNAPSHOTS || [];
-    var flows = window.InterfaceTourData.FLOWS || [];
+    var allFlows = window.InterfaceTourData.FLOWS || [];
+    var flows = allFlows;
+    if (Array.isArray(opts.flowIds) && opts.flowIds.length) {
+      flows = opts.flowIds
+        .map(function (fid) {
+          for (var i = 0; i < allFlows.length; i++) {
+            if (allFlows[i].id === fid) return allFlows[i];
+          }
+          return null;
+        })
+        .filter(Boolean);
+    }
     if (!snapshots.length) return;
 
     var activeGroup = defaultGroup || "github";
@@ -120,21 +131,21 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = isFlowsMode ? "badge badge-success" : "badge badge-info";
-    topBadge.textContent = isFlowsMode
+    topBadge.textContent = opts.badgeText || (isFlowsMode
       ? "Interactive step-by-step workflows — real app screens"
-      : "Explore where things are — interactive interface orientation";
+      : "Explore where things are — interactive interface orientation");
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = isFlowsMode
+    h3.textContent = opts.title || (isFlowsMode
       ? "Step-by-step interface flows: Cloning, committing, pushing & deploying on real screens"
-      : "Explore where things are: Click any circled feature on the interface";
+      : "Explore where things are: Click any circled feature on the interface");
     var subP = document.createElement("p");
     subP.className = "text-muted";
-    subP.textContent = isFlowsMode
-      ? "Pick any guided workflow below (like cloning a repo, creating a README, committing & pushing in VS Code, or deploying on Vercel) and step through the exact buttons to click with ◀ Previous / Next ▶."
-      : "Once you open any tool above, use this visual map to see where key buttons live. Pick a tool tab below, then click any numbered circle on the real screenshot to read what it does in the Left Side Panel.";
+    subP.textContent = opts.subtitle || (isFlowsMode
+      ? "Pick any guided workflow below and step through the exact buttons to click on the real screen with ◀ Previous / Next ▶."
+      : "Once you open any tool above, use this visual map to see where key buttons live. Pick a tool tab below, then click any numbered circle on the real screenshot to read what it does in the Left Side Panel.");
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
     titleCol.appendChild(subP);
@@ -187,33 +198,34 @@
       var currentFlow = getActiveFlow();
 
       if (isFlowsMode) {
-        // STEP 5 MODE: Dedicated Step-by-Step Guided Workflow Player (no duplicate Step 1 tool-tab bar)
-        var flowsMenuBar = document.createElement("div");
-        flowsMenuBar.className = "ui-tour-top-menu";
+        if (flows.length > 1) {
+          var flowsMenuBar = document.createElement("div");
+          flowsMenuBar.className = "ui-tour-top-menu";
 
-        var flowsLabel = document.createElement("span");
-        flowsLabel.className = "ui-tour-menu-label";
-        flowsLabel.textContent = "Pick a workflow ➔";
-        flowsMenuBar.appendChild(flowsLabel);
+          var flowsLabel = document.createElement("span");
+          flowsLabel.className = "ui-tour-menu-label";
+          flowsLabel.textContent = "Pick a walkthrough ➔";
+          flowsMenuBar.appendChild(flowsLabel);
 
-        flows.forEach(function (fl, fIdx) {
-          var fBtn = document.createElement("button");
-          fBtn.type = "button";
-          fBtn.className = "vocab-top-tab-btn" + (activeFlowId === fl.id ? " active" : "");
-          var fIc = document.createElement("span");
-          fIc.className = "material-symbols-outlined btn-icon-sm";
-          fIc.textContent = fl.icon;
-          var fTxt = document.createElement("span");
-          fTxt.textContent = (fIdx + 1) + ". " + fl.title.replace(/^Flow\s+\d+:\s*/i, "");
-          fBtn.appendChild(fIc);
-          fBtn.appendChild(fTxt);
-          fBtn.addEventListener("click", function () {
-            applyFlowStep(fl, 0, true);
+          flows.forEach(function (fl, fIdx) {
+            var fBtn = document.createElement("button");
+            fBtn.type = "button";
+            fBtn.className = "vocab-top-tab-btn" + (activeFlowId === fl.id ? " active" : "");
+            var fIc = document.createElement("span");
+            fIc.className = "material-symbols-outlined btn-icon-sm";
+            fIc.textContent = fl.icon;
+            var fTxt = document.createElement("span");
+            fTxt.textContent = (fIdx + 1) + ". " + fl.title.replace(/^Flow\s+\d+:\s*/i, "");
+            fBtn.appendChild(fIc);
+            fBtn.appendChild(fTxt);
+            fBtn.addEventListener("click", function () {
+              applyFlowStep(fl, 0, true);
+            });
+            flowsMenuBar.appendChild(fBtn);
           });
-          flowsMenuBar.appendChild(fBtn);
-        });
 
-        mount.appendChild(flowsMenuBar);
+          mount.appendChild(flowsMenuBar);
+        }
       } else {
         // STEP 1 MODE: Clean Interface Orientation Map ("Explore where things are ➔")
         var menuBar = document.createElement("div");

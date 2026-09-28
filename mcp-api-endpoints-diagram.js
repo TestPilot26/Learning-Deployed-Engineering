@@ -386,6 +386,10 @@
     var mcpPrims = d.MCP_PRIMITIVES || [];
     var fivePatterns = d.FIVE_PATTERNS || [];
 
+    var stageLoop = mcpStages[0] || { steps: [] };
+    var stageAuth = mcpStages[2] || { modes: [] };
+    var stageBuild = mcpStages[3] || { versions: [] };
+
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
 
@@ -396,17 +400,17 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Interactive visual guide — click any step or pill to inspect in the Left Side Panel";
+    topBadge.textContent = "Interactive visual guide & walkthroughs — click any diagram node or step to inspect in the Left Side Panel";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How APIs & Endpoints work (in 5 mins) — and how to understand & build MCP Servers";
+    h3.textContent = "How APIs & Endpoints work (in 5 mins) — and how MCP Servers work & how to build one";
 
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "Built directly around Aaron Jack's 'What is an API (in 5 minutes)' and Tech With Tim's 'MCP Servers Explained & Built'. Click any stage or pill below to explore the diagram and read the full breakdown in the Left Side Panel.";
+      "Walk through (1) What an API & Endpoint are (the Restaurant Waiter analogy + 7-part Endpoint X-Ray), (2) API (Before MCP) vs. MCP (After MCP), (3) the 4-Step MCP JSON Tool Loop, (4) Local stdio vs. Remote HTTP + OAuth 2.1, and (5) building a Python FastMCP server.";
 
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
@@ -414,228 +418,352 @@
     headerRow.appendChild(titleCol);
     card.appendChild(headerRow);
 
-    var activeTab = "api-explainer";
     var activeWaiterIdx = 0;
     var activeEndpointIdx = 1;
-    var activeMcpStageIdx = 0;
     var activeLoopStepIdx = 0;
     var activePrimIdx = 0;
     var activeAuthModeIdx = 2;
     var activeBuildVerIdx = 0;
     var activePatternIdx = 4;
 
-    // Filter out the old duplicate "Before MCP vs With MCP" stage (stage index 1) since McpPuzzleDiagrams renders the interactive Brain-in-Gear + Before/After MCP Hub
-    var uniqueMcpStages = mcpStages.filter(function (st, idx) {
-      return idx !== 1;
-    });
-
-    var tabsBar = document.createElement("div");
-    tabsBar.className = "vocab-top-tabs-bar";
     var workshopHost = document.createElement("div");
     workshopHost.className = "reliability-workshop-host";
 
-    function syncMcpStageToSidePanel(isUserClick) {
-      var st = uniqueMcpStages[activeMcpStageIdx] || uniqueMcpStages[0];
-      if (!st) return;
-      if (st.steps && st.steps[activeLoopStepIdx]) {
-        var lp = st.steps[activeLoopStepIdx];
-        showInspectorCard({ badgeText: st.badge, badgeClass: st.badgeClass, title: lp.title, bodyText: lp.detail, codeText: lp.wireJson }, isUserClick);
-      } else if (st.modes && st.modes[activeAuthModeIdx]) {
-        var md = st.modes[activeAuthModeIdx];
-        showInspectorCard({ badgeText: md.badge, badgeClass: md.badgeClass, title: md.title, bodyText: md.whatItIs, codeText: md.codeSnippet }, isUserClick);
-      } else if (st.versions && st.versions[activeBuildVerIdx]) {
-        var vr = st.versions[activeBuildVerIdx];
-        showInspectorCard({ badgeText: vr.badge, badgeClass: vr.badgeClass, title: vr.title, bodyText: vr.takeaway, codeText: vr.code }, isUserClick);
+    function syncLoopStepToSidePanel(isUserClick) {
+      if (stageLoop.steps && stageLoop.steps[activeLoopStepIdx]) {
+        var lp = stageLoop.steps[activeLoopStepIdx];
+        showInspectorCard({
+          panelTitle: lp.pill,
+          badgeText: stageLoop.badge,
+          badgeClass: stageLoop.badgeClass,
+          title: lp.title,
+          bodyText: lp.detail,
+          codeText: lp.wireJson
+        }, isUserClick);
       }
     }
 
-    function render() {
-      tabsBar.replaceChildren();
-      [
-        { id: "api-explainer", label: "1. First: What is an API & Endpoint? (Waiter Analogy + 7-Part X-Ray)", icon: "restaurant" },
-        { id: "mcp-course", label: "2. Next: MCP vs. API (Puzzle Pieces & Hub) + Build an MCP Server", icon: "usb" },
-        { id: "five-patterns", label: "3. Compare: REST API vs. Webhook vs. Streaming vs. MCP", icon: "compare_arrows" }
-      ].forEach(function (t) {
-        var btn = document.createElement("button");
-        btn.type = "button";
-        btn.id = "mcp-tab-" + t.id;
-        btn.className = "vocab-top-tab-btn" + (activeTab === t.id ? " active" : "");
-        var ic = document.createElement("span");
-        ic.className = "material-symbols-outlined btn-icon-sm";
-        ic.textContent = t.icon;
-        var sp = document.createElement("span");
-        sp.textContent = t.label;
-        btn.appendChild(ic);
-        btn.appendChild(sp);
-        btn.addEventListener("click", function () {
-          activeTab = t.id;
-          render();
-          if (t.id === "api-explainer" && waiterSteps[activeWaiterIdx]) {
-            showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx], true);
-          } else if (t.id === "mcp-course") {
-            syncMcpStageToSidePanel(true);
-          } else if (t.id === "five-patterns" && fivePatterns[activePatternIdx]) {
-            var pt = fivePatterns[activePatternIdx];
-            showInspectorCard({ badgeText: pt.whoStarts, badgeClass: "badge-info", title: pt.shortPill, calloutText: "Best for: " + pt.bestFor, bodyText: pt.howItWorks, bannerText: pt.whenNotToUse }, true);
-          }
-        });
-        tabsBar.appendChild(btn);
-      });
-
-      workshopHost.replaceChildren();
-      if (activeTab === "api-explainer") {
-        renderApiExplainerTab(workshopHost);
-      } else if (activeTab === "mcp-course") {
-        renderMcpCourseTab(workshopHost);
-      } else {
-        renderFivePatternsTab(workshopHost);
+    function syncAuthModeToSidePanel(isUserClick) {
+      if (stageAuth.modes && stageAuth.modes[activeAuthModeIdx]) {
+        var md = stageAuth.modes[activeAuthModeIdx];
+        showInspectorCard({
+          panelTitle: md.pill,
+          badgeText: md.badge,
+          badgeClass: md.badgeClass,
+          title: md.title,
+          bodyText: md.whatItIs,
+          codeText: md.codeSnippet
+        }, isUserClick);
       }
     }
 
-    function renderApiExplainerTab(host) {
+    function syncBuildVerToSidePanel(isUserClick) {
+      if (stageBuild.versions && stageBuild.versions[activeBuildVerIdx]) {
+        var vr = stageBuild.versions[activeBuildVerIdx];
+        showInspectorCard({
+          panelTitle: vr.pill,
+          badgeText: vr.badge,
+          badgeClass: vr.badgeClass,
+          title: vr.title,
+          bodyText: vr.takeaway,
+          codeText: vr.code
+        }, isUserClick);
+      }
+    }
+
+    // Build persistent section mounts so interactive state updates don't recreate the whole page
+    var waiterMount = document.createElement("div");
+    var xrayMount = document.createElement("div");
+    var mcpHeroMount = document.createElement("div");
+    var mcpLoopMount = document.createElement("div");
+    var mcpAuthMount = document.createElement("div");
+    var mcpBuildMount = document.createElement("div");
+    var patternsMount = document.createElement("div");
+
+    workshopHost.appendChild(waiterMount);
+    workshopHost.appendChild(xrayMount);
+    workshopHost.appendChild(mcpHeroMount);
+    workshopHost.appendChild(mcpLoopMount);
+    workshopHost.appendChild(mcpAuthMount);
+    workshopHost.appendChild(mcpBuildMount);
+    workshopHost.appendChild(patternsMount);
+
+    function renderWaiterSection() {
+      waiterMount.replaceChildren();
       var waiterCard = document.createElement("div");
       waiterCard.className = "nested-card";
       var topRow = document.createElement("div");
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "Part A · What is an API? The Puzzle-Piece & Restaurant Waiter Analogy (hover to light up, click to inspect):";
+      titleStrong.textContent = "1A · What is an API? The Restaurant Waiter & Puzzle-Piece Walkthrough (hover or click each station):";
       topRow.appendChild(titleStrong);
-      topRow.appendChild(createVideoLinkRow([{ label: "Watch: What is an API (in 5 minutes) — Aaron Jack", url: d.API_VIDEO_URL, icon: "play_circle" }]));
+
+      var rightActions = document.createElement("div");
+      rightActions.className = "diagram-pill-cluster";
+      var nextWaiterBtn = document.createElement("button");
+      nextWaiterBtn.type = "button";
+      nextWaiterBtn.className = "diagram-label-pill active";
+      nextWaiterBtn.textContent = "Step through API flow (" + (activeWaiterIdx + 1) + "/" + waiterSteps.length + ") ▶";
+      nextWaiterBtn.addEventListener("click", function () {
+        activeWaiterIdx = (activeWaiterIdx + 1) % waiterSteps.length;
+        renderWaiterSection();
+        showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx], true);
+      });
+      rightActions.appendChild(nextWaiterBtn);
+      rightActions.appendChild(createVideoLinkRow([{ label: "Watch: What is an API (in 5 mins) — Aaron Jack", url: d.API_VIDEO_URL, icon: "play_circle" }]));
+      topRow.appendChild(rightActions);
       waiterCard.appendChild(topRow);
 
       var curWaiter = waiterSteps[activeWaiterIdx] || waiterSteps[0];
       waiterCard.appendChild(createApiWaiterSvg(curWaiter.id, function (stepId, isClick) {
         waiterSteps.forEach(function (s, i) { if (s.id === stepId) activeWaiterIdx = i; });
-        render();
+        renderWaiterSection();
         showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx], Boolean(isClick));
       }));
-      host.appendChild(waiterCard);
+      waiterMount.appendChild(waiterCard);
+    }
 
+    function renderXraySection() {
+      xrayMount.replaceChildren();
       var xrayCard = document.createElement("div");
       xrayCard.className = "nested-card";
+      var topRow = document.createElement("div");
+      topRow.className = "resource-title-row";
       var xrayTitle = document.createElement("strong");
       xrayTitle.className = "diagram-node-title";
-      xrayTitle.textContent = "Part B · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
-      xrayCard.appendChild(xrayTitle);
+      xrayTitle.textContent = "1B · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
+      topRow.appendChild(xrayTitle);
+
+      var nextEpBtn = document.createElement("button");
+      nextEpBtn.type = "button";
+      nextEpBtn.className = "diagram-label-pill active";
+      nextEpBtn.textContent = "Step through Endpoint parts (" + (activeEndpointIdx + 1) + "/" + endpointParts.length + ") ▶";
+      nextEpBtn.addEventListener("click", function () {
+        activeEndpointIdx = (activeEndpointIdx + 1) % endpointParts.length;
+        renderXraySection();
+        showEndpointPartInSidePanel(endpointParts[activeEndpointIdx], true);
+      });
+      topRow.appendChild(nextEpBtn);
+      xrayCard.appendChild(topRow);
 
       var curEp = endpointParts[activeEndpointIdx] || endpointParts[0];
       xrayCard.appendChild(createEndpointAnatomySvg(curEp.id, function (partId, isClick) {
         endpointParts.forEach(function (p, i) { if (p.id === partId) activeEndpointIdx = i; });
-        render();
+        renderXraySection();
         showEndpointPartInSidePanel(endpointParts[activeEndpointIdx], Boolean(isClick));
       }));
-      host.appendChild(xrayCard);
+      xrayMount.appendChild(xrayCard);
     }
 
-    function renderMcpCourseTab(host) {
-      if (window.McpPuzzleDiagrams && window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer) {
-        var visualHeroCard = document.createElement("div");
-        visualHeroCard.className = "nested-card";
-        var heroTitleRow = document.createElement("div");
-        heroTitleRow.className = "resource-title-row";
-        var heroStrong = document.createElement("strong");
-        heroStrong.className = "diagram-node-title";
-        heroStrong.textContent = "Part A · API (Before MCP) vs. MCP (After MCP): Puzzle Pieces & Universal Hub (hover or click):";
-        heroTitleRow.appendChild(heroStrong);
-        heroTitleRow.appendChild(createVideoLinkRow([
-          { label: "Watch: MCP Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
-          { label: "GitHub Code (v1 -> v3)", url: d.MCP_REPO_URL, icon: "code" }
-        ]));
-        visualHeroCard.appendChild(heroTitleRow);
+    function renderMcpHeroSection() {
+      mcpHeroMount.replaceChildren();
+      if (!window.McpPuzzleDiagrams || !window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer) return;
+      var visualHeroCard = document.createElement("div");
+      visualHeroCard.className = "nested-card";
+      var heroTitleRow = document.createElement("div");
+      heroTitleRow.className = "resource-title-row";
+      var heroStrong = document.createElement("strong");
+      heroStrong.className = "diagram-node-title";
+      heroStrong.textContent = "2 · API (Before MCP) vs. MCP (After MCP): Puzzle Pieces, Brain-in-Gear & Universal Hub (hover or click):";
+      heroTitleRow.appendChild(heroStrong);
+      heroTitleRow.appendChild(createVideoLinkRow([
+        { label: "Watch: MCP Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
+        { label: "GitHub Code (v1 -> v3)", url: d.MCP_REPO_URL, icon: "code" }
+      ]));
+      visualHeroCard.appendChild(heroTitleRow);
 
-        visualHeroCard.appendChild(window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer(function (info) {
-          showInspectorCard({
-            panelTitle: info.badge,
-            badgeText: info.badge,
-            badgeClass: info.badgeClass,
-            title: info.title,
-            calloutText: info.analogy,
-            bodyText: info.body,
-            codeText: info.code
-          }, true);
-        }));
+      visualHeroCard.appendChild(window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer(function (info) {
+        showInspectorCard({
+          panelTitle: info.badge,
+          badgeText: info.badge,
+          badgeClass: info.badgeClass,
+          title: info.title,
+          calloutText: info.analogy,
+          bodyText: info.body,
+          codeText: info.code
+        }, true);
+      }));
 
-        visualHeroCard.appendChild(createPillCluster(mcpPrims, activePrimIdx, function (pr) { return pr.title; }, function (pr) { return pr.icon; }, function (pr, idx) {
-          activePrimIdx = idx;
-          render();
-          showInspectorCard({ badgeText: pr.badge, badgeClass: pr.badgeClass, title: pr.title, calloutText: pr.analogy, bodyText: pr.whatItIs, codeText: pr.example }, true);
-        }));
-        host.appendChild(visualHeroCard);
-      }
+      var primsLabel = document.createElement("p");
+      primsLabel.className = "resource-desc";
+      primsLabel.textContent = "The 3 core building blocks ('primitives') every MCP Server can expose to an AI agent (click to inspect):";
+      visualHeroCard.appendChild(primsLabel);
 
-      var courseCard = document.createElement("div");
-      courseCard.className = "nested-card";
+      visualHeroCard.appendChild(createPillCluster(mcpPrims, activePrimIdx, function (pr) { return pr.title; }, function (pr) { return pr.icon; }, function (pr, idx) {
+        activePrimIdx = idx;
+        renderMcpHeroSection();
+        showInspectorCard({ badgeText: pr.badge, badgeClass: pr.badgeClass, title: pr.title, calloutText: pr.analogy, bodyText: pr.whatItIs, codeText: pr.example }, true);
+      }));
+      mcpHeroMount.appendChild(visualHeroCard);
+    }
+
+    function renderMcpLoopSection() {
+      mcpLoopMount.replaceChildren();
+      var loopCard = document.createElement("div");
+      loopCard.className = "nested-card";
+
       var topRow = document.createElement("div");
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "Part B · Under the hood: 4-Step JSON Tool Loop, Local vs. Remote OAuth 2.1, and Python FastMCP Code:";
+      titleStrong.textContent = "3 · Walkthrough: How an AI Tool Call & MCP Server Work Under the Hood (4 JSON Steps):";
       topRow.appendChild(titleStrong);
-      courseCard.appendChild(topRow);
 
-      courseCard.appendChild(createPillCluster(uniqueMcpStages, activeMcpStageIdx, function (st) { return st.shortTab; }, function (st) { return st.icon; }, function (st, idx) {
-        activeMcpStageIdx = idx;
-        render();
-        syncMcpStageToSidePanel(true);
-      }));
+      var nextStepBtn = document.createElement("button");
+      nextStepBtn.type = "button";
+      nextStepBtn.className = "diagram-label-pill active";
+      nextStepBtn.textContent = "Next step (" + (activeLoopStepIdx + 1) + "/4) ▶";
+      nextStepBtn.addEventListener("click", function () {
+        activeLoopStepIdx = (activeLoopStepIdx + 1) % (stageLoop.steps.length || 4);
+        renderMcpLoopSection();
+        syncLoopStepToSidePanel(true);
+      });
+      topRow.appendChild(nextStepBtn);
+      loopCard.appendChild(topRow);
 
-      var curStage = uniqueMcpStages[activeMcpStageIdx] || uniqueMcpStages[0];
       var summaryP = document.createElement("p");
       summaryP.className = "resource-desc";
-      summaryP.textContent = curStage.summary;
-      courseCard.appendChild(summaryP);
+      summaryP.textContent = stageLoop.summary;
+      loopCard.appendChild(summaryP);
 
-      if (curStage.steps) {
-        courseCard.appendChild(createMcpToolLoopSvg(activeLoopStepIdx, function (idx, isClick) {
-          activeLoopStepIdx = idx;
-          render();
-          syncMcpStageToSidePanel(Boolean(isClick));
-        }));
-      } else if (curStage.modes) {
-        courseCard.appendChild(createPillCluster(curStage.modes, activeAuthModeIdx, function (md) { return md.pill; }, null, function (md, idx) {
-          activeAuthModeIdx = idx;
-          render();
-          syncMcpStageToSidePanel(true);
-        }));
-        var curMode = curStage.modes[activeAuthModeIdx] || curStage.modes[0];
-        courseCard.appendChild(createLocalRemoteAuthSvg(curMode.id));
-      } else if (curStage.versions) {
-        courseCard.appendChild(createPillCluster(curStage.versions, activeBuildVerIdx, function (vr) { return vr.pill; }, null, function (vr, idx) {
-          activeBuildVerIdx = idx;
-          render();
-          syncMcpStageToSidePanel(true);
-        }));
-        var curVer = curStage.versions[activeBuildVerIdx] || curStage.versions[0];
+      // 4 Step Walkthrough Pills so the learner can step through 1 -> 2 -> 3 -> 4 explicitly
+      loopCard.appendChild(createPillCluster(stageLoop.steps || [], activeLoopStepIdx, function (lp) { return lp.pill; }, null, function (lp, idx) {
+        activeLoopStepIdx = idx;
+        renderMcpLoopSection();
+        syncLoopStepToSidePanel(true);
+      }));
+
+      loopCard.appendChild(createMcpToolLoopSvg(activeLoopStepIdx, function (idx, isClick) {
+        activeLoopStepIdx = idx;
+        renderMcpLoopSection();
+        syncLoopStepToSidePanel(Boolean(isClick));
+      }));
+
+      if (stageLoop.steps && stageLoop.steps[activeLoopStepIdx]) {
+        var curLp = stageLoop.steps[activeLoopStepIdx];
+        var wireBox = document.createElement("div");
+        wireBox.className = "vocab-example-box";
+        wireBox.style.whiteSpace = "pre-wrap";
+        wireBox.textContent = curLp.wireJson;
+        loopCard.appendChild(wireBox);
+      }
+      mcpLoopMount.appendChild(loopCard);
+    }
+
+    function renderMcpAuthSection() {
+      mcpAuthMount.replaceChildren();
+      var authCard = document.createElement("div");
+      authCard.className = "nested-card";
+
+      var topRow = document.createElement("div");
+      topRow.className = "resource-title-row";
+      var titleStrong = document.createElement("strong");
+      titleStrong.className = "diagram-node-title";
+      titleStrong.textContent = "4 · Walkthrough: Local MCP (stdio) vs. Remote MCP (HTTP) & The OAuth 2.1 '401 Dance':";
+      topRow.appendChild(titleStrong);
+      authCard.appendChild(topRow);
+
+      var summaryP = document.createElement("p");
+      summaryP.className = "resource-desc";
+      summaryP.textContent = stageAuth.summary;
+      authCard.appendChild(summaryP);
+
+      authCard.appendChild(createPillCluster(stageAuth.modes || [], activeAuthModeIdx, function (md) { return md.pill; }, null, function (md, idx) {
+        activeAuthModeIdx = idx;
+        renderMcpAuthSection();
+        syncAuthModeToSidePanel(true);
+      }));
+
+      var curMode = (stageAuth.modes && stageAuth.modes[activeAuthModeIdx]) || (stageAuth.modes && stageAuth.modes[0]);
+      if (curMode) {
+        authCard.appendChild(createLocalRemoteAuthSvg(curMode.id));
+      }
+      mcpAuthMount.appendChild(authCard);
+    }
+
+    function renderMcpBuildSection() {
+      mcpBuildMount.replaceChildren();
+      var buildCard = document.createElement("div");
+      buildCard.className = "nested-card";
+
+      var topRow = document.createElement("div");
+      topRow.className = "resource-title-row";
+      var titleStrong = document.createElement("strong");
+      titleStrong.className = "diagram-node-title";
+      titleStrong.textContent = "5 · Code Walkthrough: Build a Python MCP Server in 3 Steps (v1_local.py ➔ v2_remote.py ➔ v3_auth.py):";
+      topRow.appendChild(titleStrong);
+      buildCard.appendChild(topRow);
+
+      var summaryP = document.createElement("p");
+      summaryP.className = "resource-desc";
+      summaryP.textContent = stageBuild.summary;
+      buildCard.appendChild(summaryP);
+
+      buildCard.appendChild(createPillCluster(stageBuild.versions || [], activeBuildVerIdx, function (vr) { return vr.pill; }, null, function (vr, idx) {
+        activeBuildVerIdx = idx;
+        renderMcpBuildSection();
+        syncBuildVerToSidePanel(true);
+      }));
+
+      var curVer = (stageBuild.versions && stageBuild.versions[activeBuildVerIdx]) || (stageBuild.versions && stageBuild.versions[0]);
+      if (curVer) {
+        var takeawayP = document.createElement("p");
+        takeawayP.className = "resource-desc";
+        takeawayP.textContent = curVer.takeaway;
+        buildCard.appendChild(takeawayP);
+
         var codeView = document.createElement("div");
         codeView.className = "vocab-example-box";
         codeView.style.whiteSpace = "pre-wrap";
         codeView.textContent = curVer.code;
-        courseCard.appendChild(codeView);
+        buildCard.appendChild(codeView);
       }
-      host.appendChild(courseCard);
+      mcpBuildMount.appendChild(buildCard);
     }
 
-    function renderFivePatternsTab(host) {
+    function renderPatternsSection() {
+      patternsMount.replaceChildren();
       var patCard = document.createElement("div");
       patCard.className = "nested-card";
-      var leadP = document.createElement("p");
-      leadP.className = "resource-desc";
-      leadP.textContent = "Click any of the 5 communication patterns below to inspect how it works and when to use it in the Left Side Panel:";
-      patCard.appendChild(leadP);
+      var titleStrong = document.createElement("strong");
+      titleStrong.className = "diagram-node-title";
+      titleStrong.textContent = "6 · Quick Reference: REST API vs. Webhook vs. Streaming vs. Function Calling vs. MCP (click to compare):";
+      patCard.appendChild(titleStrong);
+
       patCard.appendChild(createPillCluster(fivePatterns, activePatternIdx, function (pt) { return pt.shortPill; }, function (pt) { return pt.icon; }, function (pt, idx) {
         activePatternIdx = idx;
-        render();
+        renderPatternsSection();
         showInspectorCard({ badgeText: pt.whoStarts, badgeClass: "badge-info", title: pt.shortPill, calloutText: "Best for: " + pt.bestFor, bodyText: pt.howItWorks, bannerText: pt.whenNotToUse }, true);
       }));
-      host.appendChild(patCard);
+
+      var curPat = fivePatterns[activePatternIdx] || fivePatterns[0];
+      if (curPat) {
+        var patSummary = document.createElement("div");
+        patSummary.className = "arch-mode-banner good-mode";
+        var patIcon = document.createElement("span");
+        patIcon.className = "material-symbols-outlined safety-icon";
+        patIcon.textContent = curPat.icon || "info";
+        var patText = document.createElement("span");
+        patText.textContent = curPat.shortPill + " — " + curPat.bestFor + " (" + curPat.howItWorks + ")";
+        patSummary.appendChild(patIcon);
+        patSummary.appendChild(patText);
+        patCard.appendChild(patSummary);
+      }
+      patternsMount.appendChild(patCard);
     }
 
-    render();
+    renderWaiterSection();
+    renderXraySection();
+    renderMcpHeroSection();
+    renderMcpLoopSection();
+    renderMcpAuthSection();
+    renderMcpBuildSection();
+    renderPatternsSection();
+
     if (waiterSteps[0]) {
       showApiWaiterStepInSidePanel(waiterSteps[0], false);
     }
-    card.appendChild(tabsBar);
     card.appendChild(workshopHost);
     container.appendChild(card);
   }

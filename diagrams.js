@@ -608,18 +608,66 @@
         }
       } else if (stop.diagramType === "app-infrastructure") {
         renderAppInfrastructureDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "database", {
+            mode: "flows",
+            flowIds: ["flow-connect-cloud-database", "flow-debug-chrome-devtools"],
+            badgeText: "Interactive step-by-step walkthroughs — Database & Front End",
+            title: "Step-by-step walkthroughs: Set up a Cloud Postgres database (Neon) & inspect the Front End (Chrome DevTools)",
+            subtitle: "Now that you know how the Front End (browser) and Database (SQL tables) fit together, walk through setting up a cloud Postgres database in Neon (and copying DATABASE_URL) or inspecting any webpage's Front End in Chrome DevTools."
+          });
+        }
       } else if (stop.diagramType === "git-living") {
         renderGitLivingDiagram(containerEl);
         renderToolsFlowDiagram(containerEl);
         if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "github", { showFlows: true, mode: "flows" });
+          window.renderInterfaceExplorer(containerEl, "github", {
+            mode: "flows",
+            flowIds: [
+              "flow-create-new-repo",
+              "flow-clone-repo",
+              "flow-save-commit-push",
+              "flow-deploy-vercel-env",
+              "flow-secrets-protection"
+            ],
+            badgeText: "Interactive step-by-step walkthroughs — Git, GitHub & Vercel deployment",
+            title: "Step-by-step walkthroughs: Create a GitHub repo, clone to VS Code, commit & push, and deploy to Vercel",
+            subtitle: "Pick any Git or cloud deployment walkthrough below and step through the exact buttons to click on real GitHub, VS Code Source Control, and Vercel screens with ◀ Previous / Next ▶."
+          });
         }
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "terminal", {
+            mode: "flows",
+            flowIds: ["flow-terminal-navigation"],
+            badgeText: "Interactive step-by-step walkthrough — Real Mac Terminal & VS Code Terminal",
+            title: "Step-by-step walkthrough: Navigate folders (pwd ➔ ls ➔ cd) & fix 'not a git repository' in Terminal",
+            subtitle: "Step through a real Mac Terminal window and VS Code's built-in Terminal panel to see how the prompt ('~ %'), 'pwd', 'ls', and 'cd' work in practice."
+          });
+        }
       } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
         window.renderPythonCodeDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "vscode", {
+            mode: "flows",
+            flowIds: ["flow-open-edit-run"],
+            badgeText: "Interactive step-by-step walkthrough — Reading & running Python in VS Code",
+            title: "Step-by-step walkthrough: Open a Python file (test.py), fix a bug, save & click ▷ Run in VS Code",
+            subtitle: "Step through opening a Python file in the VS Code Explorer, spotting and fixing a bug in 'def square(n):', saving with Cmd+S / Ctrl+S, and running it with the top-right ▷ Run button."
+          });
+        }
       } else if (stop.diagramType === "systems-agent-blueprint" && typeof window.renderSystemsAgentDiagram === "function") {
         window.renderSystemsAgentDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "vscode", {
+            mode: "flows",
+            flowIds: ["flow-connect-mcp-agent"],
+            badgeText: "Interactive step-by-step walkthrough — Connecting MCP Servers & AI Agents",
+            title: "Step-by-step walkthrough: Connect MCP Servers & database tools to your AI coding agent",
+            subtitle: "Step through where to find and connect MCP tool servers inside VS Code / Cursor Extensions, how to onboard your agent to a Neon Postgres database via MCP, and how to run the agent in your workspace."
+          });
+        }
       } else if (stop.diagramType === "reliability-breakages" && typeof window.renderReliabilityBreakagesSection === "function") {
         window.renderReliabilityBreakagesSection(containerEl);
       } else if (stop.diagramType === "opensource-shipping" && typeof window.renderOpenSourceShippingDiagram === "function") {
