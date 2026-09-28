@@ -536,7 +536,7 @@
         heroTitleRow.className = "resource-title-row";
         var heroStrong = document.createElement("strong");
         heroStrong.className = "diagram-node-title";
-        heroStrong.textContent = "Part A · How MCP builds on APIs: Brain-in-Gear vs. Puzzle Pieces & Before/After MCP Hub (hover or click):";
+        heroStrong.textContent = "Part A · API (Before MCP) vs. MCP (After MCP): Puzzle Pieces & Universal Hub (hover or click):";
         heroTitleRow.appendChild(heroStrong);
         heroTitleRow.appendChild(createVideoLinkRow([
           { label: "Watch: MCP Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },

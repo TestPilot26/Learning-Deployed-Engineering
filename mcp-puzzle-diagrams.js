@@ -239,22 +239,85 @@
       }));
 
       // ========================================================================
-      // ROW 1 (TOP): MCP (Brain-in-Gear) vs. API (3 Interlocking Puzzle Pieces)
+      // ROW 1 (TOP): API (3 Interlocking Puzzle Pieces — above Before MCP)
+      //              vs. MCP (Brain-in-Gear — above After MCP)
       // ========================================================================
+      var isApiConcept = activeHoverId === "concept-api" || activeHoverId === "before-mcp";
       var isMcpConcept = activeHoverId === "concept-mcp" || activeHoverId === "after-mcp-hub";
-      var isApiConcept = activeHoverId === "concept-api";
 
-      // Top-Left Card: MCP (Brain inside a Gear)
+      // Top-Left Card: API (3 Interlocking Jigsaw Puzzle Pieces — directly above Before MCP)
+      var apiCardG = svgEl("g", { class: "mcp-interactive-node" });
+      apiCardG.appendChild(svgEl("rect", {
+        x: "24", y: "18", width: "412", height: "188", rx: "14",
+        fill: isApiConcept ? "var(--color-primary-container)" : "var(--color-surface-container)",
+        stroke: isApiConcept ? "var(--color-primary)" : "var(--color-outline-variant)",
+        "stroke-width": isApiConcept ? "2.8" : "1.5"
+      }));
+
+      // 3 Interlocking Jigsaw Puzzle Pieces at (92, 114)
+      var puzzleG = svgEl("g", { transform: "translate(92, 114) scale(0.92)" });
+      // Piece 1 (Top piece — Your App)
+      puzzleG.appendChild(svgEl("path", {
+        d: "M -26 -48 L -7 -48 C -7 -58, 7 -58, 7 -48 L 26 -48 L 26 -29 C 36 -29, 36 -15, 26 -15 L 26 2 L -26 2 Z",
+        fill: "var(--color-tertiary-container)",
+        stroke: "var(--color-on-surface)",
+        "stroke-width": "2.5",
+        "stroke-linejoin": "round"
+      }));
+      // Piece 2 (Bottom-Left piece — API Connector locking into top & right)
+      puzzleG.appendChild(svgEl("path", {
+        d: "M -52 2 L -20 2 C -20 -9, -6 -9, -6 2 L 0 2 L 0 18 C 11 18, 11 32, 0 32 L 0 50 L -52 50 L -52 32 C -42 32, -42 18, -52 18 Z",
+        fill: "var(--color-error-container)",
+        stroke: "var(--color-on-surface)",
+        "stroke-width": "2.5",
+        "stroke-linejoin": "round"
+      }));
+      // Piece 3 (Bottom-Right piece — External Service locking into Piece 2's right tab)
+      puzzleG.appendChild(svgEl("path", {
+        d: "M 0 2 L 52 2 L 52 50 L 0 50 L 0 32 C 11 32, 11 18, 0 18 Z",
+        fill: "var(--color-secondary-container)",
+        stroke: "var(--color-on-surface)",
+        "stroke-width": "2.5",
+        "stroke-linejoin": "round"
+      }));
+      puzzleG.appendChild(svgText("Your App", { x: "0", y: "-20", "text-anchor": "middle", fill: "var(--color-on-tertiary-container)", "font-size": "9.5", "font-weight": "700" }));
+      puzzleG.appendChild(svgText("API", { x: "-25", y: "30", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "10.5", "font-weight": "700" }));
+      puzzleG.appendChild(svgText("External", { x: "27", y: "30", "text-anchor": "middle", fill: "var(--color-on-secondary-container)", "font-size": "9.5", "font-weight": "700" }));
+      apiCardG.appendChild(puzzleG);
+
+      // API Labels on right of Puzzle Pieces (left-aligned at x=156)
+      apiCardG.appendChild(svgText("API", { x: "156", y: "64", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "26", "font-weight": "700" }));
+      apiCardG.appendChild(svgText("Application Programming Interface", { x: "156", y: "88", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "14", "font-weight": "600" }));
+      apiCardG.appendChild(svgText("Interlocking Software Puzzle Pieces", { x: "156", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
+      apiCardG.appendChild(svgText("Lets two programs (e.g. Uber + Maps or", { x: "156", y: "138", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
+      apiCardG.appendChild(svgText("Expedia + Airlines) snap together", { x: "156", y: "156", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
+
+      apiCardG.addEventListener("mouseenter", function () {
+        if (activeHoverId !== "concept-api") {
+          activeHoverId = "concept-api";
+          renderGraphic(false);
+        }
+      });
+      apiCardG.addEventListener("click", function () {
+        activeHoverId = "concept-api";
+        renderGraphic(true);
+      });
+      svg.appendChild(apiCardG);
+
+      // Center vertical divider line
+      svg.appendChild(svgEl("line", { x1: "450", y1: "24", x2: "450", y2: "516", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
+
+      // Top-Right Card: MCP (Brain inside a Gear — directly above After MCP)
       var mcpCardG = svgEl("g", { class: "mcp-interactive-node" });
       mcpCardG.appendChild(svgEl("rect", {
-        x: "24", y: "18", width: "412", height: "188", rx: "14",
+        x: "464", y: "18", width: "412", height: "188", rx: "14",
         fill: isMcpConcept ? "var(--color-primary-container)" : "var(--color-surface-container)",
         stroke: isMcpConcept ? "var(--color-primary)" : "var(--color-outline-variant)",
         "stroke-width": isMcpConcept ? "2.8" : "1.5"
       }));
 
-      // Brain-in-Gear illustration at (94, 112)
-      var bgGearG = svgEl("g", { transform: "translate(94, 112) scale(0.88)" });
+      // Brain-in-Gear illustration at (534, 112)
+      var bgGearG = svgEl("g", { transform: "translate(534, 112) scale(0.88)" });
       bgGearG.appendChild(svgEl("circle", { cx: "0", cy: "0", r: "60", fill: "var(--color-surface-container-lowest)" }));
       // 8 gear teeth around a circle
       [0, 45, 90, 135, 180, 225, 270, 315].forEach(function (deg) {
@@ -290,12 +353,12 @@
       bgGearG.appendChild(svgEl("line", { x1: "1", y1: "-21", x2: "1", y2: "1", stroke: "var(--color-primary)", "stroke-width": "2" }));
       mcpCardG.appendChild(bgGearG);
 
-      // MCP Labels on right of Brain-in-Gear (left-aligned at x=160)
-      mcpCardG.appendChild(svgText("MCP", { x: "160", y: "64", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "26", "font-weight": "700" }));
-      mcpCardG.appendChild(svgText("Model Context Protocol", { x: "160", y: "88", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "14.5", "font-weight": "600" }));
-      mcpCardG.appendChild(svgText("Brain (AI Model) + Gear (Universal Plug)", { x: "160", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
-      mcpCardG.appendChild(svgText("One standard plug so any AI model can", { x: "160", y: "138", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
-      mcpCardG.appendChild(svgText("discover & run tools (hover or click)", { x: "160", y: "156", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
+      // MCP Labels on right of Brain-in-Gear (left-aligned at x=600)
+      mcpCardG.appendChild(svgText("MCP", { x: "600", y: "64", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "26", "font-weight": "700" }));
+      mcpCardG.appendChild(svgText("Model Context Protocol", { x: "600", y: "88", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "14.5", "font-weight": "600" }));
+      mcpCardG.appendChild(svgText("Brain (AI Model) + Gear (Universal Plug)", { x: "600", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
+      mcpCardG.appendChild(svgText("One standard plug so any AI model can", { x: "600", y: "138", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
+      mcpCardG.appendChild(svgText("discover & run tools (hover or click)", { x: "600", y: "156", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
 
       mcpCardG.addEventListener("mouseenter", function () {
         if (activeHoverId !== "concept-mcp") {
@@ -308,68 +371,6 @@
         renderGraphic(true);
       });
       svg.appendChild(mcpCardG);
-
-      // Center vertical divider line
-      svg.appendChild(svgEl("line", { x1: "450", y1: "24", x2: "450", y2: "516", stroke: "var(--color-outline-variant)", "stroke-width": "2" }));
-
-      // Top-Right Card: API (3 Interlocking Jigsaw Puzzle Pieces)
-      var apiCardG = svgEl("g", { class: "mcp-interactive-node" });
-      apiCardG.appendChild(svgEl("rect", {
-        x: "464", y: "18", width: "412", height: "188", rx: "14",
-        fill: isApiConcept ? "var(--color-primary-container)" : "var(--color-surface-container)",
-        stroke: isApiConcept ? "var(--color-primary)" : "var(--color-outline-variant)",
-        "stroke-width": isApiConcept ? "2.8" : "1.5"
-      }));
-
-      // 3 Interlocking Jigsaw Puzzle Pieces at (532, 114)
-      var puzzleG = svgEl("g", { transform: "translate(532, 114) scale(0.92)" });
-      // Piece 1 (Top Orange/Amber piece — Your App)
-      puzzleG.appendChild(svgEl("path", {
-        d: "M -26 -48 L -7 -48 C -7 -58, 7 -58, 7 -48 L 26 -48 L 26 -29 C 36 -29, 36 -15, 26 -15 L 26 2 L -26 2 Z",
-        fill: "var(--color-tertiary-container)",
-        stroke: "var(--color-on-surface)",
-        "stroke-width": "2.5",
-        "stroke-linejoin": "round"
-      }));
-      // Piece 2 (Bottom-Left Coral/Error-Container piece — API Connector with tabs locking into top & right!)
-      puzzleG.appendChild(svgEl("path", {
-        d: "M -52 2 L -20 2 C -20 -9, -6 -9, -6 2 L 0 2 L 0 18 C 11 18, 11 32, 0 32 L 0 50 L -52 50 L -52 32 C -42 32, -42 18, -52 18 Z",
-        fill: "var(--color-error-container)",
-        stroke: "var(--color-on-surface)",
-        "stroke-width": "2.5",
-        "stroke-linejoin": "round"
-      }));
-      // Piece 3 (Bottom-Right Sky Blue piece — External Service locking into Piece 2's right tab!)
-      puzzleG.appendChild(svgEl("path", {
-        d: "M 0 2 L 52 2 L 52 50 L 0 50 L 0 32 C 11 32, 11 18, 0 18 Z",
-        fill: "var(--color-secondary-container)",
-        stroke: "var(--color-on-surface)",
-        "stroke-width": "2.5",
-        "stroke-linejoin": "round"
-      }));
-      puzzleG.appendChild(svgText("Your App", { x: "0", y: "-20", "text-anchor": "middle", fill: "var(--color-on-tertiary-container)", "font-size": "9.5", "font-weight": "700" }));
-      puzzleG.appendChild(svgText("API", { x: "-25", y: "30", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "10.5", "font-weight": "700" }));
-      puzzleG.appendChild(svgText("External", { x: "27", y: "30", "text-anchor": "middle", fill: "var(--color-on-secondary-container)", "font-size": "9.5", "font-weight": "700" }));
-      apiCardG.appendChild(puzzleG);
-
-      // API Labels on right of Puzzle Pieces (left-aligned at x=596)
-      apiCardG.appendChild(svgText("API", { x: "596", y: "64", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "26", "font-weight": "700" }));
-      apiCardG.appendChild(svgText("Application Programming Interface", { x: "596", y: "88", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "14", "font-weight": "600" }));
-      apiCardG.appendChild(svgText("Interlocking Software Puzzle Pieces", { x: "596", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
-      apiCardG.appendChild(svgText("Lets two programs (e.g. Uber + Maps or", { x: "596", y: "138", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
-      apiCardG.appendChild(svgText("Expedia + Airlines) snap together", { x: "596", y: "156", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
-
-      apiCardG.addEventListener("mouseenter", function () {
-        if (activeHoverId !== "concept-api") {
-          activeHoverId = "concept-api";
-          renderGraphic(false);
-        }
-      });
-      apiCardG.addEventListener("click", function () {
-        activeHoverId = "concept-api";
-        renderGraphic(true);
-      });
-      svg.appendChild(apiCardG);
 
       // ========================================================================
       // ROW 2 (BOTTOM): "BEFORE MCP" vs. "AFTER MCP" INTERACTIVE GRAPHIC
