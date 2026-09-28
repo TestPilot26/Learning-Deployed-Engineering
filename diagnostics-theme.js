@@ -1,7 +1,7 @@
 // Deployed Eng Pipeline — Diagnostics, Theme Sync & Shared Utilities
 // Modularized to keep all source files well under the 800-line ceiling.
 
-var APP_BUILD = "2026-09-28m";
+var APP_BUILD = "2026-09-28n";
 
 // Automated stale-build cache invalidation
 (function () {

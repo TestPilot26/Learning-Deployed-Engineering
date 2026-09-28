@@ -377,8 +377,9 @@
   // ============================================================================
   // MAIN RENDERER: MOUNTED ON STEP 6 (SYSTEM DYNAMICS)
   // ============================================================================
-  function renderMcpAndEndpointsWorkshop(container) {
+  function renderMcpAndEndpointsWorkshop(container, options) {
     if (!container) return;
+    options = options || {};
     var d = getData();
     var waiterSteps = d.API_WAITER_STEPS || [];
     var endpointParts = d.ENDPOINT_PARTS || [];
@@ -400,17 +401,17 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Interactive visual guide & walkthroughs — click any diagram node or step to inspect in the Left Side Panel";
+    topBadge.textContent = "Interactive visual guide — click any diagram node to inspect in the side panel";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
     h3.className = "vocab-section-heading";
-    h3.textContent = "How APIs & Endpoints work (in 5 mins) — and how MCP Servers work & how to build one";
+    h3.textContent = "APIs vs. MCP: how your app and AI agents plug into other tools";
 
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "Walk through (1) What an API & Endpoint are (the Restaurant Waiter analogy + 7-part Endpoint X-Ray), (2) API (Before MCP) vs. MCP (After MCP), (3) the 4-Step MCP JSON Tool Loop, (4) Local stdio vs. Remote HTTP + OAuth 2.1, and (5) building a Python FastMCP server.";
+      "Start with the big picture: what an API is, what MCP adds, and how to connect an MCP server to your AI agent. Want to go further? Open the deep dive below for endpoints, the JSON tool loop, local vs. remote servers, and building your own.";
 
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
@@ -480,13 +481,52 @@
     var mcpBuildMount = document.createElement("div");
     var patternsMount = document.createElement("div");
 
-    workshopHost.appendChild(waiterMount);
-    workshopHost.appendChild(xrayMount);
     workshopHost.appendChild(mcpHeroMount);
-    workshopHost.appendChild(mcpLoopMount);
-    workshopHost.appendChild(mcpAuthMount);
-    workshopHost.appendChild(mcpBuildMount);
-    workshopHost.appendChild(patternsMount);
+
+    // Slot for content that should sit right under the API vs. MCP diagram
+    // (e.g. the "Connect MCP servers to your agent" walkthrough).
+    if (typeof options.afterHero === "function") {
+      var afterHeroMount = document.createElement("div");
+      workshopHost.appendChild(afterHeroMount);
+      options.afterHero(afterHeroMount);
+    }
+
+    // Collapsible "Building MCPs deep dive" — optional detail for learners who want more
+    var deepDiveToggle = document.createElement("button");
+    deepDiveToggle.type = "button";
+    deepDiveToggle.className = "nav-btn nav-btn-primary section-spacer";
+    deepDiveToggle.setAttribute("aria-expanded", "false");
+    var ddIcon = document.createElement("span");
+    ddIcon.className = "material-symbols-outlined";
+    ddIcon.textContent = "expand_more";
+    var ddLabel = document.createElement("span");
+    ddLabel.textContent = "Building MCPs deep dive";
+    deepDiveToggle.appendChild(ddLabel);
+    deepDiveToggle.appendChild(ddIcon);
+
+    var deepDiveHint = document.createElement("p");
+    deepDiveHint.className = "text-muted";
+    deepDiveHint.textContent = "Optional: the API waiter walkthrough, the 7 parts of an endpoint, the 4-step JSON tool loop, local vs. remote MCP & OAuth, building a Python MCP server, and all 5 communication patterns.";
+
+    var deepDiveHost = document.createElement("div");
+    deepDiveHost.style.display = "none";
+    deepDiveToggle.addEventListener("click", function () {
+      var open = deepDiveHost.style.display === "none";
+      deepDiveHost.style.display = open ? "" : "none";
+      deepDiveToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      ddIcon.textContent = open ? "expand_less" : "expand_more";
+      if (open && waiterSteps[0]) showApiWaiterStepInSidePanel(waiterSteps[activeWaiterIdx] || waiterSteps[0], false);
+    });
+
+    workshopHost.appendChild(deepDiveToggle);
+    workshopHost.appendChild(deepDiveHint);
+    workshopHost.appendChild(deepDiveHost);
+    deepDiveHost.appendChild(waiterMount);
+    deepDiveHost.appendChild(xrayMount);
+    deepDiveHost.appendChild(mcpLoopMount);
+    deepDiveHost.appendChild(mcpAuthMount);
+    deepDiveHost.appendChild(mcpBuildMount);
+    deepDiveHost.appendChild(patternsMount);
 
     function renderWaiterSection() {
       waiterMount.replaceChildren();
@@ -496,7 +536,7 @@
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "1A · What is an API? The Restaurant Waiter & Puzzle-Piece Walkthrough (hover or click each station):";
+      titleStrong.textContent = "1 · What is an API? The Restaurant Waiter & Puzzle-Piece Walkthrough (hover or click each station):";
       topRow.appendChild(titleStrong);
 
       var rightActions = document.createElement("div");
@@ -532,7 +572,7 @@
       topRow.className = "resource-title-row";
       var xrayTitle = document.createElement("strong");
       xrayTitle.className = "diagram-node-title";
-      xrayTitle.textContent = "1B · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
+      xrayTitle.textContent = "2 · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
       topRow.appendChild(xrayTitle);
 
       var nextEpBtn = document.createElement("button");
@@ -565,7 +605,7 @@
       heroTitleRow.className = "resource-title-row";
       var heroStrong = document.createElement("strong");
       heroStrong.className = "diagram-node-title";
-      heroStrong.textContent = "2 · API (Before MCP) vs. MCP (After MCP): Puzzle Pieces, Brain-in-Gear & Universal Hub (hover or click):";
+      heroStrong.textContent = "API (Before MCP) vs. MCP (After MCP) — hover or click any part:";
       heroTitleRow.appendChild(heroStrong);
       heroTitleRow.appendChild(createVideoLinkRow([
         { label: "Watch: MCP Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
@@ -761,9 +801,6 @@
     renderMcpBuildSection();
     renderPatternsSection();
 
-    if (waiterSteps[0]) {
-      showApiWaiterStepInSidePanel(waiterSteps[0], false);
-    }
     card.appendChild(workshopHost);
     container.appendChild(card);
   }

@@ -658,16 +658,18 @@
           });
         }
       } else if (stop.diagramType === "systems-agent-blueprint" && typeof window.renderSystemsAgentDiagram === "function") {
-        window.renderSystemsAgentDiagram(containerEl);
-        if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "vscode", {
-            mode: "flows",
-            flowIds: ["flow-connect-mcp-agent"],
-            badgeText: "Interactive step-by-step walkthrough — Connecting MCP Servers & AI Agents",
-            title: "Step-by-step walkthrough: Connect MCP Servers & database tools to your AI coding agent",
-            subtitle: "Step through where to find and connect MCP tool servers inside VS Code / Cursor Extensions, how to onboard your agent to a Neon Postgres database via MCP, and how to run the agent in your workspace."
-          });
-        }
+        window.renderSystemsAgentDiagram(containerEl, {
+          afterHero: function (slotEl) {
+            if (typeof window.renderInterfaceExplorer !== "function") return;
+            window.renderInterfaceExplorer(slotEl, "vscode", {
+              mode: "flows",
+              flowIds: ["flow-connect-mcp-agent"],
+              badgeText: "Interactive step-by-step walkthrough — Connecting MCP Servers & AI Agents",
+              title: "Step-by-step walkthrough: Connect MCP Servers & database tools to your AI coding agent",
+              subtitle: "Step through where to find and connect MCP tool servers inside VS Code / Cursor Extensions, how to onboard your agent to a Neon Postgres database via MCP, and how to run the agent in your workspace."
+            });
+          }
+        });
       } else if (stop.diagramType === "reliability-breakages" && typeof window.renderReliabilityBreakagesSection === "function") {
         window.renderReliabilityBreakagesSection(containerEl);
       } else if (stop.diagramType === "opensource-shipping" && typeof window.renderOpenSourceShippingDiagram === "function") {

@@ -555,18 +555,23 @@
     });
   }
 
-  function renderSystemsAgentDiagram(container) {
-    if (typeof window.renderMcpAndEndpointsWorkshop === "function") {
-      window.renderMcpAndEndpointsWorkshop(container);
-    }
+  // Order on Step 6: (1) how a button click / backend route / agent loop fit together,
+  // (2) API vs. MCP overview + options.afterHero walkthrough, (3) optional MCP deep dive.
+  function renderSystemsAgentDiagram(container, options) {
     var art = window.DiagramIllustrations;
-    if (!art) return;
+    if (art) buildSystemsLoopCard(container, art);
+    if (typeof window.renderMcpAndEndpointsWorkshop === "function") {
+      window.renderMcpAndEndpointsWorkshop(container, options || {});
+    }
+  }
+
+  function buildSystemsLoopCard(container, art) {
     buildInteractiveLoopCard(container, {
       skipInitialInspector: true,
       badgeClass: "badge-success",
       badgeText: "Inside your app's backend — click any stage to inspect in the side panel",
       title: "How button clicks, backend Python routes, AI agent loops & human approval fit together",
-      subtitle: "Once your APIs and MCP tools are wired up above, here is how a button click inside your app runs a backend Python function, updates your database, and pauses for Human-in-the-Loop confirmation before risky actions.",
+      subtitle: "Start here: how a button click inside your app runs a backend Python function, how an AI agent loops through tools, where your data lives, and why risky actions pause for human approval. Below, see how APIs and MCP connect all of this to outside tools.",
       defaultItemId: "sys-human-in-loop",
       itemsMap: SYSTEMS_AGENT_ITEMS,
       topStages: [
