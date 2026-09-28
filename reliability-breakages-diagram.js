@@ -21,42 +21,61 @@
     return el;
   }
 
-  // Side-by-side Before (Red: What breaks) vs. After (Green: How the fix works) SVG visual diagram
-  function createSideBySideComparisonSvg(item) {
+  // Interactive Side-by-side Before (Red: What breaks) vs. After (Blue/Green: How the fix works) SVG visual diagram
+  function createSideBySideComparisonSvg(item, activeFocus, onSelectSide) {
     var svg = svgEl("svg", {
-      viewBox: "0 0 860 220",
+      viewBox: "0 0 860 236",
       class: "mcp-vs-api-svg",
-      "aria-label": "Side-by-side diagram showing what breaks on the left and how the fix works on the right"
+      "aria-label": "Interactive side-by-side diagram showing what breaks on the left and how the fix works on the right"
     });
 
+    var isBreakFocus = activeFocus === "break";
+    var isFixFocus = activeFocus === "fix";
+
     // Left Half: WITHOUT PROTECTION (What breaks)
-    svg.appendChild(
+    var leftG = svgEl("g", { class: "mcp-interactive-node" });
+    leftG.appendChild(
       svgEl("rect", {
         x: "8",
         y: "8",
         width: "412",
-        height: "204",
+        height: "220",
         rx: "16",
         fill: "var(--color-error-container)",
         stroke: "var(--color-error)",
-        "stroke-width": "2"
+        "stroke-width": isBreakFocus ? "3.2" : "1.8"
       })
     );
 
-    svg.appendChild(
+    leftG.appendChild(
       svgText("✗ " + item.visualBefore.title, {
         x: "214",
-        y: "34",
+        y: "32",
         "text-anchor": "middle",
         fill: "var(--color-on-error-container)",
-        "font-size": "13.5",
+        "font-size": "13",
         "font-weight": "700"
       })
     );
 
+    // Animated vertical warning flow track on Left
+    var leftFlowPath = "M 214 68 L 214 176";
+    leftG.appendChild(
+      svgEl("path", {
+        d: leftFlowPath,
+        fill: "none",
+        stroke: "var(--color-error)",
+        "stroke-width": "2.5",
+        "stroke-dasharray": "4 3"
+      })
+    );
+    var leftDot = svgEl("circle", { r: "5", fill: "var(--color-error)" });
+    leftDot.appendChild(svgEl("animateMotion", { dur: "2.2s", repeatCount: "indefinite", path: leftFlowPath }));
+    leftG.appendChild(leftDot);
+
     [item.visualBefore.step1, item.visualBefore.step2, item.visualBefore.step3].forEach(function (stepTxt, idx) {
-      var y = 50 + idx * 52;
-      svg.appendChild(
+      var y = 46 + idx * 52;
+      leftG.appendChild(
         svgEl("rect", {
           x: "28",
           y: String(y),
@@ -65,61 +84,91 @@
           rx: "10",
           fill: "var(--color-surface-container-lowest)",
           stroke: "var(--color-error)",
-          "stroke-width": idx === 2 ? "2" : "1.2"
+          "stroke-width": idx === 2 ? "2.2" : "1.3"
         })
       );
-      svg.appendChild(
+      // Status indicator dot on left of step box
+      leftG.appendChild(
+        svgEl("circle", {
+          cx: "46",
+          cy: String(y + 19),
+          r: idx === 2 ? "6" : "4.5",
+          fill: idx === 2 ? "var(--color-error)" : "var(--color-error-container)",
+          stroke: "var(--color-error)",
+          "stroke-width": "1.5"
+        })
+      );
+      leftG.appendChild(
         svgText(stepTxt, {
-          x: "214",
+          x: "220",
           y: String(y + 24),
           "text-anchor": "middle",
           fill: "var(--color-on-surface)",
-          "font-size": "13",
+          "font-size": "12.5",
           "font-weight": idx === 2 ? "700" : "600"
         })
       );
-      if (idx < 2) {
-        svg.appendChild(
-          svgEl("line", {
-            x1: "214",
-            y1: String(y + 38),
-            x2: "214",
-            y2: String(y + 52),
-            stroke: "var(--color-error)",
-            "stroke-width": "2.5"
-          })
-        );
-      }
     });
 
+    leftG.appendChild(
+      svgText("Click to inspect fragile code & why it breaks in Left Panel ➔", {
+        x: "214",
+        y: "214",
+        "text-anchor": "middle",
+        fill: "var(--color-on-error-container)",
+        "font-size": "10.5",
+        "font-weight": "600"
+      })
+    );
+
+    leftG.addEventListener("click", function () {
+      if (typeof onSelectSide === "function") onSelectSide("break", true);
+    });
+    svg.appendChild(leftG);
+
     // Right Half: WITH THE FIX (How it works)
-    svg.appendChild(
+    var rightG = svgEl("g", { class: "mcp-interactive-node" });
+    rightG.appendChild(
       svgEl("rect", {
         x: "440",
         y: "8",
         width: "412",
-        height: "204",
+        height: "220",
         rx: "16",
         fill: "var(--color-primary-container)",
         stroke: "var(--color-primary)",
-        "stroke-width": "2"
+        "stroke-width": isFixFocus ? "3.2" : "1.8"
       })
     );
 
-    svg.appendChild(
+    rightG.appendChild(
       svgText("✓ " + item.visualAfter.title, {
         x: "646",
-        y: "34",
+        y: "32",
         "text-anchor": "middle",
         fill: "var(--color-on-primary-container)",
-        "font-size": "13.5",
+        "font-size": "13",
         "font-weight": "700"
       })
     );
 
+    // Animated vertical protected flow track on Right
+    var rightFlowPath = "M 646 68 L 646 176";
+    rightG.appendChild(
+      svgEl("path", {
+        d: rightFlowPath,
+        fill: "none",
+        stroke: "var(--color-primary)",
+        "stroke-width": "2.5"
+      })
+    );
+    var rightDot = svgEl("circle", { r: "5", fill: "var(--color-primary)" });
+    rightDot.appendChild(svgEl("animateMotion", { dur: "2.2s", repeatCount: "indefinite", path: rightFlowPath }));
+    rightG.appendChild(rightDot);
+
     [item.visualAfter.step1, item.visualAfter.step2, item.visualAfter.step3].forEach(function (stepTxt, idx) {
-      var y = 50 + idx * 52;
-      svg.appendChild(
+      var y = 46 + idx * 52;
+      rightG.appendChild(
         svgEl("rect", {
           x: "460",
           y: String(y),
@@ -128,32 +177,46 @@
           rx: "10",
           fill: "var(--color-surface-container-lowest)",
           stroke: "var(--color-primary)",
-          "stroke-width": idx === 2 ? "2" : "1.2"
+          "stroke-width": idx === 2 ? "2.2" : "1.3"
         })
       );
-      svg.appendChild(
+      rightG.appendChild(
+        svgEl("circle", {
+          cx: "478",
+          cy: String(y + 19),
+          r: idx === 2 ? "6" : "4.5",
+          fill: idx === 2 ? "var(--color-primary)" : "var(--color-primary-container)",
+          stroke: "var(--color-primary)",
+          "stroke-width": "1.5"
+        })
+      );
+      rightG.appendChild(
         svgText(stepTxt, {
-          x: "646",
+          x: "652",
           y: String(y + 24),
           "text-anchor": "middle",
           fill: "var(--color-on-surface)",
-          "font-size": "13",
+          "font-size": "12.5",
           "font-weight": idx === 2 ? "700" : "600"
         })
       );
-      if (idx < 2) {
-        svg.appendChild(
-          svgEl("line", {
-            x1: "646",
-            y1: String(y + 38),
-            x2: "646",
-            y2: String(y + 52),
-            stroke: "var(--color-primary)",
-            "stroke-width": "2.5"
-          })
-        );
-      }
     });
+
+    rightG.appendChild(
+      svgText("Click to inspect 3-step fix, protected code & AI prompt ➔", {
+        x: "646",
+        y: "214",
+        "text-anchor": "middle",
+        fill: "var(--color-on-primary-container)",
+        "font-size": "10.5",
+        "font-weight": "600"
+      })
+    );
+
+    rightG.addEventListener("click", function () {
+      if (typeof onSelectSide === "function") onSelectSide("fix", true);
+    });
+    svg.appendChild(rightG);
 
     return svg;
   }
@@ -164,7 +227,7 @@
 
     var items = data.SIMPLE_BREAKAGES;
     var activeIdx = 0;
-    var showCodeComparison = false;
+    var activeFocus = "fix";
 
     var card = document.createElement("div");
     card.className = "surface-card section-spacer diagram-shell-card";
@@ -178,7 +241,7 @@
     badgeRow.className = "badge-row";
     var topBadge = document.createElement("span");
     topBadge.className = "badge badge-info";
-    topBadge.textContent = "Interactive reliability & code safety guide — click any tab to inspect in the side panel";
+    topBadge.textContent = "Interactive reliability & code safety guide — click any scenario or diagram side to open the fix playbook";
     badgeRow.appendChild(topBadge);
 
     var h3 = document.createElement("h3");
@@ -188,7 +251,7 @@
     var subP = document.createElement("p");
     subP.className = "text-muted";
     subP.textContent =
-      "When you test an app by yourself on your laptop, almost everything seems to work. Click any of the 6 real-world situations below to see a side-by-side diagram of what goes wrong, the 3-step fix in the Left Side Panel, and a short video walkthrough.";
+      "The center diagram shows the everyday mental model and Before vs. After flow at a glance. Click either side of the diagram (or any scenario tab) to open the step-by-step code fix and AI editor prompt in the Left Side Panel.";
 
     titleCol.appendChild(badgeRow);
     titleCol.appendChild(h3);
@@ -196,45 +259,35 @@
     headerRow.appendChild(titleCol);
     card.appendChild(headerRow);
 
-    // --- 5 SIMPLE SCENARIO PILL BUTTONS ---
+    // --- 6 SCENARIO PILL BUTTONS ---
     var pillsBar = document.createElement("div");
     pillsBar.className = "diagram-pill-cluster";
 
     var stageHost = document.createElement("div");
     stageHost.className = "reliability-workshop-host";
 
-    function showBreakageInSidePanel(item, isUserClick) {
+    // Streamlined Left Side Panel: ZERO duplication of the on-screen headline or everyday analogy!
+    // Goes straight to: (1) What breaks & why, (2) 3-step engineering fix, (3) Fragile vs. Fixed code, (4) AI Editor Prompt.
+    function showBreakageInSidePanel(item, focusSide, isUserClick) {
       if (!window.PipelineAgent || typeof window.PipelineAgent.showInspector !== "function") return;
       window.PipelineAgent.showInspector(
         function (inspectorEl) {
           inspectorEl.replaceChildren();
 
           var topRow = document.createElement("div");
-          topRow.className = "resource-title-row";
+          topRow.className = "badge-row";
           var b = document.createElement("span");
-          b.className = "badge badge-danger";
-          b.textContent = item.tabLabel;
+          b.className = focusSide === "break" ? "badge badge-danger" : "badge badge-success";
+          b.textContent = "Fix Playbook · " + item.tabLabel;
           topRow.appendChild(b);
           inspectorEl.appendChild(topRow);
 
-          var h4 = document.createElement("h4");
-          h4.textContent = item.headline;
-          inspectorEl.appendChild(h4);
-
-          var analogyBox = document.createElement("div");
-          analogyBox.className = "nested-card";
-          var analogyP = document.createElement("p");
-          analogyP.className = "resource-desc";
-          analogyP.textContent = "Everyday analogy: " + item.analogy;
-          analogyBox.appendChild(analogyP);
-          inspectorEl.appendChild(analogyBox);
-
-          // 1. What could break
+          // 1. What could break (Symptom + Root cause)
           var breakCard = document.createElement("div");
           breakCard.className = "nested-card";
           var bBadge = document.createElement("span");
           bBadge.className = "badge badge-danger";
-          bBadge.textContent = "1. What could break";
+          bBadge.textContent = "1. What breaks & root cause";
           breakCard.appendChild(bBadge);
 
           var bList = document.createElement("ul");
@@ -254,12 +307,12 @@
           breakCard.appendChild(bList);
           inspectorEl.appendChild(breakCard);
 
-          // 2. How to fix it
+          // 2. How to fix it (3 concrete steps)
           var fixCard = document.createElement("div");
           fixCard.className = "nested-card";
           var fBadge = document.createElement("span");
           fBadge.className = "badge badge-success";
-          fBadge.textContent = "2. How to fix it";
+          fBadge.textContent = "2. How to fix it (3-step checklist)";
           fixCard.appendChild(fBadge);
 
           var fList = document.createElement("ul");
@@ -279,38 +332,55 @@
           fixCard.appendChild(fList);
           inspectorEl.appendChild(fixCard);
 
-          // 3. Plain-English translator
-          var jargonBox = document.createElement("div");
-          jargonBox.className = "nested-card";
-          var jTitle = document.createElement("strong");
-          jTitle.textContent = "Plain-English translator:";
-          jargonBox.appendChild(jTitle);
+          // 3. 4-line code comparison (Fragile vs. Protected)
+          var codeDiffCard = document.createElement("div");
+          codeDiffCard.className = "nested-card";
+          var codeBadge = document.createElement("span");
+          codeBadge.className = "badge badge-info";
+          codeBadge.textContent = "3. Code comparison (Fragile vs. Fixed)";
+          codeDiffCard.appendChild(codeBadge);
 
-          var jList = document.createElement("ul");
-          jList.className = "bullet-list";
-          item.jargonPills.forEach(function (jp) {
-            var li = document.createElement("li");
-            li.className = "bullet-item";
-            var ic = document.createElement("span");
-            ic.className = "material-symbols-outlined bullet-icon";
-            ic.textContent = "translate";
-            var sp = document.createElement("span");
-            var st = document.createElement("strong");
-            st.textContent = jp.word + " = ";
-            sp.appendChild(st);
-            sp.appendChild(document.createTextNode(jp.plain));
-            li.appendChild(ic);
-            li.appendChild(sp);
-            jList.appendChild(li);
-          });
-          jargonBox.appendChild(jList);
-          inspectorEl.appendChild(jargonBox);
-
-          // 4. 4-line code comparison
           var badPre = document.createElement("div");
-          badPre.className = "vocab-example-box";
-          badPre.textContent = "# Fragile code (What breaks):\n" + item.badCode + "\n\n# Fixed code (With protection):\n" + item.goodCode;
-          inspectorEl.appendChild(badPre);
+          badPre.className = "vocab-example-box pre-line-text";
+          badPre.textContent = item.badCode + "\n\n" + item.goodCode;
+          codeDiffCard.appendChild(badPre);
+          inspectorEl.appendChild(codeDiffCard);
+
+          // 4. Copyable AI Editor Instruction inside the playbook
+          var promptCard = document.createElement("div");
+          promptCard.className = "nested-card";
+          var pBadge = document.createElement("span");
+          pBadge.className = "badge badge-secondary";
+          pBadge.textContent = "4. Prompt to paste into Cursor / Claude Code";
+          promptCard.appendChild(pBadge);
+
+          var promptText = document.createElement("p");
+          promptText.className = "resource-desc";
+          promptText.textContent = "\"" + item.aiPrompt + "\"";
+          promptCard.appendChild(promptText);
+
+          var copyBtn = document.createElement("button");
+          copyBtn.type = "button";
+          copyBtn.className = "nav-btn nav-btn-primary";
+          var cpIc = document.createElement("span");
+          cpIc.className = "material-symbols-outlined btn-icon-sm";
+          cpIc.textContent = "content_copy";
+          var cpTxt = document.createElement("span");
+          cpTxt.textContent = "Copy instruction for your AI editor";
+          copyBtn.appendChild(cpIc);
+          copyBtn.appendChild(cpTxt);
+          copyBtn.addEventListener("click", function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(item.aiPrompt).then(function () {
+                cpTxt.textContent = "Copied prompt!";
+                setTimeout(function () {
+                  cpTxt.textContent = "Copy instruction for your AI editor";
+                }, 2000);
+              });
+            }
+          });
+          promptCard.appendChild(copyBtn);
+          inspectorEl.appendChild(promptCard);
         },
         { autoOpen: Boolean(isUserClick), pulse: Boolean(isUserClick), itemTitle: item.tabLabel }
       );
@@ -339,7 +409,7 @@
       stageHost.replaceChildren();
       var item = items[activeIdx];
 
-      // Headline + Everyday Analogy + Side-by-Side Visual Diagram + Video/Guide Action Bar
+      // Center Canvas: Headline + Everyday Analogy + Interactive Before/After Diagram + Inline Jargon Pills + Video/Guide Links
       var visualBox = document.createElement("div");
       visualBox.className = "nested-card";
 
@@ -356,9 +426,25 @@
       analogyP.appendChild(document.createTextNode(item.analogy));
       visualBox.appendChild(analogyP);
 
-      visualBox.appendChild(createSideBySideComparisonSvg(item));
+      visualBox.appendChild(
+        createSideBySideComparisonSvg(item, activeFocus, function (side, clicked) {
+          activeFocus = side;
+          renderActive(clicked);
+        })
+      );
 
-      // Action buttons: Watch Video + Read Guide + Copy Prompt + Open full breakdown in left panel
+      // Inline Plain-English Jargon Translator strip on the Center Canvas (so terms are decoded at a glance)
+      var jargonStrip = document.createElement("div");
+      jargonStrip.className = "diagram-pill-cluster";
+      item.jargonPills.forEach(function (jp) {
+        var pill = document.createElement("span");
+        pill.className = "badge badge-neutral";
+        pill.textContent = jp.word + " = " + jp.plain;
+        jargonStrip.appendChild(pill);
+      });
+      visualBox.appendChild(jargonStrip);
+
+      // Video & Guide links row
       var actionsCluster = document.createElement("div");
       actionsCluster.className = "diagram-pill-cluster";
 
@@ -390,32 +476,25 @@
       guideLink.appendChild(gIc);
       actionsCluster.appendChild(guideLink);
 
-      var copyBtn = document.createElement("button");
-      copyBtn.type = "button";
-      copyBtn.className = "diagram-label-pill";
-      var cpIc = document.createElement("span");
-      cpIc.className = "material-symbols-outlined diagram-pill-icon";
-      cpIc.textContent = "content_copy";
-      var cpTxt = document.createElement("span");
-      cpTxt.textContent = "Copy instruction for your AI editor";
-      copyBtn.appendChild(cpIc);
-      copyBtn.appendChild(cpTxt);
-      copyBtn.addEventListener("click", function () {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(item.aiPrompt).then(function () {
-            cpTxt.textContent = "Copied prompt!";
-            setTimeout(function () {
-              cpTxt.textContent = "Copy instruction for your AI editor";
-            }, 2000);
-          });
-        }
+      var inspectBtn = document.createElement("button");
+      inspectBtn.type = "button";
+      inspectBtn.className = "diagram-label-pill";
+      var inIc = document.createElement("span");
+      inIc.className = "material-symbols-outlined diagram-pill-icon";
+      inIc.textContent = "code_blocks";
+      var inTxt = document.createElement("span");
+      inTxt.textContent = "Open code fix & AI prompt in Left Panel";
+      inspectBtn.appendChild(inIc);
+      inspectBtn.appendChild(inTxt);
+      inspectBtn.addEventListener("click", function () {
+        showBreakageInSidePanel(item, activeFocus, true);
       });
-      actionsCluster.appendChild(copyBtn);
+      actionsCluster.appendChild(inspectBtn);
 
       visualBox.appendChild(actionsCluster);
       stageHost.appendChild(visualBox);
 
-      showBreakageInSidePanel(item, Boolean(isUserClick));
+      showBreakageInSidePanel(item, activeFocus, Boolean(isUserClick));
     }
 
     renderActive(false);

@@ -635,19 +635,17 @@
         h4.textContent = opt.name;
         titleWrap.appendChild(h4);
 
-        var diffBox = document.createElement("div");
-        diffBox.className = "nested-card";
-        var diffTitle = document.createElement("strong");
-        diffTitle.textContent = "How this option differs";
-        var diffP = document.createElement("p");
-        diffP.className = "resource-desc";
-        diffP.textContent = opt.oneLiner;
-        diffBox.appendChild(diffTitle);
-        diffBox.appendChild(diffP);
-
+        // Streamlined Left Side Panel: ZERO duplication of the 1-line summary or download button already on the row!
+        var whatCard = document.createElement("div");
+        whatCard.className = "nested-card";
+        var whatBadge = document.createElement("span");
+        whatBadge.className = "badge badge-info";
+        whatBadge.textContent = "1. What it is & how it works";
         var descP = document.createElement("p");
         descP.className = "resource-desc pre-line-text";
         descP.textContent = opt.whatItIs;
+        whatCard.appendChild(whatBadge);
+        whatCard.appendChild(descP);
 
         var whenBox = document.createElement("div");
         whenBox.className = "arch-mode-banner good-mode";
@@ -659,30 +657,44 @@
         whenBox.appendChild(wIcon);
         whenBox.appendChild(wText);
 
+        var cmdCard = document.createElement("div");
+        cmdCard.className = "nested-card";
+        var cmdBadge = document.createElement("span");
+        cmdBadge.className = "badge badge-secondary";
+        cmdBadge.textContent = "2. Quick-start setup / command";
         var cmdBox = document.createElement("div");
         cmdBox.className = "vocab-example-box pre-line-text";
         cmdBox.textContent = opt.setupCommand;
+        cmdCard.appendChild(cmdBadge);
+        cmdCard.appendChild(cmdBox);
 
-        var linkBtn = document.createElement("a");
-        linkBtn.className = "nav-btn nav-btn-primary";
-        linkBtn.href = opt.url;
-        linkBtn.target = "_blank";
-        linkBtn.rel = "noopener noreferrer";
-        var linkTxt = document.createElement("span");
-        linkTxt.textContent = opt.actionLabel + " (" + opt.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0] + ")";
-        var linkIc = document.createElement("span");
-        linkIc.className = "material-symbols-outlined btn-icon-sm";
-        linkIc.textContent = "open_in_new";
-        linkBtn.appendChild(linkTxt);
-        linkBtn.appendChild(linkIc);
+        var copyCmdBtn = document.createElement("button");
+        copyCmdBtn.type = "button";
+        copyCmdBtn.className = "diagram-label-pill";
+        var cpIc = document.createElement("span");
+        cpIc.className = "material-symbols-outlined diagram-pill-icon";
+        cpIc.textContent = "content_copy";
+        var cpTxt = document.createElement("span");
+        cpTxt.textContent = "Copy setup snippet";
+        copyCmdBtn.appendChild(cpIc);
+        copyCmdBtn.appendChild(cpTxt);
+        copyCmdBtn.addEventListener("click", function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(opt.setupCommand).then(function () {
+              cpTxt.textContent = "Copied!";
+              setTimeout(function () {
+                cpTxt.textContent = "Copy setup snippet";
+              }, 1800);
+            });
+          }
+        });
+        cmdCard.appendChild(copyCmdBtn);
 
         inspectorEl.appendChild(topRow);
         inspectorEl.appendChild(titleWrap);
-        inspectorEl.appendChild(diffBox);
-        inspectorEl.appendChild(descP);
+        inspectorEl.appendChild(whatCard);
         inspectorEl.appendChild(whenBox);
-        inspectorEl.appendChild(cmdBox);
-        inspectorEl.appendChild(linkBtn);
+        inspectorEl.appendChild(cmdCard);
       },
       {
         itemTitle: opt.name,

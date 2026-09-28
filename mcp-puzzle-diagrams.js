@@ -206,13 +206,23 @@
       svgHost.replaceChildren();
       var info = DETAIL_MAP[activeHoverId] || DETAIL_MAP["after-mcp-hub"];
 
+      var WIRE_TRACE_LABELS = {
+        "concept-mcp": "Active path: AI Brain ➔ Mechanical Gear (MCP) ➔ External Tools (Click card for code & details in Left Panel)",
+        "concept-api": "Active path: Your App (Top Piece) ⟷ API Connector (Left Piece) ⟷ External Service (Right Piece) — Click for details",
+        "before-mcp": "Active path: LLM ⟷ 3 separate 'Unique API' wires to Slack, Google Drive & GitHub (Click to inspect in Left Panel)",
+        "after-mcp-hub": "Active path: LLM ⟷ 1 'Unified API' ⟷ Model Context Protocol (MCP) Hub ⟷ Slack / Drive / GitHub (Click to inspect)",
+        "app-slack": "Active path: LLM ⟷ Unified API ⟷ MCP Hub ⟷ Slack Unique API (Click Slack icon for MCP tool JSON in Left Panel)",
+        "app-drive": "Active path: LLM ⟷ Unified API ⟷ MCP Hub ⟷ Google Drive Unique API (Click Drive icon for MCP tool JSON)",
+        "app-github": "Active path: LLM ⟷ Unified API ⟷ MCP Hub ⟷ GitHub Unique API (Click GitHub icon for MCP tool JSON)"
+      };
+
       statusBanner.replaceChildren();
       var sbBadge = document.createElement("span");
       sbBadge.className = "badge " + info.badgeClass;
       sbBadge.textContent = info.badge;
       var sbText = document.createElement("span");
       sbText.className = "mcp-hover-status-text";
-      sbText.textContent = info.title + " — " + info.analogy;
+      sbText.textContent = WIRE_TRACE_LABELS[activeHoverId] || WIRE_TRACE_LABELS["after-mcp-hub"];
       statusBanner.appendChild(sbBadge);
       statusBanner.appendChild(sbText);
 
