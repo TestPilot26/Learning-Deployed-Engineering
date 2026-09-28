@@ -600,6 +600,9 @@
       }
       containerEl.style.display = "block";
       if (stop.diagramType === "tools-flow") {
+        if (typeof window.renderToolkitMap === "function") {
+          window.renderToolkitMap(containerEl);
+        }
         if (typeof window.renderToolsDownloadDirectory === "function") {
           window.renderToolsDownloadDirectory(containerEl);
         }
