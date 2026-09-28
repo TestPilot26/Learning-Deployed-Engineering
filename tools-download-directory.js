@@ -26,7 +26,11 @@
       "aria-hidden": "true"
     });
 
-    if (iconId === "vscode") {
+    if (iconId === "antigravity") {
+      svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-primary-container)" }));
+      svg.appendChild(svgEl("path", { d: "M 20 7 L 31 29 L 25.5 29 L 20 17.5 L 14.5 29 L 9 29 Z", fill: "var(--color-primary)" }));
+      svg.appendChild(svgEl("path", { d: "M 20 11 C 20 15, 22.5 17.5, 26.5 17.5 C 22.5 17.5, 20 20, 20 24 C 20 20, 17.5 17.5, 13.5 17.5 C 17.5 17.5, 20 15, 20 11 Z", fill: "var(--color-tertiary)" }));
+    } else if (iconId === "vscode") {
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-primary-container)" }));
       svg.appendChild(svgEl("path", { d: "M 27 8 L 32 10.5 L 32 29.5 L 27 32 L 15 21.5 L 10 25.5 L 7.5 24 L 7.5 16 L 10 14.5 L 15 18.5 Z", fill: "var(--color-primary)" }));
       svg.appendChild(svgEl("path", { d: "M 27 13.5 L 19 20 L 27 26.5 Z", fill: "var(--color-surface-container-lowest)" }));
@@ -51,13 +55,7 @@
     } else if (iconId === "claude") {
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-error-container)" }));
       [0, 30, 60, 90, 120, 150].forEach(function (deg) {
-        svg.appendChild(svgEl("line", {
-          x1: "20", y1: "8", x2: "20", y2: "32",
-          stroke: "var(--color-on-error-container)",
-          "stroke-width": "2.8",
-          "stroke-linecap": "round",
-          transform: "rotate(" + deg + " 20 20)"
-        }));
+        svg.appendChild(svgEl("line", { x1: "20", y1: "8", x2: "20", y2: "32", stroke: "var(--color-on-error-container)", "stroke-width": "2.8", "stroke-linecap": "round", transform: "rotate(" + deg + " 20 20)" }));
       });
     } else if (iconId === "copilot") {
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-primary-container)" }));
@@ -97,10 +95,7 @@
       svg.appendChild(svgEl("circle", { cx: "25", cy: "20", r: "2.5", fill: "var(--color-surface-container-lowest)" }));
     } else if (iconId === "github") {
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-on-surface)" }));
-      svg.appendChild(svgEl("path", {
-        d: "M 20 8 C 13.4 8 8 13.4 8 20 C 8 25.3 11.4 29.8 16.2 31.4 C 16.8 31.5 17 31.1 17 30.8 L 17 28.6 C 13.7 29.3 13 27 13 27 C 12.5 25.6 11.7 25.3 11.7 25.3 C 10.6 24.6 11.8 24.6 11.8 24.6 C 13 24.7 13.6 25.8 13.6 25.8 C 14.7 27.6 16.4 27.1 17.1 26.8 C 17.2 26 17.5 25.5 17.9 25.2 C 15.2 24.9 12.4 23.9 12.4 19.3 C 12.4 18 12.9 16.9 13.6 16.1 C 13.5 15.8 13.1 14.5 13.7 12.9 C 13.7 12.9 14.7 12.6 17 14.1 C 18 13.8 19 13.7 20 13.7 C 21 13.7 22 13.8 23 14.1 C 25.3 12.6 26.3 12.9 26.3 12.9 C 26.9 14.5 26.5 15.8 26.4 16.1 C 27.1 16.9 27.6 18 27.6 19.3 C 27.6 23.9 24.8 24.9 22.1 25.2 C 22.6 25.6 23 26.4 23 27.6 L 23 30.8 C 23 31.1 23.2 31.5 23.8 31.4 C 28.6 29.8 32 25.3 32 20 C 32 13.4 26.6 8 20 8 Z",
-        fill: "var(--color-surface-container-lowest)"
-      }));
+      svg.appendChild(svgEl("path", { d: "M 20 8 C 13.4 8 8 13.4 8 20 C 8 25.3 11.4 29.8 16.2 31.4 C 16.8 31.5 17 31.1 17 30.8 L 17 28.6 C 13.7 29.3 13 27 13 27 C 12.5 25.6 11.7 25.3 11.7 25.3 C 10.6 24.6 11.8 24.6 11.8 24.6 C 13 24.7 13.6 25.8 13.6 25.8 C 14.7 27.6 16.4 27.1 17.1 26.8 C 17.2 26 17.5 25.5 17.9 25.2 C 15.2 24.9 12.4 23.9 12.4 19.3 C 12.4 18 12.9 16.9 13.6 16.1 C 13.5 15.8 13.1 14.5 13.7 12.9 C 13.7 12.9 14.7 12.6 17 14.1 C 18 13.8 19 13.7 20 13.7 C 21 13.7 22 13.8 23 14.1 C 25.3 12.6 26.3 12.9 26.3 12.9 C 26.9 14.5 26.5 15.8 26.4 16.1 C 27.1 16.9 27.6 18 27.6 19.3 C 27.6 23.9 24.8 24.9 22.1 25.2 C 22.6 25.6 23 26.4 23 27.6 L 23 30.8 C 23 31.1 23.2 31.5 23.8 31.4 C 28.6 29.8 32 25.3 32 20 C 32 13.4 26.6 8 20 8 Z", fill: "var(--color-surface-container-lowest)" }));
     } else if (iconId === "gitlab") {
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-error-container)" }));
       svg.appendChild(svgEl("polygon", { points: "12,9 16,20 8,20", fill: "var(--color-error)" }));
@@ -140,7 +135,6 @@
         svg.appendChild(svgEl("line", { x1: String(x), y1: "11", x2: String(x), y2: "29", stroke: "var(--color-primary)", "stroke-width": "2.4", "stroke-linecap": "round" }));
       });
     } else {
-      // cloudrun
       svg.appendChild(svgEl("rect", { x: "2", y: "2", width: "36", height: "36", rx: "10", fill: "var(--color-primary-container)" }));
       svg.appendChild(svgEl("polygon", { points: "12,11 28,20 12,29 16,20", fill: "var(--color-primary)" }));
       svg.appendChild(svgEl("polygon", { points: "19,11 33,20 19,29 23,20", fill: "var(--color-tertiary)" }));
@@ -154,24 +148,46 @@
       title: "1. Get a coding environment (Code editors, IDEs & notebooks)",
       badge: "Piece 1 of 6 · Pick 1 to start",
       badgeClass: "badge-info",
-      whatItDoes:
-        "Where you open your project folder, edit plain-text code files (instead of Word or Google Docs, which inject hidden formatting that breaks code), and run a built-in terminal.",
+      whatItDoes: "Where you open your project folder, edit plain-text code files (instead of Word or Google Docs, which inject hidden formatting that breaks code), and run a built-in terminal.",
       options: [
+        {
+          id: "dl-antigravity",
+          iconId: "antigravity",
+          name: "Antigravity (by Google)",
+          tag: "Recommended · Agent-first IDE",
+          tagClass: "badge-success",
+          url: "https://antigravity.google/",
+          actionLabel: "Get Antigravity",
+          oneLiner: "Google's agentic coding IDE (built on VS Code) where Gemini agents plan tasks, edit multi-file codebases, run terminal commands, and verify live web previews alongside you.",
+          whatItIs: "Antigravity combines the familiar VS Code editor, file tree, and integrated terminal with an agentic workspace: Gemini agents can plan multi-step features, edit files across your repo, run terminal tests, and inspect live browser previews in one window.",
+          whenToPick: "Pick Antigravity if you want an AI-native desktop IDE powered by Gemini that handles both hands-on code editing and autonomous multi-step engineering tasks.",
+          setupCommand: "# Download from antigravity.google and open your project folder\n# Use the Agent sidebar to plan, edit & verify changes"
+        },
         {
           id: "dl-vscode",
           iconId: "vscode",
           name: "VS Code (Visual Studio Code)",
-          tag: "Recommended starter · Free IDE",
+          tag: "Recommended starter · Universal free IDE",
           tagClass: "badge-success",
           url: "https://code.visualstudio.com/Download",
           actionLabel: "Download VS Code",
-          oneLiner:
-            "The free, universal code editor with a file tree, plain-text editor, and built-in terminal; best all-around starting point.",
-          whatItIs:
-            "Visual Studio Code (VS Code) is the world's most widely used free code editor. It shows your project's folder tree on the left, your plain-text code files in the center, and your built-in Terminal at the bottom (Ctrl+` or Cmd+`).",
-          whenToPick:
-            "Pick VS Code if you want the standard, industry-wide editor that matches 95% of tutorials and lets you plug in any AI extension (Copilot, Claude Code, Gemini).",
-          setupCommand: "# Or install via Homebrew on Mac:\nbrew install --cask visual-studio-code"
+          oneLiner: "The free, universal code editor with a file tree, plain-text editor, and built-in terminal; pairs with any CLI or extension agent.",
+          whatItIs: "Visual Studio Code (VS Code) is the world's most widely used free code editor. It shows your project's folder tree on the left, your plain-text code files in the center, and your built-in Terminal at the bottom (Ctrl+` or Cmd+`).",
+          whenToPick: "Pick VS Code if you want the standard, industry-wide editor that matches 95% of tutorials and lets you run Gemini CLI, Claude Code, or Copilot inside it.",
+          setupCommand: "brew install --cask visual-studio-code"
+        },
+        {
+          id: "dl-colab",
+          iconId: "colab",
+          name: "Google Colab",
+          tag: "Zero-install browser Python & AI notebook",
+          tagClass: "badge-info",
+          url: "https://colab.research.google.com/",
+          actionLabel: "Open Colab",
+          oneLiner: "Zero-install Python & AI lab notebook in your browser with free cloud GPUs and built-in Gemini assistance; best for data analysis and quick scripts.",
+          whatItIs: "Google Colaboratory (Colab) is a free Jupyter Notebook that runs inside Chrome on Google's cloud computers. You write Python in small clickable blocks ('cells') and press Shift+Enter to run one block at a time and see charts immediately.",
+          whenToPick: "Pick Google Colab when you want to analyze a CSV spreadsheet, test the Gemini API, or learn Python without installing anything on your laptop.",
+          setupCommand: "# No install needed — runs in your browser at colab.research.google.com"
         },
         {
           id: "dl-cursor",
@@ -181,13 +197,10 @@
           tagClass: "badge-info",
           url: "https://www.cursor.com/",
           actionLabel: "Download Cursor",
-          oneLiner:
-            "Built directly on top of VS Code, with an AI coding agent baked into the editor that can edit multiple files at once.",
-          whatItIs:
-            "Cursor is a fork of VS Code—meaning every button, shortcut, and extension is identical to VS Code—with a built-in AI Agent sidebar (Cmd+I / Ctrl+I) that can read your whole project folder and apply multi-file edits.",
-          whenToPick:
-            "Pick Cursor if you want an all-in-one desktop editor where the AI chat and multi-file agent are built right in without configuring extensions.",
-          setupCommand: "# Import your VS Code settings in 1 click on first launch\n# Press Cmd+I (Mac) or Ctrl+I (Windows) to open the Agent"
+          oneLiner: "Built on top of VS Code, with an AI coding agent baked into the editor sidebar that can edit multiple files at once.",
+          whatItIs: "Cursor is a fork of VS Code—meaning every button, shortcut, and extension is identical to VS Code—with a built-in AI Agent sidebar (Cmd+I / Ctrl+I) that can read your project folder and apply multi-file edits.",
+          whenToPick: "Pick Cursor if you want a VS Code-compatible desktop editor with built-in multi-model chat and agent mode.",
+          setupCommand: "# Press Cmd+I (Mac) or Ctrl+I (Windows) to open the Agent"
         },
         {
           id: "dl-windsurf",
@@ -197,29 +210,10 @@
           tagClass: "badge-secondary",
           url: "https://windsurf.com/",
           actionLabel: "Download Windsurf",
-          oneLiner:
-            "VS Code-based AI editor featuring 'Cascade,' an agentic sidebar that tracks your terminal commands and file edits together.",
-          whatItIs:
-            "Windsurf (by Codeium) is another VS Code-compatible desktop IDE designed around 'Cascade'—a collaborative flow where the AI watches what you run in the terminal and edits files alongside you.",
-          whenToPick:
-            "Pick Windsurf if you like Cursor's all-in-one IDE style and want a streamlined agent sidebar that automatically follows your recent edits.",
+          oneLiner: "VS Code-based AI editor featuring 'Cascade,' an agentic sidebar that tracks your terminal commands and file edits together.",
+          whatItIs: "Windsurf is another VS Code-compatible desktop IDE designed around 'Cascade'—a collaborative flow where the AI watches what you run in the terminal and edits files alongside you.",
+          whenToPick: "Pick Windsurf if you want a streamlined agent sidebar that automatically follows your recent terminal and editor actions.",
           setupCommand: "# Download from windsurf.com and open any local project folder"
-        },
-        {
-          id: "dl-colab",
-          iconId: "colab",
-          name: "Google Colab",
-          tag: "Browser Python notebook",
-          tagClass: "badge-secondary",
-          url: "https://colab.research.google.com/",
-          actionLabel: "Open Colab",
-          oneLiner:
-            "Zero-install Python & AI lab notebook in your browser with free cloud GPUs; best for data analysis and quick scripts without building a web app.",
-          whatItIs:
-            "Google Colaboratory (Colab) is a free Jupyter Notebook that runs inside Chrome on Google's cloud computers. You write Python in small clickable blocks ('cells') and press Shift+Enter to run one block at a time and see charts immediately.",
-          whenToPick:
-            "Pick Google Colab when you want to analyze a CSV spreadsheet, test an AI API, or learn Python without installing anything on your laptop.",
-          setupCommand: "# No install needed — runs in your browser!\n# Press Shift + Enter inside any code cell to run it"
         },
         {
           id: "dl-replit",
@@ -229,12 +223,9 @@
           tagClass: "badge-secondary",
           url: "https://replit.com/",
           actionLabel: "Open Replit",
-          oneLiner:
-            "All-in-one coding environment and live hosting in a browser tab; great when you want zero laptop setup.",
-          whatItIs:
-            "Replit gives you a code editor, Linux terminal, AI agent, database, and live web URL entirely inside your web browser—nothing is installed on your computer.",
-          whenToPick:
-            "Pick Replit if you are on a locked-down laptop/tablet or want to spin up a shareable prototype in 2 minutes without setting up local tools.",
+          oneLiner: "All-in-one coding environment and live hosting in a browser tab; great when you want zero laptop setup.",
+          whatItIs: "Replit gives you a code editor, Linux terminal, AI agent, database, and live web URL entirely inside your web browser—nothing is installed on your computer.",
+          whenToPick: "Pick Replit if you are on a locked-down laptop/tablet or want to spin up a shareable prototype in 2 minutes.",
           setupCommand: "# Runs entirely in your browser at replit.com"
         }
       ]
@@ -244,23 +235,32 @@
       title: "2. Install a coding agent (AI assistants that read, write & run code)",
       badge: "Piece 2 of 6 · Pick 1 to start",
       badgeClass: "badge-success",
-      whatItDoes:
-        "Instead of copying and pasting code snippets out of a web chat window, a coding agent sits directly inside your project folder, searches your files, edits code, and runs terminal tests for you.",
+      whatItDoes: "Instead of copying and pasting code snippets out of a web chat window, a coding agent sits directly inside your project folder, searches your files, edits code, and runs terminal tests for you.",
       options: [
+        {
+          id: "dl-gemini-cli",
+          iconId: "gemini",
+          name: "Gemini CLI & Google AI Studio",
+          tag: "Recommended · Open-source terminal agent + free API keys",
+          tagClass: "badge-success",
+          url: "https://github.com/google-gemini/gemini-cli",
+          actionLabel: "Get Gemini CLI",
+          oneLiner: "Google's open-source terminal coding agent with a 1M-token context window, MCP tool support, and free GEMINI_API_KEY setup via Google AI Studio.",
+          whatItIs: "Gemini CLI brings Gemini directly into your terminal (or VS Code / Antigravity terminal panel) so it can read your entire codebase, run shell commands, connect to MCP servers, and edit files. Pair it with Google AI Studio (https://aistudio.google.com/) to generate a free GEMINI_API_KEY in two clicks.",
+          whenToPick: "Pick Gemini CLI & Google AI Studio first when you want a free, open-source terminal coding agent with a massive 1-million-token context window and an instant API key for your apps.",
+          setupCommand: "npm install -g @google/gemini-cli\ncd my-project && gemini"
+        },
         {
           id: "dl-claude-code",
           iconId: "claude",
           name: "Claude Code",
-          tag: "Recommended terminal agent",
-          tagClass: "badge-success",
+          tag: "Terminal coding agent",
+          tagClass: "badge-info",
           url: "https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview",
           actionLabel: "Get Claude Code",
-          oneLiner:
-            "Anthropic's terminal agent that lives inside any project folder, searches your files with grep, edits code, and runs tests.",
-          whatItIs:
-            "Claude Code runs right inside your Terminal (or VS Code's bottom terminal panel). When you type 'claude' inside your project folder, it can read your entire codebase, run tests, check git diffs, and fix bugs across multiple files.",
-          whenToPick:
-            "Pick Claude Code if you want a deep-reasoning agent that works alongside any editor (VS Code, Cursor, or plain Terminal) and follows project rules in a CLAUDE.md file.",
+          oneLiner: "Anthropic's terminal agent that lives inside any project folder, searches your files with grep, edits code, and runs tests.",
+          whatItIs: "Claude Code runs right inside your Terminal (or VS Code's bottom terminal panel). When you type 'claude' inside your project folder, it can read your codebase, run tests, check git diffs, and fix bugs across multiple files.",
+          whenToPick: "Pick Claude Code if you have an Anthropic account and want a terminal agent that works alongside any editor.",
           setupCommand: "npm install -g @anthropic-ai/claude-code\ncd my-project && claude"
         },
         {
@@ -271,29 +271,10 @@
           tagClass: "badge-info",
           url: "https://github.com/features/copilot",
           actionLabel: "Get Copilot",
-          oneLiner:
-            "Plugs directly into VS Code and GitHub for fast inline autocomplete as you type plus a multi-file agent sidebar.",
-          whatItIs:
-            "GitHub Copilot installs as an extension inside VS Code. It suggests grey 'ghost text' completions as you type (press Tab to accept) and includes Copilot Edits / Agent mode for multi-file changes and GitHub Pull Request reviews.",
-          whenToPick:
-            "Pick GitHub Copilot if you use VS Code and want tight integration with your GitHub repositories and Pull Requests.",
+          oneLiner: "Plugs directly into VS Code and GitHub for fast inline autocomplete as you type plus a multi-file agent sidebar.",
+          whatItIs: "GitHub Copilot installs as an extension inside VS Code. It suggests grey 'ghost text' completions as you type (press Tab to accept) and includes Copilot Edits / Agent mode for multi-file changes and GitHub Pull Request reviews.",
+          whenToPick: "Pick GitHub Copilot if you use VS Code and want tight integration with your GitHub repositories and Pull Requests.",
           setupCommand: "# In VS Code: click Extensions (left sidebar) -> search 'GitHub Copilot' -> Install"
-        },
-        {
-          id: "dl-gemini-cli",
-          iconId: "gemini",
-          name: "Gemini CLI & Google AI Studio",
-          tag: "Terminal agent + free API keys",
-          tagClass: "badge-info",
-          url: "https://aistudio.google.com/",
-          actionLabel: "Open AI Studio",
-          oneLiner:
-            "Google's open-source terminal coding agent plus the free AI Studio workbench for getting a GEMINI_API_KEY.",
-          whatItIs:
-            "Google AI Studio lets you test Gemini models in your browser and generate a free-tier GEMINI_API_KEY in two clicks. Gemini CLI brings Gemini directly into your terminal with a 1-million-token context window for large codebases.",
-          whenToPick:
-            "Pick Google AI Studio & Gemini CLI when you need a free API key for your app's backend or want to analyze a large folder in your terminal.",
-          setupCommand: "npm install -g @google/gemini-cli\ngemini"
         },
         {
           id: "dl-codex-cli",
@@ -303,12 +284,9 @@
           tagClass: "badge-secondary",
           url: "https://platform.openai.com/docs/codex",
           actionLabel: "Get Codex CLI",
-          oneLiner:
-            "OpenAI's lightweight terminal agent and desktop companion that pairs with your open VS Code and Terminal windows.",
-          whatItIs:
-            "OpenAI Codex CLI runs in your terminal to inspect files, propose diffs, and run commands locally, while the ChatGPT macOS/Windows app can link directly to your open VS Code window.",
-          whenToPick:
-            "Pick Codex CLI or ChatGPT Work-with-Apps if you already use an OpenAI account and want terminal or desktop pairing.",
+          oneLiner: "OpenAI's lightweight terminal agent and desktop companion that pairs with your open VS Code and Terminal windows.",
+          whatItIs: "OpenAI Codex CLI runs in your terminal to inspect files, propose diffs, and run commands locally, while the ChatGPT macOS/Windows app can link directly to your open VS Code window.",
+          whenToPick: "Pick Codex CLI or ChatGPT Work-with-Apps if you already use an OpenAI account and want terminal or desktop pairing.",
           setupCommand: "npm install -g @openai/codex\ncodex"
         }
       ]
@@ -318,71 +296,38 @@
       title: "3. Install language engines & package managers (What runs code on your laptop)",
       badge: "Piece 3 of 6 · Core local engines",
       badgeClass: "badge-info",
-      whatItDoes:
-        "Plain-text code files cannot run by themselves—these are the official installer command (brew/winget), the language engines (Python & Node.js), and local Git.",
+      whatItDoes: "Plain-text code files cannot run by themselves—these are the official installer command (brew/winget), the language engines (Python & Node.js), and local Git.",
       options: [
         {
-          id: "dl-homebrew",
-          iconId: "homebrew",
-          name: "Homebrew (Mac/Linux) / Winget (Windows)",
-          tag: "Install 1st · System package manager",
-          tagClass: "badge-success",
-          url: "https://brew.sh/",
-          actionLabel: "Get Homebrew",
-          oneLiner:
-            "The official terminal installer that sets up Python, Node, and Git in 1 command—and wires up your PATH so you never get 'command not found'.",
-          whatItIs:
-            "When you click '.dmg' or '.exe' installers from random websites, they often drop coding tools into folders your Terminal doesn't check. Homebrew ('brew' on Mac/Linux) and 'winget' (built into Windows 11) install developer engines cleanly and register them in your PATH automatically.",
-          whenToPick:
-            "Install Homebrew first on any Mac before installing Python, Node.js, or Git.",
+          id: "dl-homebrew", iconId: "homebrew", name: "Homebrew (Mac/Linux) / Winget (Windows)",
+          tag: "Install 1st · System package manager", tagClass: "badge-success", url: "https://brew.sh/", actionLabel: "Get Homebrew",
+          oneLiner: "The official terminal installer that sets up Python, Node, and Git in 1 command—and wires up your PATH so you never get 'command not found'.",
+          whatItIs: "When you click '.dmg' or '.exe' installers from random websites, they often drop coding tools into folders your Terminal doesn't check. Homebrew ('brew' on Mac/Linux) and 'winget' (built into Windows 11) install developer engines cleanly and register them in your PATH automatically.",
+          whenToPick: "Install Homebrew first on any Mac before installing Python, Node.js, or Git.",
           setupCommand: "brew install node python git uv"
         },
         {
-          id: "dl-python",
-          iconId: "python",
-          name: "Python (python3 + uv)",
-          tag: "AI, data & backend engine",
-          tagClass: "badge-info",
-          url: "https://www.python.org/downloads/",
-          actionLabel: "Get Python & uv",
-          oneLiner:
-            "The #1 language engine for AI, data science, MCP servers, and FastAPI backends (pair with 'uv' to manage Python packages 10–100x faster than pip).",
-          whatItIs:
-            "Python is the universal language of AI, data tables (Pandas), MCP servers (FastMCP), and backend APIs (FastAPI). Modern Python projects pair Python with 'uv' (https://docs.astral.sh/uv/), which creates isolated '.venv' folders and installs libraries in milliseconds.",
-          whenToPick:
-            "Install Python + uv whenever you are building with AI APIs, data scripts, MCP servers, or Python backends.",
+          id: "dl-python", iconId: "python", name: "Python (python3 + uv)",
+          tag: "AI, data & backend engine", tagClass: "badge-info", url: "https://www.python.org/downloads/", actionLabel: "Get Python & uv",
+          oneLiner: "The #1 language engine for AI, data science, MCP servers, and FastAPI backends (pair with 'uv' to manage Python packages 10–100x faster than pip).",
+          whatItIs: "Python is the universal language of AI, data tables (Pandas), MCP servers (FastMCP), and backend APIs (FastAPI). Modern Python projects pair Python with 'uv' (https://docs.astral.sh/uv/), which creates isolated '.venv' folders and installs libraries in milliseconds.",
+          whenToPick: "Install Python + uv whenever you are building with AI APIs, data scripts, MCP servers, or Python backends.",
           setupCommand: "brew install python uv\npython3 --version && uv --version"
         },
         {
-          id: "dl-nodejs",
-          iconId: "nodejs",
-          name: "Node.js (node + npm)",
-          tag: "Web & JavaScript engine",
-          tagClass: "badge-info",
-          url: "https://nodejs.org/",
-          actionLabel: "Download Node.js",
-          oneLiner:
-            "Runs JavaScript/TypeScript on your laptop and includes 'npm' for installing web packages (React, Next.js) and CLI agents.",
-          whatItIs:
-            "Browsers run JavaScript inside web pages, while Node.js lets your laptop run JavaScript outside the browser. Installing Node.js (pick the 'LTS' Long-Term Support version) automatically installs 'npm' (Node Package Manager).",
-          whenToPick:
-            "Install Node.js LTS for any frontend/web app (React, Next.js, Vite) and to install terminal AI agents via 'npm install -g'.",
+          id: "dl-nodejs", iconId: "nodejs", name: "Node.js (node + npm)",
+          tag: "Web & JavaScript engine", tagClass: "badge-info", url: "https://nodejs.org/", actionLabel: "Download Node.js",
+          oneLiner: "Runs JavaScript/TypeScript on your laptop and includes 'npm' for installing web packages (React, Next.js) and CLI agents.",
+          whatItIs: "Browsers run JavaScript inside web pages, while Node.js lets your laptop run JavaScript outside the browser. Installing Node.js (pick the 'LTS' Long-Term Support version) automatically installs 'npm' (Node Package Manager).",
+          whenToPick: "Install Node.js LTS for any frontend/web app (React, Next.js, Vite) and to install terminal AI agents via 'npm install -g'.",
           setupCommand: "brew install node\nnode -v && npm -v"
         },
         {
-          id: "dl-git",
-          iconId: "git",
-          name: "Git (Local version control)",
-          tag: "Local checkpoint time-machine",
-          tagClass: "badge-secondary",
-          url: "https://git-scm.com/downloads",
-          actionLabel: "Download Git",
-          oneLiner:
-            "The free time-machine engine on your laptop that saves named checkpoints (commits) and safe scratchpad timelines (branches).",
-          whatItIs:
-            "Git runs privately inside your project folder on your computer. Whenever your code works, you save a 'git commit' checkpoint so if an AI agent breaks 10 files five minutes later, you can rewind in one second.",
-          whenToPick:
-            "Every project uses Git—install it once so both you and your AI coding agent can save checkpoints and check 'git diff'.",
+          id: "dl-git", iconId: "git", name: "Git (Local version control)",
+          tag: "Local checkpoint time-machine", tagClass: "badge-secondary", url: "https://git-scm.com/downloads", actionLabel: "Download Git",
+          oneLiner: "The free time-machine engine on your laptop that saves named checkpoints (commits) and safe scratchpad timelines (branches).",
+          whatItIs: "Git runs privately inside your project folder on your computer. Whenever your code works, you save a 'git commit' checkpoint so if an AI agent breaks 10 files five minutes later, you can rewind in one second.",
+          whenToPick: "Every project uses Git—install it once so both you and your AI coding agent can save checkpoints and check 'git diff'.",
           setupCommand: "brew install git\ngit --version"
         }
       ]
@@ -392,55 +337,30 @@
       title: "4. Set up a place to store your code safely in the cloud (Cloud Git repositories)",
       badge: "Piece 4 of 6 · Pick 1 (GitHub is standard)",
       badgeClass: "badge-info",
-      whatItDoes:
-        "Saving a file only keeps it on your laptop's hard drive. A Cloud Git Repository stores a secure online backup of your project and triggers automatic cloud deployments.",
+      whatItDoes: "Saving a file only keeps it on your laptop's hard drive. A Cloud Git Repository stores a secure online backup of your project and triggers automatic cloud deployments.",
       options: [
         {
-          id: "dl-github",
-          iconId: "github",
-          name: "GitHub",
-          tag: "Recommended default · Cloud Git",
-          tagClass: "badge-success",
-          url: "https://github.com/signup",
-          actionLabel: "Sign up for GitHub",
-          oneLiner:
-            "The industry standard cloud home for Git repositories, Pull Requests, open-source code, and 1-click auto-deploy to Vercel or Render.",
-          whatItIs:
-            "GitHub is where over 100 million developers store their Git repositories in the cloud. When you run 'git push', your laptop uploads your commits to GitHub—and cloud hosts like Vercel or Render watch your GitHub repo to publish updates automatically.",
-          whenToPick:
-            "Create a free GitHub account first—almost every open-source template, AI tool, and cloud host connects directly to GitHub.",
+          id: "dl-github", iconId: "github", name: "GitHub",
+          tag: "Recommended default · Cloud Git", tagClass: "badge-success", url: "https://github.com/signup", actionLabel: "Sign up for GitHub",
+          oneLiner: "The industry standard cloud home for Git repositories, Pull Requests, open-source code, and 1-click auto-deploy to Vercel or Render.",
+          whatItIs: "GitHub is where over 100 million developers store their Git repositories in the cloud. When you run 'git push', your laptop uploads your commits to GitHub—and cloud hosts like Vercel or Render watch your GitHub repo to publish updates automatically.",
+          whenToPick: "Create a free GitHub account first—almost every open-source template, AI tool, and cloud host connects directly to GitHub.",
           setupCommand: "git push -u origin main"
         },
         {
-          id: "dl-gitlab",
-          iconId: "gitlab",
-          name: "GitLab",
-          tag: "Enterprise & DevOps Git",
-          tagClass: "badge-secondary",
-          url: "https://about.gitlab.com/",
-          actionLabel: "Explore GitLab",
-          oneLiner:
-            "Popular enterprise and open-source alternative to GitHub with built-in CI/CD testing pipelines in a single platform.",
-          whatItIs:
-            "GitLab does the exact same core job as GitHub—storing Git repositories and Merge Requests in the cloud—and is widely used by companies that want self-hosted Git and built-in DevOps pipelines.",
-          whenToPick:
-            "Pick GitLab if your team or organization standardizes on GitLab instead of GitHub.",
+          id: "dl-gitlab", iconId: "gitlab", name: "GitLab",
+          tag: "Enterprise & DevOps Git", tagClass: "badge-secondary", url: "https://about.gitlab.com/", actionLabel: "Explore GitLab",
+          oneLiner: "Popular enterprise and open-source alternative to GitHub with built-in CI/CD testing pipelines in a single platform.",
+          whatItIs: "GitLab does the exact same core job as GitHub—storing Git repositories and Merge Requests in the cloud—and is widely used by companies that want self-hosted Git and built-in DevOps pipelines.",
+          whenToPick: "Pick GitLab if your team or organization standardizes on GitLab instead of GitHub.",
           setupCommand: "git remote -v   # Check whether a project points to github.com or gitlab.com"
         },
         {
-          id: "dl-hf-hub",
-          iconId: "huggingface",
-          name: "Hugging Face Hub",
-          tag: "The GitHub of AI",
-          tagClass: "badge-info",
-          url: "https://huggingface.co/join",
-          actionLabel: "Join Hugging Face",
-          oneLiner:
-            "Git-based cloud hub built specifically for storing open-weights AI models, datasets, and Python AI demo repos.",
-          whatItIs:
-            "Hugging Face Hub uses Git under the hood, but is designed for machine learning: it hosts open AI models (Llama, Gemma, Qwen, Whisper), public datasets, and live Python demo apps.",
-          whenToPick:
-            "Sign up for Hugging Face when you want to download open-source AI models/datasets or publish a free Python AI demo.",
+          id: "dl-hf-hub", iconId: "huggingface", name: "Hugging Face Hub",
+          tag: "The GitHub of AI", tagClass: "badge-info", url: "https://huggingface.co/join", actionLabel: "Join Hugging Face",
+          oneLiner: "Git-based cloud hub built specifically for storing open-weights AI models, datasets, and Python AI demo repos.",
+          whatItIs: "Hugging Face Hub uses Git under the hood, but is designed for machine learning: it hosts open AI models (Gemma, Llama, Qwen, Whisper), public datasets, and live Python demo apps.",
+          whenToPick: "Sign up for Hugging Face when you want to download open-source AI models/datasets or publish a free Python AI demo.",
           setupCommand: "pip install huggingface_hub"
         }
       ]
@@ -450,71 +370,38 @@
       title: "5. Get a backend & database (Where user accounts, tables & permanent data live)",
       badge: "Piece 5 of 6 · When you need saved data",
       badgeClass: "badge-secondary",
-      whatItDoes:
-        "If your app only runs in the browser, data disappears or stays trapped on one device. A managed cloud database stores user logins and rows of data permanently.",
+      whatItDoes: "If your app only runs in the browser, data disappears or stays trapped on one device. A managed cloud database stores user logins and rows of data permanently.",
       options: [
         {
-          id: "dl-supabase",
-          iconId: "supabase",
-          name: "Supabase",
-          tag: "Recommended all-in-one · Postgres + Login",
-          tagClass: "badge-success",
-          url: "https://supabase.com/",
-          actionLabel: "Sign up for Supabase",
-          oneLiner:
-            "Open-source PostgreSQL (SQL spreadsheet-table database) bundled with ready-made User Login (Auth) and file storage in one dashboard.",
-          whatItIs:
-            "Supabase gives you a full PostgreSQL database (with a spreadsheet-style table editor in your browser) PLUS built-in user authentication (Google/GitHub/email login) and image/file storage buckets.",
-          whenToPick:
-            "Pick Supabase when you want both a SQL database and ready-made user login without stitching together multiple services.",
-          setupCommand: "# Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to your server .env file"
-        },
-        {
-          id: "dl-neon",
-          iconId: "neon",
-          name: "Neon",
-          tag: "Serverless Postgres (SQL)",
-          tagClass: "badge-info",
-          url: "https://neon.tech/",
-          actionLabel: "Sign up for Neon",
-          oneLiner:
-            "Serverless PostgreSQL database that spins up in 3 seconds, scales to $0 when idle, and lets you 'branch' your database like Git.",
-          whatItIs:
-            "Neon is a pure, blazing-fast serverless PostgreSQL database. It includes a browser SQL Editor, automatic connection pooling ('-pooler' URLs so 50+ visitors don't freeze your app), and instant dev/prod database branches.",
-          whenToPick:
-            "Pick Neon when you want a clean, zero-maintenance SQL database for a Python (FastAPI) or Next.js backend—and remember to inspect its real dashboard in our 'Explore where things are' viewer below!",
-          setupCommand: "DATABASE_URL=\"postgresql://user:pass@ep-cool-host-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require\""
-        },
-        {
-          id: "dl-firebase",
-          iconId: "firebase",
-          name: "Firebase / Firestore",
-          tag: "NoSQL JSON documents + Auth",
-          tagClass: "badge-secondary",
-          url: "https://firebase.google.com/",
-          actionLabel: "Open Firebase",
-          oneLiner:
-            "Google's app backend that stores flexible JSON documents instead of strict SQL tables and syncs live changes to screens in real time.",
-          whatItIs:
-            "Firebase bundles Firestore (a NoSQL document database where data is stored as nested JSON documents) with Firebase Authentication and mobile/web SDKs that push live updates to connected browsers automatically.",
-          whenToPick:
-            "Pick Firebase when you are building a real-time collaborative app or chat tool and prefer JSON documents over SQL tables.",
+          id: "dl-firebase", iconId: "firebase", name: "Firebase / Firestore (by Google)",
+          tag: "Recommended · Realtime JSON DB + Auth", tagClass: "badge-success", url: "https://firebase.google.com/", actionLabel: "Open Firebase",
+          oneLiner: "Google's app backend bundling Firestore (flexible JSON documents), Google/email user sign-in (Auth), and live real-time sync.",
+          whatItIs: "Firebase bundles Firestore (a NoSQL document database where data is stored as nested JSON documents) with Firebase Authentication and web/mobile SDKs that push live updates to connected browsers automatically.",
+          whenToPick: "Pick Firebase when you want Google Auth sign-in and a real-time JSON database that syncs across browsers out of the box.",
           setupCommand: "npm install firebase"
         },
         {
-          id: "dl-upstash",
-          iconId: "upstash",
-          name: "Upstash Redis",
-          tag: "Serverless cache & rate-limiter",
-          tagClass: "badge-secondary",
-          url: "https://upstash.com/",
-          actionLabel: "Explore Upstash",
-          oneLiner:
-            "Ultrafast in-memory cache and API rate-limiter to cap how many times a visitor can call your AI endpoint per minute.",
-          whatItIs:
-            "Upstash provides serverless Redis—an in-memory key-value store used alongside your main database to cache expensive lookups and enforce per-IP rate limits (e.g., max 10 AI calls per minute) so bots cannot run up your API bill.",
-          whenToPick:
-            "Add Upstash before sharing a public AI app to protect your endpoints from spam and surprise bills.",
+          id: "dl-supabase", iconId: "supabase", name: "Supabase",
+          tag: "Recommended SQL · Postgres + Login", tagClass: "badge-success", url: "https://supabase.com/", actionLabel: "Sign up for Supabase",
+          oneLiner: "Open-source PostgreSQL (SQL spreadsheet-table database) bundled with ready-made User Login (Auth) and file storage in one dashboard.",
+          whatItIs: "Supabase gives you a full PostgreSQL database (with a spreadsheet-style table editor in your browser) PLUS built-in user authentication (Google/GitHub/email login) and image/file storage buckets.",
+          whenToPick: "Pick Supabase when you want both a relational SQL database and ready-made user login in one dashboard.",
+          setupCommand: "# Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to your server .env file"
+        },
+        {
+          id: "dl-neon", iconId: "neon", name: "Neon",
+          tag: "Serverless Postgres (SQL)", tagClass: "badge-info", url: "https://neon.tech/", actionLabel: "Sign up for Neon",
+          oneLiner: "Serverless PostgreSQL database that spins up in 3 seconds, scales to $0 when idle, and lets you 'branch' your database like Git.",
+          whatItIs: "Neon is a pure, blazing-fast serverless PostgreSQL database. It includes a browser SQL Editor, automatic connection pooling ('-pooler' URLs so 50+ visitors don't freeze your app), and instant dev/prod database branches.",
+          whenToPick: "Pick Neon when you want a clean, zero-maintenance SQL database for a Python (FastAPI) or Next.js backend.",
+          setupCommand: "DATABASE_URL=\"postgresql://user:pass@ep-cool-host-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require\""
+        },
+        {
+          id: "dl-upstash", iconId: "upstash", name: "Upstash Redis",
+          tag: "Serverless cache & rate-limiter", tagClass: "badge-secondary", url: "https://upstash.com/", actionLabel: "Explore Upstash",
+          oneLiner: "Ultrafast in-memory cache and API rate-limiter to cap how many times a visitor can call your AI endpoint per minute.",
+          whatItIs: "Upstash provides serverless Redis—an in-memory key-value store used alongside your main database to cache expensive lookups and enforce per-IP rate limits (e.g., max 10 AI calls per minute) so bots cannot run up your API bill.",
+          whenToPick: "Add Upstash before sharing a public AI app to protect your endpoints from spam and surprise bills.",
           setupCommand: "npm install @upstash/ratelimit @upstash/redis"
         }
       ]
@@ -524,88 +411,47 @@
       title: "6. Set up cloud hosting to put your work online (Deploy & share a live https:// link)",
       badge: "Piece 6 of 6 · Pick the host that fits your project",
       badgeClass: "badge-success",
-      whatItDoes:
-        "Connects to your GitHub repository so every time you 'git push', a cloud server builds your code and publishes it at a shareable https:// web link.",
+      whatItDoes: "Connects to your GitHub repository so every time you 'git push', a cloud server builds your code and publishes it at a shareable https:// web link.",
       options: [
         {
-          id: "dl-vercel",
-          iconId: "vercel",
-          name: "Vercel",
-          tag: "Recommended for websites & web apps",
-          tagClass: "badge-success",
-          url: "https://vercel.com/signup",
-          actionLabel: "Sign up for Vercel",
-          oneLiner:
-            "Best default for frontend & full-stack web apps (HTML/JS, React, Next.js); connects to GitHub and creates a live preview link for every PR.",
-          whatItIs:
-            "Vercel connects directly to your GitHub account. Whenever you push a commit to 'main', Vercel builds and updates your live production URL in ~30 seconds—and whenever you open a Pull Request, it comments a private Preview URL so you can test before merging.",
-          whenToPick:
-            "Pick Vercel as your default for websites, interactive explainers, and React/Next.js web apps.",
+          id: "dl-cloud-run", iconId: "cloudrun", name: "Google Cloud Run",
+          tag: "Recommended · Serverless Python/Node/Containers", tagClass: "badge-success", url: "https://cloud.google.com/run", actionLabel: "Explore Cloud Run",
+          oneLiner: "Google's serverless platform that deploys any backend (Python FastAPI, Node, MCP servers), scales to $0 when idle, and handles production traffic.",
+          whatItIs: "Google Cloud Run takes a source folder or container (Python, Node.js, Go), gives it a live https:// URL in one command, scales down to zero when nobody is visiting, and scales up automatically under load.",
+          whenToPick: "Pick Google Cloud Run when deploying Python FastAPI backends, AI agents, remote HTTP MCP servers, or full-stack web apps.",
+          setupCommand: "gcloud run deploy my-service --source ."
+        },
+        {
+          id: "dl-vercel", iconId: "vercel", name: "Vercel",
+          tag: "Recommended for static & Next.js web apps", tagClass: "badge-success", url: "https://vercel.com/signup", actionLabel: "Sign up for Vercel",
+          oneLiner: "Connects to GitHub in 1 click to host frontend & full-stack web apps (HTML/JS, React, Next.js) and creates a live preview URL for every PR.",
+          whatItIs: "Vercel connects directly to your GitHub account. Whenever you push a commit to 'main', Vercel builds and updates your live production URL in ~30 seconds—and whenever you open a Pull Request, it comments a private Preview URL.",
+          whenToPick: "Pick Vercel for websites, interactive explainers, and React/Next.js web apps.",
           setupCommand: "# Sign in with GitHub at vercel.com -> Add New Project -> Import Git Repository"
         },
         {
-          id: "dl-render",
-          iconId: "render",
-          name: "Render",
-          tag: "Always-on Python & API servers",
-          tagClass: "badge-info",
-          url: "https://render.com/",
-          actionLabel: "Sign up for Render",
-          oneLiner:
-            "Best when you have a long-running Python backend server (FastAPI/Flask), background worker, or Postgres database.",
-          whatItIs:
-            "While serverless hosts like Vercel are designed for quick request-response functions that time out after 10–60 seconds, Render runs always-on Python or Node web servers, cron jobs, and Docker containers straight from your GitHub repo.",
-          whenToPick:
-            "Pick Render when your backend runs a Python FastAPI server or long AI workflows that need an always-on server.",
+          id: "dl-render", iconId: "render", name: "Render",
+          tag: "Always-on Python & API servers", tagClass: "badge-info", url: "https://render.com/", actionLabel: "Sign up for Render",
+          oneLiner: "Deploys long-running Python backend servers (FastAPI/Flask), background workers, and Postgres databases straight from GitHub.",
+          whatItIs: "Render runs always-on Python or Node web servers, cron jobs, and Docker containers straight from your GitHub repo without serverless function timeout limits.",
+          whenToPick: "Pick Render when your backend runs an always-on Python server or background worker.",
           setupCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
         },
         {
-          id: "dl-railway",
-          iconId: "railway",
-          name: "Railway",
-          tag: "Visual full-stack canvas",
-          tagClass: "badge-secondary",
-          url: "https://railway.app/",
-          actionLabel: "Explore Railway",
-          oneLiner:
-            "Visual cloud canvas that deploys your Python/Node backend server and a Postgres/Redis database side-by-side with zero config files.",
-          whatItIs:
-            "Railway gives you a visual project canvas where you can connect a GitHub repo for your backend server and click '+ New -> Database -> PostgreSQL' right next to it, wiring their environment variables together automatically.",
-          whenToPick:
-            "Pick Railway when you want to spin up both a backend server and a database in one visual dashboard.",
+          id: "dl-railway", iconId: "railway", name: "Railway",
+          tag: "Visual full-stack canvas", tagClass: "badge-secondary", url: "https://railway.app/", actionLabel: "Explore Railway",
+          oneLiner: "Visual cloud canvas that deploys your Python/Node backend server and a Postgres/Redis database side-by-side with zero config files.",
+          whatItIs: "Railway gives you a visual project canvas where you can connect a GitHub repo for your backend server and click '+ New -> Database -> PostgreSQL' right next to it.",
+          whenToPick: "Pick Railway when you want to spin up both a backend server and a database in one visual dashboard.",
           setupCommand: "# Connect your GitHub repo at railway.app"
         },
         {
-          id: "dl-hf-spaces",
-          iconId: "huggingface",
-          name: "Hugging Face Spaces",
-          tag: "Free AI demo hosting",
-          tagClass: "badge-info",
-          url: "https://huggingface.co/spaces",
-          actionLabel: "Open HF Spaces",
-          oneLiner:
-            "Turns a 20-line Python Gradio or Streamlit script into a shareable live AI web demo for free—no HTML/CSS frontend needed.",
-          whatItIs:
-            "Not every project needs a full HTML/React frontend! Hugging Face Spaces hosts Python Gradio and Streamlit apps for free, giving you an instant interactive web UI for testing models, prompts, or data tools.",
-          whenToPick:
-            "Pick Hugging Face Spaces when you built a Python script or AI prototype and want to share an interactive demo in 5 minutes.",
+          id: "dl-hf-spaces", iconId: "huggingface", name: "Hugging Face Spaces",
+          tag: "Free AI demo hosting", tagClass: "badge-info", url: "https://huggingface.co/spaces", actionLabel: "Open HF Spaces",
+          oneLiner: "Turns a 20-line Python Gradio or Streamlit script into a shareable live AI web demo for free—no HTML/CSS frontend needed.",
+          whatItIs: "Not every project needs a full HTML/React frontend! Hugging Face Spaces hosts Python Gradio and Streamlit apps for free, giving you an instant interactive web UI for testing models, prompts, or data tools.",
+          whenToPick: "Pick Hugging Face Spaces when you built a Python script or AI prototype and want to share an interactive demo in 5 minutes.",
           setupCommand: "pip install gradio\npython app.py"
-        },
-        {
-          id: "dl-cloud-run",
-          iconId: "cloudrun",
-          name: "Google Cloud Run",
-          tag: "Production serverless containers",
-          tagClass: "badge-secondary",
-          url: "https://cloud.google.com/run",
-          actionLabel: "Explore Cloud Run",
-          oneLiner:
-            "Enterprise serverless platform that runs any container (Python, Node, Go), scales from 0 to thousands of users, and bills only while active.",
-          whatItIs:
-            "Google Cloud Run takes any backend server or Docker container, gives it an HTTPS URL, scales it down to zero instances when nobody is visiting, and scales up automatically under heavy traffic.",
-          whenToPick:
-            "Pick Cloud Run when deploying production APIs, remote HTTP MCP servers, or enterprise backends.",
-          setupCommand: "gcloud run deploy my-service --source ."
         }
       ]
     }
