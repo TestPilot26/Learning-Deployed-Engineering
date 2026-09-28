@@ -521,20 +521,26 @@
         {
           snapshotId: "github-repo",
           hotspotId: "gh-repo-green-code-btn",
-          stepTitle: "Step 1 of 3 · Click the green '<> Code' button on GitHub & copy the URL",
-          instruction: "On the GitHub repository page, click the green '<> Code' button (Pin #8) and click the copy icon next to the HTTPS URL (e.g. 'https://github.com/TestPilot26/ThisDeck.git'). Never download a plain ZIP if you want Git history—copy the HTTPS link!"
+          stepTitle: "Step 1 of 4 · Click the green '<> Code' button on the GitHub repository",
+          instruction: "On the GitHub repository page, click the green '<> Code' button (Pin #8) to open the Clone menu."
+        },
+        {
+          snapshotId: "github-clone",
+          hotspotId: "gh-clone-url-copy",
+          stepTitle: "Step 2 of 4 · Copy the HTTPS URL inside the '<> Code' popup (don't Download ZIP!)",
+          instruction: "Inside the open '<> Code' menu, make sure 'HTTPS' (Pin #3) is selected and click the copy icon next to the URL (Pin #4). Avoid 'Download ZIP' (Pin #6) if you want to keep Git history and push updates later!"
         },
         {
           snapshotId: "vscode-explorer",
           hotspotId: "vsc-exp-terminal-prompt",
-          stepTitle: "Step 2 of 3 · Open the Terminal panel inside VS Code & run 'git clone'",
-          instruction: "Switch to VS Code on your laptop, click into the bottom Terminal prompt (Pin #6, or press Ctrl+` to open it), type 'git clone <paste-url-here>' and press Enter ↵. Git downloads the entire project folder onto your laptop!"
+          stepTitle: "Step 3 of 4 · Open the Terminal panel inside VS Code & run 'git clone'",
+          instruction: "Switch to VS Code on your laptop, click into the bottom Terminal prompt (Pin #6), type 'git clone <paste-url-here>' and press Enter ↵."
         },
         {
           snapshotId: "vscode-explorer",
           hotspotId: "vsc-exp-file-tree",
-          stepTitle: "Step 3 of 3 · Open the downloaded folder in the left Explorer sidebar",
-          instruction: "In VS Code, click File -> Open Folder (or run 'cd ThisDeck && code .' in the terminal). All your downloaded folders and files now appear in the left Explorer sidebar (Pin #2), ready to edit!"
+          stepTitle: "Step 4 of 4 · Open the downloaded folder in the left Explorer sidebar",
+          instruction: "In VS Code, click File -> Open Folder (or run 'cd Practice1 && code .' in the terminal). All your downloaded folders and files now appear in the left Explorer sidebar (Pin #2)!"
         }
       ]
     },
@@ -594,28 +600,34 @@
     },
     {
       id: "flow-create-new-repo",
-      title: "Flow 4: Create a brand-new repository & add a README / .gitignore",
+      title: "Flow 4: Create a brand-new repository & toggle 'Add README' / .gitignore",
       badge: "On GitHub",
       icon: "add_box",
-      summary: "How to start a new repository from the '+' menu and where to click 'Add file' or inspect your README.md and .gitignore:",
+      summary: "How to start a brand-new repository from the '+' menu, toggle 'Add README' on the creation page, and clone it:",
       steps: [
         {
           snapshotId: "github-home",
           hotspotId: "gh-home-plus-new-repo",
-          stepTitle: "Step 1 of 3 · Click the '+' button in the top-right corner of GitHub -> 'New repository'",
-          instruction: "From GitHub Home (or any GitHub page), click the '+' icon in the top-right bar (Pin #6) and select 'New repository' (which opens github.com/new where you name the repo, pick Private/Public, and toggle 'Add a README file')."
+          stepTitle: "Step 1 of 4 · Click the '+' button in the top-right corner of GitHub -> 'New repository'",
+          instruction: "From GitHub Home (or any GitHub page), click the '+' icon in the top-right bar (Pin #6) and select 'New repository' to open the creation screen."
         },
         {
-          snapshotId: "github-repo",
-          hotspotId: "gh-repo-find-add-file",
-          stepTitle: "Step 2 of 3 · Inside an existing repo, click 'Add file' (Pin #7) to create or upload a README",
-          instruction: "If your repository is already created and you want to add a README.md, .gitignore, or any new file in the browser, click the 'Add file' button (Pin #7 -> 'Create new file' or 'Upload files'). Once saved, '.gitignore' and 'README.md' sit in the root file list (Pin #11)."
+          snapshotId: "github-new",
+          hotspotId: "gh-new-owner-name",
+          stepTitle: "Step 2 of 4 · Type your new Repository name & choose Public or Private",
+          instruction: "On the 'Create a new repository' screen, type a short project name in 'Repository name *' (Pin #1) and choose whether it should be Public or Private (Pin #3)."
         },
         {
-          snapshotId: "github-repo",
-          hotspotId: "gh-repo-green-code-btn",
-          stepTitle: "Step 3 of 3 · Click the green '<> Code' button (Pin #8) to copy the HTTPS URL & clone",
-          instruction: "Click the green '<> Code' button (Pin #8) to copy your repository's HTTPS URL and run 'git clone <url>' in your VS Code terminal!"
+          snapshotId: "github-new",
+          hotspotId: "gh-new-add-readme",
+          stepTitle: "Step 3 of 4 · Toggle 'Add README' ON & select a '.gitignore' template",
+          instruction: "Under Configuration, toggle 'Add README' ON (Pin #4) so your repo starts with a front-page instruction manual, and select a '.gitignore' template (Pin #5, e.g. Python or Node) so secret '.env' files are ignored automatically!"
+        },
+        {
+          snapshotId: "github-clone",
+          hotspotId: "gh-clone-url-copy",
+          stepTitle: "Step 4 of 4 · Click '<> Code' & copy the HTTPS URL to clone to your laptop",
+          instruction: "Once your repo is created, click the green '<> Code' button and copy the HTTPS URL (Pin #4) to run 'git clone <url>' in your terminal!"
         }
       ]
     },

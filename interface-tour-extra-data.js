@@ -1,9 +1,12 @@
-// Deployed Eng Pipeline — Additional Tool Interface Snapshots & Flows
-// Extends window.InterfaceTourData with:
-//   7. Vercel Cloud Hosting Dashboard (Deployments, Build/Runtime Logs, Environment Variables, Rollback & Analytics)
-//   8. Chrome DevTools (Elements/CSS Inspector, Network 200/500 API tab, Console Errors & Application/LocalStorage)
-//   9. Neon / Supabase Cloud Postgres Database Studio (Table Editor, SQL Editor, Pooled DATABASE_URL, Branches & RLS)
-//  10. Mac Terminal & CLI Coding Agents (zsh prompt, Homebrew/uv, .venv, localhost:8000 server & Claude Code CLI)
+// Deployed Eng Pipeline — Additional Real Interface Snapshots & Flows
+// Extends window.InterfaceTourData with 7 real screenshots:
+//   - GitHub Screen 4: Create a new repository (ui-github-new.png)
+//   - GitHub Screen 5: Green <> Code clone & Download ZIP popup (ui-github-clone.png)
+//   - Vercel Screen 1: Overview & Import GitHub Project (ui-vercel-overview.png)
+//   - Vercel Screen 2: Environment Variables vault (ui-vercel-env.png)
+//   - Chrome DevTools: Elements, Styles & Console drawer (ui-chrome-devtools.png)
+//   - Neon Cloud Postgres Database: Projects, Compute & psql connection (ui-neon-database.png)
+//   - Mac Terminal: zsh prompt, pwd, ls & git status (ui-mac-terminal.png)
 // Zero innerHTML (SecureCoder compliant) and 100% GM3 token-driven (BillSkill compliant).
 
 (function () {
@@ -11,290 +14,455 @@
 
   var EXTRA_SNAPSHOTS = [
     // =========================================================================
-    // SNAPSHOT 7: VERCEL CLOUD HOSTING & DEPLOYMENTS DASHBOARD
+    // GITHUB SNAPSHOT 4: CREATE A NEW REPOSITORY (github.com/new)
+    // =========================================================================
+    {
+      id: "github-new",
+      group: "github",
+      groupLabel: "GitHub (Cloud Git repository)",
+      tabTitle: "4. Create new repo (README & .gitignore)",
+      shortTitle: "GitHub: Create New Repository",
+      imageSrc: "./ui-github-new.png",
+      aspectRatio: "1024 / 576",
+      subtitle: "What you see after clicking '+' -> 'New repository': where you name your project, pick Public/Private, toggle 'Add README' ON, and add a .gitignore file.",
+      hotspots: [
+        {
+          id: "gh-new-owner-name", num: "1", shortLabel: "Owner & Repository name *",
+          x: 22.8, y: 31.0, w: 54.4, h: 7.5,
+          title: "Owner account & Repository name * (Required)",
+          category: "GitHub setup · Name your project",
+          whatItDoes: "Picks which GitHub account owns the project and sets the repository's URL slug (e.g. 'my-first-app'). Use lowercase letters and hyphens instead of spaces.",
+          whenYouUseIt: "Step 1 whenever starting a new project on GitHub.",
+          tryCommand: "https://github.com/<owner>/<repository-name>"
+        },
+        {
+          id: "gh-new-description", num: "2", shortLabel: "Description (Optional)",
+          x: 22.8, y: 47.0, w: 54.4, h: 9.2,
+          title: "Description box (1-sentence summary)",
+          category: "GitHub setup · Project summary",
+          whatItDoes: "A short plain-English description that appears in the 'About' sidebar on your repository's main page.",
+          whenYouUseIt: "Fill in 1 sentence so future-you (and teammates) immediately know what this repo does.",
+          tryCommand: "Appears under 'About' on the repo page"
+        },
+        {
+          id: "gh-new-visibility", num: "3", shortLabel: "Choose visibility (Public / Private)",
+          x: 22.8, y: 66.8, w: 54.4, h: 10.2,
+          title: "Choose visibility: Public vs. Private",
+          category: "Security · Who can see your code",
+          whatItDoes: "• Public: Anyone on the internet can view and clone your code (great for open-source portfolios, though you must NEVER commit '.env' keys).\n• Private: Only you and people you explicitly invite can see the repository.",
+          whenYouUseIt: "Choose 'Private' for internal prototypes or proprietary apps; choose 'Public' when sharing open-source work.",
+          tryCommand: "Can be changed later in Settings -> Danger Zone"
+        },
+        {
+          id: "gh-new-add-readme", num: "4", shortLabel: "Add README toggle (Off / On)",
+          x: 22.8, y: 78.6, w: 54.4, h: 8.8,
+          title: "'Add README' toggle switch (Creates README.md automatically)",
+          category: "Documentation · Front-page manual",
+          whatItDoes: "Flipping this toggle switch ON tells GitHub to initialize your repository with a 'README.md' Markdown file right away—giving your project an instruction manual and an initial commit on 'main'.",
+          whenYouUseIt: "Toggle this ON whenever creating a brand-new repository on GitHub so you can clone it immediately!",
+          tryCommand: "Creates README.md in your new repo"
+        },
+        {
+          id: "gh-new-add-gitignore", num: "5", shortLabel: "Add .gitignore template",
+          x: 22.8, y: 87.8, w: 54.4, h: 8.2,
+          title: "'Add .gitignore' template dropdown (Protects .env secrets!)",
+          category: "Security guardrail · Do-not-upload list",
+          whatItDoes: "Lets you pick a pre-made '.gitignore' file for your language (such as 'Python' or 'Node'). It automatically lists '.env', '.venv/', '__pycache__/', and 'node_modules/' so Git never uploads secret API keys or heavy dependency folders.",
+          whenYouUseIt: "Always pick 'Python' or 'Node' here so your repo starts with a battle-tested .gitignore from Day 1.",
+          tryCommand: "Prevents '.env' and 'node_modules/' from uploading"
+        }
+      ]
+    },
+
+    // =========================================================================
+    // GITHUB SNAPSHOT 5: GREEN '<> CODE' CLONE & DOWNLOAD ZIP POPUP
+    // =========================================================================
+    {
+      id: "github-clone",
+      group: "github",
+      groupLabel: "GitHub (Cloud Git repository)",
+      tabTitle: "5. <> Code menu (Clone vs ZIP)",
+      shortTitle: "GitHub: <> Code Clone Menu",
+      imageSrc: "./ui-github-clone.png",
+      aspectRatio: "1024 / 576",
+      subtitle: "What opens when you click the green '<> Code' button: where you copy the HTTPS URL for 'git clone' (and why you shouldn't just click 'Download ZIP').",
+      hotspots: [
+        {
+          id: "gh-clone-green-btn", num: "1", shortLabel: "Green <> Code ▾ button",
+          x: 64.2, y: 29.3, w: 8.5, h: 4.8,
+          title: "Green '<> Code ▾' button (Opens this dropdown)",
+          category: "GitHub action · Download or connect",
+          whatItDoes: "Opens the popup menu for bringing this cloud repository onto your laptop.",
+          whenYouUseIt: "Click this first whenever you want to clone a project into VS Code or Cursor.",
+          tryCommand: "Click '<> Code' -> Copy HTTPS URL"
+        },
+        {
+          id: "gh-clone-local-codespaces", num: "2", shortLabel: "Local vs. Codespaces tabs",
+          x: 42.0, y: 35.2, w: 14.5, h: 4.8,
+          title: "'Local' (Your laptop) vs. 'Codespaces' (Cloud browser VM)",
+          category: "Environment choice · Laptop vs. Cloud",
+          whatItDoes: "• Local: Gives you the URL to download the repo onto your own computer.\n• Codespaces: Spins up a cloud VS Code machine inside your web browser.",
+          whenYouUseIt: "Keep 'Local' selected when working in VS Code, Cursor, or Terminal on your laptop.",
+          tryCommand: "Select 'Local' tab"
+        },
+        {
+          id: "gh-clone-https-tabs", num: "3", shortLabel: "HTTPS / SSH / GitHub CLI",
+          x: 43.0, y: 47.4, w: 17.8, h: 4.8,
+          title: "'HTTPS' vs. 'SSH' vs. 'GitHub CLI' connection modes",
+          category: "Git protocol · Easiest default is HTTPS",
+          whatItDoes: "'HTTPS' is the universal web URL format that works out-of-the-box with VS Code's Git sign-in.",
+          whenYouUseIt: "Leave 'HTTPS' selected (the default).",
+          tryCommand: "HTTPS URL starts with https://github.com/..."
+        },
+        {
+          id: "gh-clone-url-copy", num: "4", shortLabel: "HTTPS URL & Copy icon (📋)",
+          x: 43.0, y: 52.6, w: 28.5, h: 4.8,
+          title: "Repository HTTPS URL & 1-click Copy button (📋)",
+          category: "Essential action · Copy for 'git clone'",
+          whatItDoes: "Copies the exact Git URL (e.g. 'https://github.com/TestPilot26/Practice1.git') to your clipboard.",
+          whenYouUseIt: "Click the two-squares copy icon on the right, then open your VS Code Terminal and run 'git clone <paste-url>'.",
+          tryCommand: "git clone https://github.com/TestPilot26/Practice1.git"
+        },
+        {
+          id: "gh-clone-download-zip", num: "5", shortLabel: "Download ZIP (No Git link)",
+          x: 42.5, y: 73.6, w: 14.0, h: 4.5,
+          title: "'Download ZIP' (One-time snapshot — strips Git connection!)",
+          category: "Watch-out · Why 'git clone' is better",
+          whatItDoes: "Downloads a compressed '.zip' folder of the files, but strips out the hidden '.git' history folder—so you can't easily run 'git push' or 'git pull' to sync changes back to GitHub.",
+          whenYouUseIt: "Use 'git clone' (Pin #4) instead of 'Download ZIP' whenever you plan to edit code and push updates.",
+          tryCommand: "Prefer 'git clone <url>' over Download ZIP"
+        }
+      ]
+    },
+
+    // =========================================================================
+    // VERCEL SNAPSHOT 1: OVERVIEW & IMPORT GITHUB PROJECT
     // =========================================================================
     {
       id: "vercel-dashboard",
       group: "vercel",
       groupLabel: "Vercel / Cloud Hosting",
-      tabTitle: "7. Vercel: Cloud Deploy, Logs & Env Vars",
-      shortTitle: "Vercel Cloud Dashboard",
-      imageSrc: "./ui-vercel-dashboard.svg",
-      aspectRatio: "1024 / 640",
-      subtitle: "What happens after you push code to GitHub: Vercel builds your app, gives you a live public URL, stores your encrypted API keys, and streams server logs.",
+      tabTitle: "1. Overview & Import GitHub repo",
+      shortTitle: "Vercel: Overview & Import Project",
+      imageSrc: "./ui-vercel-overview.png",
+      aspectRatio: "1024 / 576",
+      subtitle: "The Vercel dashboard: where you import your GitHub repository in 1 click so every 'git push' auto-deploys to a live public URL.",
       hotspots: [
         {
-          id: "vc-prod-domain", num: "1", shortLabel: "Live .vercel.app URL",
-          x: 42.8, y: 30.3, w: 32.5, h: 5.2,
-          title: "Production Deployment card & public '.vercel.app' URL",
-          category: "Cloud hosting · Your live public website",
-          whatItDoes: "Shows the live production version of your app and its public HTTPS domain (e.g. 'https://tech-tree-app.vercel.app') that anyone in the world can open on their phone or laptop.",
-          whenYouUseIt: "Every time you merge or push to your 'main' branch on GitHub, Vercel automatically rebuilds your code (~25 seconds) and updates this live URL with zero downtime.",
-          tryCommand: "git push origin main  ->  auto-updates this URL"
+          id: "vc-nav-projects-deployments", num: "1", shortLabel: "Projects, Deployments & Logs",
+          x: 0.6, y: 14.0, w: 18.0, h: 14.5,
+          title: "Left sidebar: Projects, Deployments & Logs",
+          category: "Vercel navigation · Live builds & server logs",
+          whatItDoes: "• Projects: Lists all your hosted web apps.\n• Deployments: Shows every automatic build triggered when you push a Git commit to GitHub.\n• Logs: Streams live server logs so you can see 200 OK requests or debug 500 backend errors.",
+          whenYouUseIt: "Click 'Deployments' to grab a live URL or 'Logs' if a backend API route fails in production.",
+          tryCommand: "Every 'git push' creates a new Deployment row here"
         },
         {
-          id: "vc-git-preview", num: "2", shortLabel: "Git commit & Preview URL",
-          x: 31.6, y: 50.2, w: 54.8, h: 6.4,
-          title: "Source Git Commit ('7ecde05') & Automatic Preview Branch URLs",
-          category: "Cloud hosting · Test branches before going live",
-          whatItDoes: "• Links directly to the exact GitHub commit ('7ecde05' on 'main') currently running in production.\n• Below it, every Pull Request or feature branch gets its own private 'Preview URL' so you can test changes on a real cloud server before merging to 'main'!",
-          whenYouUseIt: "Click the Preview URL on any Pull Request to share a working test link with teammates before touching production.",
-          tryCommand: "git push -u origin feat/my-branch  ->  creates a Preview URL"
+          id: "vc-nav-observability-firewall", num: "2", shortLabel: "Analytics, Observability & Firewall",
+          x: 0.6, y: 29.8, w: 18.0, h: 18.5,
+          title: "Analytics, Speed Insights, Observability & Firewall",
+          category: "Monitoring & security · Traffic & protection",
+          whatItDoes: "Tracks page visitor counts, page load speeds, and lets you configure firewall / rate-limiting rules against bot traffic.",
+          whenYouUseIt: "Check 'Observability' and 'Firewall' after sharing a public link.",
+          tryCommand: "Monitor live traffic & block abusive IPs"
         },
         {
-          id: "vc-instant-rollback", num: "3", shortLabel: "↺ Instant Rollback",
-          x: 91.5, y: 11.6, w: 13.0, h: 4.8,
-          title: "'↺ Instant Rollback' button (1-click emergency recovery)",
-          category: "Reliability · Revert a broken deploy in 1 second",
-          whatItDoes: "If you push a bug to production, clicking 'Instant Rollback' immediately switches live traffic back to your previous working deployment without waiting for a new build.",
-          whenYouUseIt: "Use this whenever a new deployment breaks production—revert traffic first in 1 click, then debug calmly on your laptop.",
-          tryCommand: "Vercel Dashboard -> Instant Rollback (or git revert HEAD)"
+          id: "vc-nav-env-domains", num: "3", shortLabel: "Environment Variables & Domains",
+          x: 0.6, y: 56.4, w: 18.0, h: 9.2,
+          title: "'Environment Variables' & 'Domains' tabs",
+          category: "Secrets & custom URLs · Production config",
+          whatItDoes: "• Environment Variables: Where you paste secret API keys (like 'GEMINI_API_KEY') so your cloud server can read them without exposing them in GitHub.\n• Domains: Where you connect a custom domain name (like 'myapp.com').",
+          whenYouUseIt: "Click 'Environment Variables' (or switch to Screen 2 above) whenever your app needs a secret API key or DATABASE_URL.",
+          tryCommand: "process.env.GEMINI_API_KEY (Node) / os.environ.get('GEMINI_API_KEY') (Python)"
         },
         {
-          id: "vc-build-runtime-logs", num: "4", shortLabel: "Build & Runtime Logs (500)",
-          x: 31.6, y: 79.4, w: 56.8, h: 7.4,
-          title: "Build Logs & Serverless Function Runtime Logs",
-          category: "Observability · Read cloud crash tracebacks",
-          whatItDoes: "• Build Logs: Shows 'npm run build' or Python library install errors if a deployment fails while building.\n• Runtime Logs: Streams live messages ('200 OK' vs. '500 ERROR') from your running backend endpoints (often called 'Serverless Functions' — small backend functions that wake up whenever a user clicks a button). Notice how the red log immediately tells you 'KeyError: STRIPE_SECRET_KEY missing'!",
-          whenYouUseIt: "Whenever your live site shows '500 Internal Server Error' or a button fails in production, open Runtime Logs here to read the exact error line.",
-          tryCommand: "Filter logs by 'Error (500)' to spot missing env keys or crashes"
+          id: "vc-add-new-btn", num: "4", shortLabel: "Add New ▾ (Deploy a repo)",
+          x: 89.4, y: 10.6, w: 9.0, h: 5.2,
+          title: "Top-right 'Add New ▾' button",
+          category: "Essential action · Connect a new GitHub repo",
+          whatItDoes: "Opens a menu to import a GitHub repository ('Project'), attach a custom 'Domain', or create a 'Storage' database.",
+          whenYouUseIt: "Click 'Add New ▾ -> Project' anytime you want to turn a GitHub repo into a live website.",
+          tryCommand: "Add New -> Project -> Import GitHub Repo"
         },
         {
-          id: "vc-env-variables", num: "5", shortLabel: "Environment Variables",
-          x: 80.2, y: 32.0, w: 32.4, h: 14.0,
-          title: "Settings ➔ Environment Variables (Your cloud '.env' vault)",
-          category: "Security · Where secret API keys live in the cloud",
-          whatItDoes: "Because your local '.env' file is ignored by '.gitignore' and never uploaded to GitHub, Vercel doesn't have your API keys until you paste them here! Values are encrypted (scrambled safely in storage) and handed directly to your running Python ('os.environ') or JavaScript ('process.env') code when the server runs.",
-          whenYouUseIt: "Whenever you add a new key (like 'GEMINI_API_KEY' or 'DATABASE_URL') to your local '.env' file, paste the key and value here too, then click 'Redeploy'.",
-          tryCommand: "Settings -> Environment Variables -> Add Key -> Redeploy"
+          id: "vc-usage-card", num: "5", shortLabel: "Usage & Anomaly Alerts",
+          x: 21.0, y: 24.8, w: 31.2, h: 25.4,
+          title: "Last 30 days Usage & Anomaly Alerts",
+          category: "Billing safety · Track bandwidth & function runs",
+          whatItDoes: "Shows your current bandwidth and serverless function usage over the last 30 days so there are never surprise cloud bills.",
+          whenYouUseIt: "Glance here to verify your hobby projects are staying well within free-tier limits.",
+          tryCommand: "Free Hobby tier covers static & light serverless apps"
         },
         {
-          id: "vc-web-analytics", num: "6", shortLabel: "Web Analytics (Visitors)",
-          x: 80.2, y: 75.2, w: 32.4, h: 9.2,
-          title: "Web Analytics (Private visitor & pageview counter)",
-          category: "Analytics · See how many people visit your app",
-          whatItDoes: "Shows unique visitors, total page views, and top routes over the last 7/30 days—visible only to you when logged into your Vercel dashboard, without needing cookie banners.",
-          whenYouUseIt: "Click the 'Web Analytics' tab in Vercel to enable 1-click visitor tracking for your deployed project.",
-          tryCommand: "Vercel -> Web Analytics -> Enable"
+          id: "vc-import-project", num: "6", shortLabel: "Import Project (Link GitHub)",
+          x: 56.6, y: 64.2, w: 38.8, h: 9.6,
+          title: "'Import Project' button (Connects GitHub -> Vercel)",
+          category: "Essential action · 1-click auto-deploy setup",
+          whatItDoes: "Lets you pick any repository from your linked GitHub account and deploy it to a live 'https://<project>.vercel.app' URL. Once linked, every future 'git push' updates your live site automatically!",
+          whenYouUseIt: "Click 'Import' right after pushing your code to GitHub for the first time.",
+          tryCommand: "Import repo -> Click Deploy -> Live in ~30s"
         }
       ]
     },
 
     // =========================================================================
-    // SNAPSHOT 8: CHROME DEVTOOLS (F12 / INSPECT)
+    // VERCEL SNAPSHOT 2: ENVIRONMENT VARIABLES VAULT
+    // =========================================================================
+    {
+      id: "vercel-env",
+      group: "vercel",
+      groupLabel: "Vercel / Cloud Hosting",
+      tabTitle: "2. Environment Variables (.env)",
+      shortTitle: "Vercel: Environment Variables",
+      imageSrc: "./ui-vercel-env.png",
+      aspectRatio: "1024 / 576",
+      subtitle: "Where your secret '.env' API keys (like GEMINI_API_KEY or DATABASE_URL) live safely in the cloud—since '.env' is never uploaded to GitHub.",
+      hotspots: [
+        {
+          id: "vc-env-sidebar", num: "1", shortLabel: "Environment Variables tab",
+          x: 0.6, y: 20.6, w: 18.0, h: 5.2,
+          title: "'Environment Variables' in the left navigation bar",
+          category: "Security · Cloud secrets vault",
+          whatItDoes: "Opens the encrypted variables manager where you store API keys and database connection strings for your deployed apps.",
+          whenYouUseIt: "Click here (or inside a specific Project -> Settings -> Environment Variables) whenever your live site needs a secret key.",
+          tryCommand: "Local laptop reads .env -> Live Vercel reads Environment Variables"
+        },
+        {
+          id: "vc-env-projects-shared", num: "2", shortLabel: "Projects vs. Shared variables",
+          x: 20.8, y: 23.2, w: 10.8, h: 5.4,
+          title: "'Projects' vs. 'Shared' Environment Variables",
+          category: "Organization · Per-app vs. team-wide keys",
+          whatItDoes: "• Projects: Keys scoped to one specific web app.\n• Shared: Keys you can share across multiple projects in your account.",
+          whenYouUseIt: "Keep keys scoped to a single Project unless multiple apps intentionally share the same backend service.",
+          tryCommand: "Project Settings -> Environment Variables -> Add"
+        },
+        {
+          id: "vc-env-filters", num: "3", shortLabel: "Environment filters (Prod / Preview)",
+          x: 21.0, y: 30.6, w: 77.0, h: 5.8,
+          title: "Search & Environment filters (Production, Preview, Development)",
+          category: "Environment isolation · Separate Prod vs. Preview keys",
+          whatItDoes: "Lets you filter variables by environment: 'Production' (your main live URL), 'Preview' (branch preview URLs), and 'Development'.",
+          whenYouUseIt: "Point 'Preview' deployments at a test database and 'Production' at your live database so branch experiments never touch real user rows.",
+          tryCommand: "Separate Production vs. Preview DATABASE_URL"
+        },
+        {
+          id: "vc-env-main-box", num: "4", shortLabel: "Project Environment Variables list",
+          x: 21.0, y: 38.0, w: 77.0, h: 22.8,
+          title: "Project Environment Variables vault",
+          category: "Security · Why you must redeploy after adding a key",
+          whatItDoes: "Lists all encrypted Key/Value pairs injected into your cloud server at runtime. Remember: after adding or changing an environment variable in a project's settings, trigger a new deployment (or 'git push') so the running server picks up the new key!",
+          whenYouUseIt: "Add 'GEMINI_API_KEY' or 'DATABASE_URL' inside your project's Settings -> Environment Variables.",
+          tryCommand: "Add Key + Value -> Save -> Redeploy"
+        },
+        {
+          id: "vc-env-storage-ai", num: "5", shortLabel: "Storage & AI Gateway",
+          x: 0.6, y: 41.8, w: 18.0, h: 19.5,
+          title: "Left sidebar: Storage (Postgres/Blob/KV) & AI Gateway",
+          category: "Cloud services · Attached databases & AI routing",
+          whatItDoes: "Lets you connect managed databases (like Neon Postgres or Upstash Redis) and route AI model requests with caching and spend controls.",
+          whenYouUseIt: "Use 'Storage' to link a database and automatically inject its 'DATABASE_URL' into your project.",
+          tryCommand: "Storage -> Connect Database"
+        }
+      ]
+    },
+
+    // =========================================================================
+    // CHROME DEVTOOLS SNAPSHOT: ELEMENTS, STYLES & CONSOLE
     // =========================================================================
     {
       id: "chrome-devtools",
       group: "devtools",
-      groupLabel: "Chrome DevTools (Browser Inspector)",
-      tabTitle: "8. Chrome DevTools: Inspect, Console & Network",
-      shortTitle: "Chrome DevTools (F12)",
-      imageSrc: "./ui-chrome-devtools.svg",
-      aspectRatio: "1024 / 640",
-      subtitle: "Your X-ray goggles inside Chrome (Right-click -> Inspect, or Cmd+Option+I): inspect HTML/CSS, read red JS errors, and watch every API call.",
+      groupLabel: "Chrome DevTools (F12)",
+      tabTitle: "Chrome DevTools: Inspect & Console",
+      shortTitle: "Chrome DevTools (Inspect)",
+      imageSrc: "./ui-chrome-devtools.png",
+      aspectRatio: "1024 / 576",
+      subtitle: "Right-click any webpage and click 'Inspect' (or press Cmd+Option+I / F12) to x-ray HTML elements, live-edit CSS styles, and read red Console errors.",
       hotspots: [
         {
-          id: "dt-inspect-picker", num: "1", shortLabel: "Inspect Element (↖)",
-          x: 21.3, y: 30.9, w: 38.8, h: 13.4,
-          title: "Element Picker ('↖') & Blue Box-Model Highlight",
-          category: "Frontend X-ray · Click any button on the page",
-          whatItDoes: "Click the top-left '↖' cursor icon in DevTools (or right-click any button on a webpage and choose 'Inspect'). Hovering over the page highlights the element's exact pixel size ('188 × 38 px'), padding, and jumps straight to its '<button>' tag in the HTML tree.",
-          whenYouUseIt: "Whenever a card, button, or label looks misaligned or cut off, inspect it to see which CSS rule is controlling its size.",
-          tryCommand: "Shortcut: Cmd+Shift+C (Mac) or Ctrl+Shift+C (Windows)"
+          id: "dt-inspect-picker", num: "1", shortLabel: "↖ Element Picker & 📱 Mobile Toggle",
+          x: 58.0, y: 0.4, w: 4.2, h: 4.2,
+          title: "'↖' Element Picker & '📱' Mobile Screen Simulator",
+          category: "UI debugging · Point at any button on screen",
+          whatItDoes: "• '↖' (Top-left icon): Click this, then hover or click any button, card, or image on the webpage (left) to jump straight to its exact HTML tag and CSS rules on the right.\n• '📱' (Next to it): Previews how your site looks on an iPhone or iPad screen.",
+          whenYouUseIt: "Use '↖' whenever a button or layout looks slightly off and you want to see which CSS class controls it.",
+          tryCommand: "Cmd+Shift+C (Mac) / Ctrl+Shift+C (Win)"
         },
         {
-          id: "dt-device-toolbar", num: "2", shortLabel: "Mobile Preview (📱)",
-          x: 47.0, y: 14.7, w: 6.2, h: 4.6,
-          title: "Toggle Device Toolbar ('📱' phone/tablet simulator)",
-          category: "Responsive design · Test iPhone & iPad layouts",
-          whatItDoes: "Shrinks your browser viewport to simulate an iPhone, Pixel, or iPad screen right on your laptop so you can verify your app doesn't overflow horizontally on mobile.",
-          whenYouUseIt: "Click this phone icon before shipping any UI change to verify buttons and diagrams wrap cleanly on narrow screens.",
-          tryCommand: "Shortcut: Cmd+Shift+M (Mac) toggles Mobile Device view"
+          id: "dt-top-tabs", num: "2", shortLabel: "Elements, Console & Network (»)",
+          x: 62.4, y: 0.4, w: 12.6, h: 4.2,
+          title: "Top DevTools tabs: Elements, Console & '»' (Network / Application)",
+          category: "DevTools navigation · The Big 3 debugging tabs",
+          whatItDoes: "• Elements: Inspects HTML structure and CSS styling.\n• Console: Prints red JavaScript errors and 'console.log()' messages.\n• '»' (More tabs -> Network): Shows every API request and whether it returned 200 OK or a red 404/500 error.",
+          whenYouUseIt: "Check 'Console' first when a click does nothing; check 'Network' when an API call fails.",
+          tryCommand: "Cmd+Option+I (Mac) or F12 (Win)"
         },
         {
-          id: "dt-elements-styles", num: "3", shortLabel: "Elements & Live CSS",
-          x: 71.5, y: 29.7, w: 54.8, h: 21.2,
-          title: "'Elements' HTML DOM Tree & 'Styles' Live CSS Editor",
-          category: "Frontend X-ray · Experiment with CSS live",
-          whatItDoes: "• Left ('Elements'): Shows the live HTML DOM tree (Document Object Model — the browser's live family tree of every heading, button, and box on the page).\n• Right ('Styles'): Lets you click any CSS property (like 'padding: 8px 16px' or 'var(--color-primary)') and type a new value to preview the change instantly!",
-          whenYouUseIt: "Note: Edits in DevTools Styles are temporary! Once you find the spacing or color that looks right, copy that change into your real '.css' file in VS Code.",
-          tryCommand: "Right-click any element -> Inspect -> Edit Styles pane"
+          id: "dt-error-counter", num: "3", shortLabel: "Red Error (⊗ 2) & Warning counter",
+          x: 79.2, y: 0.4, w: 7.2, h: 4.2,
+          title: "Live Error ('⊗ 2') & Warning ('⚠ 2') badge",
+          category: "Instant diagnostics · Spot hidden crashes",
+          whatItDoes: "Counts how many JavaScript or network errors have fired on the current page. Clicking this badge opens the Console drawer directly to the red error lines.",
+          whenYouUseIt: "Always glance at this corner when testing your site—if the red number is above 0, click it to read the error!",
+          tryCommand: "Click '⊗' badge -> Copy error into your AI coding agent"
         },
         {
-          id: "dt-network-tab", num: "4", shortLabel: "Network (200 vs 500)",
-          x: 71.5, y: 54.4, w: 53.8, h: 8.6,
-          title: "'Network' tab (Inspect every API request, status code & latency)",
-          category: "API debugging · Is it a frontend or backend bug?",
-          whatItDoes: "Lists every file and API call your page makes:\n• Green '200 OK' ('/api/ask-guide', 380ms): Request succeeded! Click it to read the JSON response.\n• Red '500 Error' ('/api/save-note'): Your backend server crashed! Click the red row -> 'Response' tab to see the exact error payload.",
-          whenYouUseIt: "Whenever clicking a button does nothing or shows an error, check Network first to see if the request returned 200, 401 (unauthenticated), 404 (wrong URL), or 500 (server crash).",
-          tryCommand: "Network tab -> Click request row -> Preview / Response tab"
+          id: "dt-dom-breadcrumbs", num: "4", shortLabel: "HTML DOM breadcrumb bar",
+          x: 57.6, y: 4.2, w: 42.0, h: 3.8,
+          title: "Selected HTML element & parent/child breadcrumb trail",
+          category: "HTML structure · See how boxes nest",
+          whatItDoes: "Shows the currently selected HTML tag and its parent containers ('div > article > section > div').",
+          whenYouUseIt: "Click along this breadcrumb bar to step up to a parent container when debugging flexbox or grid alignment.",
+          tryCommand: "Right-click element on page -> Inspect"
         },
         {
-          id: "dt-disable-cache", num: "5", shortLabel: "Disable cache & Hard Refresh",
-          x: 88.8, y: 44.1, w: 18.0, h: 3.8,
-          title: "'☑ Disable cache' checkbox & Hard Refresh (Cmd+Shift+R)",
-          category: "Browser cache · Why didn't my code change show up?",
-          whatItDoes: "Browsers aggressively cache old '.css' and '.js' files for speed. Checking '☑ Disable cache' keeps Chrome from serving stale files whenever DevTools is open!",
-          whenYouUseIt: "If you saved a change in VS Code and refreshed Chrome but the page still looks old, press Cmd+Shift+R (Mac) or Ctrl+Shift+R (Win) to force a hard refresh.",
-          tryCommand: "Cmd+Shift+R (Mac) / Ctrl+Shift+R (Windows)"
+          id: "dt-styles-pane", num: "5", shortLabel: "Styles & Computed CSS rules",
+          x: 57.6, y: 8.2, w: 42.0, h: 49.5,
+          title: "'Styles' & 'Computed' CSS pane (Live sandbox)",
+          category: "CSS styling · Test changes live in the browser",
+          whatItDoes: "Shows every CSS rule applied to the selected element (e.g. 'justify-content: center', 'display: flex') and which file:line it comes from. You can click any value to type a new color, padding, or font-size and preview it live! (Crossed-out rules mean another CSS rule overrode them.)",
+          whenYouUseIt: "Experiment with spacing or colors here first, then copy the winning CSS into your '.css' file in VS Code.",
+          tryCommand: "Click any CSS property in 'Styles' to toggle or edit it live"
         },
         {
-          id: "dt-console-drawer", num: "6", shortLabel: "Console (JS Errors)",
-          x: 61.0, y: 75.6, w: 32.0, h: 8.6,
-          title: "'Console' tab (Red JavaScript errors & interactive JS prompt)",
-          category: "JavaScript debugging · Exact file & line number",
-          whatItDoes: "Prints every 'console.log()' message and highlights uncaught JavaScript crashes in red—including the exact file and line number (e.g. 'app.js:142') where the error happened! You can also type JS expressions at the '>' prompt.",
-          whenYouUseIt: "Open Console immediately if your page renders blank or a button click doesn't respond.",
-          tryCommand: "Shortcut: Cmd+Option+J (Mac) opens the Console directly"
-        },
-        {
-          id: "dt-application-storage", num: "7", shortLabel: "Application (LocalStorage)",
-          x: 88.8, y: 78.4, w: 18.6, h: 9.0,
-          title: "'Application' tab (Inspect LocalStorage, Cookies & Session tokens)",
-          category: "Browser storage · Saved preferences & login cookies",
-          whatItDoes: "Shows every key-value pair saved in your browser's 'localStorage' (a small notebook built into the browser that remembers non-sensitive settings like dark/light mode) and your login cookies ('HttpOnly ✓' — secure login passes that browser scripts cannot steal).",
-          whenYouUseIt: "Use this tab to inspect or clear saved local state when testing a fresh user experience.",
-          tryCommand: "Application -> Local Storage -> Right-click -> Clear"
+          id: "dt-console-drawer", num: "6", shortLabel: "Bottom Console drawer",
+          x: 57.6, y: 58.2, w: 23.5, h: 5.0,
+          title: "Bottom 'Console' drawer (Always-visible JS log)",
+          category: "Debugging · Read stack traces while inspecting HTML",
+          whatItDoes: "Keeps the JavaScript Console visible in a split drawer at the bottom while you inspect HTML/CSS at the top. Press 'Esc' anytime inside DevTools to toggle this bottom Console drawer open or closed!",
+          whenYouUseIt: "Press 'Esc' in DevTools to view HTML/CSS and Console errors side-by-side.",
+          tryCommand: "Press [Esc] inside DevTools to toggle the Console drawer"
         }
       ]
     },
 
     // =========================================================================
-    // SNAPSHOT 9: CLOUD DATABASE STUDIO (NEON / SUPABASE POSTGRES)
+    // NEON CLOUD DATABASE SNAPSHOT: SERVERLESS POSTGRES DASHBOARD
     // =========================================================================
     {
       id: "database-studio",
       group: "database",
       groupLabel: "Cloud Database (Neon / Supabase)",
-      tabTitle: "9. Cloud DB: Tables, SQL & DATABASE_URL",
-      shortTitle: "Neon / Supabase DB Studio",
-      imageSrc: "./ui-database-studio.svg",
-      aspectRatio: "1024 / 640",
-      subtitle: "Where your app's permanent memory lives in the cloud: browse tables like a spreadsheet, run SQL queries, and copy your pooled DATABASE_URL.",
+      tabTitle: "Neon Cloud Postgres Dashboard",
+      shortTitle: "Neon Cloud Postgres",
+      imageSrc: "./ui-neon-database.png",
+      aspectRatio: "1024 / 568",
+      subtitle: "What a managed Serverless SQL Database (Neon Postgres) looks like: where your database projects, branches, compute usage, and connection commands live.",
       hotspots: [
         {
-          id: "db-table-editor", num: "1", shortLabel: "Table Editor (Rows & PK)",
-          x: 60.0, y: 26.6, w: 75.6, h: 20.0,
-          title: "Table Editor ('public.users' spreadsheet view & Primary Keys)",
-          category: "Database · View & edit persistent cloud data",
-          whatItDoes: "Displays your PostgreSQL database tables just like a Google Sheet or Airtable! Each column has a strict data type—like 'PK' (Primary Key, the unique ID badge for each row, often a random 'uuid' ID string), 'text unique', or 'timestamptz' (timestamp with timezone)—and rows stay saved safely even when your web server restarts.",
-          whenYouUseIt: "Open Table Editor after submitting a form in your app to verify that the new row was actually saved to the database.",
-          tryCommand: "Click '+ Insert row' to add test data visually"
+          id: "db-sidebar-projects", num: "1", shortLabel: "Projects, Billing & Settings",
+          x: 1.0, y: 10.0, w: 14.8, h: 21.5,
+          title: "Left sidebar: Projects, People, Billing, Integrations & Settings",
+          category: "Database navigation · Manage your cloud SQL instances",
+          whatItDoes: "Navigates between your database projects, team access permissions, billing limits, and cloud integrations (like linking Neon directly to Vercel).",
+          whenYouUseIt: "Click 'Integrations' to automatically sync your database connection string into Vercel.",
+          tryCommand: "Neon + Vercel integration auto-sets DATABASE_URL"
         },
         {
-          id: "db-branches", num: "2", shortLabel: "Database Branches",
-          x: 54.1, y: 4.1, w: 19.2, h: 4.4,
-          title: "Database Branch selector ('main' vs. preview branches)",
-          category: "Serverless Postgres · Git-style branches for data",
-          whatItDoes: "Modern serverless databases like Neon let you create an instant isolated branch copy of your database so you can test schema migrations (adding or renaming columns) without risking real production user data.",
-          whenYouUseIt: "Create a test branch before running a major 'ALTER TABLE' migration or letting an AI agent modify your database schema.",
-          tryCommand: "neon branches create --name preview-feature"
+          id: "db-usage-metrics", num: "2", shortLabel: "Serverless Compute & Storage (0 CU-hrs)",
+          x: 19.0, y: 17.0, w: 78.5, h: 17.5,
+          title: "Serverless Compute ('CU-hrs') & Storage GB metrics",
+          category: "How serverless SQL works · Scales to $0 when idle",
+          whatItDoes: "• Compute (CU-hrs): Neon automatically pauses your database CPU when no one is using your app ('0 CU-hrs') and wakes it up in ~500ms when a request arrives.\n• Storage: Shows the disk space used by your SQL tables (here just 0.03 GB / 32 MB).",
+          whenYouUseIt: "Check here to see how much database storage and compute your app is using.",
+          tryCommand: "Scales to zero automatically when idle"
         },
         {
-          id: "db-rls-badge", num: "3", shortLabel: "RLS Policies (Security)",
-          x: 73.3, y: 4.1, w: 16.4, h: 4.4,
-          title: "Row Level Security ('RLS Policies: Enabled')",
-          category: "Database security · Prevent users seeing others' rows",
-          whatItDoes: "In Supabase and Postgres, Row Level Security (RLS) enforces rules inside the database itself (e.g. 'auth.uid() = user_id') so User A can never query or delete User B's rows.",
-          whenYouUseIt: "Always make sure RLS is enabled on every table in Supabase before launching publicly!",
-          tryCommand: "ALTER TABLE notes ENABLE ROW LEVEL SECURITY;"
+          id: "db-new-project-btn", num: "3", shortLabel: "+ New project & Import data",
+          x: 78.6, y: 9.6, w: 19.0, h: 5.2,
+          title: "'+ New project' & 'Import data' buttons",
+          category: "Essential action · Spin up a Postgres database in 2 seconds",
+          whatItDoes: "Creates a brand-new PostgreSQL database in the cloud (or imports an existing SQL dump / CSV).",
+          whenYouUseIt: "Click '+ New project' when your app needs permanent storage for users, posts, or orders.",
+          tryCommand: "Click '+ New project' -> Copy DATABASE_URL into .env"
         },
         {
-          id: "db-connect-url", num: "4", shortLabel: "Connect & DATABASE_URL",
-          x: 82.7, y: 75.6, w: 28.2, h: 20.6,
-          title: "'🔌 Connect' modal & Pooled 'DATABASE_URL' connection string",
-          category: "Essential action · Connect your code to the database",
-          whatItDoes: "Clicking 'Connect' gives you the 'DATABASE_URL' connection string (an all-in-one address containing your username, password, database host, and '?sslmode=require' for encrypted traffic). Checking '☑ Connection Pooling' ('-pooler' — a shared switchboard for database connections) prevents cloud servers from running out of connections under heavy traffic.",
-          whenYouUseIt: "Copy this 'DATABASE_URL' string and paste it into TWO places: (1) your local '.env' file in VS Code, and (2) Vercel -> Settings -> Environment Variables.",
-          tryCommand: "Paste into .env:  DATABASE_URL=\"postgresql://...\""
+          id: "db-project-row", num: "4", shortLabel: "Project1 row, Region & Branches",
+          x: 19.0, y: 51.8, w: 78.5, h: 9.0,
+          title: "Database Project row ('Project1'), Region & 'Branches'",
+          category: "Database architecture · Click to open Tables & SQL Editor",
+          whatItDoes: "• Clicking 'Project1' opens its SQL Editor, Table Editor (rows & columns), and Connection String modal.\n• Region ('AWS US East 2'): Pick the region closest to your backend server so queries take <5ms.\n• Branches ('1'): Neon lets you branch your database just like a Git branch to test schema migrations safely!",
+          whenYouUseIt: "Click your project name ('Project1') to inspect tables, run SQL queries, or copy your 'DATABASE_URL'.",
+          tryCommand: "Click 'Project1' -> Tables / SQL Editor / Connect"
         },
         {
-          id: "db-sql-editor", num: "5", shortLabel: "SQL Editor & Indexes",
-          x: 43.2, y: 69.5, w: 42.4, h: 26.0,
-          title: "SQL Editor ('▷ Run SQL' & 'CREATE INDEX')",
-          category: "Database queries · Fast filtering & indexing",
-          whatItDoes: "Lets you run raw SQL queries ('SELECT ... FROM users WHERE ...') and create indexes ('CREATE INDEX idx_users_email ON users(email)'). An index is like a book's index—it makes lookups take 3 milliseconds instead of scanning every row!",
-          whenYouUseIt: "Use the SQL Editor to inspect query speed or add an index on columns your app filters by frequently (like 'email' or 'user_id').",
-          tryCommand: "CREATE INDEX idx_users_email ON users(email);"
+          id: "db-agent-skills", num: "5", shortLabel: "Onboard your agent (MCP / Skills)",
+          x: 1.2, y: 63.0, w: 14.8, h: 22.8,
+          title: "'Onboard your agent' card (Connect Cursor / Claude Code safely)",
+          category: "AI Engineering · Give your coding agent database context",
+          whatItDoes: "Provides a 1-click command to install Neon's official agent skill / MCP server so your AI coding assistant (Cursor, Claude Code, Windsurf) can inspect table schemas and write accurate SQL migrations.",
+          whenYouUseIt: "Use this when you want your coding agent to help design tables or write Drizzle/Prisma/SQLAlchemy queries.",
+          tryCommand: "Connects via Model Context Protocol (MCP)"
         },
         {
-          id: "db-left-nav", num: "6", shortLabel: "Schema, Auth & Backups",
-          x: 9.6, y: 26.0, w: 17.0, h: 32.0,
-          title: "Left navigation (Table Editor, SQL, Auth Users & Point-in-Time Backups)",
-          category: "Database navigation · All tables & automated backups",
-          whatItDoes: "Switches between your table list ('users', 'flashcards', 'study_sessions'), built-in user Authentication management, Row Level Security rules, and automated Point-in-Time Recovery backups.",
-          whenYouUseIt: "Click any table name under 'PUBLIC SCHEMA TABLES' to inspect its columns and rows.",
-          tryCommand: "Point-in-Time Restore lets you rewind accidental deletions"
+          id: "db-psql-connect", num: "6", shortLabel: "$ psql -h pg.neon.tech (Connect)",
+          x: 41.5, y: 93.0, w: 34.5, h: 5.8,
+          title: "Terminal connection command ('$ psql -h pg.neon.tech')",
+          category: "CLI connectivity · Connect from your terminal",
+          whatItDoes: "Lets you connect directly to your cloud Postgres database from your Mac Terminal using 'psql' without typing a password (via browser authentication).",
+          whenYouUseIt: "Copy this command into your terminal when you want to test SQL queries directly from the command line.",
+          tryCommand: "psql -h pg.neon.tech"
         }
       ]
     },
 
     // =========================================================================
-    // SNAPSHOT 10: MAC TERMINAL, HOMEBREW/UV & CLAUDE CODE CLI AGENT
+    // MAC TERMINAL SNAPSHOT: ZSH PROMPT, PWD, LS & GIT STATUS
     // =========================================================================
     {
       id: "terminal-cli",
       group: "terminal",
-      groupLabel: "Mac Terminal & CLI Agent",
-      tabTitle: "10. Terminal: zsh, .venv, Server & Claude CLI",
-      shortTitle: "Mac Terminal & Claude CLI",
-      imageSrc: "./ui-terminal-cli.svg",
-      aspectRatio: "1024 / 640",
-      subtitle: "How to read a real Mac Terminal window: your folder prompt, Homebrew & uv virtual environments, a running localhost server, and a terminal AI agent.",
+      groupLabel: "Mac Terminal & CLI",
+      tabTitle: "Mac Terminal: pwd, ls & git status",
+      shortTitle: "Mac Terminal",
+      imageSrc: "./ui-mac-terminal.png",
+      aspectRatio: "1024 / 547",
+      subtitle: "A real Mac Terminal window: how to read the prompt ('~ %'), check where you are ('pwd'), list folders ('ls'), and avoid the 'not a git repository' trap.",
       hotspots: [
         {
-          id: "tm-title-bar", num: "1", shortLabel: "Window bar (my-app — -zsh)",
-          x: 45.0, y: 3.6, w: 24.0, h: 4.6,
-          title: "Terminal window header ('📁 my-app — -zsh — 120×36') & Split Tabs",
-          category: "Terminal anatomy · Current folder & active shell",
-          whatItDoes: "The top bar always tells you three things: (1) which folder you are currently standing inside ('my-app'), (2) which command-line shell is running ('-zsh', the default Mac shell), and (3) your open terminal tabs ('Tab 1: zsh & server', 'Tab 2: claude agent').",
-          whenYouUseIt: "Press Cmd+T in Mac Terminal to open a second tab whenever your first tab is busy running a local web server!",
-          tryCommand: "Cmd+T opens a new terminal tab; pwd prints your full folder path"
+          id: "tm-pwd-command", num: "1", shortLabel: "pwd -> /Users/lucy (Where am I?)",
+          x: 1.0, y: 5.5, w: 24.0, h: 9.0,
+          title: "'pwd' (Print Working Directory) & the '~' home symbol",
+          category: "Navigation #1 · Always check where you are standing",
+          whatItDoes: "• Notice the prompt: 'lucy@macbook ~ %'. The tilde ('~') means your terminal is currently standing inside your personal Home folder.\n• Running 'pwd' prints the exact full path on disk: '/Users/lucy'.",
+          whenYouUseIt: "Run 'pwd' first whenever you open a new Terminal window so you never run commands in the wrong folder!",
+          tryCommand: "pwd"
         },
         {
-          id: "tm-brew-uv", num: "2", shortLabel: "brew install & uv",
-          x: 26.5, y: 24.8, w: 46.5, h: 8.4,
-          title: "Installing developer tools with Homebrew ('brew install uv gh')",
-          category: "Package managers · The App Store for your terminal",
-          whatItDoes: "Running 'brew install uv gh' uses Homebrew to download and install official command-line tools ('uv' for fast Python environments, 'gh' for GitHub CLI) into Mac's official tool folder ('/opt/homebrew/') and registers them in your Terminal's PATH lookup list automatically.",
-          whenYouUseIt: "Use 'brew install <tool>' for system-wide developer tools, and 'uv pip install' (or 'npm install') for project-specific libraries.",
-          tryCommand: "brew install uv gh node"
+          id: "tm-ls-command", num: "2", shortLabel: "ls (List folders in current directory)",
+          x: 1.0, y: 14.2, w: 22.0, h: 52.0,
+          title: "'ls' (List every folder & file sitting inside your current folder)",
+          category: "Navigation #2 · See what is around you",
+          whatItDoes: "Prints the folders sitting inside '/Users/lucy'—the exact same folders ('Desktop', 'Documents', 'Downloads', 'my-first-app') you see in Mac Finder! (Tip: run 'ls -la' to also reveal hidden dotfiles like '.env' and '.git'.)",
+          whenYouUseIt: "Run 'ls' before 'cd' so you can see the exact spelling of the subfolder you want to step into.",
+          tryCommand: "ls   (or ls -la to see hidden .env files)"
         },
         {
-          id: "tm-venv-prompt", num: "3", shortLabel: "(.venv) prompt prefix",
-          x: 26.5, y: 38.8, w: 47.8, h: 5.4,
-          title: "The green '(.venv)' prefix in front of your prompt",
-          category: "Python isolation · Your project's private bubble",
-          whatItDoes: "After you run 'uv venv && source .venv/bin/activate', notice how '(.venv)' appears at the very start of your prompt! That confirms any Python packages you install ('fastapi', 'pytest') go cleanly into this project's '.venv' folder instead of polluting your Mac's system Python.",
-          whenYouUseIt: "Always look for '(.venv)' before running 'pip install' or 'pytest'.",
-          tryCommand: "uv venv && source .venv/bin/activate"
+          id: "tm-git-not-a-repo", num: "3", shortLabel: "fatal: not a git repository (.git)",
+          x: 1.0, y: 66.8, w: 69.5, h: 9.5,
+          title: "Why 'git status' said 'fatal: not a git repository'",
+          category: "Common beginner error · Standing one folder too high!",
+          whatItDoes: "Look closely at why this failed: the terminal is still standing in the Home folder ('~'), which is NOT a Git project! Git only works inside a project folder that contains a hidden '.git' tracking folder.",
+          whenYouUseIt: "Whenever you see 'fatal: not a git repository', don't panic—you just need to 'cd <your-project-folder>' first (or run 'git init' if it's a brand-new project)!",
+          tryCommand: "cd my-first-app   # Step into your project folder first!"
         },
         {
-          id: "tm-localhost-ctrlc", num: "4", shortLabel: "localhost:8000 & Ctrl+C",
-          x: 26.5, y: 68.6, w: 47.8, h: 14.8,
-          title: "Running local server ('http://127.0.0.1:8000') & 'Press CTRL+C to quit'",
-          category: "Local server · Why the terminal stops showing a prompt",
-          whatItDoes: "When you start a web server ('uvicorn server:app --reload' or 'npm run dev'), the terminal stays busy listening for browser requests and printing live access logs ('GET / 200 OK'). It is NOT frozen—it is actively serving your site!",
-          whenYouUseIt: "Open 'http://127.0.0.1:8000' (or 'localhost:8000') in Chrome to view your app. When you want to stop the server and get your '%' prompt back, press Ctrl + C!",
-          tryCommand: "Press Ctrl + C (Control+C, even on a Mac!) to stop a server"
+          id: "tm-cd-git-status", num: "4", shortLabel: "cd my-first-app && git status",
+          x: 1.0, y: 76.2, w: 46.0, h: 13.0,
+          title: "'cd my-first-app && git status' -> 'On branch main'",
+          category: "Chaining commands · Step inside & check Git cleanly",
+          whatItDoes: "• 'cd my-first-app' steps down into the project folder.\n• '&&' chains the next command right after.\n• Now 'git status' succeeds and replies: 'On branch main — nothing to commit, working tree clean'!",
+          whenYouUseIt: "Use 'cd <folder> && git status' to jump into your project and verify its Git state in one line.",
+          tryCommand: "cd my-first-app && git status"
         },
         {
-          id: "tm-claude-diff", num: "5", shortLabel: "Claude / Gemini CLI diff",
-          x: 75.5, y: 39.5, w: 43.0, h: 14.2,
-          title: "Terminal AI Coding Agent ('claude' / 'gemini') & Red/Green Diff Preview",
-          category: "AI coding agent · Autonomous multi-file edits",
-          whatItDoes: "When you launch a terminal agent inside your project folder, it reads your 'CLAUDE.md' / 'GEMINI.md' rules, inspects your files, and shows you a red (-) and green (+) diff of the exact lines it wants to change before touching disk.",
-          whenYouUseIt: "Read the green (+) lines in the proposed diff to verify the agent isn't deleting working logic or hardcoding secrets.",
-          tryCommand: "claude   (launches interactive terminal agent in current folder)"
-        },
-        {
-          id: "tm-permission-gate", num: "6", shortLabel: "Agent Permission Gate ([1])",
-          x: 75.5, y: 55.9, w: 43.0, h: 14.0,
-          title: "Human-in-the-Loop Permission Prompt ('Allow agent to edit & run pytest?')",
-          category: "Agent safety · Approve edits & automatic test verification",
-          whatItDoes: "Before modifying files or running shell commands, the terminal agent pauses and asks for your approval ('[1] Yes', '[2] Yes, don't ask again for pytest', '[3] No / Esc'). Immediately after applying the edit, it runs 'pytest' to prove the change works!",
-          whenYouUseIt: "Safe read/test commands ('pytest', 'git status') are great to auto-allow ('[2]'), while destructive commands ('rm', 'git push --force') should always require human review.",
-          tryCommand: "Press 1 to approve, or Esc to interrupt and redirect the agent"
+          id: "tm-active-prompt", num: "5", shortLabel: "Prompt changed to 'my-first-app %'",
+          x: 1.0, y: 89.2, w: 31.0, h: 5.5,
+          title: "Updated prompt ('lucy@macbook my-first-app % █')",
+          category: "Terminal anatomy · Your prompt shows your current folder",
+          whatItDoes: "Notice how the word before '%' changed from '~' to 'my-first-app'! The Mac zsh prompt always tells you the name of the folder you are currently standing inside, and the solid block cursor ('█') is waiting for your next command.",
+          whenYouUseIt: "Glance at the word right before '%' (or '$') to confirm you are inside your project folder before running 'npm', 'python3', or 'git' commands.",
+          tryCommand: "cd ..   # Steps back up to the parent folder"
         }
       ]
     }
@@ -303,111 +471,110 @@
   var EXTRA_FLOWS = [
     {
       id: "flow-deploy-vercel-env",
-      title: "Flow 6: Deploy to Vercel & add secret API keys",
+      title: "Flow 6: Deploy a GitHub repo to Vercel & add secret Environment Variables",
       badge: "4 steps · GitHub ➔ Vercel",
       icon: "rocket_launch",
-      description: "How your code goes from a GitHub repository to a live public '.vercel.app' website—and how to add secret API keys when your local '.env' file isn't uploaded.",
+      summary: "How to connect your GitHub repository to Vercel for automatic cloud deployments and store secret '.env' API keys safely:",
       steps: [
         {
           snapshotId: "github-repo",
-          hotspotId: "gh-repo-special-files",
-          stepTitle: "Step 1 of 4 · Verify '.env' is inside '.gitignore' on GitHub",
-          instruction: "Before deploying, check your GitHub repository root (Pin #11) to make sure '.gitignore' hides '.env' so your raw API keys are never exposed in public code."
+          hotspotId: "gh-repo-commits-history",
+          stepTitle: "Step 1 of 4 · Verify your latest commit is pushed to GitHub (and '.env' is in .gitignore)",
+          instruction: "Make sure your working code is pushed to GitHub (Pin #9) and that '.gitignore' (Pin #11) is blocking your local '.env' file from uploading."
         },
         {
           snapshotId: "vercel-dashboard",
-          hotspotId: "vc-prod-domain",
-          stepTitle: "Step 2 of 4 · Connect GitHub to Vercel to get your live '.vercel.app' URL",
-          instruction: "Import your GitHub repository into Vercel. Vercel builds your 'main' branch in ~25 seconds and publishes it at a live HTTPS URL (Pin #1)."
+          hotspotId: "vc-import-project",
+          stepTitle: "Step 2 of 4 · Click 'Import' on Vercel to connect your GitHub repository",
+          instruction: "Sign in to Vercel with GitHub and click 'Import' (Pin #6, or 'Add New ▾ -> Project' at Pin #4) to select your GitHub repository and deploy it."
+        },
+        {
+          snapshotId: "vercel-env",
+          hotspotId: "vc-env-main-box",
+          stepTitle: "Step 3 of 4 · Paste secret API keys into Vercel's Environment Variables vault",
+          instruction: "Open Environment Variables (Pin #1 / Pin #4) and add your secret keys (like 'GEMINI_API_KEY' or 'DATABASE_URL') so your cloud backend can read them safely."
         },
         {
           snapshotId: "vercel-dashboard",
-          hotspotId: "vc-env-variables",
-          stepTitle: "Step 3 of 4 · Paste 'GEMINI_API_KEY' in Vercel Settings ➔ Environment Variables",
-          instruction: "Because your local '.env' was never uploaded to GitHub, open Vercel's 'Settings ➔ Environment Variables' panel (Pin #5), paste your secret key and value, click Save, and Redeploy."
-        },
-        {
-          snapshotId: "vercel-dashboard",
-          hotspotId: "vc-build-runtime-logs",
-          stepTitle: "Step 4 of 4 · Check Runtime Logs & Web Analytics",
-          instruction: "Verify your API routes return green '[200 OK]' in the Runtime Logs panel (Pin #4) and check your visitor count in Web Analytics (Pin #6)."
+          hotspotId: "vc-nav-projects-deployments",
+          stepTitle: "Step 4 of 4 · Open Deployments & Logs to view your live URL and server status",
+          instruction: "Click 'Deployments' or 'Logs' (Pin #1) to open your live '.vercel.app' URL—every future 'git push' on your laptop will update it automatically!"
         }
       ]
     },
     {
-      id: "flow-connect-cloud-db",
-      title: "Flow 7: Connect a cloud database (Neon / Supabase) to VS Code",
-      badge: "3 steps · Cloud DB ➔ VS Code",
+      id: "flow-connect-cloud-database",
+      title: "Flow 7: Create a cloud Postgres database in Neon & connect it",
+      badge: "3 steps · Neon ➔ Vercel",
       icon: "database",
-      description: "How to grab your pooled Postgres connection string from Neon or Supabase, store it safely in your local project, and verify rows are saved.",
+      summary: "How to spin up a serverless PostgreSQL database in Neon and wire its connection string into your app:",
       steps: [
         {
           snapshotId: "database-studio",
-          hotspotId: "db-connect-url",
-          stepTitle: "Step 1 of 3 · Click '🔌 Connect' & copy your pooled 'DATABASE_URL'",
-          instruction: "In your Neon or Supabase dashboard, click 'Connect' (Pin #4), keep 'Connection Pooling' checked, and click 'Copy DATABASE_URL'."
-        },
-        {
-          snapshotId: "vscode-explorer",
-          hotspotId: "vsc-exp-dotfiles",
-          stepTitle: "Step 2 of 3 · Paste 'DATABASE_URL' into your local '.env' file in VS Code",
-          instruction: "In VS Code's Explorer sidebar (Pin #3), paste DATABASE_URL=\"postgresql://...\" into your local '.env' file—and confirm '.env' is listed inside '.gitignore'!"
+          hotspotId: "db-new-project-btn",
+          stepTitle: "Step 1 of 3 · Click '+ New project' in Neon to create a Postgres database",
+          instruction: "In the Neon dashboard, click '+ New project' (Pin #3) to spin up a serverless PostgreSQL database."
         },
         {
           snapshotId: "database-studio",
-          hotspotId: "db-table-editor",
-          stepTitle: "Step 3 of 3 · Inspect saved rows in the Table Editor & add an index",
-          instruction: "Run your app and open the Cloud Database Table Editor (Pin #1) to see your new user rows appear live, or use the SQL Editor (Pin #5) to add a fast lookup index."
+          hotspotId: "db-project-row",
+          stepTitle: "Step 2 of 3 · Open your project ('Project1') or use the Vercel integration",
+          instruction: "Click your project row ('Project1', Pin #4) to open the SQL Editor and copy your 'DATABASE_URL' (or connect your coding agent via Pin #5)."
+        },
+        {
+          snapshotId: "vercel-env",
+          hotspotId: "vc-env-main-box",
+          stepTitle: "Step 3 of 3 · Save 'DATABASE_URL' in your local .env and Vercel Environment Variables",
+          instruction: "Paste 'DATABASE_URL' into your local '.env' file on your laptop and into Vercel's Environment Variables vault (Pin #4)!"
         }
       ]
     },
     {
       id: "flow-debug-chrome-devtools",
-      title: "Flow 8: Debug a broken button or API error in Chrome DevTools",
+      title: "Flow 8: Inspect CSS & debug red Console errors in Chrome DevTools",
       badge: "4 steps · DevTools ➔ VS Code",
       icon: "troubleshoot",
-      description: "What to click when a webpage looks wrong, a button does nothing, or an API call fails with a 500 error.",
+      summary: "What to click when a webpage layout looks wrong or a button click throws an error:",
       steps: [
         {
           snapshotId: "chrome-devtools",
           hotspotId: "dt-inspect-picker",
-          stepTitle: "Step 1 of 4 · Right-click the element -> 'Inspect' (or press Cmd+Option+I)",
-          instruction: "Click the '↖' Element Picker (Pin #1) and click any button on your webpage to highlight its box model and jump to its HTML & CSS in the Elements tab (Pin #3)."
+          stepTitle: "Step 1 of 4 · Right-click the page -> 'Inspect' & click the '↖' Element Picker",
+          instruction: "Open Chrome DevTools (Cmd+Option+I or F12), click the '↖' Element Picker (Pin #1), and click any element on the page to jump to its HTML tag (Pin #4)."
         },
         {
           snapshotId: "chrome-devtools",
-          hotspotId: "dt-console-drawer",
-          stepTitle: "Step 2 of 4 · Check the Console tab for red JavaScript stack traces",
-          instruction: "Look at the Console drawer (Pin #6): if JavaScript crashed, Chrome prints the exact error and filename:line ('app.js:142')."
+          hotspotId: "dt-styles-pane",
+          stepTitle: "Step 2 of 4 · Inspect & live-edit CSS rules in the 'Styles' pane",
+          instruction: "Check the 'Styles' pane (Pin #5) to see which CSS rules apply (and which file:line they live on) and test spacing or flex changes live."
         },
         {
           snapshotId: "chrome-devtools",
-          hotspotId: "dt-network-tab",
-          stepTitle: "Step 3 of 4 · Check the Network tab for red 404 or 500 API requests",
-          instruction: "If the frontend JS is fine, check the Network tab (Pin #4) to see if '/api/save-note' returned a red '500 Error'—and check '☑ Disable cache' (Pin #5) so stale files never fool you."
+          hotspotId: "dt-error-counter",
+          stepTitle: "Step 3 of 4 · Check the red '⊗' Error counter & bottom Console drawer",
+          instruction: "Click the red error badge ('⊗ 2', Pin #3) or look at the bottom Console drawer (Pin #6) to read any JavaScript crash messages and line numbers."
         },
         {
           snapshotId: "vscode-git",
           hotspotId: "vsc-git-python-code",
-          stepTitle: "Step 4 of 4 · Fix the bug in VS Code & run 'pytest' to lock it in",
-          instruction: "Jump back to the exact line in VS Code (Pin #5), fix the bug, and add an 'assert' test so that bug can never sneak back!"
+          stepTitle: "Step 4 of 4 · Fix the file in VS Code, save (Cmd+S), and hard-refresh (Cmd+Shift+R)",
+          instruction: "Jump back to the file in VS Code (Pin #5), save your fix, and press Cmd+Shift+R in Chrome to verify the error is gone!"
         }
       ]
     }
   ];
 
-  // Rule: Never display synthetic/made-up SVG interface mockups.
-  // Only register snapshots whose imageSrc is a real screenshot (.png / .jpg / .webp).
+  EXTRA_SNAPSHOTS.forEach(function (s) {
+    if (s.imageSrc && !/\.svg$/i.test(s.imageSrc)) {
+      window.InterfaceTourData.SNAPSHOTS.push(s);
+    }
+  });
+
   var realSnapshotIds = {};
   (window.InterfaceTourData.SNAPSHOTS || []).forEach(function (s) {
     realSnapshotIds[s.id] = true;
   });
-  EXTRA_SNAPSHOTS.forEach(function (s) {
-    if (s.imageSrc && !/\.svg$/i.test(s.imageSrc)) {
-      window.InterfaceTourData.SNAPSHOTS.push(s);
-      realSnapshotIds[s.id] = true;
-    }
-  });
+
   EXTRA_FLOWS.forEach(function (f) {
     var allReal = (f.steps || []).every(function (st) {
       return Boolean(realSnapshotIds[st.snapshotId]);
