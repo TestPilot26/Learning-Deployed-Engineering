@@ -147,11 +147,11 @@
         code: "// MCP = Universal AI-to-Tool standard\n{\"method\": \"tools/list\"}  ->  Discovers available tools\n{\"method\": \"tools/call\", \"params\": {\"name\": \"search_drive\"}}"
       },
       "concept-api": {
-        badge: "Visual Analogy · Interlocking Puzzle Pieces",
+        badge: "Visual Analogy · The Seam Between Puzzle Pieces",
         badgeClass: "badge-success",
-        title: "API (Application Programming Interface): The interlocking puzzle pieces between two apps",
-        analogy: "Why the icon is 3 Interlocking Puzzle Pieces (from Aaron Jack's video): Modern apps are built by snapping existing software pieces together instead of coding everything from scratch.",
-        body: "• Orange Top Piece (Your App, e.g. Uber or Expedia): Needs road maps, flight prices, or credit-card checkout.\n• Coral Bottom-Left Piece (The API Connector): Defines the exact tab shape (the Endpoint URL + JSON format) that two programs agree to use.\n• Blue Bottom-Right Piece (External Service, e.g. Google Maps or Stripe): Snaps cleanly into your app via the API without exposing its private kitchen code!",
+        title: "API (Application Programming Interface): The shape where two apps fit together",
+        analogy: "Why the icon is a highlighted seam (from Aaron Jack's video): Modern apps are built by snapping existing software pieces together. The API isn't a piece itself — it's the agreed tab-and-slot shape that lets two pieces lock.",
+        body: "• Green Left Piece (Your App, e.g. Uber or Expedia): Needs road maps, flight prices, or credit-card checkout.\n• Blue Right Piece (External Service, e.g. Google Maps or Stripe): Has the data or capability, but keeps its private kitchen code hidden.\n• Highlighted Seam (The API): The exact shape both sides agree on — the Endpoint URL, required key, and JSON format. If your request matches the shape, the pieces lock.",
         code: "// API = Two software puzzle pieces snapping together:\nGET https://api.stripe.com/v1/charges\nAuthorization: Bearer sk_live_...\n-> Returns: {\"status\": \"succeeded\", \"amount\": 2000}"
       },
       "before-mcp": {
@@ -254,41 +254,52 @@
         "stroke-width": isApiConcept ? "2.8" : "1.5"
       }));
 
-      // 3 Interlocking Jigsaw Puzzle Pieces at (92, 114)
+      // 2 Interlocking Jigsaw Pieces at (92, 114). The API is the SEAM between them
+      // (the agreed tab-and-slot shape), not a third piece.
       var puzzleG = svgEl("g", { transform: "translate(92, 114) scale(0.92)" });
-      // Piece 1 (Top piece — Your App)
+      var seamD = "M 0 -26 L 0 -9 C 14 -13, 14 13, 0 9 L 0 26";
+      // Left piece — Your App (tab sticks out to the right)
       puzzleG.appendChild(svgEl("path", {
-        d: "M -26 -48 L -7 -48 C -7 -58, 7 -58, 7 -48 L 26 -48 L 26 -29 C 36 -29, 36 -15, 26 -15 L 26 2 L -26 2 Z",
+        d: "M -56 -26 L 0 -26 L 0 -9 C 14 -13, 14 13, 0 9 L 0 26 L -56 26 Z",
         fill: "var(--color-tertiary-container)",
         stroke: "var(--color-on-surface)",
         "stroke-width": "2.5",
         "stroke-linejoin": "round"
       }));
-      // Piece 2 (Bottom-Left piece — API Connector locking into top & right)
+      // Right piece — External Service (slot receives the tab)
       puzzleG.appendChild(svgEl("path", {
-        d: "M -52 2 L -20 2 C -20 -9, -6 -9, -6 2 L 0 2 L 0 18 C 11 18, 11 32, 0 32 L 0 50 L -52 50 L -52 32 C -42 32, -42 18, -52 18 Z",
-        fill: "var(--color-error-container)",
-        stroke: "var(--color-on-surface)",
-        "stroke-width": "2.5",
-        "stroke-linejoin": "round"
-      }));
-      // Piece 3 (Bottom-Right piece — External Service locking into Piece 2's right tab)
-      puzzleG.appendChild(svgEl("path", {
-        d: "M 0 2 L 52 2 L 52 50 L 0 50 L 0 32 C 11 32, 11 18, 0 18 Z",
+        d: "M 0 -26 L 56 -26 L 56 26 L 0 26 L 0 9 C 14 13, 14 -13, 0 -9 Z",
         fill: "var(--color-secondary-container)",
         stroke: "var(--color-on-surface)",
         "stroke-width": "2.5",
         "stroke-linejoin": "round"
       }));
-      puzzleG.appendChild(svgText("Your App", { x: "0", y: "-20", "text-anchor": "middle", fill: "var(--color-on-tertiary-container)", "font-size": "9.5", "font-weight": "700" }));
-      puzzleG.appendChild(svgText("API", { x: "-25", y: "30", "text-anchor": "middle", fill: "var(--color-on-error-container)", "font-size": "10.5", "font-weight": "700" }));
-      puzzleG.appendChild(svgText("External", { x: "27", y: "30", "text-anchor": "middle", fill: "var(--color-on-secondary-container)", "font-size": "9.5", "font-weight": "700" }));
+      // Highlighted seam = the API (the shared shape both sides agree on)
+      puzzleG.appendChild(svgEl("path", {
+        d: seamD,
+        fill: "none",
+        stroke: "var(--color-primary)",
+        "stroke-width": "4.5",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      }));
+      puzzleG.appendChild(svgText("Your App", { x: "-28", y: "4", "text-anchor": "middle", fill: "var(--color-on-tertiary-container)", "font-size": "9.5", "font-weight": "700" }));
+      puzzleG.appendChild(svgText("Service", { x: "35", y: "4", "text-anchor": "middle", fill: "var(--color-on-secondary-container)", "font-size": "9.5", "font-weight": "700" }));
+      // "API" callout pointing at the seam
+      puzzleG.appendChild(svgText("API", { x: "0", y: "-44", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "12", "font-weight": "700" }));
+      puzzleG.appendChild(svgEl("path", {
+        d: "M 0 -39 L 0 -29",
+        stroke: "var(--color-primary)",
+        "stroke-width": "2",
+        "stroke-linecap": "round"
+      }));
+      puzzleG.appendChild(svgText("= the fit", { x: "0", y: "44", "text-anchor": "middle", fill: "var(--color-primary)", "font-size": "9", "font-weight": "700" }));
       apiCardG.appendChild(puzzleG);
 
       // API Labels on right of Puzzle Pieces (left-aligned at x=156)
       apiCardG.appendChild(svgText("API", { x: "156", y: "64", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "26", "font-weight": "700" }));
       apiCardG.appendChild(svgText("Application Programming Interface", { x: "156", y: "88", "text-anchor": "start", fill: "var(--color-on-surface)", "font-size": "14", "font-weight": "600" }));
-      apiCardG.appendChild(svgText("Interlocking Software Puzzle Pieces", { x: "156", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
+      apiCardG.appendChild(svgText("The shape where two programs fit", { x: "156", y: "114", "text-anchor": "start", fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700" }));
       apiCardG.appendChild(svgText("Lets two programs (e.g. Uber + Maps or", { x: "156", y: "138", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
       apiCardG.appendChild(svgText("Expedia + Airlines) snap together", { x: "156", y: "156", "text-anchor": "start", fill: "var(--color-on-surface-variant)", "font-size": "11.5" }));
 
@@ -626,7 +637,7 @@
     var stations = [
       { id: "api-step-client", x: 18, w: 184, topTag: "1. YOUR APP (CLIENT)", title: "You at the Table", sub1: "Uber · Expedia · Browser", sub2: "Left Puzzle Piece", iconType: "laptop" },
       { id: "api-step-menu", x: 234, w: 188, topTag: "2. THE MENU (CONTRACT)", title: "API Docs & Endpoints", sub1: "GET /v1/weather", sub2: "Allowed puzzle shapes", iconType: "menu" },
-      { id: "api-step-waiter", x: 456, w: 188, topTag: "3. THE WAITER (API)", title: "Interlocking Connector", sub1: "Carries Request & Key", sub2: "Returns JSON tray", iconType: "puzzle" },
+      { id: "api-step-waiter", x: 456, w: 188, topTag: "3. THE WAITER (API)", title: "Where the Pieces Fit", sub1: "Carries Request & Key", sub2: "Returns JSON tray", iconType: "puzzle" },
       { id: "api-step-kitchen", x: 676, w: 186, topTag: "4. THE KITCHEN (SERVER)", title: "External Service & DB", sub1: "Google Maps · Stripe", sub2: "Right Puzzle Piece", iconType: "server" }
     ];
 
@@ -650,9 +661,18 @@
         g.appendChild(svgEl("line", { x1: String(icX - 8), y1: "76", x2: String(icX + 8), y2: "76", stroke: "var(--color-primary)", "stroke-width": "2" }));
         g.appendChild(svgEl("line", { x1: String(icX - 8), y1: "83", x2: String(icX + 8), y2: "83", stroke: "var(--color-tertiary)", "stroke-width": "2" }));
       } else if (st.iconType === "puzzle") {
+        // Two pieces meeting; the highlighted seam is the API
+        var sm = " 70 L " + icX + " 77 C " + (icX + 8) + " 75, " + (icX + 8) + " 87, " + icX + " 85 L " + icX + " 92";
         g.appendChild(svgEl("path", {
-          d: "M " + (icX - 16) + " 70 L " + (icX + 8) + " 70 L " + (icX + 8) + " 77 C " + (icX + 16) + " 77, " + (icX + 16) + " 85, " + (icX + 8) + " 85 L " + (icX + 8) + " 92 L " + (icX - 16) + " 92 Z",
-          fill: "var(--color-error-container)", stroke: "var(--color-error)", "stroke-width": "2"
+          d: "M " + (icX - 18) + " 70 L " + icX + sm + " L " + (icX - 18) + " 92 Z",
+          fill: "var(--color-tertiary-container)", stroke: "var(--color-on-surface-variant)", "stroke-width": "1.5"
+        }));
+        g.appendChild(svgEl("path", {
+          d: "M " + (icX + 18) + " 70 L " + icX + sm + " L " + (icX + 18) + " 92 Z",
+          fill: "var(--color-secondary-container)", stroke: "var(--color-on-surface-variant)", "stroke-width": "1.5"
+        }));
+        g.appendChild(svgEl("path", {
+          d: "M " + icX + sm, fill: "none", stroke: "var(--color-primary)", "stroke-width": "3.5", "stroke-linecap": "round"
         }));
       } else {
         g.appendChild(svgEl("rect", { x: String(icX - 16), y: "68", width: "32", height: "10", rx: "3", fill: "var(--color-surface-container-lowest)", stroke: "var(--color-tertiary)", "stroke-width": "2" }));
