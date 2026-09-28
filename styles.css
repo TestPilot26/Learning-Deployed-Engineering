@@ -117,7 +117,7 @@ p { margin: 0; max-width: 72ch; color: var(--color-on-surface); }
   transition: opacity 150ms ease;
 }
 .brand-home-btn:hover { opacity: 0.85; }
-.brand-site-logo { width: 34px; height: 34px; flex-shrink: 0; display: block; }
+.brand-site-logo { width: 40px; height: 40px; flex-shrink: 0; display: block; }
 .brand-title { font-family: var(--font-family-display); font-size: 22px; font-weight: 600; color: var(--color-on-surface); line-height: 1.2; }
 .brand-author-link {
   display: inline-flex;

@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- Rounded Squircle Background -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="#0b57d0" />
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="none" stroke="#a8c7fa" stroke-width="1.8" />
-
-  <!-- Subtle Code Brackets Top-Left -->
-  <path d="M 17 15 L 11 20.5 L 17 26" fill="none" stroke="#a8c7fa" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-  <path d="M 23 15 L 29 20.5 L 23 26" fill="none" stroke="#a8c7fa" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
-
-  <!-- Winding Journey Pathway (Vibes bottom-left -> Git node center -> Deployed Prism top-right) -->
-  <path d="M 16 48 C 16 36, 32 40, 32 31 C 32 22, 46 25, 47 16" fill="none" stroke="#d3e3fd" stroke-width="4.5" stroke-linecap="round" />
-
-  <!-- Origin Node (Bottom-Left): The "Vibes" Spark Circle -->
-  <circle cx="16" cy="48" r="7" fill="#ffffff" stroke="#0842a0" stroke-width="2" />
-  <path d="M 16 43.8 L 17.3 46.7 L 20.2 48 L 17.3 49.3 L 16 52.2 L 14.7 49.3 L 11.8 48 L 14.7 46.7 Z" fill="#0b57d0" />
-
-  <!-- Midpoint Checkpoint Node (Git Commit / Build Step) -->
-  <circle cx="32" cy="31" r="5" fill="#ffffff" stroke="#0842a0" stroke-width="2" />
-  <circle cx="32" cy="31" r="2.2" fill="#0b57d0" />
-
-  <!-- Destination Node (Top-Right): Deployed Live Prism + Emerald Status Pulse -->
-  <polygon points="47,8 55.5,22.5 38.5,22.5" fill="#ffffff" stroke="#0842a0" stroke-width="1.6" stroke-linejoin="round" />
-  <circle cx="53.5" cy="11.5" r="4.5" fill="#34a853" stroke="#ffffff" stroke-width="1.8" />
+  <!-- Soft Sky-Blue Squircle Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#d3e3fd" stroke="#0b57d0" stroke-width="2.5" />
+  <!-- Cute Robot Side Ears -->
+  <rect x="5.5" y="30" width="6" height="14" rx="3" fill="#0b57d0" />
+  <rect x="52.5" y="30" width="6" height="14" rx="3" fill="#0b57d0" />
+  <!-- Antenna Stem & Glowing Emerald Bulb -->
+  <line x1="32" y1="13" x2="32" y2="20" stroke="#0b57d0" stroke-width="3.5" stroke-linecap="round" />
+  <circle cx="32" cy="10" r="5" fill="#146c2e" stroke="#ffffff" stroke-width="2" />
+  <!-- Top-Right 4-Point Vibes Sparkle -->
+  <path d="M 49 7 L 50.5 11 L 54.5 12.5 L 50.5 14 L 49 18 L 47.5 14 L 43.5 12.5 L 47.5 11 Z" fill="#0b57d0" />
+  <!-- Chubby Rounded Robot Head -->
+  <rect x="11" y="20" width="42" height="34" rx="13" fill="#ffffff" stroke="#0b57d0" stroke-width="3" />
+  <!-- Big Expressive Eyes with Catchlight Sparkles -->
+  <circle cx="23.5" cy="34" r="4.3" fill="#1f1f1f" />
+  <circle cx="25" cy="32.4" r="1.5" fill="#ffffff" />
+  <circle cx="40.5" cy="34" r="4.3" fill="#1f1f1f" />
+  <circle cx="42" cy="32.4" r="1.5" fill="#ffffff" />
+  <!-- Rosy Cheeks -->
+  <ellipse cx="17.5" cy="40" rx="3.6" ry="2.2" fill="#f9dedc" />
+  <ellipse cx="46.5" cy="40" rx="3.6" ry="2.2" fill="#f9dedc" />
+  <!-- Happy Curved Smile -->
+  <path d="M 26.5 40.5 Q 32 46 37.5 40.5" fill="none" stroke="#0b57d0" stroke-width="3" stroke-linecap="round" />
 </svg>
