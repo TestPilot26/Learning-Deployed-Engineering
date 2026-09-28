@@ -274,5 +274,135 @@
   margin: 8px 0;
 }
 
+/* ============================================================================
+   STEP 1: 6-PART TOOL DOWNLOAD & SETUP DIRECTORY
+   ============================================================================ */
+.tool-download-groups-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
+.tool-download-category-card {
+  background-color: var(--color-surface-container);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
+.tool-download-category-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tool-download-category-title {
+  margin: 0;
+  font-family: var(--font-family-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.tool-download-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tool-download-option-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-lowest);
+  cursor: pointer;
+  transition: transform 140ms ease, background-color 140ms ease;
+}
+
+.tool-download-option-row:hover {
+  background-color: var(--color-surface-container-high);
+  transform: translateY(-1px);
+}
+
+.tool-download-option-row.active {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.tool-download-icon-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.tool-download-brand-svg {
+  width: 38px;
+  height: 38px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.tool-download-main-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tool-download-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tool-download-name {
+  font-family: var(--font-family-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.tool-download-oneliner {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-on-surface-variant);
+}
+
+.tool-download-actions-col {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-download-ext-btn {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tool-inspector-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .tool-download-option-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tool-download-actions-col {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

@@ -19,8 +19,8 @@ window.PIPELINE_DATA = {
       badgeClass: "badge-info",
       icon: "home_repair_service",
       diagramType: "tools-flow",
-      teaser: "What a code file actually is, why you don't use Word or Google Docs to write code, and how your laptop connects to cloud code repositories (online project backups like GitHub) and cloud hosting platforms (services that put your project on a live web link, like Vercel, Render, or Hugging Face).",
-      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and websites actually do, and which category each one belongs to. Here is the secret: code is just plain text files sitting in a normal folder on your computer. Once you see the five core categories of tools—a Code Editor / IDE (Integrated Development Environment, an all-in-one coding workshop app like VS Code or Cursor where you edit files), a Package Manager & Runtime (official installer commands like Homebrew and language engines like Node.js or Python that actually run code on your laptop), Local Version Control (Git, a time-machine program on your laptop that saves named checkpoints of your folder), a Cloud Code Repository (like GitHub or GitLab, a website that stores an online backup of your project), and a Cloud Hosting Platform (a service that runs your project on an always-on cloud computer at a public https:// web address—like Vercel for websites, Render for backend servers, or Hugging Face Spaces for AI demos)—every tool name you hear suddenly clicks into place.",
+      teaser: "Direct download and signup links for the 6 pieces of a coding setup—with site icons, one-line comparisons between options (VS Code vs. Cursor vs. Colab, Claude Code vs. Copilot, Supabase vs. Neon, Vercel vs. Render), and a clean map of where buttons live on each screen.",
+      explainer: "When you start from zero, the hardest part isn't complex math—it's figuring out what all the new apps and websites actually do, which category each one belongs to, and which option you should actually download. Here is the secret: code is just plain text files sitting in a normal folder on your computer, and you only need ONE option from each category to start. Below, we've organized the 6 pieces of a modern coding toolkit—(1) a Coding Environment (like VS Code, Cursor, or Google Colab), (2) a Coding Agent (like Claude Code, Copilot, or Gemini CLI), (3) Language Engines & Package Managers (Homebrew, Python, Node.js, and Git), (4) Cloud Code Storage (GitHub or GitLab), (5) a Backend & Database (Supabase, Neon, or Firebase), and (6) Cloud Hosting (Vercel, Render, or Hugging Face Spaces)—with direct download links, site icons, and one line explaining the difference between each option.",
       experiences: [
         {
           lead: "Category 1 — Code editors & notebooks vs. Word or Google Docs:",
@@ -36,11 +36,11 @@ window.PIPELINE_DATA = {
         }
       ],
       activity: {
-        title: "Fun activity: Trace a file from laptop to live URL",
+        title: "Fun activity: Pick your starter tools & explore where buttons live",
         steps: [
-          "Click through each stage in the interactive diagram above to see the category name first—and which real-world tools (VS Code, Homebrew, Git, GitHub, Vercel, Render, Hugging Face) fit into each slot.",
-          "Open a code editor (like VS Code or Cursor), create a file named index.html (the standard filename browsers look for as the front page of a website), and find it in Mac Finder or Windows Explorer to see that it is just a normal text file in a normal folder.",
-          "Open your editor's built-in Terminal by pressing Ctrl+` or Cmd+` (the ` key is the backtick key in the top-left of your keyboard above Tab) and type git --version, node -v, or python3 --version (where --version or -v asks each program to print its installed version number) to check which engines are installed on your laptop."
+          "Browse the 6-part Toolkit Directory above—click any option row (like VS Code vs. Cursor, Claude Code vs. Copilot, or Supabase vs. Neon) to compare them in the Left Side Panel, and bookmark or download 1 starter option per category.",
+          "In the 'Explore where things are' viewer right above, click through the 6 real tool screens (GitHub, VS Code / Cursor, Vercel, Chrome DevTools, Cloud Database, and Mac Terminal) and click the numbered circles to see what each button does.",
+          "Open your editor's built-in Terminal by pressing Ctrl+` or Cmd+` (the ` key is the backtick key in the top-left of your keyboard above Tab) and type git --version, node -v, or python3 --version to check which engines are already installed on your laptop."
         ]
       },
       resources: [
@@ -318,10 +318,10 @@ window.PIPELINE_DATA = {
         }
       ],
       activity: {
-        title: "Fun activity: Drive the living Git & deployment timeline",
+        title: "Fun activity: Drive the living Git timeline & step-by-step interface flows",
         steps: [
           "Click each step on the Living Git & Cloud Deployment Diagram above (Clone/Init, Branch, Commit, git diff, Pull Request, Merge, and Auto-Deploy Live) to see how code moves safely from your laptop to the internet.",
-          "Make a clean git commit in your project folder, ask an AI agent to tweak a file, and run git diff to see the exact red and green lines it changed.",
+          "In the 'Step-by-step interface flows' explorer right above, walk through 'Clone a project from GitHub to VS Code', 'Create a new GitHub repo & README', 'Save (commit) & push changes', and 'Deploy a GitHub repo on Vercel' using ◀ Previous / Next ▶.",
           "Create a new branch with git checkout -b test-experiment (where 'checkout -b' creates and switches to a new branch named 'test-experiment'), make an edit, and switch back to main with git checkout main to watch your files instantly return to normal."
         ]
       },

@@ -603,14 +603,20 @@
       }
       containerEl.style.display = "block";
       if (stop.diagramType === "tools-flow") {
-        renderToolsFlowDiagram(containerEl);
+        if (typeof window.renderToolsDownloadDirectory === "function") {
+          window.renderToolsDownloadDirectory(containerEl);
+        }
         if (typeof window.renderInterfaceExplorer === "function") {
-          window.renderInterfaceExplorer(containerEl, "github");
+          window.renderInterfaceExplorer(containerEl, "github", { showFlows: false });
         }
       } else if (stop.diagramType === "app-infrastructure") {
         renderAppInfrastructureDiagram(containerEl);
       } else if (stop.diagramType === "git-living") {
         renderGitLivingDiagram(containerEl);
+        renderToolsFlowDiagram(containerEl);
+        if (typeof window.renderInterfaceExplorer === "function") {
+          window.renderInterfaceExplorer(containerEl, "github", { showFlows: true, mode: "flows" });
+        }
       } else if (stop.diagramType === "terminal-interactive" && typeof window.renderTerminalInteractiveDiagram === "function") {
         window.renderTerminalInteractiveDiagram(containerEl);
       } else if (stop.diagramType === "python-code-blueprint" && typeof window.renderPythonCodeDiagram === "function") {
