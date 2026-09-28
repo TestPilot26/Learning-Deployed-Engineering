@@ -600,9 +600,7 @@
       pillsContainer: buildCluster([
         "ext-ai-stripe",
         "ext-payments-ops",
-        "bridge-env-keys",
-        "bridge-webhooks",
-        "lang-bash"
+        "bridge-env-keys"
       ])
     });
     stageCards.push(stage4.card);
@@ -612,7 +610,7 @@
     rightRuleNote.className = "nested-card";
     var rightRuleP = document.createElement("p");
     rightRuleP.className = "resource-desc";
-    rightRuleP.textContent = "Architecture rule 2: Secret billing keys (.env) stay locked between the Cloud Server (2) and Outside Services (4), and Webhooks call the Cloud Server back.";
+    rightRuleP.textContent = "Architecture rule 2: Secret billing keys (.env) stay locked between the Cloud Server (2) and Outside Services (4)—never inside Front End browser code.";
     rightRuleNote.appendChild(rightRuleP);
     bottomRow.appendChild(rightRuleNote);
 
@@ -699,9 +697,6 @@
 
     updateAppInspector(false);
     container.appendChild(card);
-    if (typeof window.renderMcpAndEndpointsWorkshop === "function") {
-      window.renderMcpAndEndpointsWorkshop(container);
-    }
   }
 
   window.renderAppInfraDiagram = renderAppInfraDiagram;

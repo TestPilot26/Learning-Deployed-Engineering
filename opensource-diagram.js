@@ -346,44 +346,14 @@
       resourceTitle: "Open: Socket.dev (Open-Source Supply Chain Security)",
       resourceUrl: "https://socket.dev/"
     },
-    "watch-env-leaks": {
-      id: "watch-env-leaks",
-      label: "3. Leaking .env keys on public GitHub",
-      tag: "Security watch-out",
-      badgeClass: "badge-danger",
-      icon: "key_off",
-      oneLiner: "Automated bots scrape public GitHub commits for API keys in under 30 seconds",
-      headline: "Watch-out #3: Pushing secret API keys (.env) to a public GitHub repository",
-      whatItIs: "The #1 catastrophic mistake new builders make when shipping is accidentally committing an API key (Gemini, OpenAI, AWS, Stripe, Supabase service_role key) to a public GitHub repo—either by pasting it directly into 'app.js' or by editing '.env.example' instead of '.env'. Automated scraper bots watch GitHub's public event firehose 24/7 and exploit leaked keys within seconds. Even if you delete the key in a second commit, the key is STILL visible in your Git commit history!",
-      whenToUse: "Before every 'git commit' and 'git push'—especially when working in a public repository.",
-      codeExample: "# 1. Make sure .gitignore blocks .env:\necho \".env*\" >> .gitignore\n\n# 2. Check git status & git diff before every commit:\ngit status\ngit diff --staged",
-      watchOut: "If you ever accidentally push a secret key to GitHub, deleting the line and pushing again does NOT save you (it stays in Git history). Immediately go to the provider's dashboard and REVOKE/ROTATE the key!",
-      resourceTitle: "Open: GitHub Secret Scanning Docs",
-      resourceUrl: "https://docs.github.com/en/code-security/secret-scanning/about-secret-scanning"
-    },
-    "watch-runaway-bills": {
-      id: "watch-runaway-bills",
-      label: "4. Runaway cloud bills & infinite loops",
-      tag: "Cost watch-out",
-      badgeClass: "badge-danger",
-      icon: "payments",
-      oneLiner: "Set hard billing alerts, API spending caps, and rate limits before launching",
-      headline: "Watch-out #4: Runaway API bills from infinite loops or bot traffic",
-      whatItIs: "Two things cause surprise four-figure cloud bills:\n1. Accidental infinite loops in your own code (e.g. a React 'useEffect' or webhook handler that triggers itself repeatedly, calling an LLM or database 50,000 times while you grab coffee).\n2. Launching a public link without rate limiting, allowing bots to hammer your API endpoint.",
-      whenToUse: "Before connecting a credit card to any cloud or AI API provider.",
-      codeExample: "// Always guard effects & add hard max-token / rate limits on API calls:\n// 1. Set a hard monthly spend limit ($10-$25) in your AI/Cloud billing console.\n// 2. Add per-IP rate limiting (e.g. 10 requests/min) on every public POST route.",
-      watchOut: "On day 1 of any project, open your billing settings in Google Cloud / OpenAI / Anthropic / Vercel and set a hard monthly spending limit and email budget alert at $10.",
-      resourceTitle: "Open: OWASP API4 — Unrestricted Resource Consumption",
-      resourceUrl: "https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/"
-    },
     "watch-zombie-deps": {
       id: "watch-zombie-deps",
-      label: "5. Abandoned repos & dependency bloat",
+      label: "3. Abandoned repos & dependency bloat",
       tag: "Stability watch-out",
       badgeClass: "badge-warning",
       icon: "history_toggle_off",
       oneLiner: "Avoid unmaintained 5-year-old libraries when native browser/Node APIs work",
-      headline: "Watch-out #5: Abandoned 'zombie' libraries and unnecessary dependencies",
+      headline: "Watch-out #3: Abandoned 'zombie' libraries and unnecessary dependencies",
       whatItIs: "Every open-source library you install brings along its own tree of sub-dependencies. If you install a library that hasn't been updated since 2020, it will eventually block you from upgrading Node.js, React, or Python. Meanwhile, modern browsers and Node.js now have built-in native tools ('fetch()', 'crypto.randomUUID()', 'Intl.DateTimeFormat', CSS Grid, native '<dialog>') that used to require external packages.",
       whenToUse: "Before installing a package for a tiny task—ask: 'Can modern JavaScript/Python do this natively in 5 lines?'",
       codeExample: "// Instead of installing 'uuid' and 'axios', modern JS has them built in:\nconst id = crypto.randomUUID();\nconst res = await fetch(\"https://api.example.com/data\");",
@@ -391,20 +361,20 @@
       resourceTitle: "Open: You Might Not Need (Native JS Alternatives)",
       resourceUrl: "https://youmightnotneed.com/"
     },
-    "watch-client-trust": {
-      id: "watch-client-trust",
-      label: "6. Trusting the browser (Client-side checks)",
-      tag: "Security watch-out",
-      badgeClass: "badge-info",
-      icon: "shield_locked",
-      oneLiner: "Anything in frontend code can be edited by users in Chrome DevTools",
-      headline: "Watch-out #6: Never trust the browser for permissions, prices, or secrets",
-      whatItIs: "When AI vibe-codes an app quickly, it loves to put permission checks ('if (user.isAdmin)'), price calculations, or database filters inside frontend browser code. Remember Stop 2: the Front End runs on the user's own computer! Anyone can open Chrome DevTools, edit frontend variables, or send a custom 'curl' request straight to your backend API.",
-      whenToUse: "Every time you build a form, checkout flow, admin dashboard, or database query.",
-      codeExample: "// BAD (Fragile): Frontend sends the price or user_id to trust blindly\n// GOOD (Deployed): Backend derives user_id from the encrypted session token\n// and looks up the price from the database on the server.",
-      watchOut: "Treat everything arriving from the browser as untrusted user input: validate types with Zod/Pydantic on the backend, check session auth on the server, and enable Row-Level Security (RLS) in your database.",
-      resourceTitle: "Open: OWASP Top 10 Security Risks",
-      resourceUrl: "https://owasp.org/www-project-top-ten/"
+    "watch-agents-md": {
+      id: "watch-agents-md",
+      label: "4. Writing a CLAUDE.md / AGENTS.md repo rulebook",
+      tag: "AI engineering guardrail",
+      badgeClass: "badge-success",
+      icon: "rule",
+      oneLiner: "Give your project a plain-text rulebook so AI agents remember your architecture & test commands",
+      headline: "Watch-out #4: Without a CLAUDE.md / AGENTS.md file, AI agents repeat the same mistakes",
+      whatItIs: "Every time you start a new chat with an AI coding agent (Claude Code, Cursor, Windsurf, Copilot, Gemini CLI), it wakes up with zero memory of your past conversations. If you place a short plain-text 'CLAUDE.md' or 'AGENTS.md' file at the root of your repository, every modern coding agent automatically reads it before touching your code! Include 4 things in under 100 lines:\n1. Tech stack & folder map (e.g. 'Frontend in src/, FastAPI backend in api/').\n2. Exact commands to run tests & linters ('pytest', 'ruff check .', 'npm test').\n3. Design & file-size rules (e.g. 'Keep files under 500 lines; use CSS variables instead of hardcoded hex colors').\n4. Non-negotiable safety rules ('Never edit .env, never push directly to main, never query production DB from localhost').",
+      whenToUse: "Create a CLAUDE.md or AGENTS.md file in the root folder of every project and update it whenever you catch your AI agent making a preventable mistake.",
+      codeExample: "# Example CLAUDE.md / AGENTS.md in your project root:\n## Commands\n- Run tests: `pytest`\n- Lint code: `ruff check .`\n\n## Guardrails\n- Never hardcode API keys; read from `os.environ`.\n- Write or update a unit test in `tests/` for every bug fix.",
+      watchOut: "Keep your CLAUDE.md / AGENTS.md concise (under ~150 lines)—if you paste 2,000 lines of rambling notes into it, the AI's context window gets noisy and it starts ignoring rules.",
+      resourceTitle: "Open: Anthropic Claude Code Best Practices (CLAUDE.md)",
+      resourceUrl: "https://www.anthropic.com/engineering/claude-code-best-practices"
     }
   };
 
@@ -607,24 +577,14 @@
 
     [
       {
-        title: "1. Ways to host & share (Do they all need to be web apps? No!)",
-        desc: "Web app hosts vs. AI demo & notebook hubs (Hugging Face, Colab) vs. serverless GPUs (Modal, Replicate) vs. container clouds:",
+        title: "1. Ways to publish & share (Not everything needs to be a full web app!)",
+        desc: "Web app hosts vs. AI demo & notebook hubs (Hugging Face Spaces, Colab) vs. serverless GPUs (Modal, Replicate) vs. container clouds:",
         ids: ["ship-vercel-templates", "ship-ai-huggingface", "ship-gpu-runners", "ship-vercel-cloudflare"]
       },
       {
-        title: "2. Databases, AI memory & file storage (Where Neon, Supabase, Pinecone & S3 fit)",
-        desc: "Serverless SQL tables & ORMs (Neon, Supabase, Drizzle, Prisma) vs. Realtime/Vector DBs (Convex, Pinecone) vs. File storage (R2, S3):",
-        ids: ["ship-supabase-neon", "ship-nosql-vector", "ship-blob-storage"]
-      },
-      {
-        title: "3. AI builders, code editors, UI kits & user login",
-        desc: "Prompt-to-UI generators (v0, Lovable, Bolt) vs. local AI IDEs (Cursor, Windsurf), UI component kits (shadcn/ui), and Auth:",
-        ids: ["ship-awesome-github", "ship-shadcn-radix", "ship-clerk-authjs"]
-      },
-      {
-        title: "4. External APIs, background queues, domains & monitoring",
-        desc: "Frontier AI APIs, Stripe billing, Resend email, Redis rate limits, Inngest queues, Cloudflare DNS, Sentry & PostHog:",
-        ids: ["ship-stripe-billing", "ship-upstash-inngest", "ship-domains-monitoring"]
+        title: "2. Open-source building blocks & launch infrastructure to snap in",
+        desc: "Pre-built UI component kits (shadcn/ui, Tailwind), drop-in login (Clerk, Better Auth), background queues (Inngest, Upstash), and custom domains/monitoring:",
+        ids: ["ship-shadcn-radix", "ship-clerk-authjs", "ship-upstash-inngest", "ship-domains-monitoring"]
       }
     ].forEach(function (grp) {
       var box = document.createElement("div");
@@ -648,7 +608,7 @@
     container.appendChild(shipCard);
 
     // =========================================================================
-    // CARD 3: INTERACTIVE WATCH-OUTS & CAUTIONS MATRIX
+    // CARD 3: INTERACTIVE OPEN-SOURCE & REPO GUARDRAILS
     // =========================================================================
     var watchCard = document.createElement("div");
     watchCard.className = "surface-card section-spacer diagram-shell-card";
@@ -660,14 +620,14 @@
     watchBadgeRow.className = "badge-row";
     var watchBadge = document.createElement("span");
     watchBadge.className = "badge badge-warning";
-    watchBadge.textContent = "Interactive diagram 3 — click any watch-out below to see how builders get burned & how to prevent it";
+    watchBadge.textContent = "Interactive diagram 3 — click any guardrail below to inspect in the side panel";
     watchBadgeRow.appendChild(watchBadge);
     var watchH3 = document.createElement("h3");
     watchH3.className = "vocab-section-heading";
-    watchH3.textContent = "6 critical watch-outs & cautions when building and shipping";
+    watchH3.textContent = "4 open-source & AI repository guardrails (Licenses, slopsquatting, dependencies & CLAUDE.md)";
     var watchSub = document.createElement("p");
     watchSub.className = "text-muted";
-    watchSub.textContent = "Moving from vibe-coding to deployed engineering means knowing the 6 traps that catch new builders off guard—click any card to inspect the fix in the side panel:";
+    watchSub.textContent = "Before installing open-source packages or handing your repo to an AI coding agent, check these 4 repo-level guardrails:";
     watchTitleGroup.appendChild(watchBadgeRow);
     watchTitleGroup.appendChild(watchH3);
     watchTitleGroup.appendChild(watchSub);
@@ -679,10 +639,8 @@
     [
       "watch-licenses",
       "watch-slopsquatting",
-      "watch-env-leaks",
-      "watch-runaway-bills",
       "watch-zombie-deps",
-      "watch-client-trust"
+      "watch-agents-md"
     ].forEach(function (id) {
       watchGrid.appendChild(createPillBtn(id, selectedId, selectItem, allBtns));
     });

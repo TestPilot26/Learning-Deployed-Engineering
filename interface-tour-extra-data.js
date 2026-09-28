@@ -566,6 +566,10 @@
 
   EXTRA_SNAPSHOTS.forEach(function (s) {
     if (s.imageSrc && !/\.svg$/i.test(s.imageSrc)) {
+      (s.hotspots || []).forEach(function (hs) {
+        hs.x = Math.round((hs.x + (hs.w || 10) / 2) * 10) / 10;
+        hs.y = Math.round((hs.y + (hs.h || 5.2) / 2) * 10) / 10;
+      });
       window.InterfaceTourData.SNAPSHOTS.push(s);
     }
   });

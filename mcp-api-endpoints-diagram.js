@@ -419,41 +419,15 @@
     var activeEndpointIdx = 1;
     var activeMcpStageIdx = 0;
     var activeLoopStepIdx = 0;
-    var isMcpDiagramMode = true;
     var activePrimIdx = 0;
     var activeAuthModeIdx = 2;
     var activeBuildVerIdx = 0;
     var activePatternIdx = 4;
 
-    // Top Visual Hero: MCP (Brain in Gear) vs API (3 Interlocking Puzzle Pieces) + Before vs After MCP Hub
-    if (window.McpPuzzleDiagrams && window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer) {
-      var visualHeroCard = document.createElement("div");
-      visualHeroCard.className = "nested-card";
-      var heroTitleRow = document.createElement("div");
-      heroTitleRow.className = "resource-title-row";
-      var heroStrong = document.createElement("strong");
-      heroStrong.className = "diagram-node-title";
-      heroStrong.textContent = "Visual Overview · MCP vs. API (Puzzle Pieces & Brain-in-Gear) + Before MCP vs. After MCP (Hover to light up paths, click to inspect):";
-      heroTitleRow.appendChild(heroStrong);
-      heroTitleRow.appendChild(createVideoLinkRow([
-        { label: "Watch: API Puzzle Analogy (5m)", url: d.API_VIDEO_URL, icon: "extension" },
-        { label: "Watch: MCP Explained & Built", url: d.MCP_VIDEO_URL, icon: "hub" }
-      ]));
-      visualHeroCard.appendChild(heroTitleRow);
-
-      visualHeroCard.appendChild(window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer(function (info) {
-        showInspectorCard({
-          panelTitle: info.badge,
-          badgeText: info.badge,
-          badgeClass: info.badgeClass,
-          title: info.title,
-          calloutText: info.analogy,
-          bodyText: info.body,
-          codeText: info.code
-        }, true);
-      }));
-      card.appendChild(visualHeroCard);
-    }
+    // Filter out the old duplicate "Before MCP vs With MCP" stage (stage index 1) since McpPuzzleDiagrams renders the interactive Brain-in-Gear + Before/After MCP Hub
+    var uniqueMcpStages = mcpStages.filter(function (st, idx) {
+      return idx !== 1;
+    });
 
     var tabsBar = document.createElement("div");
     tabsBar.className = "vocab-top-tabs-bar";
@@ -461,18 +435,15 @@
     workshopHost.className = "reliability-workshop-host";
 
     function syncMcpStageToSidePanel(isUserClick) {
-      var st = mcpStages[activeMcpStageIdx];
+      var st = uniqueMcpStages[activeMcpStageIdx] || uniqueMcpStages[0];
       if (!st) return;
-      if (activeMcpStageIdx === 0 && st.steps && st.steps[activeLoopStepIdx]) {
+      if (st.steps && st.steps[activeLoopStepIdx]) {
         var lp = st.steps[activeLoopStepIdx];
         showInspectorCard({ badgeText: st.badge, badgeClass: st.badgeClass, title: lp.title, bodyText: lp.detail, codeText: lp.wireJson }, isUserClick);
-      } else if (activeMcpStageIdx === 1 && mcpPrims[activePrimIdx]) {
-        var pr = mcpPrims[activePrimIdx];
-        showInspectorCard({ badgeText: pr.badge, badgeClass: pr.badgeClass, title: pr.title, calloutText: pr.analogy, bodyText: pr.whatItIs, codeText: pr.example }, isUserClick);
-      } else if (activeMcpStageIdx === 2 && st.modes && st.modes[activeAuthModeIdx]) {
+      } else if (st.modes && st.modes[activeAuthModeIdx]) {
         var md = st.modes[activeAuthModeIdx];
         showInspectorCard({ badgeText: md.badge, badgeClass: md.badgeClass, title: md.title, bodyText: md.whatItIs, codeText: md.codeSnippet }, isUserClick);
-      } else if (activeMcpStageIdx === 3 && st.versions && st.versions[activeBuildVerIdx]) {
+      } else if (st.versions && st.versions[activeBuildVerIdx]) {
         var vr = st.versions[activeBuildVerIdx];
         showInspectorCard({ badgeText: vr.badge, badgeClass: vr.badgeClass, title: vr.title, bodyText: vr.takeaway, codeText: vr.code }, isUserClick);
       }
@@ -481,8 +452,8 @@
     function render() {
       tabsBar.replaceChildren();
       [
-        { id: "api-explainer", label: "1. Deep Dive: API Waiter Analogy + 7-Part Endpoint X-Ray", icon: "restaurant" },
-        { id: "mcp-course", label: "2. Deep Dive: MCP Tool Loop · Local vs. Remote · Python Build", icon: "usb" },
+        { id: "api-explainer", label: "1. First: What is an API & Endpoint? (Waiter Analogy + 7-Part X-Ray)", icon: "restaurant" },
+        { id: "mcp-course", label: "2. Next: MCP vs. API (Puzzle Pieces & Hub) + Build an MCP Server", icon: "usb" },
         { id: "five-patterns", label: "3. Compare: REST API vs. Webhook vs. Streaming vs. MCP", icon: "compare_arrows" }
       ].forEach(function (t) {
         var btn = document.createElement("button");
@@ -570,33 +541,64 @@
     }
 
     function renderMcpCourseTab(host) {
+      if (window.McpPuzzleDiagrams && window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer) {
+        var visualHeroCard = document.createElement("div");
+        visualHeroCard.className = "nested-card";
+        var heroTitleRow = document.createElement("div");
+        heroTitleRow.className = "resource-title-row";
+        var heroStrong = document.createElement("strong");
+        heroStrong.className = "diagram-node-title";
+        heroStrong.textContent = "Part A · How MCP builds on APIs: Brain-in-Gear vs. Puzzle Pieces & Before/After MCP Hub (hover or click):";
+        heroTitleRow.appendChild(heroStrong);
+        heroTitleRow.appendChild(createVideoLinkRow([
+          { label: "Watch: MCP Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
+          { label: "GitHub Code (v1 -> v3)", url: d.MCP_REPO_URL, icon: "code" }
+        ]));
+        visualHeroCard.appendChild(heroTitleRow);
+
+        visualHeroCard.appendChild(window.McpPuzzleDiagrams.createVisualMcpVsApiExplorer(function (info) {
+          showInspectorCard({
+            panelTitle: info.badge,
+            badgeText: info.badge,
+            badgeClass: info.badgeClass,
+            title: info.title,
+            calloutText: info.analogy,
+            bodyText: info.body,
+            codeText: info.code
+          }, true);
+        }));
+
+        visualHeroCard.appendChild(createPillCluster(mcpPrims, activePrimIdx, function (pr) { return pr.title; }, function (pr) { return pr.icon; }, function (pr, idx) {
+          activePrimIdx = idx;
+          render();
+          showInspectorCard({ badgeText: pr.badge, badgeClass: pr.badgeClass, title: pr.title, calloutText: pr.analogy, bodyText: pr.whatItIs, codeText: pr.example }, true);
+        }));
+        host.appendChild(visualHeroCard);
+      }
+
       var courseCard = document.createElement("div");
       courseCard.className = "nested-card";
       var topRow = document.createElement("div");
       topRow.className = "resource-title-row";
       var titleStrong = document.createElement("strong");
       titleStrong.className = "diagram-node-title";
-      titleStrong.textContent = "Explore the 4 chapters of Tech With Tim's MCP walkthrough (hover or click any step to inspect):";
+      titleStrong.textContent = "Part B · Under the hood: 4-Step JSON Tool Loop, Local vs. Remote OAuth 2.1, and Python FastMCP Code:";
       topRow.appendChild(titleStrong);
-      topRow.appendChild(createVideoLinkRow([
-        { label: "Watch: MCP Servers Explained & Built — Tech With Tim", url: d.MCP_VIDEO_URL, icon: "play_circle" },
-        { label: "GitHub Code (v1 -> v3)", url: d.MCP_REPO_URL, icon: "code" }
-      ]));
       courseCard.appendChild(topRow);
 
-      courseCard.appendChild(createPillCluster(mcpStages, activeMcpStageIdx, function (st) { return st.shortTab; }, function (st) { return st.icon; }, function (st, idx) {
+      courseCard.appendChild(createPillCluster(uniqueMcpStages, activeMcpStageIdx, function (st) { return st.shortTab; }, function (st) { return st.icon; }, function (st, idx) {
         activeMcpStageIdx = idx;
         render();
         syncMcpStageToSidePanel(true);
       }));
 
-      var curStage = mcpStages[activeMcpStageIdx] || mcpStages[0];
+      var curStage = uniqueMcpStages[activeMcpStageIdx] || uniqueMcpStages[0];
       var summaryP = document.createElement("p");
       summaryP.className = "resource-desc";
       summaryP.textContent = curStage.summary;
       courseCard.appendChild(summaryP);
 
-      if (activeMcpStageIdx === 0) {
+      if (curStage.steps) {
         courseCard.appendChild(createPillCluster(curStage.steps, activeLoopStepIdx, function (lp) { return lp.pill; }, null, function (lp, idx) {
           activeLoopStepIdx = idx;
           render();
@@ -607,22 +609,7 @@
           render();
           syncMcpStageToSidePanel(Boolean(isClick));
         }));
-      } else if (activeMcpStageIdx === 1) {
-        var modes = [
-          { mode: false, label: "Slide 4 · Before MCP: Custom Plumbing (M×N)", icon: "cable" },
-          { mode: true, label: "Slide 5 · With MCP: Universal USB-C Plug (M+N)", icon: "usb" }
-        ];
-        courseCard.appendChild(createPillCluster(modes, isMcpDiagramMode ? 1 : 0, function (m) { return m.label; }, function (m) { return m.icon; }, function (m) {
-          isMcpDiagramMode = m.mode;
-          render();
-        }));
-        courseCard.appendChild(createMcpVsApiSvg(isMcpDiagramMode));
-        courseCard.appendChild(createPillCluster(mcpPrims, activePrimIdx, function (pr) { return pr.title; }, function (pr) { return pr.icon; }, function (pr, idx) {
-          activePrimIdx = idx;
-          render();
-          syncMcpStageToSidePanel(true);
-        }));
-      } else if (activeMcpStageIdx === 2) {
+      } else if (curStage.modes) {
         courseCard.appendChild(createPillCluster(curStage.modes, activeAuthModeIdx, function (md) { return md.pill; }, null, function (md, idx) {
           activeAuthModeIdx = idx;
           render();
@@ -630,7 +617,7 @@
         }));
         var curMode = curStage.modes[activeAuthModeIdx] || curStage.modes[0];
         courseCard.appendChild(createLocalRemoteAuthSvg(curMode.id));
-      } else if (activeMcpStageIdx === 3) {
+      } else if (curStage.versions) {
         courseCard.appendChild(createPillCluster(curStage.versions, activeBuildVerIdx, function (vr) { return vr.pill; }, null, function (vr, idx) {
           activeBuildVerIdx = idx;
           render();

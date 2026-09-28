@@ -563,40 +563,40 @@
     buildInteractiveLoopCard(container, {
       skipInitialInspector: true,
       badgeClass: "badge-success",
-      badgeText: "Interactive system dynamics & AI agent blueprint — click any stage to open in the side panel",
-      title: "How URLs, backend functions, AI agents & databases work together safely",
-      subtitle: "Click any stage below to see how a button click maps to a Python function, how AI agents use tools with Human-in-the-Loop approval cards, and why sensitive data stays out of Git.",
+      badgeText: "Inside your app's backend — click any stage to inspect in the side panel",
+      title: "How button clicks, backend Python routes, AI agent loops & human approval fit together",
+      subtitle: "Once your APIs and MCP tools are wired up above, here is how a button click inside your app runs a backend Python function, updates your database, and pauses for Human-in-the-Loop confirmation before risky actions.",
       defaultItemId: "sys-human-in-loop",
       itemsMap: SYSTEMS_AGENT_ITEMS,
       topStages: [
         {
           stageKey: "stage-sys-request",
           artSvg: art.createUrlRouteClickArt(),
-          title: "1. URL route & UI state",
-          subtitle: "Button click -> /api/users",
+          title: "1. Button click -> Route",
+          subtitle: "UI state vs. DB state",
           defaultId: "sys-url-to-func",
-          pillIds: ["sys-url-to-func", "sys-idempotency", "sys-ui-vs-db-state"]
+          pillIds: ["sys-url-to-func", "sys-ui-vs-db-state"]
         },
         {
           stageKey: "stage-sys-agent",
           artSvg: art.createAgentMcpLoopArt(),
-          title: "2. Backend & AI agent loop",
-          subtitle: "Python function + MCP tools",
+          title: "2. AI agent loop",
+          subtitle: "Think -> Tool -> Observe (max_steps)",
           defaultId: "sys-agent-loop",
-          pillIds: ["sys-agent-loop", "sys-mcp-tools"]
+          pillIds: ["sys-agent-loop"]
         },
         {
           stageKey: "stage-sys-storage",
           artSvg: art.createDbWebhookArt(),
-          title: "3. Separate DB & webhooks",
-          subtitle: "Keep private data out of Git!",
+          title: "3. Code vs. private data",
+          subtitle: "Keep user rows out of Git!",
           defaultId: "sys-data-separation",
-          pillIds: ["sys-data-separation", "sys-polling-webhooks"]
+          pillIds: ["sys-data-separation"]
         }
       ],
       arrows: [
         { topLabel: "Calls route", bottomLabel: "GET / POST", pillId: "sys-url-to-func" },
-        { topLabel: "Queries DB", bottomLabel: "Async / Webhook", pillId: "sys-polling-webhooks" }
+        { topLabel: "Saves state", bottomLabel: "Cloud SQL DB", pillId: "sys-data-separation" }
       ],
       returnLeftLabel: "Human clicks Approve",
       returnRightLabel: "Stages preview card",

@@ -140,16 +140,13 @@
       stageKey: "stage-computer",
       artSvg: art.createLaptopEditorArt(),
       title: "1. Your computer",
-      subtitle: "Edit & test privately",
+      subtitle: "Local Git folder & .env",
       onStageClick: function () {
-        selectNode(nodeById["ide-editor"]);
+        selectNode(nodeById["local-git"]);
       },
       pillsContainer: buildPillsCluster([
-        { id: "ide-editor", label: "Code editors & IDEs" },
-        { id: "plain-text", label: "Plain-text files" },
-        { id: "homebrew-runtime", label: "Tool installers & engines" },
-        { id: "local-git", label: "Local Git" },
-        { id: "env-secrets", label: "Secret .env" }
+        { id: "local-git", label: "Local Git checkpoints" },
+        { id: "env-secrets", label: "Secret .env (ignored by Git)" }
       ])
     });
     stageCards.push(stage1.card);

@@ -186,53 +186,83 @@
       var currentHs = findHotspot(snap, activeHotspotId);
       var currentFlow = getActiveFlow();
 
-      // A. Single Clean Top Tool Selector Bar ("Explore where things are ->")
-      var menuBar = document.createElement("div");
-      menuBar.className = "ui-tour-top-menu";
+      if (isFlowsMode) {
+        // STEP 5 MODE: Dedicated Step-by-Step Guided Workflow Player (no duplicate Step 1 tool-tab bar)
+        var flowsMenuBar = document.createElement("div");
+        flowsMenuBar.className = "ui-tour-top-menu";
 
-      var menuLabel = document.createElement("span");
-      menuLabel.className = "ui-tour-menu-label";
-      menuLabel.textContent = "Explore where things are ➔";
-      menuBar.appendChild(menuLabel);
+        var flowsLabel = document.createElement("span");
+        flowsLabel.className = "ui-tour-menu-label";
+        flowsLabel.textContent = "Pick a workflow ➔";
+        flowsMenuBar.appendChild(flowsLabel);
 
-      [
-        { id: "github", label: "GitHub", icon: "cloud" },
-        { id: "vscode", label: "VS Code / Cursor", icon: "code_blocks" },
-        { id: "vercel", label: "Vercel", icon: "rocket_launch" },
-        { id: "devtools", label: "Chrome DevTools", icon: "troubleshoot" },
-        { id: "database", label: "Cloud Database", icon: "database" },
-        { id: "terminal", label: "Mac Terminal", icon: "terminal" }
-      ]
-        .filter(function (grp) {
-          return snapshots.some(function (s) { return s.group === grp.id; });
-        })
-        .forEach(function (grp) {
-          var btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "vocab-top-tab-btn" + (activeGroup === grp.id ? " active" : "");
-          var ic = document.createElement("span");
-          ic.className = "material-symbols-outlined btn-icon-sm";
-          ic.textContent = grp.icon;
-          var sp = document.createElement("span");
-          sp.textContent = grp.label;
-          btn.appendChild(ic);
-          btn.appendChild(sp);
-          btn.addEventListener("click", function () {
-            activeGroup = grp.id;
-            activeFlowId = null;
-            var firstInGroup = snapshots.filter(function (s) { return s.group === grp.id; })[0];
-            if (firstInGroup) {
-              activeSnapId = firstInGroup.id;
-              activeHotspotId = firstInGroup.hotspots[0].id;
-            }
-            render(false);
-            var newSnap = getActiveSnap();
-            populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
+        flows.forEach(function (fl, fIdx) {
+          var fBtn = document.createElement("button");
+          fBtn.type = "button";
+          fBtn.className = "vocab-top-tab-btn" + (activeFlowId === fl.id ? " active" : "");
+          var fIc = document.createElement("span");
+          fIc.className = "material-symbols-outlined btn-icon-sm";
+          fIc.textContent = fl.icon;
+          var fTxt = document.createElement("span");
+          fTxt.textContent = (fIdx + 1) + ". " + fl.title.replace(/^Flow\s+\d+:\s*/i, "");
+          fBtn.appendChild(fIc);
+          fBtn.appendChild(fTxt);
+          fBtn.addEventListener("click", function () {
+            applyFlowStep(fl, 0, true);
           });
-          menuBar.appendChild(btn);
+          flowsMenuBar.appendChild(fBtn);
         });
 
-      mount.appendChild(menuBar);
+        mount.appendChild(flowsMenuBar);
+      } else {
+        // STEP 1 MODE: Clean Interface Orientation Map ("Explore where things are ➔")
+        var menuBar = document.createElement("div");
+        menuBar.className = "ui-tour-top-menu";
+
+        var menuLabel = document.createElement("span");
+        menuLabel.className = "ui-tour-menu-label";
+        menuLabel.textContent = "Explore where things are ➔";
+        menuBar.appendChild(menuLabel);
+
+        [
+          { id: "github", label: "GitHub", icon: "cloud" },
+          { id: "vscode", label: "VS Code / Cursor", icon: "code_blocks" },
+          { id: "vercel", label: "Vercel", icon: "rocket_launch" },
+          { id: "devtools", label: "Chrome DevTools", icon: "troubleshoot" },
+          { id: "database", label: "Cloud Database", icon: "database" },
+          { id: "terminal", label: "Mac Terminal", icon: "terminal" }
+        ]
+          .filter(function (grp) {
+            return snapshots.some(function (s) { return s.group === grp.id; });
+          })
+          .forEach(function (grp) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "vocab-top-tab-btn" + (activeGroup === grp.id ? " active" : "");
+            var ic = document.createElement("span");
+            ic.className = "material-symbols-outlined btn-icon-sm";
+            ic.textContent = grp.icon;
+            var sp = document.createElement("span");
+            sp.textContent = grp.label;
+            btn.appendChild(ic);
+            btn.appendChild(sp);
+            btn.addEventListener("click", function () {
+              activeGroup = grp.id;
+              activeFlowId = null;
+              var firstInGroup = snapshots.filter(function (s) { return s.group === grp.id; })[0];
+              if (firstInGroup) {
+                activeSnapId = firstInGroup.id;
+                activeHotspotId = firstInGroup.hotspots[0].id;
+              }
+              render(false);
+              var newSnap = getActiveSnap();
+              populateHotspotInSidePanel(newSnap, findHotspot(newSnap, activeHotspotId), null, 0, false);
+            });
+            menuBar.appendChild(btn);
+          });
+
+        mount.appendChild(menuBar);
+      }
 
       // Active Flow Compact Stepper Controls (when a flow is active)
       if (currentFlow) {
@@ -250,7 +280,7 @@
         stBadge.textContent = st.stepTitle;
         var stSnapBadge = document.createElement("span");
         stSnapBadge.className = "badge badge-secondary";
-        stSnapBadge.textContent = "Viewing: " + snap.shortTitle + " (Circle #" + currentHs.num + " — details in left panel)";
+        stSnapBadge.textContent = "Screen: " + snap.shortTitle + " · Pin #" + currentHs.num;
         stepTitleGroup.appendChild(stBadge);
         stepTitleGroup.appendChild(stSnapBadge);
         stepTopRow.appendChild(stepTitleGroup);
@@ -277,25 +307,20 @@
           applyFlowStep(currentFlow, nextIdx, true);
         });
 
-        var exitFlowBtn = document.createElement("button");
-        exitFlowBtn.type = "button";
-        exitFlowBtn.className = "diagram-label-pill";
-        exitFlowBtn.textContent = "✕ Exit flow";
-        exitFlowBtn.addEventListener("click", function () {
-          activeFlowId = null;
-          render(false);
-        });
-
         stepNavBtns.appendChild(prevBtn);
         stepNavBtns.appendChild(nextBtn);
-        stepNavBtns.appendChild(exitFlowBtn);
         stepTopRow.appendChild(stepNavBtns);
 
+        var instrP = document.createElement("p");
+        instrP.className = "ui-tour-flow-instruction";
+        instrP.textContent = st.instruction;
+
         stepperCard.appendChild(stepTopRow);
+        stepperCard.appendChild(instrP);
         mount.appendChild(stepperCard);
       }
 
-      // B. Annotated Screenshot Canvas (with inline screen switcher ONLY if this tool has >1 screen)
+      // B. Annotated Screenshot Canvas (with inline screen switcher ONLY in Step 1 orientation mode)
       var stageWrap = document.createElement("div");
       stageWrap.className = "ui-tour-stage-wrap";
 
@@ -307,14 +332,14 @@
       stageCaptionRow.appendChild(scTitle);
 
       var groupSnaps = snapshots.filter(function (s) { return s.group === activeGroup; });
-      if (groupSnaps.length > 1) {
+      if (!isFlowsMode && groupSnaps.length > 1) {
         var subViewCluster = document.createElement("div");
         subViewCluster.className = "diagram-pill-cluster";
         groupSnaps.forEach(function (s, idx) {
           var svBtn = document.createElement("button");
           svBtn.type = "button";
           svBtn.className = "diagram-label-pill" + (s.id === activeSnapId ? " active" : "");
-          svBtn.textContent = "Screen " + (idx + 1) + ": " + s.shortTitle.replace(/^(GitHub|VS Code)\s+/i, "");
+          svBtn.textContent = "Screen " + (idx + 1) + ": " + s.shortTitle.replace(/^(GitHub|VS Code)\s*:?\s*/i, "");
           svBtn.addEventListener("click", function () {
             activeSnapId = s.id;
             activeHotspotId = s.hotspots[0].id;
@@ -403,57 +428,6 @@
       });
 
       stageWrap.appendChild(imgContainer);
-
-      // C. Compact Relevant Guided Flows Strip (only rendered when showFlows is true, e.g. on Step 5 Git & Cloud Deployment)
-      if (showFlows) {
-        var relevantFlows = showAllFlows
-          ? flows
-          : flows.filter(function (fl) {
-              return fl.steps.some(function (st) {
-                var stepSnap = snapshots.filter(function (s) { return s.id === st.snapshotId; })[0];
-                return stepSnap && stepSnap.group === activeGroup;
-              });
-            });
-        if (!relevantFlows.length) relevantFlows = flows.slice(0, 2);
-
-        var flowsRow = document.createElement("div");
-        flowsRow.className = "diagram-pill-cluster";
-
-        var flLabel = document.createElement("span");
-        flLabel.className = "badge badge-success";
-        flLabel.textContent = "Step-by-step flows:";
-        flowsRow.appendChild(flLabel);
-
-        relevantFlows.forEach(function (fl) {
-          var fBtn = document.createElement("button");
-          fBtn.type = "button";
-          fBtn.className = "diagram-label-pill" + (activeFlowId === fl.id ? " active" : "");
-          var fIc = document.createElement("span");
-          fIc.className = "material-symbols-outlined diagram-pill-icon";
-          fIc.textContent = fl.icon;
-          var fTxt = document.createElement("span");
-          fTxt.textContent = fl.title.replace(/^Flow\s+\d+:\s*/i, "");
-          fBtn.appendChild(fIc);
-          fBtn.appendChild(fTxt);
-          fBtn.addEventListener("click", function () {
-            applyFlowStep(fl, 0, true);
-          });
-          flowsRow.appendChild(fBtn);
-        });
-
-        var toggleAllFlowsBtn = document.createElement("button");
-        toggleAllFlowsBtn.type = "button";
-        toggleAllFlowsBtn.className = "diagram-label-pill";
-        toggleAllFlowsBtn.textContent = showAllFlows ? "Show only " + snap.groupLabel.split(" ")[0] + " flows" : "All " + flows.length + " flows…";
-        toggleAllFlowsBtn.addEventListener("click", function () {
-          showAllFlows = !showAllFlows;
-          render(false);
-        });
-        flowsRow.appendChild(toggleAllFlowsBtn);
-
-        stageWrap.appendChild(flowsRow);
-      }
-
       mount.appendChild(stageWrap);
 
       if (openSidePanel) {

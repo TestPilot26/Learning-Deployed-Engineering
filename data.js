@@ -104,8 +104,8 @@ window.PIPELINE_DATA = {
           body: "Each layer of software has its own native language: web browsers only understand HTML (page structure), CSS (colors, fonts, and layout), and JavaScript/TypeScript (interactive button logic, often built with screen toolkits called UI frameworks like React, Next.js, or Vue); Back End servers often use Python (with server frameworks like FastAPI or Flask—great for AI and data) or Node.js; and relational Databases (which store data in linked spreadsheet-like tables) use SQL (Structured Query Language, e.g. PostgreSQL or SQLite) to save and look up rows."
         },
         {
-          lead: "Not everything needs to be a full-stack web app:",
-          body: "Before building a full-stack web app (an app with both a custom browser Front End and a Back End server + database), ask what shape actually fits your goal: a Python notebook (Google Colab / Jupyter) is often best for data analysis; an interactive Python demo (using Gradio or Streamlit—two Python libraries that build a web screen automatically from a short Python script—hosted on Hugging Face Spaces) is fastest for sharing an AI model; and a simple static site (pre-built HTML/CSS/JS pages on GitHub Pages or Cloudflare Pages that need no backend server) is plenty for a portfolio or guide."
+          lead: "The 4 core rooms of an application (Front End, Back End, Database & Outside Services):",
+          body: "Think of an application like a restaurant: (1) the Front End is the dining room on the user's phone or browser screen (buttons, forms, and layout); (2) the Cloud Server (Back End) is the private kitchen where business rules and secret keys live; (3) the Database & Storage is the permanent pantry where user accounts, rows, and uploaded files are saved; and (4) Outside Services are external specialists (like Stripe for payments or Gemini/Claude for AI) that your Back End calls securely."
         },
         {
           lead: "Why a working demo can still be fragile:",
@@ -542,8 +542,8 @@ window.PIPELINE_DATA = {
           body: "To stop AI coding agents from making the same mistakes repeatedly, add a short plain-text 'AGENTS.md' or 'CLAUDE.md' file at the root of your project folder. List your project's folder structure, how to run tests ('pytest'), file-size limits, and security rules (like 'never hardcode API keys or touch the production database')—every modern AI coding tool reads this file automatically before editing your code."
         },
         {
-          lead: "Four watch-outs before you install or go live:",
-          body: "1) Check the repo's LICENSE file (permissive licenses like MIT and Apache 2.0 let you use the code freely in private or commercial apps; 'copyleft' licenses like AGPL/GPL require you to share your own source code). 2) Verify any package an AI suggests actually exists on npm or PyPI before installing it (to avoid 'slopsquatting' — when scammers register fake package names that AI models commonly hallucinate) and enable GitHub Dependabot for security alerts. 3) Keep secret keys in '.env' (never on public GitHub). 4) Set a hard monthly spend limit in your AI/cloud billing dashboard."
+          lead: "Three open-source watch-outs before you run npm install or pip install:",
+          body: "1) Check the repo's LICENSE file (permissive licenses like MIT and Apache 2.0 let you use the code freely in private or commercial apps; 'copyleft' licenses like AGPL/GPL require you to share your own source code). 2) Verify any package an AI suggests actually exists on npm or PyPI before installing it (to avoid 'slopsquatting' — when scammers register fake package names that AI models commonly hallucinate). 3) Check the last commit date so you don't adopt an abandoned 'zombie' library when modern JavaScript or Python already has the feature built in."
         }
       ],
       activity: {
