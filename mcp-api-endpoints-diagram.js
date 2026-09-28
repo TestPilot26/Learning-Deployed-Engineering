@@ -504,12 +504,6 @@
       topRow.appendChild(createVideoLinkRow([{ label: "Watch: What is an API (in 5 minutes) — Aaron Jack", url: d.API_VIDEO_URL, icon: "play_circle" }]));
       waiterCard.appendChild(topRow);
 
-      waiterCard.appendChild(createPillCluster(waiterSteps, activeWaiterIdx, function (s) { return s.shortPill; }, function (s) { return s.icon; }, function (st, idx) {
-        activeWaiterIdx = idx;
-        render();
-        showApiWaiterStepInSidePanel(st, true);
-      }));
-
       var curWaiter = waiterSteps[activeWaiterIdx] || waiterSteps[0];
       waiterCard.appendChild(createApiWaiterSvg(curWaiter.id, function (stepId, isClick) {
         waiterSteps.forEach(function (s, i) { if (s.id === stepId) activeWaiterIdx = i; });
@@ -524,12 +518,6 @@
       xrayTitle.className = "diagram-node-title";
       xrayTitle.textContent = "Part B · Inside the Waiter's Order Pad: Hover or click all 7 parts of a live API Endpoint call:";
       xrayCard.appendChild(xrayTitle);
-
-      xrayCard.appendChild(createPillCluster(endpointParts, activeEndpointIdx, function (ep) { return ep.shortPill; }, function (ep) { return ep.icon; }, function (ep, idx) {
-        activeEndpointIdx = idx;
-        render();
-        showEndpointPartInSidePanel(ep, true);
-      }));
 
       var curEp = endpointParts[activeEndpointIdx] || endpointParts[0];
       xrayCard.appendChild(createEndpointAnatomySvg(curEp.id, function (partId, isClick) {
@@ -599,11 +587,6 @@
       courseCard.appendChild(summaryP);
 
       if (curStage.steps) {
-        courseCard.appendChild(createPillCluster(curStage.steps, activeLoopStepIdx, function (lp) { return lp.pill; }, null, function (lp, idx) {
-          activeLoopStepIdx = idx;
-          render();
-          syncMcpStageToSidePanel(true);
-        }));
         courseCard.appendChild(createMcpToolLoopSvg(activeLoopStepIdx, function (idx, isClick) {
           activeLoopStepIdx = idx;
           render();

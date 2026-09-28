@@ -384,7 +384,7 @@
 
       // Left Panel Background ("Before MCP")
       var beforeBg = svgEl("rect", {
-        x: "24", y: "218", width: "412", height: "302", rx: "16",
+        x: "24", y: "216", width: "412", height: "308", rx: "16",
         fill: isBeforeActive ? "var(--color-error-container)" : "var(--color-surface-container)",
         stroke: isBeforeActive ? "var(--color-error)" : "var(--color-outline-variant)",
         "stroke-width": isBeforeActive ? "2.8" : "1.5",
@@ -403,17 +403,17 @@
       svg.appendChild(beforeBg);
 
       svg.appendChild(svgText("Before MCP", {
-        x: "230", y: "248", "text-anchor": "middle",
+        x: "230", y: "244", "text-anchor": "middle",
         fill: "var(--color-on-surface)", "font-size": "20", "font-weight": "700"
       }));
       svg.appendChild(svgText("3 tools = 3 separate 'Unique API' wires directly to the LLM", {
-        x: "230", y: "268", "text-anchor": "middle",
+        x: "230", y: "263", "text-anchor": "middle",
         fill: "var(--color-on-surface-variant)", "font-size": "11.5"
       }));
 
       // Right Panel Background ("After MCP")
       var afterBg = svgEl("rect", {
-        x: "464", y: "218", width: "412", height: "302", rx: "16",
+        x: "464", y: "216", width: "412", height: "308", rx: "16",
         fill: isAfterHubActive ? "var(--color-primary-container)" : "var(--color-surface-container)",
         stroke: isAfterHubActive ? "var(--color-primary)" : "var(--color-outline-variant)",
         "stroke-width": isAfterHubActive ? "2.8" : "1.5",
@@ -432,26 +432,26 @@
       svg.appendChild(afterBg);
 
       svg.appendChild(svgText("After MCP", {
-        x: "670", y: "248", "text-anchor": "middle",
+        x: "670", y: "244", "text-anchor": "middle",
         fill: "var(--color-on-surface)", "font-size": "20", "font-weight": "700"
       }));
       svg.appendChild(svgText("LLM speaks 1 'Unified API' to MCP — hover any tool below to trace!", {
-        x: "670", y: "268", "text-anchor": "middle",
+        x: "670", y: "263", "text-anchor": "middle",
         fill: "var(--color-primary)", "font-size": "11.5", "font-weight": "700"
       }));
 
       // --- LEFT ("BEFORE MCP") NODES & WIRES ---
-      drawLlmNode(svg, 230, 308, isBeforeActive);
+      drawLlmNode(svg, 230, 300, isBeforeActive);
 
       var leftTools = [
-        { id: "app-slack", label: "Slack", x: 110, y: 468, labelX: 128, labelY: 404, drawFn: drawSlackLogo },
-        { id: "app-drive", label: "Google Drive", x: 230, y: 468, labelX: 230, labelY: 416, drawFn: drawDriveLogo },
-        { id: "app-github", label: "GitHub", x: 350, y: 468, labelX: 332, labelY: 404, drawFn: drawGitHubLogo }
+        { id: "app-slack", label: "Slack", x: 110, y: 468, labelX: 156, labelY: 398, drawFn: drawSlackLogo },
+        { id: "app-drive", label: "Google Drive", x: 230, y: 468, labelX: 230, labelY: 398, drawFn: drawDriveLogo },
+        { id: "app-github", label: "GitHub", x: 350, y: 468, labelX: 304, labelY: 398, drawFn: drawGitHubLogo }
       ];
 
       leftTools.forEach(function (lt) {
         var isToolHi = isBeforeActive || activeHoverId === lt.id;
-        var pathStr = "M 230 352 L " + lt.x + " 440";
+        var pathStr = "M 230 344 L " + lt.x + " 442";
         svg.appendChild(svgEl("path", {
           d: pathStr,
           fill: "none",
@@ -465,10 +465,16 @@
           dot.appendChild(anim);
           svg.appendChild(dot);
         }
+        svg.appendChild(svgEl("rect", {
+          x: String(lt.labelX - 33), y: String(lt.labelY - 11), width: "66", height: "16", rx: "8",
+          fill: "var(--color-surface-container-lowest)",
+          stroke: isToolHi ? "var(--color-error)" : "var(--color-outline-variant)",
+          "stroke-width": "1"
+        }));
         svg.appendChild(svgText("Unique API", {
           x: String(lt.labelX), y: String(lt.labelY), "text-anchor": "middle",
           fill: isToolHi ? "var(--color-error)" : "var(--color-on-surface-variant)",
-          "font-size": "11", "font-weight": "700"
+          "font-size": "10", "font-weight": "700"
         }));
 
         var toolG = svgEl("g", { class: "mcp-interactive-node" });
@@ -490,10 +496,10 @@
       });
 
       // --- RIGHT ("AFTER MCP") NODES, UNIFIED WIRE, MCP HUB & UNIQUE WIRES ---
-      drawLlmNode(svg, 640, 304, isAfterHubActive);
+      drawLlmNode(svg, 640, 294, isAfterHubActive);
 
       // Unified API vertical bidirectional wire (LLM <-> MCP Hub)
-      var unifiedPath = "M 640 346 L 640 374";
+      var unifiedPath = "M 640 338 L 640 364";
       svg.appendChild(svgEl("path", {
         d: unifiedPath,
         fill: "none",
@@ -501,17 +507,17 @@
         "stroke-width": isAfterHubActive ? "4" : "2.8"
       }));
       svg.appendChild(svgText("Unified API", {
-        x: "686", y: "364", "text-anchor": "start",
+        x: "682", y: "355", "text-anchor": "start",
         fill: "var(--color-primary)", "font-size": "12", "font-weight": "700"
       }));
-      var uniDot = svgEl("circle", { r: "5", fill: "var(--color-tertiary)" });
+      var uniDot = svgEl("circle", { r: "4.5", fill: "var(--color-tertiary)" });
       var uniAnim = svgEl("animateMotion", { dur: "1.1s", repeatCount: "indefinite", path: unifiedPath });
       uniDot.appendChild(uniAnim);
       svg.appendChild(uniDot);
 
-      // MCP Hub Node at (640, 400)
+      // MCP Hub Node at (640, 390)
       var hubG = svgEl("g", { class: "mcp-interactive-node" });
-      drawMcpHubNode(hubG, 640, 400, isAfterHubActive);
+      drawMcpHubNode(hubG, 640, 390, isAfterHubActive);
       hubG.addEventListener("mouseenter", function () {
         activeHoverId = "after-mcp-hub";
         renderGraphic(false);
@@ -524,30 +530,36 @@
       svg.appendChild(hubG);
 
       var rightTools = [
-        { id: "app-slack", label: "Slack", x: 530, y: 474, labelX: 552, labelY: 442, drawFn: drawSlackLogo },
-        { id: "app-drive", label: "Google Drive", x: 640, y: 474, labelX: 640, labelY: 446, drawFn: drawDriveLogo },
-        { id: "app-github", label: "GitHub", x: 750, y: 474, labelX: 730, labelY: 442, drawFn: drawGitHubLogo }
+        { id: "app-slack", label: "Slack", x: 530, y: 472, labelX: 566, labelY: 436, drawFn: drawSlackLogo },
+        { id: "app-drive", label: "Google Drive", x: 640, y: 472, labelX: 640, labelY: 436, drawFn: drawDriveLogo },
+        { id: "app-github", label: "GitHub", x: 750, y: 472, labelX: 714, labelY: 436, drawFn: drawGitHubLogo }
       ];
 
       rightTools.forEach(function (rt) {
         var isRouteHi = activeHoverId === "after-mcp-hub" || activeHoverId === rt.id;
-        var fanPath = "M 640 426 L " + rt.x + " 452";
+        var fanPath = "M 640 416 L " + rt.x + " 448";
         svg.appendChild(svgEl("path", {
           d: fanPath,
           fill: "none",
           stroke: isRouteHi ? "var(--color-tertiary)" : "var(--color-outline)",
-          "stroke-width": isRouteHi ? "3.4" : "2"
+          "stroke-width": isRouteHi ? "3.2" : "2"
         }));
         if (isRouteHi) {
-          var fDot = svgEl("circle", { r: "4.5", fill: "var(--color-tertiary)" });
+          var fDot = svgEl("circle", { r: "4.2", fill: "var(--color-tertiary)" });
           var fAnim = svgEl("animateMotion", { dur: "1.3s", repeatCount: "indefinite", path: fanPath });
           fDot.appendChild(fAnim);
           svg.appendChild(fDot);
         }
+        svg.appendChild(svgEl("rect", {
+          x: String(rt.labelX - 31), y: String(rt.labelY - 10), width: "62", height: "15", rx: "7.5",
+          fill: "var(--color-surface-container-lowest)",
+          stroke: isRouteHi ? "var(--color-tertiary)" : "var(--color-outline-variant)",
+          "stroke-width": "1"
+        }));
         svg.appendChild(svgText("Unique API", {
           x: String(rt.labelX), y: String(rt.labelY), "text-anchor": "middle",
-          fill: isRouteHi ? "var(--color-on-primary-container)" : "var(--color-on-surface-variant)",
-          "font-size": "10.5", "font-weight": "700"
+          fill: isRouteHi ? "var(--color-on-surface)" : "var(--color-on-surface-variant)",
+          "font-size": "9.5", "font-weight": "700"
         }));
 
         var rToolG = svgEl("g", { class: "mcp-interactive-node" });

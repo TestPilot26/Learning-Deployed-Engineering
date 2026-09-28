@@ -350,6 +350,7 @@
     }
 
     function makePills(ids) {
+      if (!ids || ids.length <= 1) return null;
       var cluster = document.createElement("div");
       cluster.className = "diagram-pill-cluster loop-stage-pills";
       ids.forEach(function (id) {
