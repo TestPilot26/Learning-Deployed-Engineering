@@ -28,7 +28,7 @@
       hotspots: [
         {
           id: "gh-new-owner-name", num: "1", shortLabel: "Owner & Repository name *",
-          x: 22.8, y: 31.0, w: 54.4, h: 7.5,
+          x: 22.6, y: 30.2, w: 54.6, h: 8.0,
           title: "Owner account & Repository name * (Required)",
           category: "GitHub setup · Name your project",
           whatItDoes: "Picks which GitHub account owns the project and sets the repository's URL slug (e.g. 'my-first-app'). Use lowercase letters and hyphens instead of spaces.",
@@ -37,7 +37,7 @@
         },
         {
           id: "gh-new-description", num: "2", shortLabel: "Description (Optional)",
-          x: 22.8, y: 47.0, w: 54.4, h: 9.2,
+          x: 22.6, y: 46.8, w: 54.6, h: 8.5,
           title: "Description box (1-sentence summary)",
           category: "GitHub setup · Project summary",
           whatItDoes: "A short plain-English description that appears in the 'About' sidebar on your repository's main page.",
@@ -45,9 +45,9 @@
           tryCommand: "Appears under 'About' on the repo page"
         },
         {
-          id: "gh-new-visibility", num: "3", shortLabel: "Choose visibility (Public / Private)",
-          x: 22.8, y: 66.8, w: 54.4, h: 10.2,
-          title: "Choose visibility: Public vs. Private",
+          id: "gh-new-visibility", num: "3", shortLabel: "Choose visibility (Public ▾)",
+          x: 66.8, y: 68.2, w: 9.2, h: 5.5,
+          title: "Choose visibility: Public vs. Private dropdown",
           category: "Security · Who can see your code",
           whatItDoes: "• Public: Anyone on the internet can view and clone your code (great for open-source portfolios, though you must NEVER commit '.env' keys).\n• Private: Only you and people you explicitly invite can see the repository.",
           whenYouUseIt: "Choose 'Private' for internal prototypes or proprietary apps; choose 'Public' when sharing open-source work.",
@@ -55,7 +55,7 @@
         },
         {
           id: "gh-new-add-readme", num: "4", shortLabel: "Add README toggle (Off / On)",
-          x: 22.8, y: 78.6, w: 54.4, h: 8.8,
+          x: 69.2, y: 79.8, w: 6.8, h: 5.2,
           title: "'Add README' toggle switch (Creates README.md automatically)",
           category: "Documentation · Front-page manual",
           whatItDoes: "Flipping this toggle switch ON tells GitHub to initialize your repository with a 'README.md' Markdown file right away—giving your project an instruction manual and an initial commit on 'main'.",
@@ -63,8 +63,8 @@
           tryCommand: "Creates README.md in your new repo"
         },
         {
-          id: "gh-new-add-gitignore", num: "5", shortLabel: "Add .gitignore template",
-          x: 22.8, y: 87.8, w: 54.4, h: 8.2,
+          id: "gh-new-add-gitignore", num: "5", shortLabel: "Add .gitignore (No .gitignore ▾)",
+          x: 65.0, y: 88.6, w: 11.0, h: 5.4,
           title: "'Add .gitignore' template dropdown (Protects .env secrets!)",
           category: "Security guardrail · Do-not-upload list",
           whatItDoes: "Lets you pick a pre-made '.gitignore' file for your language (such as 'Python' or 'Node'). It automatically lists '.env', '.venv/', '__pycache__/', and 'node_modules/' so Git never uploads secret API keys or heavy dependency folders.",
@@ -229,7 +229,7 @@
         },
         {
           id: "vc-env-projects-shared", num: "2", shortLabel: "Projects vs. Shared variables",
-          x: 20.8, y: 23.2, w: 10.8, h: 5.4,
+          x: 20.8, y: 23.2, w: 11.2, h: 5.2,
           title: "'Projects' vs. 'Shared' Environment Variables",
           category: "Organization · Per-app vs. team-wide keys",
           whatItDoes: "• Projects: Keys scoped to one specific web app.\n• Shared: Keys you can share across multiple projects in your account.",
@@ -238,16 +238,16 @@
         },
         {
           id: "vc-env-filters", num: "3", shortLabel: "Environment filters (Prod / Preview)",
-          x: 21.0, y: 30.6, w: 77.0, h: 5.8,
-          title: "Search & Environment filters (Production, Preview, Development)",
+          x: 43.2, y: 30.6, w: 21.0, h: 5.8,
+          title: "Environment & Type filters (Production, Preview, Development)",
           category: "Environment isolation · Separate Prod vs. Preview keys",
           whatItDoes: "Lets you filter variables by environment: 'Production' (your main live URL), 'Preview' (branch preview URLs), and 'Development'.",
           whenYouUseIt: "Point 'Preview' deployments at a test database and 'Production' at your live database so branch experiments never touch real user rows.",
           tryCommand: "Separate Production vs. Preview DATABASE_URL"
         },
         {
-          id: "vc-env-main-box", num: "4", shortLabel: "Project Environment Variables list",
-          x: 21.0, y: 38.0, w: 77.0, h: 22.8,
+          id: "vc-env-main-box", num: "4", shortLabel: "Project Environment Variables vault",
+          x: 44.0, y: 42.5, w: 31.0, h: 14.0,
           title: "Project Environment Variables vault",
           category: "Security · Why you must redeploy after adding a key",
           whatItDoes: "Lists all encrypted Key/Value pairs injected into your cloud server at runtime. Remember: after adding or changing an environment variable in a project's settings, trigger a new deployment (or 'git push') so the running server picks up the new key!",
@@ -351,7 +351,7 @@
       hotspots: [
         {
           id: "db-sidebar-projects", num: "1", shortLabel: "Projects, Billing & Settings",
-          x: 1.0, y: 10.0, w: 14.8, h: 21.5,
+          x: 1.0, y: 10.0, w: 14.6, h: 21.0,
           title: "Left sidebar: Projects, People, Billing, Integrations & Settings",
           category: "Database navigation · Manage your cloud SQL instances",
           whatItDoes: "Navigates between your database projects, team access permissions, billing limits, and cloud integrations (like linking Neon directly to Vercel).",
@@ -360,7 +360,7 @@
         },
         {
           id: "db-usage-metrics", num: "2", shortLabel: "Serverless Compute & Storage (0 CU-hrs)",
-          x: 19.0, y: 17.0, w: 78.5, h: 17.5,
+          x: 20.0, y: 18.2, w: 28.5, h: 10.2,
           title: "Serverless Compute ('CU-hrs') & Storage GB metrics",
           category: "How serverless SQL works · Scales to $0 when idle",
           whatItDoes: "• Compute (CU-hrs): Neon automatically pauses your database CPU when no one is using your app ('0 CU-hrs') and wakes it up in ~500ms when a request arrives.\n• Storage: Shows the disk space used by your SQL tables (here just 0.03 GB / 32 MB).",
@@ -369,7 +369,7 @@
         },
         {
           id: "db-new-project-btn", num: "3", shortLabel: "+ New project & Import data",
-          x: 78.6, y: 9.6, w: 19.0, h: 5.2,
+          x: 78.6, y: 9.6, w: 19.0, h: 5.0,
           title: "'+ New project' & 'Import data' buttons",
           category: "Essential action · Spin up a Postgres database in 2 seconds",
           whatItDoes: "Creates a brand-new PostgreSQL database in the cloud (or imports an existing SQL dump / CSV).",
@@ -377,8 +377,8 @@
           tryCommand: "Click '+ New project' -> Copy DATABASE_URL into .env"
         },
         {
-          id: "db-project-row", num: "4", shortLabel: "Project1 row, Region & Branches",
-          x: 19.0, y: 51.8, w: 78.5, h: 9.0,
+          id: "db-project-row", num: "4", shortLabel: "Project1 row & AWS Region",
+          x: 19.8, y: 53.8, w: 22.5, h: 5.2,
           title: "Database Project row ('Project1'), Region & 'Branches'",
           category: "Database architecture · Click to open Tables & SQL Editor",
           whatItDoes: "• Clicking 'Project1' opens its SQL Editor, Table Editor (rows & columns), and Connection String modal.\n• Region ('AWS US East 2'): Pick the region closest to your backend server so queries take <5ms.\n• Branches ('1'): Neon lets you branch your database just like a Git branch to test schema migrations safely!",
@@ -387,7 +387,7 @@
         },
         {
           id: "db-agent-skills", num: "5", shortLabel: "Onboard your agent (MCP / Skills)",
-          x: 1.2, y: 63.0, w: 14.8, h: 22.8,
+          x: 1.2, y: 59.0, w: 14.5, h: 26.5,
           title: "'Onboard your agent' card (Connect Cursor / Claude Code safely)",
           category: "AI Engineering · Give your coding agent database context",
           whatItDoes: "Provides a 1-click command to install Neon's official agent skill / MCP server so your AI coding assistant (Cursor, Claude Code, Windsurf) can inspect table schemas and write accurate SQL migrations.",
@@ -396,7 +396,7 @@
         },
         {
           id: "db-psql-connect", num: "6", shortLabel: "$ psql -h pg.neon.tech (Connect)",
-          x: 41.5, y: 93.0, w: 34.5, h: 5.8,
+          x: 60.0, y: 93.2, w: 15.6, h: 5.0,
           title: "Terminal connection command ('$ psql -h pg.neon.tech')",
           category: "CLI connectivity · Connect from your terminal",
           whatItDoes: "Lets you connect directly to your cloud Postgres database from your Mac Terminal using 'psql' without typing a password (via browser authentication).",
